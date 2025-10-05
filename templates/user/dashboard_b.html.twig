@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mon espace — Binajia{% endblock %}
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  <div class="flex flex-wrap gap-2">
+    <a href="#profile" class="px-4 py-2 rounded-full bg-primary text-white">Profil</a>
+    <a href="#payments" class="px-4 py-2 rounded-full ring-1 ring-gray-300">Paiements</a>
+    <a href="#tickets" class="px-4 py-2 rounded-full ring-1 ring-gray-300">Tickets</a>
+    <a href="#card" class="px-4 py-2 rounded-full ring-1 ring-gray-300">Carte</a>
+  </div>
+
+  <div class="mt-8 grid lg:grid-cols-3 gap-6">
+    <div id="profile" class="lg:col-span-2 p-6 rounded-2xl bg-white ring-1 ring-gray-200">Profil…</div>
+    <div class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
+      <h3 class="font-semibold">Résumé</h3>
+      <ul class="mt-3 text-sm text-gray-600 space-y-2">
+        <li>Membre depuis {{ app.user.joinedAt|date('Y') }}</li>
+        <li>Dernier paiement: {{ lastPayment.date|date('d/m/Y') }}</li>
+        <li>Tickets actifs: {{ tickets|length }}</li>
+      </ul>
+    </div>
+    <div id="payments" class="lg:col-span-2 p-6 rounded-2xl bg-white ring-1 ring-gray-200">Paiements…</div>
+    <div id="tickets" class="lg:col-span-2 p-6 rounded-2xl bg-white ring-1 ring-gray-200">Tickets…</div>
+    <div id="card" class="lg:col-span-3 p-6 rounded-2xl bg-white ring-1 ring-gray-200">{% include 'partials/member-card-digital.html.twig' with { user: app.user } %}</div>
+  </div>
+</div>
+{% endblock %}

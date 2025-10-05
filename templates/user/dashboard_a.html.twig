@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mon espace — Binajia{% endblock %}
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  <div class="grid lg:grid-cols-12 gap-8">
+    <aside class="lg:col-span-3 space-y-4">
+      <div class="p-4 rounded-2xl bg-white ring-1 ring-gray-200">
+        <div class="flex items-center gap-3">
+          <img src="{{ user.avatarUrl ?? '/media/avatar.png' }}" class="h-12 w-12 rounded-full object-cover" alt="">
+          <div>
+            <div class="font-semibold">{{ user.firstName }} {{ user.lastName }}</div>
+            <div class="text-xs text-gray-500">Membre #{{ user.memberId }}</div>
+          </div>
+        </div>
+      </div>
+      <nav class="p-2 rounded-2xl bg-white ring-1 ring-gray-200">
+        <a href="#profile" class="block px-4 py-2 rounded-md hover:bg-neutral-50">Profil</a>
+        <a href="#payments" class="block px-4 py-2 rounded-md hover:bg-neutral-50">Paiements</a>
+        <a href="#tickets" class="block px-4 py-2 rounded-md hover:bg-neutral-50">Tickets</a>
+        <a href="#card" class="block px-4 py-2 rounded-md hover:bg-neutral-50">Carte membre</a>
+      </nav>
+    </aside>
+
+    <section class="lg:col-span-9 space-y-8">
+      <div id="profile" class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
+        <h2 class="font-display text-xl font-semibold">Profil</h2>
+        <form class="mt-6 grid sm:grid-cols-2 gap-4">
+          <div><label class="text-sm text-gray-600">Prénom</label><input value="{{ user.firstName }}" class="mt-1 w-full rounded-md border-gray-300"/></div>
+          <div><label class="text-sm text-gray-600">Nom</label><input value="{{ user.lastName }}" class="mt-1 w-full rounded-md border-gray-300"/></div>
+          <div class="sm:col-span-2"><label class="text-sm text-gray-600">Pays</label>
+            <input value="{{ user.country }}" class="mt-1 w-full rounded-md border-gray-300"/>
+          </div>
+          <div class="sm:col-span-2">
+            <button class="mt-3 px-4 py-2 rounded-md bg-primary text-white">Mettre à jour</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="payments" class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
+        <h2 class="font-display text-xl font-semibold">Historique des paiements</h2>
+        <div class="mt-4 overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead>
+              <tr class="text-left text-gray-500">
+                <th class="py-2">Date</th><th class="py-2">Description</th><th class="py-2">Montant</th><th class="py-2">Reçu</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y">
+              {% for p in payments %}
+              <tr>
+                <td class="py-2">{{ p.date|date('d/m/Y') }}</td>
+                <td class="py-2">{{ p.label }}</td>
+                <td class="py-2">{{ p.amount }} {{ p.currency }}</td>
+                <td class="py-2">
+                  <a href="#" class="text-primary hover:underline">Télécharger</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="tickets" class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
+        <h2 class="font-display text-xl font-semibold">Mes tickets</h2>
+        <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {% for t in tickets %}
+          <div class="p-4 rounded-xl bg-neutral-50 ring-1 ring-gray-200">
+            <div class="text-xs text-gray-500">{{ t.date|date('d M Y') }}</div>
+            <div class="font-semibold mt-1">{{ t.eventTitle }}</div>
+            <a href="#" class="mt-2 inline-block text-primary text-sm">Afficher QR</a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div id="card" class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
+        <h2 class="font-display text-xl font-semibold">Carte membre</h2>
+        {% include 'partials/member-card-digital.html.twig' with { user: user } %}
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

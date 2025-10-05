@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block title %}Admin — Binajia{% endblock %}
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid lg:grid-cols-12 gap-8">
+  {% include 'admin/_sidebar.html.twig' %}
+  <section class="lg:col-span-9 space-y-8">
+    {% block content_inner %}{% endblock %}
+  </section>
+</div>
+{% endblock %}

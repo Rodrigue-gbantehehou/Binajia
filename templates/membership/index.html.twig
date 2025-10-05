@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+{% block title %}Devenir Membre - BINAJIA{% endblock %}
+
+{% block content %}
+<section class="pt-28 pb-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto">
+      <h1 class="font-serif text-4xl md:text-5xl font-bold text-charcoal">Rejoignez la communauté Binajia</h1>
+      <p class="mt-4 text-lg text-gray-600">Événements exclusifs, réductions, réseau transfrontalier — obtenez votre carte de membre et devenez acteur du mouvement.</p>
+      <div class="mt-8 inline-flex gap-3">
+        <a href="#plans" class="px-6 py-3 bg-gradient-to-br from-primary to-accent text-white rounded-xl font-semibold">Voir les offres</a>
+        <a href="#card" class="px-6 py-3 bg-white border-2 border-primary text-primary rounded-xl font-semibold">Voir un exemple</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="plans" class="py-12 bg-cream">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-6">
+    <div class="p-6 bg-white rounded-2xl shadow-sm ring-1 ring-gray-200">
+      <h3 class="font-semibold text-charcoal">Essentiel</h3>
+      <p class="text-gray-600 mt-2">Accès aux événements publics et newsletter</p>
+      <div class="mt-4 text-3xl font-bold text-charcoal">Gratuit</div>
+      <button class="mt-6 w-full px-4 py-2 bg-white border-2 border-primary text-primary rounded-xl font-semibold">Choisir</button>
+    </div>
+    <div class="p-6 bg-white rounded-2xl shadow-xl ring-2 ring-primary">
+      <h3 class="font-semibold text-charcoal">Membre</h3>
+      <p class="text-gray-600 mt-2">Réductions, accès prioritaire, carte numérique</p>
+      <div class="mt-4 text-3xl font-bold text-charcoal">25 €<span class="text-base font-normal text-gray-500">/an</span></div>
+      <button class="mt-6 w-full px-4 py-2 bg-gradient-to-br from-primary to-accent text-white rounded-xl font-semibold">Adhérer</button>
+    </div>
+    <div class="p-6 bg-white rounded-2xl shadow-sm ring-1 ring-gray-200">
+      <h3 class="font-semibold text-charcoal">Ambassadeur</h3>
+      <p class="text-gray-600 mt-2">Avantages premium et soutien aux projets</p>
+      <div class="mt-4 text-3xl font-bold text-charcoal">60 €<span class="text-base font-normal text-gray-500">/an</span></div>
+      <button class="mt-6 w-full px-4 py-2 bg-white border-2 border-primary text-primary rounded-xl font-semibold">Choisir</button>
+    </div>
+  </div>
+</section>
+
+<section id="card" class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h2 class="font-serif text-3xl font-bold text-charcoal">Votre carte de membre</h2>
+      <p class="mt-3 text-gray-600">Une identité visuelle moderne, inspirée des esthétiques béninoises et nigérianes. Votre photo et vos informations sont intégrées proprement.</p>
+      <div class="mt-6 flex gap-3">
+        <a href="{{ path('app_membership_card') }}" class="px-5 py-3 rounded-xl bg-gradient-to-br from-primary to-accent text-white font-semibold">Voir la carte</a>
+        <a href="{{ path('app_user_dashboard') }}" class="px-5 py-3 rounded-xl border-2 border-primary text-primary font-semibold">Accéder à mon espace</a>
+      </div>
+    </div>
+    <div>
+      {% include 'partials/member-card-digital.html.twig' with { user: user } %}
+      <p class="mt-3 text-sm text-gray-500">Exemple affiché. La carte s'adapte automatiquement à vos informations.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

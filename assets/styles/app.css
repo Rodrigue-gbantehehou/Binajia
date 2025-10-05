@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base typography */
+html { scroll-behavior: smooth; }
+body { @apply bg-cream text-charcoal font-sans; }
+
+/* Helpers if needed (keep minimal, utilities in custom.css) */
+.btn-primary { background: linear-gradient(135deg, #1E6A2E, #D4A030); transition: all .3s cubic-bezier(.16,1,.3,1); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(30, 106, 46, 0.35); }

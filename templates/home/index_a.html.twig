@@ -1,0 +1,260 @@
+{% extends 'base.html.twig' %}
+{% block title %}BINAJIA — Découvrez la richesse culturelle du Bénin et du Nigéria{% endblock %}
+{% block scripts %}
+<script>
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href && href !== '#') {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          closeMobileMenu();
+        }
+      }
+    });
+  });
+
+  // Mobile menu
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const closeMenuBtn = document.getElementById('close-menu');
+  const menuOverlay = document.getElementById('menu-overlay');
+  function openMobileMenu(){ mobileMenu.classList.add('active'); menuOverlay.classList.remove('hidden'); document.body.style.overflow='hidden'; }
+  function closeMobileMenu(){ mobileMenu.classList.remove('active'); menuOverlay.classList.add('hidden'); document.body.style.overflow=''; }
+  mobileMenuBtn && mobileMenuBtn.addEventListener('click', openMobileMenu);
+  closeMenuBtn && closeMenuBtn.addEventListener('click', closeMobileMenu);
+  menuOverlay && menuOverlay.addEventListener('click', closeMobileMenu);
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMobileMenu(); });
+
+  // Navbar shadow on scroll
+  const navbar = document.querySelector('nav');
+  window.addEventListener('scroll', ()=>{ const s = window.pageYOffset; navbar.style.boxShadow = s<=0 ? '0 10px 15px -3px rgba(0,0,0,0.1)' : '0 20px 25px -5px rgba(0,0,0,0.1)'; });
+
+  // Carousel
+  const track = document.getElementById('carouselTrack');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const dots = document.querySelectorAll('.carousel-dot');
+  let currentIndex = 0; const totalSlides = 4; let autoSlideInterval;
+  function updateCarousel(){ if(track){ track.style.transform = `translateX(-${currentIndex * 100}%)`; } dots.forEach((dot,i)=>{ dot.classList.toggle('bg-primary', i===currentIndex); dot.classList.toggle('bg-gray-300', i!==currentIndex); }); }
+  function nextSlide(){ currentIndex = (currentIndex + 1) % totalSlides; updateCarousel(); }
+  function prevSlide(){ currentIndex = (currentIndex - 1 + totalSlides) % totalSlides; updateCarousel(); }
+  function goToSlide(i){ currentIndex = i; updateCarousel(); }
+  function startAutoSlide(){ autoSlideInterval = setInterval(nextSlide, 5000); }
+  function stopAutoSlide(){ clearInterval(autoSlideInterval); }
+  nextBtn && nextBtn.addEventListener('click', ()=>{ nextSlide(); stopAutoSlide(); startAutoSlide(); });
+  prevBtn && prevBtn.addEventListener('click', ()=>{ prevSlide(); stopAutoSlide(); startAutoSlide(); });
+  dots.forEach(dot=>{ dot.addEventListener('click', ()=>{ const i = parseInt(dot.getAttribute('data-index')); goToSlide(i); stopAutoSlide(); startAutoSlide(); }); });
+  const carouselSection = document.querySelector('#lieux .relative');
+  if (carouselSection){ carouselSection.addEventListener('mouseenter', stopAutoSlide); carouselSection.addEventListener('mouseleave', startAutoSlide); }
+  if (track){ startAutoSlide(); }
+
+  // Appear animations
+  const observer = new IntersectionObserver((entries)=>{ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.style.opacity='1'; entry.target.style.transform='translateY(0)'; } }); }, { threshold: .1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.event-card, .card-hover').forEach(el=>{ el.style.opacity='0'; el.style.transform='translateY(30px)'; el.style.transition='opacity .6s ease, transform .6s ease'; observer.observe(el); });
+</script>
+{% endblock %}
+{% block content %}
+
+{# Hero #}
+<section class="relative isolate overflow-hidden">
+  <div class="absolute inset-0 -z-10">
+    <div class="w-full h-full bg-[url('https://images.unsplash.com/photo-1523805009345-7448845a9e53?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60"></div>
+    <div class="absolute inset-0 bg-afric-motif"></div>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 text-white">
+    <div class="max-w-3xl">
+      <h1 class="font-display text-4xl sm:text-6xl font-semibold leading-tight">Découvrez la richesse culturelle du Bénin et du Nigeria</h1>
+      <p class="mt-5 text-lg text-gray-100">BINAJIA — Une frontière devient un pont. Une communauté qui relie, célèbre et valorise nos cultures.</p>
+      <div class="mt-8 flex gap-4">
+        <a href="#events" class="px-5 py-3 rounded-md bg-primary hover:bg-primary/90">Événements à venir</a>
+        <a href="#membership" class="px-5 py-3 rounded-md bg-white/10 ring-1 ring-white/20 hover:bg-white/20">Obtenir ma carte</a>
+      </div>
+    </div>
+  </div>
+  <div class="sr-only">BINAJIA — Une frontière devient un pont</div>
+  
+</section>
+
+{# Mission / Movement #}
+<section id="mission" class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-start">
+    <div>
+      <h2 class="font-display text-3xl font-semibold">BINAJIA — Une frontière devient un pont</h2>
+      <p class="mt-4 text-gray-700">Binajia est né d'un rêve partagé: transformer une frontière en passerelle, une séparation en rencontre. À cheval entre le Bénin et le Nigéria, ce projet incarne une nouvelle manière de penser l'unité régionale — par la culture, par la jeunesse, par l'action locale.</p>
+      <p class="mt-3 text-gray-700">En nous appuyant sur nos complémentarités culturelles, économiques et sociales, nous semons les graines d'une coopération innovante, humaine et profondément enracinée.</p>
+      <div class="mt-6 grid sm:grid-cols-3 gap-4 text-sm">
+        <div class="p-4 rounded-xl bg-neutral-50 ring-1 ring-gray-200">
+          <div class="font-semibold">Union</div>
+          <div class="text-gray-600">Bâtir des ponts entre nos peuples</div>
+        </div>
+        <div class="p-4 rounded-xl bg-neutral-50 ring-1 ring-gray-200">
+          <div class="font-semibold">Culture</div>
+          <div class="text-gray-600">Célébrer notre héritage commun</div>
+        </div>
+        <div class="p-4 rounded-xl bg-neutral-50 ring-1 ring-gray-200">
+          <div class="font-semibold">Rejoignez le mouvement</div>
+          <div class="text-gray-600">500+ membres déjà engagés</div>
+        </div>
+      </div>
+    </div>
+    <div class="rounded-2xl overflow-hidden ring-1 ring-gray-200">
+      <div class="w-full h-80 bg-[url('https://images.unsplash.com/photo-1590736969955-71cc94901144?q=80&w=1600&auto=format&fit=crop')] bg-cover"></div>
+    </div>
+  </div>
+</section>
+
+{# Upcoming Events #}
+<section id="events" class="py-16 bg-neutral-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-end justify-between">
+      <h3 class="font-display text-2xl font-semibold">Événements à venir</h3>
+      <a href="#" class="text-sm text-primary hover:underline">Voir tous</a>
+    </div>
+    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="rounded-2xl overflow-hidden bg-white ring-1 ring-gray-200">
+        <div class="h-44 bg-[url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center"></div>
+        <div class="p-4">
+          <div class="text-xs text-gray-500">15–18 Août 2025 • Cotonou, Bénin</div>
+          <h4 class="mt-2 font-semibold">Festival culturel Bénin–Nigéria</h4>
+        </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden bg-white ring-1 ring-gray-200">
+        <div class="h-44 bg-[url('https://images.unsplash.com/photo-1564759298141-cef86f51d4d4?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center"></div>
+        <div class="p-4">
+          <div class="text-xs text-gray-500">22 Septembre 2025 • Lagos, Nigéria</div>
+          <h4 class="mt-2 font-semibold">Visite guidée de Lagos</h4>
+        </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden bg-white ring-1 ring-gray-200">
+        <div class="h-44 bg-[url('https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center"></div>
+        <div class="p-4">
+          <div class="text-xs text-gray-500">Octobre 2025 • Bénin & Nigéria</div>
+          <h4 class="mt-2 font-semibold">Promotion hôtelière spéciale</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Cultural immersion grid #}
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h3 class="font-display text-2xl font-semibold">Plongez dans notre richesse culturelle</h3>
+    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
+      <div class="p-5 rounded-xl ring-1 ring-gray-200 bg-neutral-50">Danses traditionnelles</div>
+      <div class="p-5 rounded-xl ring-1 ring-gray-200 bg-neutral-50">Instruments</div>
+      <div class="p-5 rounded-xl ring-1 ring-gray-200 bg-neutral-50">Tissus colorés</div>
+      <div class="p-5 rounded-xl ring-1 ring-gray-200 bg-neutral-50">Marchés locaux</div>
+      <div class="p-5 rounded-xl ring-1 ring-gray-200 bg-neutral-50">Gastronomie</div>
+      <div class="p-5 rounded-xl ring-1 ring-gray-200 bg-neutral-50">Architecture</div>
+    </div>
+  </div>
+</section>
+
+{# Iconic places as carousel #}
+<section id="lieux" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4 text-charcoal">Lieux emblématiques</h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">Explorez les sites historiques et culturels du Bénin et du Nigéria</p>
+    </div>
+
+    <div class="relative">
+      <div class="overflow-hidden">
+        <div id="carouselTrack" class="flex transition-transform duration-500 ease-out">
+          <div class="w-full flex-shrink-0 px-2">
+            <div class="relative group overflow-hidden rounded-3xl shadow-xl h-96 cursor-pointer">
+              <div class="absolute inset-0 bg-gradient-to-br from-primary to-accent"></div>
+              <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all"></div>
+              <div class="relative h-full flex flex-col justify-end p-8 text-white">
+                <div class="mb-4"><span class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold">Bénin</span></div>
+                <h3 class="font-serif text-3xl font-bold mb-2">Palais Royaux d'Abomey</h3>
+                <p class="text-white/90 mb-4">Site classé au patrimoine mondial de l'UNESCO, témoignage de la puissance du royaume du Dahomey.</p>
+                <button class="self-start px-6 py-2 bg-white text-charcoal rounded-full font-semibold hover:bg-cream transition-all">Découvrir</button>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex-shrink-0 px-2">
+            <div class="relative group overflow-hidden rounded-3xl shadow-xl h-96 cursor-pointer">
+              <div class="absolute inset-0 bg-gradient-to-br from-secondary to-primary"></div>
+              <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all"></div>
+              <div class="relative h-full flex flex-col justify-end p-8 text-white">
+                <div class="mb-4"><span class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold">Nigéria</span></div>
+                <h3 class="font-serif text-3xl font-bold mb-2">Musée National de Lagos</h3>
+                <p class="text-white/90 mb-4">Le plus ancien musée du Nigéria, abritant une collection exceptionnelle d'art et d'artisanat.</p>
+                <button class="self-start px-6 py-2 bg-white text-charcoal rounded-full font-semibold hover:bg-cream transition-all">Découvrir</button>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex-shrink-0 px-2">
+            <div class="relative group overflow-hidden rounded-3xl shadow-xl h-96 cursor-pointer">
+              <div class="absolute inset-0 bg-gradient-to-br from-accent to-secondary"></div>
+              <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all"></div>
+              <div class="relative h-full flex flex-col justify-end p-8 text-white">
+                <div class="mb-4"><span class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold">Bénin</span></div>
+                <h3 class="font-serif text-3xl font-bold mb-2">Ganvié, la Venise africaine</h3>
+                <p class="text-white/90 mb-4">Village lacustre unique construit sur pilotis au milieu du lac Nokoué.</p>
+                <button class="self-start px-6 py-2 bg-white text-charcoal rounded-full font-semibold hover:bg-cream transition-all">Découvrir</button>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex-shrink-0 px-2">
+            <div class="relative group overflow-hidden rounded-3xl shadow-xl h-96 cursor-pointer">
+              <div class="absolute inset-0 bg-gradient-to-br from-primary via-accent to-secondary"></div>
+              <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all"></div>
+              <div class="relative h-full flex flex-col justify-end p-8 text-white">
+                <div class="mb-4"><span class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold">Nigéria</span></div>
+                <h3 class="font-serif text-3xl font-bold mb-2">Forêt sacrée d'Osun-Osogbo</h3>
+                <p class="text-white/90 mb-4">Site sacré yoruba classé au patrimoine mondial, sanctuaire de la déesse Osun.</p>
+                <button class="self-start px-6 py-2 bg-white text-charcoal rounded-full font-semibold hover:bg-cream transition-all">Découvrir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all z-10">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all z-10">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <div class="flex justify-center mt-8 space-x-2">
+        <button class="carousel-dot w-3 h-3 rounded-full bg-primary transition-all" data-index="0"></button>
+        <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300 transition-all" data-index="1"></button>
+        <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300 transition-all" data-index="2"></button>
+        <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300 transition-all" data-index="3"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Membership CTA #}
+<section id="membership" class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h3 class="font-display text-2xl font-semibold">Rejoignez la communauté Binajia</h3>
+      <p class="mt-3 text-gray-600">Événements exclusifs, réductions, réseau transfrontalier. Obtenez votre carte de membre et devenez acteur du mouvement.</p>
+      <a href="#" class="mt-6 inline-block px-5 py-3 rounded-md bg-primary text-white">Obtenir ma carte</a>
+    </div>
+    <div class="relative">
+      {% include 'partials/member-card-digital.html.twig' with { user: {
+        firstName: 'Nom', lastName: 'Prénom', memberId: 'BjNg-2025-XXX', country: '—', joinedAt: date() } } %}
+      <div class="mt-4 text-xs text-gray-500">United to grow together</div>
+    </div>
+  </div>
+</section>
+
+{# Contact #}
+<section class="py-16 bg-neutral-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h3 class="font-display text-2xl font-semibold">Restons en contact</h3>
+    <p class="mt-2 text-gray-600">hello@binajia.org</p>
+  </div>
+</section>
+
+{% endblock %}

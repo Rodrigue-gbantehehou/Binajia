@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block title %}Page introuvable — Binajia{% endblock %}
+{% block content %}
+<section class="pt-32 pb-20 text-center">
+  <div class="max-w-3xl mx-auto px-4">
+    <h1 class="font-serif text-6xl font-bold text-primary">404</h1>
+    <p class="mt-4 text-gray-600">Désolé, la page demandée est introuvable.</p>
+    <div class="mt-8"><a href="{{ path('app_home') }}" class="btn-primary px-6 py-3">Retour à l'accueil</a></div>
+  </div>
+</section>
+{% endblock %}

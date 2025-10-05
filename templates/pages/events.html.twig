@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+{% block title %}Événements — Binajia{% endblock %}
+{% block content %}
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="font-serif text-4xl font-bold text-charcoal">Événements à Venir</h1>
+    <p class="mt-2 text-gray-600">Participez à nos événements culturels et vivez des expériences authentiques</p>
+
+    {% set events = [
+      {
+        status: 'À venir',
+        country: 'Bénin',
+        title: 'Festival Voodoo',
+        description: "Célébrez la culture traditionnelle béninoise avec des danses, de la musique et des cérémonies ancestrales.",
+        datetime: '10 novembre 2025 à 18:00',
+        location: 'Ouidah, Bénin',
+        seats: 150,
+        price: '5 000 FCFA',
+        image: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1400&auto=format&fit=crop'
+      },
+      {
+        status: 'complet',
+        country: 'Nigeria',
+        title: 'Concert Afrobeat Lagos',
+        description: "Une soirée inoubliable avec les plus grands artistes nigérians de l'Afrobeat contemporain.",
+        datetime: '25 octobre 2025 à 20:00',
+        location: 'Lagos, Nigeria',
+        seats: 0,
+        price: '8 000 FCFA',
+        image: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?q=80&w=1400&auto=format&fit=crop'
+      },
+      {
+        status: 'À venir',
+        country: 'Bénin',
+        title: "Exposition d'Art Contemporain",
+        description: "Découvrez les œuvres des artistes émergents du Bénin et du Nigeria dans un cadre exceptionnel.",
+        datetime: '5 décembre 2025 à 14:00',
+        location: 'Cotonou, Bénin',
+        seats: 200,
+        price: '3 000 FCFA',
+        image: 'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?q=80&w=1400&auto=format&fit=crop'
+      }
+    ] %}
+
+    <div class="mt-8 grid md:grid-cols-3 gap-6">
+      {% for e in events %}
+      {% set slug = e.title|lower|replace({" ": "-", "'": ""}) %}
+      {% set isFull = e.seats == 0 %}
+      <article class="rounded-2xl overflow-hidden bg-white ring-1 ring-gray-200 card-hover">
+        <div class="h-48 overflow-hidden">
+          <a href="{{ path('app_event_show', {slug: slug}) }}"><img src="{{ e.image }}" alt="" class="w-full h-full object-cover transition-transform duration-200 will-change-transform hover:scale-[1.01]"></a>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center gap-2 text-xs text-gray-500">
+            <span class="px-2 py-0.5 rounded-full bg-neutral-100 ring-1 ring-gray-200">{{ e.status }}</span>
+            <span class="px-2 py-0.5 rounded-full bg-neutral-100 ring-1 ring-gray-200">{{ e.country }}</span>
+          </div>
+          <h3 class="mt-2 font-semibold text-charcoal"><a href="{{ path('app_event_show', {slug: slug}) }}" class="hover:text-primary">{{ e.title }}</a></h3>
+          <p class="mt-1 text-sm text-gray-600">{{ e.description }}</p>
+          <div class="mt-3 grid gap-1 text-sm text-gray-600">
+            <div>{{ e.datetime }}</div>
+            <div>{{ e.location }}</div>
+            <div>
+              {% if isFull %}
+                <span class="text-red-600 font-medium">0 places disponibles</span>
+              {% else %}
+                <span class="text-green-700 font-medium">{{ e.seats }} places disponibles</span>
+              {% endif %}
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <div class="font-semibold text-charcoal">{{ e.price }}</div>
+            {% if isFull %}
+              <button class="px-5 py-2 rounded-full ring-1 ring-gray-300 text-gray-400 bg-neutral-50 cursor-not-allowed" aria-disabled="true">Complet</button>
+            {% else %}
+              <a href="{{ path('app_event_show', {slug: slug}) }}" class="px-5 py-2 btn-primary">Voir</a>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    <div class="mt-12 rounded-2xl bg-neutral-50 ring-1 ring-gray-200 p-6">
+      <h2 class="font-serif text-2xl font-bold text-charcoal">Avantages Membres</h2>
+      <ul class="mt-3 grid sm:grid-cols-2 gap-3 text-gray-600">
+        <li>• Tarifs réduits sur une sélection d'événements</li>
+        <li>• Accès prioritaire aux réservations</li>
+        <li>• Invitations à des événements privés</li>
+        <li>• Réductions partenaires (hôtels, visites)</li>
+      </ul>
+      <div class="mt-4">
+        <a href="{{ path('app_user_dashboard') }}" class="btn-primary px-6 py-3 inline-block">Devenir membre</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}
