@@ -1,0 +1,79 @@
+{# Reusable membership card component (scoped styles in .bnj-card) #}
+{# Props (with sane defaults):
+   name, phone, nationality, id, expiry, join_date, role, roleTitle, logoUrl #}
+{% set name = name|default('Nom Complet') %}
+{% set phone = phone|default('+229 XX XX XX XX XX') %}
+{% set nationality = nationality|default('Bénin') %}
+{% set id = id|default('BjNg-2025-XXX') %}
+{% set expiry = expiry|default('01/06/2028') %}
+{% set join_date = join_date|default('01/06/2025') %}
+{% set role = role|default('MEMBRE') %}
+{% set roleTitle = roleTitle|default('MEMBER\nBINAJIA') %}
+{% set logoUrl = logoUrl|default(null) %}
+
+<div class="bnj-card">
+  <div class="bnj-card__header">
+    <div>
+      <div class="bnj-card__title">
+        <div class="bnj-card__flag bnj-card__flag--benin"></div>
+        <span class="bnj-card__brand">BINAJIA</span>
+        <div class="bnj-card__flag bnj-card__flag--nigeria"></div>
+      </div>
+      <div class="bnj-card__assoc">Association Bénino-Nigériane</div>
+    </div>
+    <div class="bnj-card__logo">
+      {% if logoUrl %}
+        <img src="{{ logoUrl }}" alt="Logo" style="height:38px;width:auto;object-fit:contain;"/>
+      {% else %}
+        LOGO
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="bnj-card__body">
+    <div class="bnj-card__type">Carte de Membre / Membership card</div>
+
+    <div class="bnj-card__main">
+      <div class="bnj-card__photo">
+        <div class="bnj-card__photo--ph">PHOTO</div>
+      </div>
+
+      <div class="bnj-card__info">
+        <div>
+          <div class="bnj-card__role">{{ roleTitle|raw }}</div>
+          <div class="bnj-card__slogan">United to grow together</div>
+        </div>
+        <div>
+          <div class="bnj-card__name">{{ name }}</div>
+          <div class="bnj-card__details">
+            <div class="bnj-card__row">
+              <span class="bnj-card__label">Tél :</span>
+              <span class="bnj-card__value">{{ phone }}</span>
+            </div>
+            <div class="bnj-card__row">
+              <span class="bnj-card__label">Nationality :</span>
+              <span class="bnj-card__value">{{ nationality }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bnj-card__footer">
+      <div>
+        <div class="bnj-card__badge">{{ role }}</div>
+        <div class="bnj-card__fd"><strong>ID :</strong> {{ id }}</div>
+        <div class="bnj-card__fd"><strong>Expiration :</strong> {{ expiry }}</div>
+        <div class="bnj-card__fd" style="opacity:.9;">
+          <span style="opacity:.7;">Date d'adhésion :</span> {{ join_date }}<br>
+          <span style="opacity:.7; font-size:9px;">Joining date</span>
+        </div>
+      </div>
+      <div class="bnj-card__contact">
+        <div><strong>binajia@hotmail.com</strong></div>
+        <div>(+229) 01 46 10 10 50</div>
+        <div>(+234) 707 047 7730</div>
+      </div>
+    </div>
+  </div>
+</div>

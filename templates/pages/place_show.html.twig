@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ place.name }} — Binajia{% endblock %}
+{% block content %}
+<section class="pt-24 pb-16 bg-white">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid md:grid-cols-2 gap-8 items-start">
+      <img src="{{ place.image }}" alt="" class="rounded-2xl shadow-lg">
+      <div>
+        <h1 class="font-serif text-4xl font-bold text-charcoal">{{ place.name }}</h1>
+        <div class="mt-3 text-gray-600">{{ place.city }}, {{ place.country }}</div>
+        <p class="mt-6 text-gray-700">{{ place.description }}</p>
+        <div class="mt-8">
+          <a href="{{ path('app_places') }}" class="px-6 py-3 rounded-full ring-1 ring-gray-300 hover:bg-cream">← Retour aux lieux</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,47 @@
+<div class="w-[860px] h-[540px] relative">
+  <div class="absolute inset-0 rounded-xl overflow-hidden ring-1 ring-gray-300 bg-white">
+    <div class="absolute inset-0 opacity-10" style="background-image:url('/media/afric-pattern.svg'); background-size: 300px;"></div>
+
+    <div class="relative h-full p-8 grid grid-cols-3 gap-6">
+      <div class="col-span-2">
+        <div class="font-display text-3xl font-semibold text-dark">Binajia</div>
+        <div class="mt-2 inline-block px-3 py-1 rounded-md bg-primary text-white text-sm">Carte Membre</div>
+
+        <div class="mt-8 grid grid-cols-2 gap-6 text-sm">
+          <div>
+            <div class="text-gray-500">Nom</div>
+            <div class="font-semibold">{{ user.lastName }}</div>
+          </div>
+          <div>
+            <div class="text-gray-500">Prénom</div>
+            <div class="font-semibold">{{ user.firstName }}</div>
+          </div>
+          <div>
+            <div class="text-gray-500">Identifiant</div>
+            <div class="font-semibold">{{ user.memberId }}</div>
+          </div>
+          <div>
+            <div class="text-gray-500">Pays</div>
+            <div class="font-semibold">{{ user.country }}</div>
+          </div>
+          <div>
+            <div class="text-gray-500">Date d’adhésion</div>
+            <div class="font-semibold">{{ user.joinedAt|date('d/m/Y') }}</div>
+          </div>
+        </div>
+
+        <div class="mt-10 text-xs text-gray-500">
+          <div>Binajia • binajia.org</div>
+        </div>
+      </div>
+
+      <div class="col-span-1 flex flex-col items-center justify-between">
+        <img src="{{ user.avatarUrl ?? '/media/avatar.png' }}" class="w-44 h-44 object-cover rounded-lg ring-1 ring-gray-300" alt="">
+        <div class="w-full">
+          <div class="h-14 bg-[url('/media/micro-pattern.svg')] bg-[length:40px] rounded-md"></div>
+          <div class="mt-3 text-center text-xs text-gray-500">Signature</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

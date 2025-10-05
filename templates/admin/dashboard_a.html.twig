@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+{% block title %}Admin — Binajia{% endblock %}
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid lg:grid-cols-12 gap-8">
+  <aside class="lg:col-span-3 p-4 rounded-2xl bg-white ring-1 ring-gray-200 h-max">
+    <h2 class="font-display text-lg font-semibold">Administration</h2>
+    <nav class="mt-4 space-y-2">
+      <a href="#users" class="block px-3 py-2 rounded-md hover:bg-neutral-50">Utilisateurs</a>
+      <a href="#events" class="block px-3 py-2 rounded-md hover:bg-neutral-50">Événements & Tickets</a>
+      <a href="#payments" class="block px-3 py-2 rounded-md hover:bg-neutral-50">Paiements & Stats</a>
+      <a href="#places" class="block px-3 py-2 rounded-md hover:bg-neutral-50">Lieux culturels</a>
+    </nav>
+  </aside>
+
+  <section class="lg:col-span-9 space-y-8">
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="p-4 rounded-xl bg-white ring-1 ring-gray-200">
+        <div class="text-xs text-gray-500">Revenus (30j)</div>
+        <div class="mt-2 text-2xl font-semibold">{{ stats.revenue30d }} {{ stats.currency }}</div>
+      </div>
+      <div class="p-4 rounded-xl bg-white ring-1 ring-gray-200">
+        <div class="text-xs text-gray-500">Nouveaux membres</div>
+        <div class="mt-2 text-2xl font-semibold">{{ stats.newMembers30d }}</div>
+      </div>
+      <div class="p-4 rounded-xl bg-white ring-1 ring-gray-200">
+        <div class="text-xs text-gray-500">Tickets vendus</div>
+        <div class="mt-2 text-2xl font-semibold">{{ stats.tickets30d }}</div>
+      </div>
+    </div>
+
+    <div id="users" class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
+      <div class="flex items-center justify-between">
+        <h3 class="font-display text-xl font-semibold">Gestion des utilisateurs</h3>
+        <form method="get"><input name="q" placeholder="Rechercher" class="rounded-md border-gray-300"/></form>
+      </div>
+      <div class="mt-4 overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead><tr class="text-left text-gray-500"><th class="py-2">Nom</th><th class="py-2">Email</th><th class="py-2">Pays</th><th class="py-2">Statut</th><th></th></tr></thead>
+          <tbody class="divide-y">
+            {% for u in users %}
+            <tr>
+              <td class="py-2">{{ u.firstName }} {{ u.lastName }}</td>
+              <td class="py-2">{{ u.email }}</td>
+              <td class="py-2">{{ u.country }}</td>
+              <td class="py-2"><span class="px-2 py-1 rounded-full text-xs {{ u.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600' }}">{{ u.active ? 'Actif' : 'Inactif' }}</span></td>
+              <td class="py-2 text-right">
+                <a href="#" class="text-primary">Éditer</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="events" class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
+      <div class="flex items-center justify-between">
+        <h3 class="font-display text-xl font-semibold">Événements & Tickets</h3>
+        <a href="#" class="px-3 py-2 rounded-md bg-primary text-white">Créer un événement</a>
+      </div>
+      <div class="mt-4 grid md:grid-cols-2 gap-4">
+        {% for e in events %}
+        <div class="p-4 rounded-xl ring-1 ring-gray-200 bg-neutral-50">
+          <div class="text-sm text-gray-600">{{ e.date|date('d M Y') }} • {{ e.city }}</div>
+          <div class="font-semibold mt-1">{{ e.title }}</div>
+          <div class="mt-2 flex gap-3 text-sm">
+            <a class="text-primary" href="#">Modifier</a>
+            <a class="text-primary" href="#">Tickets</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div id="payments" class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
+      <h3 class="font-display text-xl font-semibold">Paiements & Statistiques</h3>
+      <div class="mt-4 grid md:grid-cols-2 gap-4">
+        <div class="p-4 rounded-xl bg-neutral-50 ring-1 ring-gray-200">
+          <h4 class="font-semibold">Résumé</h4>
+          <ul class="mt-2 text-sm text-gray-600 space-y-1">
+            <li>Total: {{ stats.revenueTotal }} {{ stats.currency }}</li>
+            <li>30j: {{ stats.revenue30d }} {{ stats.currency }}</li>
+            <li>ARPU: {{ stats.arpu }} {{ stats.currency }}</li>
+          </ul>
+        </div>
+        <div class="p-4 rounded-xl bg-neutral-50 ring-1 ring-gray-200">
+          <h4 class="font-semibold">Tendances</h4>
+          <div class="mt-2 text-sm text-gray-500">Placeholder graphique</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="places" class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
+      <div class="flex items-center justify-between">
+        <h3 class="font-display text-xl font-semibold">Lieux culturels</h3>
+        <a href="#" class="px-3 py-2 rounded-md bg-primary text-white">Ajouter un lieu</a>
+      </div>
+      <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for p in places %}
+        <div class="rounded-xl overflow-hidden ring-1 ring-gray-200 bg-white">
+          <div class="h-40 w-full bg-cover" style="background-image:url('{{ p.coverUrl }}')"></div>
+          <div class="p-3">
+            <div class="font-semibold">{{ p.name }}</div>
+            <div class="text-xs text-gray-500">{{ p.city }}, {{ p.country }}</div>
+            <a class="text-primary text-sm mt-2 inline-block" href="#">Gérer</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

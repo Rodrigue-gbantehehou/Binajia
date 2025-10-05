@@ -1,0 +1,20 @@
+<aside class="lg:col-span-3 p-4 rounded-2xl bg-white ring-1 ring-gray-200 h-max sticky top-24">
+  <h2 class="font-display text-lg font-semibold">Administration</h2>
+  <nav class="mt-4 space-y-1">
+    <a href="{{ path('admin_dashboard') }}" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 {{ app.request.get('_route') starts with 'admin_dashboard' ? 'bg-neutral-50 text-primary' : '' }}">
+      <span>Tableau de bord</span>
+    </a>
+    <a href="#users" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50">
+      <span>Utilisateurs</span>
+    </a>
+    <a href="#events" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50">
+      <span>Événements & Tickets</span>
+    </a>
+    <a href="#payments" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50">
+      <span>Paiements & Statistiques</span>
+    </a>
+    <a href="#places" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50">
+      <span>Lieux culturels</span>
+    </a>
+  </nav>
+</aside>

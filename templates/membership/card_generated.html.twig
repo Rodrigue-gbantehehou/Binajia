@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block title %}Carte Membre — Binajia{% endblock %}
+{% block content %}
+<section class="pt-24 pb-16 bg-white">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="font-serif text-3xl font-bold text-charcoal">Bienvenue, {{ user.firstname }} !</h1>
+    <p class="mt-2 text-gray-600">Votre adhésion est enregistrée. Voici votre carte membre.</p>
+
+    <div class="mt-8 grid md:grid-cols-2 gap-8 items-start">
+      <div class="rounded-2xl ring-1 ring-gray-200 p-4 bg-cream">
+        {% include 'components/membership_card.html.twig' with {
+          name: user.firstname ~ ' ' ~ user.lastname,
+          phone: user.phone ?? '—',
+          nationality: (user.country ?? '—')|title,
+          id: memberId,
+          expiry: ("now"|date_modify('+1 year'))|date('d/m/Y'),
+          join_date: (user.createdAt ? user.createdAt|date('d/m/Y') : "now"|date('d/m/Y')),
+          role: 'MEMBRE',
+          roleTitle: 'MEMBER\\nBINAJIA',
+          logoUrl: asset('media/logo.jpeg')
+        } %}
+      </div>
+      <div>
+        <div class="rounded-2xl bg-neutral-50 ring-1 ring-gray-200 p-6">
+          <h2 class="font-semibold text-charcoal">Informations</h2>
+          <dl class="mt-4 grid sm:grid-cols-2 gap-3 text-sm text-gray-700">
+            <div><dt class="text-gray-500">Nom</dt><dd class="font-semibold">{{ user.firstname }} {{ user.lastname }}</dd></div>
+            <div><dt class="text-gray-500">Email</dt><dd class="font-semibold">{{ user.email }}</dd></div>
+            <div><dt class="text-gray-500">Téléphone</dt><dd class="font-semibold">{{ user.phone ?? '—' }}</dd></div>
+            <div><dt class="text-gray-500">Pays</dt><dd class="font-semibold">{{ (user.country ?? '—')|title }}</dd></div>
+            <div><dt class="text-gray-500">Ville</dt><dd class="font-semibold">{{ user.city ?? '—' }}</dd></div>
+            <div><dt class="text-gray-500">Identifiant</dt><dd class="font-semibold">{{ memberId }}</dd></div>
+          </dl>
+          <div class="mt-6 flex gap-3">
+            <button onclick="window.print()" class="px-5 py-2 rounded-full ring-1 ring-gray-300 hover:bg-cream">Imprimer</button>
+            <a href="{{ path('app_user_dashboard') }}" class="px-5 py-2 btn-primary">Accéder à mon espace</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
