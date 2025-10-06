@@ -1,6 +1,6 @@
 {# Reusable membership card component (scoped styles in .bnj-card) #}
 {# Props (with sane defaults):
-   name, phone, nationality, id, expiry, join_date, role, roleTitle, logoUrl #}
+   name, phone, nationality, id, expiry, join_date, role, roleTitle, logoUrl, photoUrl #}
 {% set name = name|default('Nom Complet') %}
 {% set phone = phone|default('+229 XX XX XX XX XX') %}
 {% set nationality = nationality|default('Bénin') %}
@@ -9,7 +9,8 @@
 {% set join_date = join_date|default('01/06/2025') %}
 {% set role = role|default('MEMBRE') %}
 {% set roleTitle = roleTitle|default('MEMBER\nBINAJIA') %}
-{% set logoUrl = logoUrl|default(null) %}
+{% set logoUrl = logoUrl|default('/media/logo.jpeg') %}
+{% set photoUrl = photoUrl|default(null) %}
 
 <div class="bnj-card">
   <div class="bnj-card__header">
@@ -35,7 +36,11 @@
 
     <div class="bnj-card__main">
       <div class="bnj-card__photo">
-        <div class="bnj-card__photo--ph">PHOTO</div>
+        {% if photoUrl %}
+          <img src="{{ photoUrl }}" alt="Photo" style="width:100%;height:100%;object-fit:cover;border-radius:10px;"/>
+        {% else %}
+          <div class="bnj-card__photo--ph">PHOTO</div>
+        {% endif %}
       </div>
 
       <div class="bnj-card__info">

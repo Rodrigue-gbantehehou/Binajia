@@ -14,6 +14,8 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Twig\Environment;
+use Symfony\Bundle\SecurityBundle\Security;
+use Psr\Log\LoggerInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
@@ -26,7 +28,9 @@ class RegistrationController extends AbstractController
         UserPasswordHasherInterface $passwordHasher,
         MailerInterface $mailer,
         HttpClientInterface $httpClient,
-        Environment $twig
+        Environment $twig,
+        Security $security,
+        LoggerInterface $logger
     ): Response {
         $firstName = trim((string)$request->request->get('firstName'));
         $lastName  = trim((string)$request->request->get('lastName'));
@@ -35,7 +39,7 @@ class RegistrationController extends AbstractController
         $country   = trim((string)$request->request->get('country')) ?: null;
         $birthDate = trim((string)$request->request->get('birthDate')) ?: null;
         $plan      = trim((string)$request->request->get('plan')) ?: 'standard';
-        $photoData = (string)$request->request->get('photoData'); // base64 data URL (optional)
+        $photoData = (string)$request->request->get('photoData'); // base64 data URL (required)
 
         if ($firstName === '' || $lastName === '' || $email === '' || $phone === '') {
             return $this->json(['ok' => false, 'message' => 'Champs requis manquants'], 400);
@@ -92,19 +96,53 @@ class RegistrationController extends AbstractController
         // Build a member ID like BjNg-YYYY-000{id}
         $memberId = sprintf('BjNg-%s-%03d', (new \DateTime())->format('Y'), $user->getId());
 
-        // Store avatar temporarily on disk if provided (optional)
+        // Photo is required: decode, crop (3:4 portrait), and save JPEG for card
         $avatarPath = null;
         if ($photoData && str_starts_with($photoData, 'data:image')) {
             $data = explode(',', $photoData, 2);
             if (count($data) === 2) {
                 $bin = base64_decode($data[1]);
-                $dir = $this->getParameter('kernel.project_dir') . '/public/media/avatars';
-                if (!is_dir($dir)) {
-                    @mkdir($dir, 0775, true);
+                if ($bin !== false) {
+                    $src = @imagecreatefromstring($bin);
+                    if ($src !== false) {
+                        $srcW = imagesx($src); $srcH = imagesy($src);
+                        // Target aspect 3:4 (width:height)
+                        $targetRatio = 3/4;
+                        $srcRatio = $srcW / max(1, $srcH);
+                        if ($srcRatio > $targetRatio) {
+                            // too wide: crop width
+                            $newW = (int) round($srcH * $targetRatio);
+                            $newH = $srcH;
+                            $srcX = (int) max(0, floor(($srcW - $newW)/2));
+                            $srcY = 0;
+                        } else {
+                            // too tall: crop height
+                            $newW = $srcW;
+                            $newH = (int) round($srcW / $targetRatio);
+                            $srcX = 0;
+                            $srcY = (int) max(0, floor(($srcH - $newH)/2));
+                        }
+                        $crop = imagecreatetruecolor($newW, $newH);
+                        imagecopy($crop, $src, 0, 0, $srcX, $srcY, $newW, $newH);
+                        // Resize to consistent output (e.g., 300x400)
+                        $outW = 300; $outH = 400;
+                        $dst = imagecreatetruecolor($outW, $outH);
+                        imagecopyresampled($dst, $crop, 0, 0, 0, 0, $outW, $outH, $newW, $newH);
+                        imagedestroy($crop);
+
+                        $dir = $this->getParameter('kernel.project_dir') . '/public/media/avatars';
+                        if (!is_dir($dir)) { @mkdir($dir, 0775, true); }
+                        $avatarPath = sprintf('/media/avatars/%d.jpg', $user->getId());
+                        $fsPath = $this->getParameter('kernel.project_dir') . $avatarPath;
+                        @imagejpeg($dst, $fsPath, 90);
+                        imagedestroy($dst);
+                        imagedestroy($src);
+                    }
                 }
-                $avatarPath = sprintf('/media/avatars/%d.png', $user->getId());
-                @file_put_contents($this->getParameter('kernel.project_dir') . $avatarPath, $bin);
             }
+        }
+        if ($avatarPath === null) {
+            return $this->json(['ok' => false, 'message' => 'La photo est obligatoire pour générer la carte.'], 400);
         }
 
         // Redirect URL to view the card
@@ -163,20 +201,28 @@ class RegistrationController extends AbstractController
             }
 
             // If payment approved, send credentials + card link by email
+            $finalStatus = $verifiedStatus ?: $txStatus;
             if (is_string($finalStatus) && in_array(strtolower($finalStatus), ['approved','succeeded','success','paid'])) {
                 try {
                     $loginUrl = $this->generateUrl('app_login', [], UrlGeneratorInterface::ABSOLUTE_URL);
                     $cardUrlAbs = $this->generateUrl('app_membership_card_generated', ['id' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
                     $amountTxt = $payment->getAmount();
 
-                    // 1) Generate Membership Card PDF
+                    // 1) Generate Membership Card PDF (recto-verso)
                     $cardsDir = $this->getParameter('kernel.project_dir') . '/public/media/cards';
                     if (!is_dir($cardsDir)) { @mkdir($cardsDir, 0775, true); }
-                    $cardPdfPath = $cardsDir . sprintf('/card_%d.pdf', $user->getId());
-                    $cardPdfUrl = '/media/cards/' . sprintf('card_%d.pdf', $user->getId());
-                    $logoFs = $this->getParameter('kernel.project_dir') . '/public/media/logo.jpeg';
+                    $stamp = date('YmdHis');
+                    $cardFilename = sprintf('card_%d_%s.pdf', $user->getId(), $stamp);
+                    $cardPdfPath = $cardsDir . '/' . $cardFilename;
+                    $cardPdfUrl = '/media/cards/' . $cardFilename;
+                    $publicDir = $this->getParameter('kernel.project_dir') . '/public';
+                    $logoFs = $publicDir . '/media/logo.jpeg';
                     $logoForPdf = 'file://' . $logoFs;
-                    $cardHtml = $twig->render('components/membership_card.html.twig', [
+                    $photoFs = 'file://' . ($this->getParameter('kernel.project_dir') . $avatarPath);
+                    // Backgrounds for image-overlay approach (optional files you provide)
+                    $bgRecto = 'file://' . ($publicDir . '/media/card_bg_recto.png');
+                    $bgVerso = 'file://' . ($publicDir . '/media/card_bg_verso.png');
+                    $cardHtml = $twig->render('membership/card_pdf_recto_verso.html.twig', [
                         'name' => $user->getFirstname() . ' ' . $user->getLastname(),
                         'phone' => $user->getPhone(),
                         'nationality' => $user->getCountry(),
@@ -186,15 +232,25 @@ class RegistrationController extends AbstractController
                         'role' => 'MEMBRE',
                         'roleTitle' => "MEMBER\nBINAJIA",
                         'logoUrl' => $logoForPdf,
+                        'photoUrl' => $photoFs,
+                        'bgRecto' => $bgRecto,
+                        'bgVerso' => $bgVerso,
                     ]);
                     $options = new Options();
                     $options->set('defaultFont', 'DejaVu Sans');
                     $options->setIsRemoteEnabled(true);
+                    // Restrict file access to public directory for safety
+                    $options->setChroot($publicDir);
                     $dompdf = new Dompdf($options);
                     $dompdf->loadHtml($cardHtml, 'UTF-8');
                     $dompdf->setPaper('A6', 'landscape');
                     $dompdf->render();
-                    @file_put_contents($cardPdfPath, $dompdf->output());
+                    $cardBytes = $dompdf->output();
+                    $bytesWritten = @file_put_contents($cardPdfPath, $cardBytes);
+                    $logger->info('Card PDF write attempt', ['path' => $cardPdfPath, 'bytes' => is_int($bytesWritten) ? $bytesWritten : null, 'ok' => is_int($bytesWritten) && $bytesWritten > 0]);
+                    if (!file_exists($cardPdfPath)) {
+                        $logger->error('Card PDF not found after write', ['path' => $cardPdfPath]);
+                    }
 
                     // Save/Update MembershipCards row with PDF URL
                     $mc = new \App\Entity\MembershipCards();
@@ -206,6 +262,7 @@ class RegistrationController extends AbstractController
                         ->setPdfurl($cardPdfUrl);
                     $em->persist($mc);
                     $em->flush();
+                    $logger->info('MembershipCards persisted', ['userId' => $user->getId(), 'pdfurl' => $cardPdfUrl]);
 
                     // 2) Generate Receipt PDF
                     $receiptsDir = $this->getParameter('kernel.project_dir') . '/public/media/receipts';
@@ -223,7 +280,12 @@ class RegistrationController extends AbstractController
                     $dompdf2->loadHtml($receiptHtml, 'UTF-8');
                     $dompdf2->setPaper('A4', 'portrait');
                     $dompdf2->render();
-                    @file_put_contents($receiptPdfPath, $dompdf2->output());
+                    $receiptBytes = $dompdf2->output();
+                    $bytesWritten2 = @file_put_contents($receiptPdfPath, $receiptBytes);
+                    $logger->info('Receipt PDF write attempt', ['path' => $receiptPdfPath, 'bytes' => is_int($bytesWritten2) ? $bytesWritten2 : null, 'ok' => is_int($bytesWritten2) && $bytesWritten2 > 0]);
+                    if (!file_exists($receiptPdfPath)) {
+                        $logger->error('Receipt PDF not found after write', ['path' => $receiptPdfPath]);
+                    }
 
                     // Save Receipts row
                     $receipt = new \App\Entity\Receipts();
@@ -233,33 +295,36 @@ class RegistrationController extends AbstractController
                         ->setPdfurl($receiptPdfUrl);
                     $em->persist($receipt);
                     $em->flush();
+                    $logger->info('Receipt persisted', ['paymentId' => $payment->getId(), 'pdfurl' => $receiptPdfUrl]);
 
                     $emailMsg = (new Email())
-                        ->from('no-reply@binajia.org')
-                        ->to($user->getEmail())
-                        ->subject('Votre adhésion Binajia — Identifiants et carte membre')
-                        ->html((function() use ($user, $loginUrl, $cardUrlAbs, $txId, $amountTxt, $plainPassword, $isNewUser) {
-{{ ... }}
-                                . '<p>Bonjour ' . htmlspecialchars($user->getFirstname() . ' ' . $user->getLastname()) . ',</p>'
-                                . '<p>Votre paiement a été confirmé.</p>';
-                            if ($isNewUser && $plainPassword) {
-                                $html .= '<p><strong>Identifiants de connexion</strong><br>'
-                                    . 'Email: ' . htmlspecialchars($user->getEmail()) . '<br>'
-                                    . 'Mot de passe: <code>' . htmlspecialchars($plainPassword) . '</code></p>'
-                                    . '<p><a href="' . $loginUrl . '">Se connecter</a></p>';
-                            } else {
-                                $html .= '<p>Vous pouvez vous connecter avec vos identifiants existants: <a href="' . $loginUrl . '">Se connecter</a></p>';
-                            }
-                            $html .= '<hr>'
-                                . '<p><strong>Reçu</strong><br>'
-                                . 'Transaction: ' . htmlspecialchars((string)$txId) . '<br>'
-                                . 'Montant: ' . htmlspecialchars((string)$amountTxt) . ' XOF<br>'
-                                . 'Date: ' . (new \DateTime())->format('d/m/Y H:i') . '</p>'
-                                . '<p>Votre carte est disponible ici: <a href="' . $cardUrlAbs . '">' . $cardUrlAbs . '</a></p>';
-                            return $html;
-                        })())
-                        ->attachFromPath($receiptPdfPath, 'recu_binajia.pdf', 'application/pdf');
+            ->from('no-reply@binajia.org')
+            ->to($user->getEmail())
+            ->subject('Votre adhésion Binajia — Identifiants et carte membre')
+            ->html((function() use ($user, $loginUrl, $cardUrlAbs, $txId, $amountTxt, $plainPassword, $isNewUser) {
+                $html = '<p>Bonjour ' . htmlspecialchars($user->getFirstname() . ' ' . $user->getLastname()) . ',</p>'
+                    . '<p>Votre paiement a été confirmé.</p>';
+                if ($isNewUser && $plainPassword) {
+                    $html .= '<p><strong>Identifiants de connexion</strong><br>'
+                        . 'Email: ' . htmlspecialchars($user->getEmail()) . '<br>'
+                        . 'Mot de passe: <code>' . htmlspecialchars($plainPassword) . '</code></p>'
+                        . '<p><a href="' . $loginUrl . '">Se connecter</a></p>';
+                } else {
+                    $html .= '<p>Vous pouvez vous connecter avec vos identifiants existants: <a href="' . $loginUrl . '">Se connecter</a></p>';
+                }
+                $html .= '<hr>'
+                    . '<p><strong>Reçu</strong><br>'
+                    . 'Transaction: ' . htmlspecialchars((string)$txId) . '<br>'
+                    . 'Montant: ' . htmlspecialchars((string)$amountTxt) . ' XOF<br>'
+                    . 'Date: ' . (new \DateTime())->format('d/m/Y H:i') . '</p>'
+                    . '<p>Votre carte est disponible ici: <a href="' . $cardUrlAbs . '">' . $cardUrlAbs . '</a></p>';
+                return $html;
+            })())
+            ->attachFromPath($receiptPdfPath, 'recu_binajia.pdf', 'application/pdf');
                     $mailer->send($emailMsg);
+
+                    // Auto-login the user after successful card generation
+                    $security->login($user);
                 } catch (\Throwable $e) {
                     // Ignore mail errors to not block the flow
                 }
@@ -269,9 +334,8 @@ class RegistrationController extends AbstractController
         return $this->json([
             'ok' => true,
             'cardUrl' => $url,
-            'memberId' => $memberId,
-            'plan' => $plan,
             'avatar' => $avatarPath,
+            'redirect' => $this->generateUrl('app_user_dashboard'),
         ]);
     }
 

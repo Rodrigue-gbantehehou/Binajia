@@ -9,8 +9,8 @@
   <div class="absolute inset-0 -z-10 gradient-hero opacity-90"></div>
   <div class="absolute inset-0 -z-10 bg-black/30"></div>
   <div class="absolute inset-0 -z-10 bg-afric-motif opacity-20"></div>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 lg:py-40 text-white">
-    <div class="grid md:grid-cols-12 gap-10 items-center">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-36 text-white">
+    <div class="grid md:grid-cols-12 gap-8 items-center">
       <div class="md:col-span-7">
         <h1 class="font-serif text-4xl md:text-6xl font-bold leading-tight">Une passerelle culturelle entre le Bénin et le Nigéria</h1>
         <p class="mt-5 text-lg text-white/90">Vivez nos cultures à travers des événements, des lieux emblématiques et une communauté engagée.</p>
@@ -78,37 +78,37 @@
 </section>
 
 {# Vision + Membership card #}
-<section id="apropos" class="py-24 bg-white">
+<section id="apropos" class="py-20 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid md:grid-cols-12 gap-12 items-center">
       <div class="md:col-span-7">
-        <div class="inline-flex items-center space-x-2 px-4 py-2 bg-primary/10 rounded-full mb-6">
+        <div class="inline-flex items-center space-x-2 px-4 py-2 bg-primary/10 rounded-full mb-5">
           <span class="w-2 h-2 rounded-full bg-primary"></span>
           <span class="font-semibold text-primary">Notre Vision</span>
         </div>
         <h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal">BINAJIA — Une frontière devient un pont</h2>
-        <div class="mt-6 space-y-4 text-lg text-gray-700 leading-relaxed">
+        <div class="mt-5 space-y-4 text-lg text-gray-700 leading-relaxed">
           <p>Binajia est né d'un rêve partagé: transformer une frontière en passerelle. À cheval entre le Bénin et le Nigéria, nous réinventons l'unité régionale par la culture, la jeunesse et l'action locale.</p>
           <p>Nous créons des ponts durables grâce à des initiatives concrètes et inclusives, en valorisant nos complémentarités culturelles, économiques et sociales.</p>
         </div>
-        <div class="mt-8 flex gap-4">
+        <div class="mt-6 flex gap-4">
           <a href="{{ path('app_membership') }}" class="px-8 py-4 btn-primary text-white rounded-full font-semibold">Devenir membre</a>
           <a href="{{ path('app_about') }}" class="px-8 py-4 bg-white text-charcoal rounded-full font-semibold ring-1 ring-gray-300 hover:ring-primary/40">En savoir plus</a>
         </div>
       </div>
       <div class="md:col-span-5">
-        <div class="relative">
-          <div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/10 rounded-full blur-2xl"></div>
-          <div class="absolute -bottom-10 -right-6 w-56 h-56 bg-secondary/10 rounded-full blur-2xl"></div>
-          <div class="relative bg-gradient-to-br from-primary to-accent rounded-3xl p-6 sm:p-8 shadow-2xl">
+        <div class="relative flex justify-center md:justify-start">
+          <div class="absolute -top-8 -left-8 w-24 h-24 md:w-40 md:h-40 bg-primary/10 rounded-full blur-2xl"></div>
+          <div class="absolute -bottom-8 -right-4 w-32 h-32 md:w-56 md:h-56 bg-secondary/10 rounded-full blur-2xl"></div>
+          <div class="relative inline-block bg-gradient-to-br from-primary to-accent rounded-2xl p-3 sm:p-5 md:p-6 shadow-2xl mx-auto max-w-[340px] sm:max-w-[380px]">
             {% include 'components/membership_card.html.twig' with {
               name: 'Prénom Nom',
-              phone: '+229 01 46 10 10 50',
+              phone: '',
               nationality: 'Bénin',
-              id: 'BjNg-2025-245',
-              expiry: '01/06/2028',
-              join_date: '01/06/2025',
-              role: 'MEMBRE',
+              id: '',
+              expiry: '',
+              join_date: '',
+              role: '',
               roleTitle: 'MEMBER<br>BINAJIA'
             } %}
           </div>
@@ -233,11 +233,11 @@
     </div>
 
     {% set projects = [
-      { title: 'Binajia Travel Week', desc: "Semaine de découvertes croisées dans les deux pays — Jeunes, touristes, voyageurs", img: asset('/media/travel-week.jfif') },
+      { title: 'Binajia Travel Week', desc: "Semaine de découvertes croisées dans les deux pays — Jeunes, touristes, voyageurs", img: asset('/media/travel.jfif') },
       { title: 'Binajia Lab', desc: "Laboratoire d'innovation (écologie, tech, design) — Jeunes créatifs, étudiants, startups", img: asset('/media/lab.jfif') },
       { title: 'Exchange Programme', desc: "Programme d'échange pour jeunes leaders et artistes — Étudiants, leaders communautaires", img: asset('/media/exchange.jfif') },
-      { title: 'Market Connect', desc: "Plateforme de collaboration économique locale — Artisans, commerçants, femmes", img: asset('/media/market-connect.jfif') },
-      { title: 'Culture Fest', desc: "Festival culturel : musique, masques, gastronomie — Grand public, artistes", img: asset('/media/culture-fest.jfif') },
+      { title: 'Market Connect', desc: "Plateforme de collaboration économique locale — Artisans, commerçants, femmes", img: asset('/media/market.jfif') },
+      { title: 'Culture Fest', desc: "Festival culturel : musique, masques, gastronomie — Grand public, artistes", img: asset('/media/culture.jfif') },
       { title: 'Transit', desc: "Promotion de la libre circulation et des savoirs — Institutions, société civile", img: asset('/media/transit.jfif') }
     ] %}
 
