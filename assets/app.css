@@ -4,35 +4,41 @@
 /* Custom theme tokens (Tailwind v4) */
 @theme {
   /* Colors */
-  /* Terracotta / Primary */
-  --color-primary: #D66A4E;
-  --color-primary-dark: #B25840;
-  --color-primary-light: #E1866D;
+  /* Deep green / Primary (site palette) */
+  --color-primary: #1F5438;          /* deep green */
+  --color-primary-dark: #1B4A32;     /* darker green */
+  --color-primary-light: #2D7A4F;    /* lighter green */
 
-  /* Deep green / Secondary */
-  --color-secondary: #256B4F;
-  --color-secondary-dark: #1E5741;
-  --color-secondary-light: #2F8362;
+  /* Secondary green (supporting) */
+  --color-secondary: #2D7A4F;        /* medium green */
+  --color-secondary-dark: #1F5438;   /* deep green */
+  --color-secondary-light: #3A8C63;  /* brighter green */
 
-  /* Amber / Accent */
-  --color-accent: #F4B400;
-  --color-accent-dark: #D79E00;
-  --color-accent-light: #FFD451;
+  /* Amber / Accent (site palette) */
+  --color-accent: #F59E0B;           /* amber */
+  --color-accent-dark: #D97706;      /* darker amber */
+  --color-accent-light: #FBBF24;     /* light amber */
 
   --color-cream: #FAF8F5;
   --color-charcoal: #2B2520;
 
   /* Fonts (Google Fonts are loaded in base.html.twig) */
-  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-sans: Roboto, Inter, ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Playfair Display", Georgia, serif;
 }
 
 /* ----- Custom utilities for design ----- */
 
-/* Hero gradient background */
+/* Hero gradient background (orange → green) */
 .gradient-hero {
-  background-image: linear-gradient(135deg, var(--color-secondary-dark), var(--color-primary));
+  background-image: linear-gradient(135deg, var(--color-accent), var(--color-primary));
 }
+
+/* Optional: dark overlay helper for text readability on photos */
+.hero-dark-overlay { background: rgba(0,0,0,.30); }
+.hero-overlay-light { background: rgba(0,0,0,.20); }
+.hero-overlay-medium { background: rgba(0,0,0,.35); }
+.hero-overlay-strong { background: rgba(0,0,0,.50); }
 
 /* Repeating cultural pattern background */
 .bg-afric-motif {
@@ -136,6 +142,16 @@
 .nav-link-active::after { transform: scaleX(1); }
 
 /* ===== Membership Card (scoped) ===== */
+
+/* Navbar gradient variant */
+.navbar-gradient {
+  background-image: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+}
+.navbar-gradient .nav-link { color: rgba(255,255,255,.9); }
+.navbar-gradient .nav-link:hover { color: #fff; }
+.navbar-gradient .text-charcoal { color: #fff; }
+.navbar-gradient .btn-primary { box-shadow: 0 4px 16px rgba(0,0,0,.18); }
+
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .slider-dot { width: 8px; height: 8px; border-radius: 9999px; background: rgba(0,0,0,.15); transition: all .2s ease; }

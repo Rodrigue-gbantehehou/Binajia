@@ -8,12 +8,50 @@
     <link rel="icon" href="/media/logo.jpeg" type="image/jpeg" sizes="16x16">
     {% block styles %}
       <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
-      {{ encore_entry_link_tags('app') }}
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+      <style>
+        /* Fallback to support legacy JS that toggles `active` */
+        .mobile-menu.active{ transform: translateX(0) !important; }
+
+        /* Responsive fixes: scale down membership card on small screens */
+        @media (max-width: 480px) {
+          .bnj-card { width: 320px; height: 200px; margin-left: auto; margin-right: auto; }
+          .bnj-card__header { height: 48px; padding: 0 12px; }
+          .bnj-card__logo { width: 64px; height: 42px; }
+          .bnj-card__brand { font-size: 18px; }
+          .bnj-card__assoc { font-size: 8px; }
+          .bnj-card__body { height: 152px; padding: 10px 12px; }
+          .bnj-card__photo { width: 68px; height: 84px; }
+          .bnj-card__role { font-size: 13px; }
+          .bnj-card__slogan { font-size: 9px; }
+          .bnj-card__name { font-size: 14px; }
+          .bnj-card__details { font-size: 10px; }
+          .bnj-card__badge { font-size: 9px; padding: 2px 8px; }
+          .bnj-card__fd { font-size: 9px; }
+        }
+
+        /* Extra small phones */
+        @media (max-width: 360px) {
+          .bnj-card { width: 290px; height: 184px; }
+          .bnj-card__header { height: 44px; padding: 0 10px; }
+          .bnj-card__logo { width: 56px; height: 36px; }
+          .bnj-card__brand { font-size: 16px; }
+          .bnj-card__assoc { font-size: 7px; }
+          .bnj-card__body { height: 140px; padding: 8px 10px; }
+          .bnj-card__photo { width: 62px; height: 78px; }
+          .bnj-card__role { font-size: 12px; }
+          .bnj-card__slogan { font-size: 8px; }
+          .bnj-card__name { font-size: 13px; }
+          .bnj-card__details { font-size: 9px; }
+          .bnj-card__badge { font-size: 8px; padding: 2px 6px; }
+          .bnj-card__fd { font-size: 8px; }
+        }
+      </style>
     {% endblock %}
   <body class="min-h-full bg-cream text-charcoal font-sans">
     {% block header %}
-    <nav class="fixed w-full top-0 z-50 glass-effect shadow-lg transition-all duration-300" role="navigation" aria-label="Navigation principale">
+    <nav class="fixed w-full top-0 z-50 navbar-gradient shadow-lg transition-all duration-300" role="navigation" aria-label="Navigation principale">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
           <a href="{{ path('app_home') }}" class="flex items-center space-x-3 group">
             <img src="/media/logo.jpeg" alt="Logo Binajia" class="h-12 w-12 rounded-full object-cover shadow-md transition-transform duration-300 group-hover:scale-110">
@@ -30,11 +68,35 @@
             {% endif %}
           </div>
           <div class="flex items-center space-x-3">
+          {% if not app.user %}
+          
             <a href="{{ path('app_login', {}, false) ?? '#' }}" class="hidden md:block px-6 py-2.5 bg-white border-2 border-primary text-primary rounded-full font-semibold">Connexion</a>
-            <a href="{{ path('app_user_dashboard') }}" class="hidden md:block px-6 py-2.5 btn-primary">Devenir membre</a>
+           {% endif %}
+           {% if app.user %}
+           <a href="{{ path('app_user_dashboard') }}" class="hidden md:block px-6 py-2.5 btn-primary">Espace membre</a>
+            <a href="{{ path('app_logout') }}" class="hidden md:block p-2.5 rounded-full ring-1 ring-gray-300 hover:bg-cream" title="Se déconnecter" aria-label="Se déconnecter">
+              <svg class="w-5 h-5 text-charcoal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+            </a>
             <button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-cream rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
               <svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
+            <a href="{{ path('app_logout') }}" class="md:hidden p-2 rounded-lg hover:bg-cream transition-colors" title="Se déconnecter" aria-label="Se déconnecter">
+              <svg class="w-6 h-6 text-charcoal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+            </a>
+            {% else %}
+            <a href="{{ path('app_membership') }}" class="hidden md:block px-6 py-2.5 btn-primary">Devenir membre</a>
+            <button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-cream rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
+              <svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            {% endif %}
           </div>
         </div>
     </nav>
@@ -58,8 +120,13 @@
         <a href="{{ path('admin_dashboard') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Admin</a>
         {% endif %}
         <div class="pt-4 space-y-3">
-          <a href="{{ path('app_login') }}" class="block w-full px-6 py-3 text-center bg-white border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all">Connexion</a>
-          <a href="{{ path('app_user_dashboard') }}" class="block w-full px-6 py-3 text-center btn-primary">Devenir membre</a>
+          {% if not app.user %}
+            <a href="{{ path('app_login') }}" class="block w-full px-6 py-3 text-center bg-white border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all">Connexion</a>
+            <a href="{{ path('app_membership') }}" class="block w-full px-6 py-3 text-center btn-primary">Devenir membre</a>
+          {% else %}
+            <a href="{{ path('app_user_dashboard') }}" class="block w-full px-6 py-3 text-center btn-primary">Espace membre</a>
+            <a href="{{ path('app_logout') }}" class="block w-full px-6 py-3 text-center bg-white border-2 border-gray-300 text-charcoal rounded-full font-semibold hover:bg-cream transition-all">Se déconnecter</a>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -117,7 +184,9 @@
     {% endblock %}
 
     {% block scripts %}
-      {{ encore_entry_script_tags('app') }}
+      <script src="{{ asset('build/runtime.js') }}" defer></script>
+      <script src="{{ asset('build/app.js') }}" defer></script>
+      <script src="/scripts/app.js" defer></script>
     {% endblock %}
   </body>
 </html>

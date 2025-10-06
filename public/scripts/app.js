@@ -21,8 +21,20 @@
   const closeMenuBtn = document.getElementById('close-menu');
   const menuOverlay = document.getElementById('menu-overlay');
   if (!mobileMenu || !menuOverlay) return;
-  function openMobileMenu(){ mobileMenu.classList.add('active'); menuOverlay.classList.remove('hidden'); document.body.style.overflow='hidden'; }
-  function closeMobileMenu(){ mobileMenu.classList.remove('active'); menuOverlay.classList.add('hidden'); document.body.style.overflow=''; }
+  function openMobileMenu(){
+    mobileMenu.classList.remove('hidden');
+    mobileMenu.classList.add('open');
+    mobileMenu.classList.add('active'); // backward compatibility
+    menuOverlay.classList.remove('hidden');
+    document.body.style.overflow='hidden';
+  }
+  function closeMobileMenu(){
+    mobileMenu.classList.add('hidden');
+    mobileMenu.classList.remove('open');
+    mobileMenu.classList.remove('active');
+    menuOverlay.classList.add('hidden');
+    document.body.style.overflow='';
+  }
   window.closeMobileMenu = closeMobileMenu;
   mobileMenuBtn && mobileMenuBtn.addEventListener('click', openMobileMenu);
   closeMenuBtn && closeMenuBtn.addEventListener('click', closeMobileMenu);

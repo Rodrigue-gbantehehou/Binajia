@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block title %}Mon espace — Binajia{% endblock %}
 {% block content %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-  <div class="grid lg:grid-cols-12 gap-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="grid lg:grid-cols-12 gap-6">
     <aside class="lg:col-span-3 space-y-4">
       <div class="p-4 rounded-2xl bg-white ring-1 ring-gray-200">
         <div class="flex items-center gap-3">
@@ -21,23 +21,35 @@
       </nav>
     </aside>
 
-    <section class="lg:col-span-9 space-y-8">
-      <div id="profile" class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
-        <h2 class="font-display text-xl font-semibold">Profil</h2>
-        <form class="mt-6 grid sm:grid-cols-2 gap-4">
-          <div><label class="text-sm text-gray-600">Prénom</label><input value="{{ user.firstName }}" class="mt-1 w-full rounded-md border-gray-300"/></div>
-          <div><label class="text-sm text-gray-600">Nom</label><input value="{{ user.lastName }}" class="mt-1 w-full rounded-md border-gray-300"/></div>
-          <div class="sm:col-span-2"><label class="text-sm text-gray-600">Pays</label>
-            <input value="{{ user.country }}" class="mt-1 w-full rounded-md border-gray-300"/>
+    <section class="lg:col-span-9 space-y-6">
+      <div id="profile" class="p-5 rounded-2xl bg-white ring-1 ring-gray-200 border-t-4 border-accent">
+        <h2 class="font-display text-xl font-semibold text-primary">Profil</h2>
+        <div class="mt-5 grid sm:grid-cols-2 gap-3 text-sm">
+          <div>
+            <div class="text-gray-500">Prénom</div>
+            <div class="font-semibold">{{ user.firstName }}</div>
+          </div>
+          <div>
+            <div class="text-gray-500">Nom</div>
+            <div class="font-semibold">{{ user.lastName }}</div>
+          </div>
+          <div>
+            <div class="text-gray-500">Pays</div>
+            <div class="font-semibold">{{ user.country ?? '—' }}</div>
+          </div>
+          <div>
+            <div class="text-gray-500">Date d'adhésion</div>
+            <div class="font-semibold">{{ user.joinedAt|date('d/m/Y') }}</div>
           </div>
           <div class="sm:col-span-2">
-            <button class="mt-3 px-4 py-2 rounded-md bg-primary text-white">Mettre à jour</button>
+            <div class="text-gray-500">Identifiant membre</div>
+            <div class="font-semibold">{{ user.memberId }}</div>
           </div>
-        </form>
+        </div>
       </div>
 
-      <div id="payments" class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
-        <h2 class="font-display text-xl font-semibold">Historique des paiements</h2>
+      <div id="payments" class="p-5 rounded-2xl bg-white ring-1 ring-gray-200 border-t-4 border-accent">
+        <h2 class="font-display text-xl font-semibold text-primary">Historique des paiements</h2>
         <div class="mt-4 overflow-x-auto">
           <table class="min-w-full text-sm">
             <thead>
@@ -52,7 +64,12 @@
                 <td class="py-2">{{ p.label }}</td>
                 <td class="py-2">{{ p.amount }} {{ p.currency }}</td>
                 <td class="py-2">
-                  <a href="#" class="text-primary hover:underline">Télécharger</a>
+                  {% set receiptUrl = user.receipts[p.id]|default(null) %}
+                  {% if receiptUrl %}
+                    <a href="{{ receiptUrl }}" class="text-primary hover:underline" target="_blank">Télécharger</a>
+                  {% else %}
+                    <span class="text-gray-400">—</span>
+                  {% endif %}
                 </td>
               </tr>
               {% endfor %}
@@ -61,9 +78,9 @@
         </div>
       </div>
 
-      <div id="tickets" class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
-        <h2 class="font-display text-xl font-semibold">Mes tickets</h2>
-        <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div id="tickets" class="p-5 rounded-2xl bg-white ring-1 ring-gray-200 border-t-4 border-accent">
+        <h2 class="font-display text-xl font-semibold text-primary">Mes tickets</h2>
+        <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {% for t in tickets %}
           <div class="p-4 rounded-xl bg-neutral-50 ring-1 ring-gray-200">
             <div class="text-xs text-gray-500">{{ t.date|date('d M Y') }}</div>
@@ -74,9 +91,52 @@
         </div>
       </div>
 
-      <div id="card" class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
-        <h2 class="font-display text-xl font-semibold">Carte membre</h2>
-        {% include 'partials/member-card-digital.html.twig' with { user: user } %}
+      <div id="card" class="p-5 rounded-2xl bg-white ring-1 ring-gray-200 border-t-4 border-accent">
+        <h2 class="font-display text-xl font-semibold text-primary">Carte membre</h2>
+        <div class="mt-4 flex items-center gap-3">
+          {% include 'partials/member-card-digital.html.twig' with { user: user } %}
+          <div>
+            {% if user.cardPdf %}
+              <a href="{{ user.cardPdf }}" target="_blank" class="inline-flex items-center px-4 py-2 rounded-md ring-1 ring-gray-300 hover:bg-cream">Télécharger la carte (PDF)</a>
+            {% else %}
+              <span class="text-sm text-gray-500">Carte PDF non disponible</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <h3 class="font-semibold mb-3">Historique des cartes</h3>
+          {% if cards is defined and cards|length > 0 %}
+            <div class="overflow-x-auto">
+              <table class="min-w-full text-sm">
+                <thead>
+                  <tr class="text-left text-gray-500">
+                    <th class="py-2">Date d'émission</th>
+                    <th class="py-2">Expiration</th>
+                    <th class="py-2">Fichier</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y">
+                  {% for c in cards %}
+                  <tr>
+                    <td class="py-2">{{ c.issuedate ? c.issuedate|date('d/m/Y H:i') : '—' }}</td>
+                    <td class="py-2">{{ c.expiryDate ? c.expiryDate|date('d/m/Y') : '—' }}</td>
+                    <td class="py-2">
+                      {% if c.pdfurl %}
+                        <a href="{{ c.pdfurl }}" target="_blank" class="text-primary hover:underline">Télécharger</a>
+                      {% else %}
+                        <span class="text-gray-400">—</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <div class="text-sm text-gray-500">Aucune carte émise pour le moment.</div>
+          {% endif %}
+        </div>
       </div>
     </section>
   </div>

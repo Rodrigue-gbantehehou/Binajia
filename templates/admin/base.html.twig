@@ -1,0 +1,167 @@
+{% extends 'base.html.twig' %}
+{% block title %}Admin — Binajia{% endblock %}
+
+{% block styles %}
+  {{ parent() }}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .active-tab { background-color: var(--color-accent); color: #fff; }
+    /* Remove top padding coming from base layout's <main class="pt-16"> for admin pages */
+    body > main.pt-16 { padding-top: 0 !important; }
+  </style>
+{% endblock %}
+
+{# Remove site-level header and footer for admin pages #}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="bg-gray-100">
+  <div class="flex min-h-[calc(100vh-4rem)]">
+    <!-- Sidebar -->
+    <aside class="sidebar w-64 hidden md:block fixed h-full overflow-y-auto text-white" style="background: linear-gradient(135deg, var(--color-accent-dark), var(--color-primary-dark));">
+      <div class="p-4 flex items-center space-x-2 border-b border-white/10">
+        <img src="/media/logo.jpeg" alt="Logo" class="h-8 w-8 rounded-full object-cover">
+        <span class="text-xl font-bold">BINAJIA ADMIN</span>
+      </div>
+      <div class="p-4">
+        <nav>
+          <ul class="space-y-2">
+            <li>
+              <a href="{{ path('admin_dashboard') }}" class="flex items-center space-x-2 p-2 rounded hover:bg-white/10 active-tab">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Tableau de bord</span>
+              </a>
+            </li>
+            <li class="px-2 mt-3 text-xs uppercase text-white/70 tracking-wide">Gestion</li>
+            <li class="has-submenu">
+              <a href="#" class="flex items-center justify-between p-2 rounded hover:bg-white/10">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-users"></i>
+                  <span>Membres & Cartes</span>
+                </div>
+                <i class="fas fa-chevron-down text-xs"></i>
+              </a>
+              <ul class="submenu hidden pl-6 mt-1 space-y-1">
+                <li><a href="{{ path('admin_members_index') }}" class="block p-2 rounded hover:bg-white/10">Membres</a></li>
+                <li><a href="{{ path('admin_cards_index') }}" class="block p-2 rounded hover:bg-white/10">Cartes</a></li>
+                <li><a href="{{ path('admin_payments_index') }}" class="block p-2 rounded hover:bg-white/10">Paiements</a></li>
+                <li><a href="{{ path('admin_receipts_index') }}" class="block p-2 rounded hover:bg-white/10">Reçus</a></li>
+              </ul>
+            </li>
+            <li class="has-submenu">
+              <a href="#" class="flex items-center justify-between p-2 rounded hover:bg-white/10">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>Événements & Lieux</span>
+                </div>
+                <i class="fas fa-chevron-down text-xs"></i>
+              </a>
+              <ul class="submenu hidden pl-6 mt-1 space-y-1">
+                <li><a href="{{ path('admin_events_index') }}" class="block p-2 rounded hover:bg-white/10">Événements</a></li>
+                <li><a href="{{ path('admin_places_index') }}" class="block p-2 rounded hover:bg-white/10">Lieux</a></li>
+                <li><a href="{{ path('admin_reservations_index') }}" class="block p-2 rounded hover:bg-white/10">Réservations</a></li>
+              </ul>
+            </li>
+            <li class="px-2 mt-3 text-xs uppercase text-white/70 tracking-wide">Supervision</li>
+            <li class="has-submenu">
+              <a href="#" class="flex items-center justify-between p-2 rounded hover:bg-white/10">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-heartbeat"></i>
+                  <span>Santé & Logs</span>
+                </div>
+                <i class="fas fa-chevron-down text-xs"></i>
+              </a>
+              <ul class="submenu hidden pl-6 mt-1 space-y-1">
+                <li><a href="{{ path('admin_health_index') }}" class="block p-2 rounded hover:bg-white/10">Health Checks</a></li>
+                <li><a href="{{ path('admin_logs_index') }}" class="block p-2 rounded hover:bg-white/10">Logs</a></li>
+                <li><a href="{{ path('admin_metrics_index') }}" class="block p-2 rounded hover:bg-white/10">Métriques</a></li>
+              </ul>
+            </li>
+            <li class="px-2 mt-3 text-xs uppercase text-white/70 tracking-wide">Sécurité & Audit</li>
+            <li class="has-submenu">
+              <a href="#" class="flex items-center justify-between p-2 rounded hover:bg-white/10">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-user-shield"></i>
+                  <span>Sécurité</span>
+                </div>
+                <i class="fas fa-chevron-down text-xs"></i>
+              </a>
+              <ul class="submenu hidden pl-6 mt-1 space-y-1">
+                <li><a href="{{ path('admin_security_users') }}" class="block p-2 rounded hover:bg-white/10">Utilisateurs</a></li>
+                <li><a href="{{ path('admin_security_roles') }}" class="block p-2 rounded hover:bg-white/10">Rôles</a></li>
+                <li><a href="{{ path('admin_security_2fa') }}" class="block p-2 rounded hover:bg-white/10">2FA</a></li>
+              </ul>
+            </li>
+            <li><a href="{{ path('admin_audit_index') }}" class="block p-2 rounded hover:bg-white/10 flex items-center space-x-2"><i class="fas fa-clipboard-list"></i><span>Audit</span></a></li>
+            <li class="px-2 mt-3 text-xs uppercase text-white/70 tracking-wide">Réglages & API</li>
+            <li><a href="{{ path('admin_settings_index') }}" class="block p-2 rounded hover:bg-white/10 flex items-center space-x-2"><i class="fas fa-sliders"></i><span>Réglages</span></a></li>
+            <li><a href="{{ path('admin_api_index') }}" class="block p-2 rounded hover:bg-white/10 flex items-center space-x-2"><i class="fas fa-plug"></i><span>API</span></a></li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="content flex-1 md:ml-64 w-full">
+      <!-- Top bar -->
+      <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          <button id="sidebarToggle" class="text-gray-600 hover:text-gray-900 md:hidden">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h1 class="text-xl font-bold">Tableau de bord</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button class="relative text-gray-600 hover:text-gray-900" title="Notifications">
+            <i class="fas fa-bell"></i>
+            <span class="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-red-500"></span>
+          </button>
+          <a href="{{ path('app_logout') }}" class="text-gray-600 hover:text-gray-900" title="Quitter">
+            <i class="fas fa-sign-out-alt"></i>
+          </a>
+        </div>
+      </header>
+
+      <main class="p-6">
+        {% block admin_body %}{% endblock %}
+      </main>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  {{ parent() }}
+  <script>
+    // Toggle sidebar on mobile
+    document.addEventListener('DOMContentLoaded', function() {
+      var toggle = document.getElementById('sidebarToggle');
+      if (toggle) {
+        toggle.addEventListener('click', function() {
+          var sidebar = document.querySelector('.sidebar');
+          var content = document.querySelector('.content');
+          if (sidebar) sidebar.classList.toggle('hidden');
+          if (content) { content.classList.toggle('ml-0'); content.classList.toggle('md:ml-64'); }
+        });
+      }
+      // Toggle submenus
+      document.querySelectorAll('.has-submenu > a').forEach(function(a){
+        a.addEventListener('click', function(e){
+          e.preventDefault();
+          var submenu = this.nextElementSibling;
+          if (submenu) submenu.classList.toggle('hidden');
+          var icon = this.querySelector('.fa-chevron-down');
+          if (icon) { icon.classList.toggle('transform'); icon.classList.toggle('rotate-180'); }
+        });
+      });
+      // Active tab
+      document.querySelectorAll('nav a').forEach(function(link){
+        link.addEventListener('click', function(){
+          document.querySelectorAll('nav a').forEach(function(i){ i.classList.remove('active-tab'); });
+          this.classList.add('active-tab');
+        });
+      });
+    });
+  </script>
+{% endblock %}

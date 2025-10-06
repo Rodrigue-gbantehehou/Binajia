@@ -1,0 +1,63 @@
+{# Two pages: front then back, A6 landscape each #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    @page { size: A6 landscape; margin: 6mm; }
+    .page { page-break-after: always; }
+    .page:last-child { page-break-after: auto; }
+    body { font-family: DejaVu Sans, Arial, sans-serif; color:#111827; }
+
+    /* Card base (match web size 450x280) */
+    .bnj-card { width: 450px; height: 280px; border-radius: 16px; overflow: hidden; background: #ffffff; border: 1px solid #e5e7eb; position: relative; }
+    /* Use PNG background images exported from your design */
+    .bnj-card--bg-recto {
+      background-image: url('{{ bgRecto|default('') }}');
+      background-repeat: no-repeat; background-position: center; background-size: cover;
+    }
+    .bnj-card--bg-verso {
+      background-image: url('{{ bgVerso|default('') }}');
+      background-repeat: no-repeat; background-position: center; background-size: cover;
+    }
+
+    /* Overlay fields (absolute positioning) */
+    .field { position: absolute; color:#111827; }
+    .photo { left: 18px; top: 78px; width: 86px; height: 114px; border-radius:10px; overflow:hidden; background:#f3f4f6; border:1px solid #e5e7eb; }
+    .role { left: 120px; top: 76px; font-size: 12px; font-weight: 700; color:#F59E0B; }
+    .roleTitle { left: 120px; top: 94px; font-size: 10px; color:#F59E0B; font-weight:700; letter-spacing:.3px; }
+    .name { left: 120px; top: 128px; font-size: 16px; font-weight: 700; color:#ffffff; }
+    .details { left: 120px; top: 156px; font-size: 11px; line-height: 1.6; color:#ffffff; }
+    .fd-box { display:inline-block; padding:2px 8px; border-radius:4px; background: rgba(245, 158, 11, 0.2); color:#F59E0B; margin-right:8px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; }
+    .fd { left: 120px; top: 206px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="bnj-card bnj-card--bg-recto" style="width: 450px; height: 280px;">
+      <div class="field photo">
+        {% if photoUrl %}
+          <img src="{{ photoUrl }}" alt="Photo" />
+        {% endif %}
+      </div>
+      <div class="field role">{{ role }}</div>
+      <div class="field roleTitle">{{- roleTitle -}}</div>
+      <div class="field name">{{ name }}</div>
+      <div class="field details">
+        <div>ID: {{ id }}</div>
+        <div>Pays: {{ nationality }}</div>
+        <div>Téléphone: {{ phone }}</div>
+      </div>
+      <div class="field fd">
+        <span class="fd-box">Adhésion: {{ join_date }}</span>
+        <span class="fd-box">Expire: {{ expiry }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="page">
+    <div class="bnj-card bnj-card--bg-verso">
+      {% include 'components/membership_card_back.html.twig' with { logoUrl: logoUrl } %}
+    </div>
+  </div>
+</body>
+</html>

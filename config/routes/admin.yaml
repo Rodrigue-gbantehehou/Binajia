@@ -1,0 +1,4 @@
+admin_routes:
+  resource: '../../src/Controller/Admin/'
+  type: attribute
+  prefix: /admin
