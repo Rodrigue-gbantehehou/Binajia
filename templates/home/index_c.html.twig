@@ -4,41 +4,26 @@
 {% block content %}
 
 {# Hero #}
-<section id="accueil" class="relative overflow-hidden min-h-[80vh] md:min-h-screen">
-  <div class="absolute inset-0 -z-10 bg-cover bg-center" style="background-image:url('{{ asset('/media/hero-split.jpg') }}')"></div>
-  <div class="absolute inset-0 -z-10 gradient-hero opacity-90"></div>
-  <div class="absolute inset-0 -z-10 bg-black/30"></div>
-  <div class="absolute inset-0 -z-10 bg-afric-motif opacity-20"></div>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-36 text-white">
-    <div class="grid md:grid-cols-12 gap-8 items-center">
-      <div class="md:col-span-7">
-        <h1 class="font-serif text-4xl md:text-6xl font-bold leading-tight">Une passerelle culturelle entre le Bénin et le Nigéria</h1>
-        <p class="mt-5 text-lg text-white/90">Vivez nos cultures à travers des événements, des lieux emblématiques et une communauté engagée.</p>
+<section id="accueil" class="relative overflow-hidden min-h-[40vh] md:min-h-screen">
+  <div class="absolute inset-0 -z-10  bg-center" style="background-image:url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80')"></div>
+  <div class="absolute inset-0 -z-10 gradient-hero "></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-15 lg:py-25 text-white">
+    <div class="grid md:grid-cols-12 gap-5 items-center">
+      <div class="md:col-span-6">
+        <h1 class="text-9xl md:text-5xl font-black mb-6">Découvrez la richesse culturelle du Bénin et du Nigeria</h1>
+        <p class="text-xl mb-8">Binajia vous connecte aux merveilles de ces deux nations africaines à travers des événements, des réservations et des expériences uniques.</p>
         <div class="mt-8 flex flex-wrap gap-4">
-          <a href="#evenements" class="px-6 py-3 bg-white text-charcoal rounded-xl font-semibold btn-outline focus:outline-none focus:ring-2 focus:ring-white/70 focus:ring-offset-2 focus:ring-offset-primary">Explorer les événements</a>
-          <a href="#adhesion" class="px-6 py-3 btn-primary text-white rounded-xl font-semibold focus:outline-none focus:ring-2 focus:ring-white/70 focus:ring-offset-2 focus:ring-offset-primary">Devenir membre</a>
+          <a href="#evenements" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-md text-center font-medium transition duration-300">Explorer les événements</a>
+          <a href="#adhesion" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-md text-center font-medium transition duration-300">Devenir membre</a>
         </div>
-        <div class="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/30">
-          <div>
-            <div class="text-3xl md:text-4xl font-bold">500+</div>
-            <div class="text-white/80">Membres</div>
-          </div>
-          <div>
-            <div class="text-3xl md:text-4xl font-bold">50+</div>
-            <div class="text-white/80">Événements</div>
-          </div>
-          <div>
-            <div class="text-3xl md:text-4xl font-bold">2</div>
-            <div class="text-white/80">Pays</div>
-          </div>
-        </div>
+       
       </div>
-      <div class="md:col-span-5">
+      <div class="md:col-span-6">
         <div class="animate-float">
-          <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 max-w-md mx-auto">
+          <div class="bg-white rounded-md shadow-2xl p-6 md:p-8 max-w-md mx-auto">
             <h3 class="font-serif text-2xl font-bold mb-6 text-charcoal">Prochains événements</h3>
             <div class="space-y-4">
-              <div class="flex items-start gap-4 p-4 rounded-xl hover:bg-cream transition-colors">
+              <div class="flex items-start gap-4 p-2 rounded-xl hover:bg-cream transition-colors">
                 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                   <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                 </div>
@@ -48,7 +33,7 @@
                   <div class="text-xs text-gray-500 mt-1">Cotonou, Bénin</div>
                 </div>
               </div>
-              <div class="flex items-start gap-4 p-4 rounded-xl hover:bg-cream transition-colors">
+              <div class="flex items-start gap-4 p-2 rounded-xl hover:bg-cream transition-colors">
                 <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
                   <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 </div>
@@ -58,7 +43,7 @@
                   <div class="text-xs text-gray-500 mt-1">Lagos, Nigéria</div>
                 </div>
               </div>
-              <div class="flex items-start gap-4 p-4 rounded-xl hover:bg-cream transition-colors">
+              <div class="flex items-start gap-4 p-2 rounded-xl hover:bg-cream transition-colors">
                 <div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                   <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                 </div>
@@ -69,7 +54,7 @@
                 </div>
               </div>
             </div>
-            <a href="{{ path('app_events') }}" class="w-full mt-6 px-6 py-3 btn-primary text-white rounded-xl font-semibold inline-block text-center">Voir tous les événements</a>
+            <a href="{{ path('app_events') }}" class="w-full mt-6 bg-primary hover:bg-secondary text-white inline-block px-6 py-3 rounded-md text-center font-semibold transition duration-300">Voir tous les événements</a>
           </div>
         </div>
       </div>
@@ -78,7 +63,7 @@
 </section>
 
 {# Vision + Membership card #}
-<section id="apropos" class="py-20 bg-white">
+<section id="apropos" class="py-10 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid md:grid-cols-12 gap-12 items-center">
       <div class="md:col-span-7">

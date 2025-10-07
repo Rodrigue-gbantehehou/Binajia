@@ -1,192 +1,287 @@
-
 <html lang="fr" class="h-full scroll-smooth">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>{% block title %}Binajia{% endblock %}</title>
-    <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
-    <link rel="icon" href="/media/logo.jpeg" type="image/jpeg" sizes="16x16">
-    {% block styles %}
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="{{ asset('build/app.css') }}">
-      <style>
-        /* Fallback to support legacy JS that toggles `active` */
-        .mobile-menu.active{ transform: translateX(0) !important; }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>
+			{% block title %}Binajia
+			{% endblock %}
+		</title>
+		<script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
+		<link rel="icon" href="/media/logo.jpeg" type="image/jpeg" sizes="16x16">
+		{% block styles %}
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+			<link rel="stylesheet" href="{{ asset('build/app.css') }}">
+			<style>
+				/* Fallback to support legacy JS that toggles `active` */
+				.mobile-menu.active {
+					transform: translateX(0) !important;
+				}
 
-        /* Responsive fixes: scale down membership card on small screens */
-        @media (max-width: 480px) {
-          .bnj-card { width: 320px; height: 200px; margin-left: auto; margin-right: auto; }
-          .bnj-card__header { height: 48px; padding: 0 12px; }
-          .bnj-card__logo { width: 64px; height: 42px; }
-          .bnj-card__brand { font-size: 18px; }
-          .bnj-card__assoc { font-size: 8px; }
-          .bnj-card__body { height: 152px; padding: 10px 12px; }
-          .bnj-card__photo { width: 68px; height: 84px; }
-          .bnj-card__role { font-size: 13px; }
-          .bnj-card__slogan { font-size: 9px; }
-          .bnj-card__name { font-size: 14px; }
-          .bnj-card__details { font-size: 10px; }
-          .bnj-card__badge { font-size: 9px; padding: 2px 8px; }
-          .bnj-card__fd { font-size: 9px; }
-        }
+				/* Responsive fixes: scale down membership card on small screens */
+				@media(max-width: 480px) {
+					.bnj-card {
+						width: 320px;
+						height: 200px;
+						margin-left: auto;
+						margin-right: auto;
+					}
+					.bnj-card__header {
+						height: 48px;
+						padding: 0 12px;
+					}
+					.bnj-card__logo {
+						width: 64px;
+						height: 42px;
+					}
+					.bnj-card__brand {
+						font-size: 18px;
+					}
+					.bnj-card__assoc {
+						font-size: 8px;
+					}
+					.bnj-card__body {
+						height: 152px;
+						padding: 10px 12px;
+					}
+					.bnj-card__photo {
+						width: 68px;
+						height: 84px;
+					}
+					.bnj-card__role {
+						font-size: 13px;
+					}
+					.bnj-card__slogan {
+						font-size: 9px;
+					}
+					.bnj-card__name {
+						font-size: 14px;
+					}
+					.bnj-card__details {
+						font-size: 10px;
+					}
+					.bnj-card__badge {
+						font-size: 9px;
+						padding: 2px 8px;
+					}
+					.bnj-card__fd {
+						font-size: 9px;
+					}
+				}
 
-        /* Extra small phones */
-        @media (max-width: 360px) {
-          .bnj-card { width: 290px; height: 184px; }
-          .bnj-card__header { height: 44px; padding: 0 10px; }
-          .bnj-card__logo { width: 56px; height: 36px; }
-          .bnj-card__brand { font-size: 16px; }
-          .bnj-card__assoc { font-size: 7px; }
-          .bnj-card__body { height: 140px; padding: 8px 10px; }
-          .bnj-card__photo { width: 62px; height: 78px; }
-          .bnj-card__role { font-size: 12px; }
-          .bnj-card__slogan { font-size: 8px; }
-          .bnj-card__name { font-size: 13px; }
-          .bnj-card__details { font-size: 9px; }
-          .bnj-card__badge { font-size: 8px; padding: 2px 6px; }
-          .bnj-card__fd { font-size: 8px; }
-        }
-      </style>
-    {% endblock %}
-  <body class="min-h-full bg-cream text-charcoal font-sans">
-    {% block header %}
-    <nav class="fixed w-full top-0 z-50 navbar-gradient shadow-lg transition-all duration-300" role="navigation" aria-label="Navigation principale">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
-          <a href="{{ path('app_home') }}" class="flex items-center space-x-3 group">
-            <img src="/media/logo.jpeg" alt="Logo Binajia" class="h-12 w-12 rounded-full object-cover shadow-md transition-transform duration-300 group-hover:scale-110">
-            <span class="font-serif text-2xl font-bold text-gradient">BINAJIA</span>
-          </a>
-          <div class="hidden md:flex items-center space-x-8">
-            <a href="{{ path('app_home') }}" class="nav-link text-charcoal hover:text-primary font-medium">Accueil</a>
-            <a href="{{ path('app_about') }}" class="nav-link text-charcoal hover:text-primary font-medium">À propos</a>
-            <a href="{{ path('app_events') }}" class="nav-link text-charcoal hover:text-primary font-medium">Événements</a>
-            <a href="{{ path('app_places') }}" class="nav-link text-charcoal hover:text-primary font-medium">Lieux</a>
-            <a href="{{ path('app_contact') }}" class="nav-link text-charcoal hover:text-primary font-medium">Contact</a>
-            {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('admin_dashboard') }}" class="nav-link text-charcoal hover:text-primary font-medium">Admin</a>
-            {% endif %}
-          </div>
-          <div class="flex items-center space-x-3">
-          {% if not app.user %}
-          
-            <a href="{{ path('app_login', {}, false) ?? '#' }}" class="hidden md:block px-6 py-2.5 bg-white border-2 border-primary text-primary rounded-full font-semibold">Connexion</a>
-           {% endif %}
-           {% if app.user %}
-           <a href="{{ path('app_user_dashboard') }}" class="hidden md:block px-6 py-2.5 btn-primary">Espace membre</a>
-            <a href="{{ path('app_logout') }}" class="hidden md:block p-2.5 rounded-full ring-1 ring-gray-300 hover:bg-cream" title="Se déconnecter" aria-label="Se déconnecter">
-              <svg class="w-5 h-5 text-charcoal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                <polyline points="16 17 21 12 16 7"/>
-                <line x1="21" y1="12" x2="9" y2="12"/>
-              </svg>
-            </a>
-            <button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-cream rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
-              <svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            </button>
-            <a href="{{ path('app_logout') }}" class="md:hidden p-2 rounded-lg hover:bg-cream transition-colors" title="Se déconnecter" aria-label="Se déconnecter">
-              <svg class="w-6 h-6 text-charcoal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                <polyline points="16 17 21 12 16 7"/>
-                <line x1="21" y1="12" x2="9" y2="12"/>
-              </svg>
-            </a>
-            {% else %}
-            <a href="{{ path('app_membership') }}" class="hidden md:block px-6 py-2.5 btn-primary">Devenir membre</a>
-            <button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-cream rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
-              <svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            </button>
-            {% endif %}
-          </div>
-        </div>
-    </nav>
-    <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 p-6 hidden" aria-hidden="true">
-      <div class="flex justify-between items-center mb-8">
-        <div class="flex items-center space-x-3">
-          <img src="/media/logo.jpeg" alt="Logo Binajia" class="h-10 w-10 rounded-full object-cover">
-          <span class="font-serif text-2xl font-bold text-gradient">BINAJIA</span>
-        </div>
-        <button id="close-menu" class="p-2 hover:bg-cream rounded-lg transition-colors" aria-label="Fermer le menu">
-          <svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-      <div class="space-y-4">
-        <a href="{{ path('app_home') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Accueil</a>
-        <a href="{{ path('app_about') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">À propos</a>
-        <a href="{{ path('app_events') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Événements</a>
-        <a href="{{ path('app_places') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Lieux</a>
-        <a href="{{ path('app_contact') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Contact</a>
-        {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('admin_dashboard') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Admin</a>
-        {% endif %}
-        <div class="pt-4 space-y-3">
-          {% if not app.user %}
-            <a href="{{ path('app_login') }}" class="block w-full px-6 py-3 text-center bg-white border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all">Connexion</a>
-            <a href="{{ path('app_membership') }}" class="block w-full px-6 py-3 text-center btn-primary">Devenir membre</a>
-          {% else %}
-            <a href="{{ path('app_user_dashboard') }}" class="block w-full px-6 py-3 text-center btn-primary">Espace membre</a>
-            <a href="{{ path('app_logout') }}" class="block w-full px-6 py-3 text-center bg-white border-2 border-gray-300 text-charcoal rounded-full font-semibold hover:bg-cream transition-all">Se déconnecter</a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-    <div id="menu-overlay" class="hidden fixed inset-0 bg-black/50 z-40"></div>
-    {% endblock %}
+				/* Extra small phones */
+				@media(max-width: 360px) {
+					.bnj-card {
+						width: 290px;
+						height: 184px;
+					}
+					.bnj-card__header {
+						height: 44px;
+						padding: 0 10px;
+					}
+					.bnj-card__logo {
+						width: 56px;
+						height: 36px;
+					}
+					.bnj-card__brand {
+						font-size: 16px;
+					}
+					.bnj-card__assoc {
+						font-size: 7px;
+					}
+					.bnj-card__body {
+						height: 140px;
+						padding: 8px 10px;
+					}
+					.bnj-card__photo {
+						width: 62px;
+						height: 78px;
+					}
+					.bnj-card__role {
+						font-size: 12px;
+					}
+					.bnj-card__slogan {
+						font-size: 8px;
+					}
+					.bnj-card__name {
+						font-size: 13px;
+					}
+					.bnj-card__details {
+						font-size: 9px;
+					}
+					.bnj-card__badge {
+						font-size: 8px;
+						padding: 2px 6px;
+					}
+					.bnj-card__fd {
+						font-size: 8px;
+					}
+				}
+			</style>
+		{% endblock %}
+		<body class="min-h-full bg-cream text-charcoal font-sans">
+			{% block header %}
+				<nav class="fixed w-full top-0 z-50 navbar-gradient shadow-lg transition-all duration-300" role="navigation" aria-label="Navigation principale">
+					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+						
+						<div class="flex items-center">
+							<a href="#" class="flex items-center">
+                            <img src="/media/logo.jpeg" alt="Logo Binajia" class="h-12 w-12  object-cover shadow-md transition-transform duration-300 group-hover:scale-110">
+								<span class="ml-2 text-xl font-bold text-white bg-gradient-to-r from-green-800 to-green-600 px-3 py-1 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-bounce">
+									B<span class="text-yellow-300">I</span>NAJ<span class="text-yellow-300">I</span>A
+								</span>
+							</a>
+						</div>
+						<div class="hidden md:flex items-center space-x-8">
+							<a href="{{ path('app_home') }}" class="nav-link text-charcoal hover:text-primary font-medium">Accueil</a>
+							<a href="{{ path('app_about') }}" class="nav-link text-charcoal hover:text-primary font-medium">À propos</a>
+							<a href="{{ path('app_events') }}" class="nav-link text-charcoal hover:text-primary font-medium">Événements</a>
+							<a href="{{ path('app_places') }}" class="nav-link text-charcoal hover:text-primary font-medium">Lieux</a>
+							<a href="{{ path('app_contact') }}" class="nav-link text-charcoal hover:text-primary font-medium">Contact</a>
+							{% if is_granted('ROLE_ADMIN') %}
+								<a href="{{ path('admin_dashboard') }}" class="nav-link text-charcoal hover:text-primary font-medium">Admin</a>
+							{% endif %}
+						</div>
+						<div class="flex items-center space-x-3">
+							{% if not app.user %}
 
-    <main class="pt-16">
-      {% block content %}{% endblock %}
-    </main>
+								<a href="{{ path('app_login', {}, false) ?? '#' }}" class="hidden md:block px-6 py-3 rounded-md bg-white border-2 border-primary text-primary  font-semibold">Connexion</a>
+							{% endif %}
+							{% if app.user %}
+								<a href="{{ path('app_user_dashboard') }}" class="hidden md:block  px-6 py-3 rounded-md text-white  bg-primary text-center font-medium transition duration-300" style="background-color: #f59e0b;">Espace membre</a>
+								<a href="{{ path('app_logout') }}" class="hidden md:block p-2.5 rounded-full ring-1 ring-gray-300 hover:bg-primary" title="Se déconnecter" aria-label="Se déconnecter">
+									<svg class="w-5 h-5 text-charcoal" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+										<polyline points="16 17 21 12 16 7"/>
+										<line x1="21" y1="12" x2="9" y2="12"/>
+									</svg>
+								</a>
+								<button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-cream rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
+									<svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+								</button>
+								<a href="{{ path('app_logout') }}" class="md:hidden p-2 rounded-md hover:bg-secondary transition-colors" title="Se déconnecter" aria-label="Se déconnecter">
+									<svg class="w-6 h-6 text-charcoal" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+										<polyline points="16 17 21 12 16 7"/>
+										<line x1="21" y1="12" x2="9" y2="12"/>
+									</svg>
+								</a>
+							{% else %}
+								<a href="{{ path('app_membership') }}" class="hidden md:block px-6 py-3 rounded-md  text-white  font-semibold" style="background-color: #f59e0b;"> Devenir membre</a>
+								<button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-cream rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
+									<svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+								</button>
+							{% endif %}
+						</div>
+					</div>
+				</nav>
+				<div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 p-6 hidden" aria-hidden="true">
+					<div class="flex justify-between items-center mb-8">
+						<div class="flex items-center space-x-3">
+							<img src="/media/logo.jpeg" alt="Logo Binajia" class="h-10 w-10 rounded-full object-cover">
+							<span class="font-serif text-2xl font-bold text-gradient">BINAJIA</span>
+						</div>
+						<button id="close-menu" class="p-2 hover:bg-cream rounded-lg transition-colors" aria-label="Fermer le menu">
+							<svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+						</button>
+					</div>
+					<div class="space-y-4">
+						<a href="{{ path('app_home') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Accueil</a>
+						<a href="{{ path('app_about') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">À propos</a>
+						<a href="{{ path('app_events') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Événements</a>
+						<a href="{{ path('app_places') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Lieux</a>
+						<a href="{{ path('app_contact') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Contact</a>
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('admin_dashboard') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Admin</a>
+						{% endif %}
+						<div class="pt-4 space-y-3">
+							{% if not app.user %}
+								<a href="{{ path('app_login') }}" class="block w-full px-6 py-3 text-center bg-white border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all">Connexion</a>
+								<a href="{{ path('app_membership') }}" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-md text-center font-medium transition duration-300">Devenir membre</a>
+							{% else %}
+								<a href="{{ path('app_user_dashboard') }}" class="block w-full px-6 py-3 text-center btn-primary">Espace membre</a>
+								<a href="{{ path('app_logout') }}" class="block w-full px-6 py-3 text-center bg-primary border-2 border-gray-300 text-charcoal rounded-full font-semibold hover:bg-cream transition-all">Se déconnecter</a>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				<div id="menu-overlay" class="hidden fixed inset-0 bg-black/50 z-40"></div>
+			{% endblock %}
 
-    {% block footer %}
-    <footer class="bg-charcoal text-white py-16 mt-24">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-5 gap-12 mb-12">
-          <div>
-            <div class="flex items-center space-x-3 mb-4">
-              <img src="/media/logo.jpeg" alt="Logo Binajia" class="h-10 w-10 rounded-full object-cover">
-              <span class="font-serif text-2xl font-bold">BINAJIA</span>
-            </div>
-            <p class="text-gray-400">United to grow together</p>
-          </div>
-          <div>
-            <h4 class="font-semibold text-lg mb-4">Navigation</h4>
-            <ul class="space-y-2">
-              <li><a href="{{ path('app_home') }}" class="text-gray-400 hover:text-primary transition-colors">Accueil</a></li>
-              <li><a href="{{ path('app_about') }}" class="text-gray-400 hover:text-primary transition-colors">À propos</a></li>
-              <li><a href="{{ path('app_events') }}" class="text-gray-400 hover:text-primary transition-colors">Événements</a></li>
-              <li><a href="{{ path('app_places') }}" class="text-gray-400 hover:text-primary transition-colors">Lieux</a></li>
-              <li><a href="{{ path('app_contact') }}" class="text-gray-400 hover:text-primary transition-colors">Contact</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-semibold text-lg mb-4">Services</h4>
-            <ul class="space-y-2">
-              <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Réservations</a></li>
-              <li><a href="{{ path('app_membership') }}" class="text-gray-400 hover:text-primary transition-colors">Devenir membre</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Événements privés</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Partenariats</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-semibold text-lg mb-4">Newsletter</h4>
-            <p class="text-gray-400 mb-4">Restez informé de nos actualités</p>
-            <div class="flex">
-              <input type="email" placeholder="Votre email" class="flex-1 px-4 py-2 rounded-l-full bg-white/10 border border-white/20 focus:outline-none focus:border-primary">
-              <button class="px-6 py-2 bg-primary rounded-r-full hover:bg-primary-dark transition-colors">→</button>
-            </div>
-          </div>
-        </div>
-        <div class="pt-8 border-t border-white/10 text-center text-gray-400">
-          <p>&copy; {{ "now"|date('Y') }} BINAJIA. Tous droits réservés.</p>
-        </div>
-      </div>
-    </footer>
-    {% endblock %}
+			<main class="pt-2"> {% block content %}{% endblock %}
+				</main>
 
-    {% block scripts %}
-      <script src="{{ asset('build/runtime.js') }}" defer></script>
-      <script src="{{ asset('build/app.js') }}" defer></script>
-      <script src="/scripts/app.js" defer></script>
-    {% endblock %}
-  </body>
-</html>
+				{% block footer %}
+					<footer class="bg-charcoal text-white py-16 mt-24">
+						<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+							<div class="grid md:grid-cols-5 gap-12 mb-12">
+								<div>
+									<div class="flex items-center space-x-3 mb-4">
+										<img src="/media/logo.jpeg" alt="Logo Binajia" class="h-10 w-10 rounded-full object-cover">
+										<span class="font-serif text-2xl font-bold">BINAJIA</span>
+									</div>
+									<p class="text-gray-400">United to grow together</p>
+								</div>
+								<div>
+									<h4 class="font-semibold text-lg mb-4">Navigation</h4>
+									<ul class="space-y-2">
+										<li>
+											<a href="{{ path('app_home') }}" class="text-gray-400 hover:text-primary transition-colors">Accueil</a>
+										</li>
+										<li>
+											<a href="{{ path('app_about') }}" class="text-gray-400 hover:text-primary transition-colors">À propos</a>
+										</li>
+										<li>
+											<a href="{{ path('app_events') }}" class="text-gray-400 hover:text-primary transition-colors">Événements</a>
+										</li>
+										<li>
+											<a href="{{ path('app_places') }}" class="text-gray-400 hover:text-primary transition-colors">Lieux</a>
+										</li>
+										<li>
+											<a href="{{ path('app_contact') }}" class="text-gray-400 hover:text-primary transition-colors">Contact</a>
+										</li>
+									</ul>
+								</div>
+								<div>
+									<h4 class="font-semibold text-lg mb-4">Services</h4>
+									<ul class="space-y-2">
+										<li>
+											<a href="#" class="text-gray-400 hover:text-primary transition-colors">Réservations</a>
+										</li>
+										<li>
+											<a href="{{ path('app_membership') }}" class="text-gray-400 hover:text-primary transition-colors">Devenir membre</a>
+										</li>
+										<li>
+											<a href="#" class="text-gray-400 hover:text-primary transition-colors">Événements privés</a>
+										</li>
+										<li>
+											<a href="#" class="text-gray-400 hover:text-primary transition-colors">Partenariats</a>
+										</li>
+									</ul>
+								</div>
+								<div>
+									<h4 class="font-semibold text-lg mb-4">Newsletter</h4>
+									<p class="text-gray-400 mb-4">Restez informé de nos actualités</p>
+									<div class="flex">
+										<input type="email" placeholder="Votre email" class="flex-1 px-4 py-2 rounded-l-full bg-white/10 border border-white/20 focus:outline-none focus:border-primary">
+										<button class="px-6 py-2 bg-primary rounded-r-full hover:bg-primary-dark transition-colors">→</button>
+									</div>
+								</div>
+							</div>
+							<div class="pt-8 border-t border-white/10 text-center text-gray-400">
+								<p>&copy;
+									{{ "now"|date('Y') }}
+									BINAJIA. Tous droits réservés.</p>
+							</div>
+						</div>
+					</footer>
+				{% endblock %}
+
+				{% block scripts %}
+					<script src="{{ asset('build/runtime.js') }}" defer></script>
+					<script src="{{ asset('build/app.js') }}" defer></script>
+					<script src="/scripts/app.js" defer></script>
+				{% endblock %}
+			</body>
+		</head>
+	</html>
