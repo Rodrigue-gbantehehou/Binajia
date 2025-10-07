@@ -10,7 +10,6 @@
 .pattern-dots { background-image: radial-gradient(circle, rgba(217, 117, 87, 0.1) 2px, transparent 2px); background-size: 30px 30px; }
 .pattern-african { background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(45, 122, 79, 0.03) 15px, rgba(45, 122, 79, 0.03) 30px), repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(217, 117, 87, 0.03) 15px, rgba(217, 117, 87, 0.03) 30px); }
 
-.gradient-hero { background: linear-gradient(135deg, #1F5438 0%, #2D7A4F 25%, #D97557 60%, #F59E0B 100%); }
 .text-gradient { background: linear-gradient(135deg, #2D7A4F, #D97557, #F59E0B); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
 .card-hover { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
