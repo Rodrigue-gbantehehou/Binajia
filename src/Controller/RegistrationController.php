@@ -18,6 +18,8 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Psr\Log\LoggerInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use App\Service\PdfGeneratorService;
+use App\Service\MailerService;
 
 class RegistrationController extends AbstractController
 {
@@ -30,7 +32,9 @@ class RegistrationController extends AbstractController
         HttpClientInterface $httpClient,
         Environment $twig,
         Security $security,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        PdfGeneratorService $pdfGenerator,
+        MailerService $mailerService
     ): Response {
         $firstName = trim((string)$request->request->get('firstName'));
         $lastName  = trim((string)$request->request->get('lastName'));
@@ -204,129 +208,64 @@ class RegistrationController extends AbstractController
             $finalStatus = $verifiedStatus ?: $txStatus;
             if (is_string($finalStatus) && in_array(strtolower($finalStatus), ['approved','succeeded','success','paid'])) {
                 try {
-                    $loginUrl = $this->generateUrl('app_login', [], UrlGeneratorInterface::ABSOLUTE_URL);
-                    $cardUrlAbs = $this->generateUrl('app_membership_card_generated', ['id' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-                    $amountTxt = $payment->getAmount();
-
-                    // 1) Generate Membership Card PDF (recto-verso)
+                    // Génération de la carte membre PDF
                     $cardsDir = $this->getParameter('kernel.project_dir') . '/public/media/cards';
                     if (!is_dir($cardsDir)) { @mkdir($cardsDir, 0775, true); }
                     $stamp = date('YmdHis');
                     $cardFilename = sprintf('card_%d_%s.pdf', $user->getId(), $stamp);
                     $cardPdfPath = $cardsDir . '/' . $cardFilename;
                     $cardPdfUrl = '/media/cards/' . $cardFilename;
-                    $publicDir = $this->getParameter('kernel.project_dir') . '/public';
-                    $logoFs = $publicDir . '/media/logo.jpeg';
-                    $logoForPdf = 'file://' . $logoFs;
-                    $photoFs = 'file://' . ($this->getParameter('kernel.project_dir') . $avatarPath);
-                    // Backgrounds for image-overlay approach (optional files you provide)
-                    $bgRecto = 'file://' . ($publicDir . '/media/card_bg_recto.png');
-                    $bgVerso = 'file://' . ($publicDir . '/media/card_bg_verso.png');
-                    $cardHtml = $twig->render('membership/card_pdf_recto_verso.html.twig', [
-                        'name' => $user->getFirstname() . ' ' . $user->getLastname(),
-                        'phone' => $user->getPhone(),
-                        'nationality' => $user->getCountry(),
-                        'id' => $memberId,
-                        'expiry' => (new \DateTime('+1 year'))->format('d/m/Y'),
-                        'join_date' => ($user->getCreatedAt() ? $user->getCreatedAt()->format('d/m/Y') : (new \DateTime())->format('d/m/Y')),
-                        'role' => 'MEMBRE',
-                        'roleTitle' => "MEMBER\nBINAJIA",
-                        'logoUrl' => $logoForPdf,
-                        'photoUrl' => $photoFs,
-                        'bgRecto' => $bgRecto,
-                        'bgVerso' => $bgVerso,
-                    ]);
-                    $options = new Options();
-                    $options->set('defaultFont', 'DejaVu Sans');
-                    $options->setIsRemoteEnabled(true);
-                    // Restrict file access to public directory for safety
-                    $options->setChroot($publicDir);
-                    $dompdf = new Dompdf($options);
-                    $dompdf->loadHtml($cardHtml, 'UTF-8');
-                    $dompdf->setPaper('A6', 'landscape');
-                    $dompdf->render();
-                    $cardBytes = $dompdf->output();
-                    $bytesWritten = @file_put_contents($cardPdfPath, $cardBytes);
-                    $logger->info('Card PDF write attempt', ['path' => $cardPdfPath, 'bytes' => is_int($bytesWritten) ? $bytesWritten : null, 'ok' => is_int($bytesWritten) && $bytesWritten > 0]);
-                    if (!file_exists($cardPdfPath)) {
-                        $logger->error('Card PDF not found after write', ['path' => $cardPdfPath]);
-                    }
 
-                    // Save/Update MembershipCards row with PDF URL
-                    $mc = new \App\Entity\MembershipCards();
-                    $mc->setUser($user)
-                        ->setCardnumberC($memberId)
-                        ->setIssuedate(new \DateTime())
-                        ->setExpiryDate(new \DateTime('+1 year'))
-                        ->setStatus(true)
-                        ->setPdfurl($cardPdfUrl);
-                    $em->persist($mc);
-                    $em->flush();
-                    $logger->info('MembershipCards persisted', ['userId' => $user->getId(), 'pdfurl' => $cardPdfUrl]);
+                    // Définir la variable bgVerso (exemple de chemin d'image ou valeur par défaut)
+                    $bgVerso = '/images/card_bg_verso.jpg';
 
-                    // 2) Generate Receipt PDF
+                    $pdfGenerator->generatePdf(
+                        'membership/card_pdf_recto_verso.html.twig',
+                        ['bgVerso' => $bgVerso], // Ajoutez les autres variables nécessaires
+                        $cardPdfPath,
+                        'A6',
+                        'landscape'
+                    );
+
+                    // Génération du reçu PDF
                     $receiptsDir = $this->getParameter('kernel.project_dir') . '/public/media/receipts';
                     if (!is_dir($receiptsDir)) { @mkdir($receiptsDir, 0775, true); }
-                    $receiptNumber = 'RC-' . date('Ymd') . '-' . str_pad((string)$payment->getId(), 5, '0', STR_PAD_LEFT);
                     $receiptPdfPath = $receiptsDir . sprintf('/receipt_%d.pdf', $payment->getId());
-                    $receiptPdfUrl = '/media/receipts/' . sprintf('receipt_%d.pdf', $payment->getId());
-                    $receiptHtml = $twig->render('invoice/receipt.html.twig', [
+
+                    $pdfGenerator->generatePdf(
+                        'invoice/receipt.html.twig',
+                        ['issuedAt' => new \DateTime()], // Ajoutez les autres variables nécessaires
+                        $receiptPdfPath,
+                        'A4',
+                        'portrait'
+                    );
+
+                    // Envoi de l'e-mail avec pièce jointe
+                    $loginUrl = $this->generateUrl('app_login', [], UrlGeneratorInterface::ABSOLUTE_URL);
+                    $cardUrlAbs = $this->generateUrl('app_membership_card_generated', ['id' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+                    $amountTxt = $payment->getAmount();
+
+                    $htmlContent = $twig->render('emails/membership.html.twig', [
                         'user' => $user,
-                        'payment' => $payment,
-                        'receiptNumber' => $receiptNumber,
-                        'issuedAt' => new \DateTime(),
+                        'loginUrl' => $loginUrl,
+                        'cardUrlAbs' => $cardUrlAbs,
+                        'txId' => $txId,
+                        'amountTxt' => $amountTxt,
+                        'plainPassword' => $plainPassword,
+                        'isNewUser' => $isNewUser,
                     ]);
-                    $dompdf2 = new Dompdf($options);
-                    $dompdf2->loadHtml($receiptHtml, 'UTF-8');
-                    $dompdf2->setPaper('A4', 'portrait');
-                    $dompdf2->render();
-                    $receiptBytes = $dompdf2->output();
-                    $bytesWritten2 = @file_put_contents($receiptPdfPath, $receiptBytes);
-                    $logger->info('Receipt PDF write attempt', ['path' => $receiptPdfPath, 'bytes' => is_int($bytesWritten2) ? $bytesWritten2 : null, 'ok' => is_int($bytesWritten2) && $bytesWritten2 > 0]);
-                    if (!file_exists($receiptPdfPath)) {
-                        $logger->error('Receipt PDF not found after write', ['path' => $receiptPdfPath]);
-                    }
 
-                    // Save Receipts row
-                    $receipt = new \App\Entity\Receipts();
-                    $receipt->setPayment($payment)
-                        ->setReceiptNumber($receiptNumber)
-                        ->setIssuedDate(new \DateTime())
-                        ->setPdfurl($receiptPdfUrl);
-                    $em->persist($receipt);
-                    $em->flush();
-                    $logger->info('Receipt persisted', ['paymentId' => $payment->getId(), 'pdfurl' => $receiptPdfUrl]);
+                    $mailerService->sendMembershipEmail(
+                        $user->getEmail(),
+                        'Votre adhésion Binajia — Identifiants et carte membre',
+                        $htmlContent,
+                        $receiptPdfPath,
+                        'recu_binajia.pdf'
+                    );
 
-                    $emailMsg = (new Email())
-            ->from('no-reply@binajia.org')
-            ->to($user->getEmail())
-            ->subject('Votre adhésion Binajia — Identifiants et carte membre')
-            ->html((function() use ($user, $loginUrl, $cardUrlAbs, $txId, $amountTxt, $plainPassword, $isNewUser) {
-                $html = '<p>Bonjour ' . htmlspecialchars($user->getFirstname() . ' ' . $user->getLastname()) . ',</p>'
-                    . '<p>Votre paiement a été confirmé.</p>';
-                if ($isNewUser && $plainPassword) {
-                    $html .= '<p><strong>Identifiants de connexion</strong><br>'
-                        . 'Email: ' . htmlspecialchars($user->getEmail()) . '<br>'
-                        . 'Mot de passe: <code>' . htmlspecialchars($plainPassword) . '</code></p>'
-                        . '<p><a href="' . $loginUrl . '">Se connecter</a></p>';
-                } else {
-                    $html .= '<p>Vous pouvez vous connecter avec vos identifiants existants: <a href="' . $loginUrl . '">Se connecter</a></p>';
-                }
-                $html .= '<hr>'
-                    . '<p><strong>Reçu</strong><br>'
-                    . 'Transaction: ' . htmlspecialchars((string)$txId) . '<br>'
-                    . 'Montant: ' . htmlspecialchars((string)$amountTxt) . ' XOF<br>'
-                    . 'Date: ' . (new \DateTime())->format('d/m/Y H:i') . '</p>'
-                    . '<p>Votre carte est disponible ici: <a href="' . $cardUrlAbs . '">' . $cardUrlAbs . '</a></p>';
-                return $html;
-            })())
-            ->attachFromPath($receiptPdfPath, 'recu_binajia.pdf', 'application/pdf');
-                    $mailer->send($emailMsg);
-
-                    // Auto-login the user after successful card generation
                     $security->login($user);
                 } catch (\Throwable $e) {
-                    // Ignore mail errors to not block the flow
+                    // Ignore mail errors to not bloquer le flow
                 }
             }
         }
