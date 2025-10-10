@@ -1,0 +1,114 @@
+{# filepath: c:\projets\Binajia\Binajia_old\binajia\templates\emails\membership.html.twig #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Votre adhésion Binajia</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: #fff;
+            max-width: 520px;
+            margin: 30px auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 32px 28px 24px 28px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .header img {
+            max-width: 120px;
+            margin-bottom: 8px;
+        }
+        h1 {
+            color: #1a237e;
+            font-size: 1.5em;
+            margin: 0 0 12px 0;
+        }
+        p {
+            color: #333;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+        .cta {
+            display: inline-block;
+            background: #1a237e;
+            color: #fff !important;
+            padding: 10px 22px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 18px 0;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .footer {
+            margin-top: 32px;
+            font-size: 0.95em;
+            color: #888;
+            text-align: center;
+        }
+        .info {
+            background: #e3eafc;
+            border-left: 4px solid #1a237e;
+            padding: 10px 16px;
+            margin: 18px 0;
+            border-radius: 4px;
+        }
+        .strong {
+            font-weight: bold;
+            color: #1a237e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            {# Ajoutez le logo si disponible #}
+            {# <img src="https://binajia.org/logo.png" alt="Binajia"> #}
+            <h1>Bienvenue chez Binajia&nbsp;!</h1>
+        </div>
+
+        <p>Bonjour <span class="strong">{{ user.firstname }} {{ user.lastname }}</span>,</p>
+
+        <div class="info">
+            Merci pour votre adhésion à <span class="strong">Binajia</span>.<br>
+            {% if isNewUser %}
+                <br>Voici vos identifiants de connexion&nbsp;:<br>
+                <span class="strong">Email&nbsp;:</span> {{ user.email }}<br>
+                <span class="strong">Mot de passe&nbsp;:</span> {{ plainPassword }}<br>
+                <a href="{{ loginUrl }}" class="cta">Se connecter</a>
+            {% else %}
+                Vous pouvez accéder à votre espace membre ici&nbsp;:
+                <a href="{{ loginUrl }}" class="cta">{{ loginUrl }}</a>
+            {% endif %}
+        </div>
+
+        <p>
+            Votre carte de membre est disponible ici&nbsp;:
+            <a href="{{ cardUrlAbs }}" class="cta">Voir ma carte</a>
+        </p>
+
+        <p>
+            Montant payé&nbsp;: <span class="strong">{{ amountTxt }} FCFA</span><br>
+            Référence de transaction&nbsp;: <span class="strong">{{ txId }}</span>
+        </p>
+
+        <p>
+            Vous trouverez en pièce jointe votre reçu de paiement.<br>
+            Bienvenue dans la communauté Binajia&nbsp;!
+        </p>
+
+        <div class="footer">
+            L’équipe Binajia<br>
+            <small>Merci de ne pas répondre à cet e-mail automatique.</small>
+        </div>
+    </div>
+</body>
+</html>
