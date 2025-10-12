@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  ###> doctrine/doctrine-bundle ###
+  database:
+    image: mysql:${MYSQL_VERSION:-8.0}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-binajia_demo}
+      MYSQL_USER: ${MYSQL_USER:-binajia_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-Binajia2025!}
+    ports:
+      - "3306:3306"
+    volumes:
+      - database_data:/var/lib/mysql:rw
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    command: --default-authentication-plugin=mysql_native_password
+  ###< doctrine/doctrine-bundle ###
+
+  ###> symfony application ###
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www/html:cached
+      # Pour éviter les problèmes de permissions sur les fichiers
+      - /var/www/html/var/cache
+      - /var/www/html/var/log
+    environment:
+      APP_ENV: prod
+      APP_DEBUG: 0
+      DATABASE_URL: mysql://binajia_user:Binajia2025!@database:3306/binajia_demo?serverVersion=8.0
+    restart: unless-stopped
+  ###< symfony application ###
+
+volumes:
+  ###> doctrine/doctrine-bundle ###
+  database_data:
+  ###< doctrine/doctrine-bundle ###
