@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\CulturalcontentRepository;
+use App\Repository\CulturalContentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CulturalcontentRepository::class)]
-class Culturalcontent
+#[ORM\Entity(repositoryClass: CulturalContentRepository::class)]
+class CulturalContent
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -26,10 +26,10 @@ class Culturalcontent
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $videoUrl = null;
 
-    #[ORM\Column(length: 20, nullable: true)]
+    #[ORM\Column(length: 10, nullable: true)]
     private ?string $type = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $country = null;
 
     #[ORM\Column(nullable: true)]
