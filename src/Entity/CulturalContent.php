@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\Repository;
+use App\Repository\CulturalcontentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,7 +14,7 @@ class Culturalcontent
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 200)]
+    #[ORM\Column(length: 200, nullable: true)]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -32,7 +32,7 @@ class Culturalcontent
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $country = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int
@@ -45,7 +45,7 @@ class Culturalcontent
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(?string $title): static
     {
         $this->title = $title;
 
@@ -117,7 +117,7 @@ class Culturalcontent
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 

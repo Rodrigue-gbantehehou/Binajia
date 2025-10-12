@@ -1,14 +1,16 @@
 <?php
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Culturalcontent;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function indexA(): Response
+    public function indexA(EntityManagerInterface $entityManager): Response
     {
         $events = [
             ['id'=>1,'title'=>'Festival des Arts Contemporains','date'=>new \DateTime('+7 days'),'city'=>'Cotonou','coverUrl'=>'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop','excerpt'=>'Rencontres, performances, expositions.'],
@@ -22,8 +24,10 @@ class HomeController extends AbstractController
             ['id'=>1,'title'=>'Textiles yoruba: art et identité','excerpt'=>'Des motifs au sens profond...'],
             ['id'=>2,'title'=>'Bronzes du Bénin: héritage','excerpt'=>'Une histoire millénaire...'],
         ];
+        $places = $entityManager->getRepository(Culturalcontent::class)->findAll();
+
         // Render the redesigned homepage by default
-        return $this->render('home/index_c.html.twig');
+        return $this->render('home/index_c.html.twig', compact('places'));
     }
 
     #[Route('/home/b', name: 'app_home_b')]
@@ -41,6 +45,8 @@ class HomeController extends AbstractController
     #[Route('/home/c', name: 'app_home_c')]
     public function indexC(): Response
     {
-        return $this->render('home/index_c.html.twig');
+        return $this->render('home/index_c.html.twig',
+       
+        );
     }
 }
