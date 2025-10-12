@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Culturalcontent;
+use App\Entity\CulturalContent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -24,7 +24,7 @@ class HomeController extends AbstractController
             ['id'=>1,'title'=>'Textiles yoruba: art et identité','excerpt'=>'Des motifs au sens profond...'],
             ['id'=>2,'title'=>'Bronzes du Bénin: héritage','excerpt'=>'Une histoire millénaire...'],
         ];
-        $places = $entityManager->getRepository(Culturalcontent::class)->findAll();
+        $places = $entityManager->getRepository(CulturalContent::class)->findAll();
 
         // Render the redesigned homepage by default
         return $this->render('home/index_c.html.twig', compact('places'));
@@ -45,8 +45,8 @@ class HomeController extends AbstractController
     #[Route('/home/c', name: 'app_home_c')]
     public function indexC(EntityManagerInterface $entityManager): Response
     {
-        $contents = $entityManager->getRepository(Culturalcontent::class)->findAll();
-        $places = $entityManager->getRepository(Culturalcontent::class)->findBy(['type' => 'lieu']);
+        $contents = $entityManager->getRepository(CulturalContent::class)->findAll();
+        $places = $entityManager->getRepository(CulturalContent::class)->findBy(['type' => 'lieu']);
         return $this->render('home/index_c.html.twig', compact('contents', 'places'));
     }
 }

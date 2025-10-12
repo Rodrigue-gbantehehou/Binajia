@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Culturalcontent;
+use App\Entity\CulturalContent;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Culturalcontent>
+ * @extends ServiceEntityRepository<CulturalContent>
  */
-class CulturalcontentRepository extends ServiceEntityRepository
+class CulturalContentRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Culturalcontent::class);
+        parent::__construct($registry, CulturalContent::class);
     }
 
     //    /**
-    //     * @return Culturalcontent[] Returns an array of Culturalcontent objects
+    //     * @return CulturalContent[] Returns an array of CulturalContent objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class CulturalcontentRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Culturalcontent
+    //    public function findOneBySomeField($value): ?CulturalContent
     //    {
     //        return $this->createQueryBuilder('c')
     //            ->andWhere('c.exampleField = :val')

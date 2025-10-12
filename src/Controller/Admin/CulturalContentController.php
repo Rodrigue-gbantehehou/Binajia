@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Culturalcontent;
+use App\Entity\CulturalContent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +22,7 @@ class CulturalContentController extends AbstractController
         $size = max(1, min(100, (int) $request->query->get('size', 20)));
         $offset = ($page - 1) * $size;
 
-        $qb = $em->getRepository(Culturalcontent::class)->createQueryBuilder('c');
+        $qb = $em->getRepository(CulturalContent::class)->createQueryBuilder('c');
 
         if ($q !== '') {
             $qb->andWhere('c.title LIKE :q OR c.description LIKE :q OR c.country LIKE :q')
@@ -60,7 +60,7 @@ class CulturalContentController extends AbstractController
     #[Route('/admin/cultural-content/{id}', name: 'admin_cultural_content_show', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function show(int $id, EntityManagerInterface $em): Response
     {
-        $content = $em->getRepository(Culturalcontent::class)->find($id);
+        $content = $em->getRepository(CulturalContent::class)->find($id);
         if (!$content) {
             throw $this->createNotFoundException('Contenu culturel introuvable');
         }
@@ -74,7 +74,7 @@ class CulturalContentController extends AbstractController
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         if ($request->isMethod('POST')) {
-            $content = new Culturalcontent();
+            $content = new CulturalContent();
             $content->setTitle($request->request->get('title'));
             $content->setDescription($request->request->get('description'));
             $content->setType($request->request->get('type'));
@@ -109,7 +109,7 @@ class CulturalContentController extends AbstractController
     #[Route('/admin/cultural-content/{id}/edit', name: 'admin_cultural_content_edit', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     public function edit(int $id, Request $request, EntityManagerInterface $em): Response
     {
-        $content = $em->getRepository(Culturalcontent::class)->find($id);
+        $content = $em->getRepository(CulturalContent::class)->find($id);
         if (!$content) {
             throw $this->createNotFoundException('Contenu culturel introuvable');
         }
@@ -149,7 +149,7 @@ class CulturalContentController extends AbstractController
     #[Route('/admin/cultural-content/{id}/delete', name: 'admin_cultural_content_delete', methods: ['POST'], requirements: ['id' => '\d+'])]
     public function delete(int $id, EntityManagerInterface $em, Request $request): Response
     {
-        $content = $em->getRepository(Culturalcontent::class)->find($id);
+        $content = $em->getRepository(CulturalContent::class)->find($id);
         if (!$content) {
             throw $this->createNotFoundException('Contenu culturel introuvable');
         }

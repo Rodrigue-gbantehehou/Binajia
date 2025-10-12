@@ -5,7 +5,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 try {
     // Test de chargement de l'entité
-    $entityClass = 'App\Entity\Culturalcontent';
+    $entityClass = 'App\Entity\CulturalContent';
     if (class_exists($entityClass)) {
         echo "✅ Classe {$entityClass} trouvée\n";
 
