@@ -1,0 +1,72 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Membre {{ user.firstname }} {{ user.lastname }}{% endblock %}
+
+{% block admin_body %}
+  <div class="space-y-6">
+    <div class="bg-white rounded-xl ring-1 ring-gray-200 p-6">
+      <h1 class="text-2xl font-bold mb-4">Profil membre</h1>
+      <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div><dt class="text-gray-500">Nom</dt><dd class="font-semibold">{{ user.firstname }} {{ user.lastname }}</dd></div>
+        <div><dt class="text-gray-500">Email</dt><dd class="font-semibold">{{ user.email }}</dd></div>
+        <div><dt class="text-gray-500">Téléphone</dt><dd class="font-semibold">{{ user.phone ?: '—' }}</dd></div>
+        <div><dt class="text-gray-500">Pays</dt><dd class="font-semibold">{{ user.country ?: '—' }}</dd></div>
+        <div><dt class="text-gray-500">Créé le</dt><dd class="font-semibold">{{ user.createdAt ? user.createdAt|date('d/m/Y H:i') : '—' }}</dd></div>
+        <div><dt class="text-gray-500">Rôles</dt><dd class="font-semibold">{{ user.roles|join(', ') }}</dd></div>
+      </dl>
+    </div>
+
+    <div class="bg-white rounded-xl ring-1 ring-gray-200 p-6">
+      <h2 class="text-xl font-semibold mb-4">Cartes</h2>
+      {% if user.membershipCards|length %}
+        <ul class="space-y-2">
+          {% for c in user.membershipCards %}
+            <li class="flex items-center justify-between">
+              <div>
+                <div class="font-semibold">{{ c.cardnumberC }}</div>
+                <div class="text-sm text-gray-600">Émise: {{ c.issuedate ? c.issuedate|date('d/m/Y') : '—' }} · Expire: {{ c.expiryDate ? c.expiryDate|date('d/m/Y') : '—' }}</div>
+              </div>
+              <div class="flex items-center gap-3">
+                {% if c.pdfurl %}
+                  <a class="btn" href="{{ c.pdfurl }}" target="_blank">Voir PDF</a>
+                {% endif %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="text-gray-500">Aucune carte.</div>
+      {% endif %}
+    </div>
+
+    <div class="bg-white rounded-xl ring-1 ring-gray-200 p-6">
+      <h2 class="text-xl font-semibold mb-4">Paiements</h2>
+      {% if user.payments|length %}
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Montant</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Réf.</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              {% for p in user.payments %}
+                <tr>
+                  <td class="px-4 py-2">{{ p.paymentdate ? p.paymentdate|date('d/m/Y H:i') : '—' }}</td>
+                  <td class="px-4 py-2">{{ p.amount ?: '—' }}</td>
+                  <td class="px-4 py-2">{{ p.status ?: '—' }}</td>
+                  <td class="px-4 py-2">{{ p.reference ?: '—' }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="text-gray-500">Aucun paiement.</div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

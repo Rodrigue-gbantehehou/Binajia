@@ -1,0 +1,25 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Supervision — Métriques{% endblock %}
+
+{% block admin_body %}
+  <h1 class="text-2xl font-bold mb-4">Métriques</h1>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="bg-white ring-1 ring-gray-200 rounded-xl p-6">
+      <div class="text-gray-500">Utilisateurs</div>
+      <div class="text-3xl font-bold">{{ totalUsers }}</div>
+    </div>
+    <div class="bg-white ring-1 ring-gray-200 rounded-xl p-6">
+      <div class="text-gray-500">Paiements</div>
+      <div class="text-3xl font-bold">{{ totalPayments }}</div>
+    </div>
+    <div class="bg-white ring-1 ring-gray-200 rounded-xl p-6">
+      <div class="text-gray-500">Cartes</div>
+      <div class="text-3xl font-bold">{{ totalCards }}</div>
+    </div>
+    <div class="bg-white ring-1 ring-gray-200 rounded-xl p-6">
+      <div class="text-gray-500">Cartes (30j)</div>
+      <div class="text-3xl font-bold">{{ cards30d }}</div>
+    </div>
+  </div>
+{% endblock %}

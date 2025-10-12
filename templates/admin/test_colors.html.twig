@@ -1,0 +1,79 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Test Couleurs{% endblock %}
+
+{% block admin_body %}
+<div class="space-y-6">
+  <h1 class="text-3xl font-bold text-gray-900">Test des Couleurs Admin</h1>
+  
+  <!-- Test des cartes -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="admin-card">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">Carte Test 1</h3>
+      <p class="text-gray-600">Cette carte devrait avoir une bordure verte en haut et un effet hover.</p>
+    </div>
+    
+    <div class="admin-card">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">Carte Test 2</h3>
+      <p class="text-gray-600">Survolez cette carte pour voir l'effet d'animation.</p>
+    </div>
+    
+    <div class="admin-card">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">Carte Test 3</h3>
+      <p class="text-gray-600">Toutes les cartes ont le même style.</p>
+    </div>
+  </div>
+  
+  <!-- Test des boutons -->
+  <div class="space-y-4">
+    <h2 class="text-2xl font-bold text-gray-900">Test des Boutons</h2>
+    <div class="flex flex-wrap gap-4">
+      <button class="admin-btn admin-btn-primary">
+        <i class="fas fa-plus mr-2"></i>Bouton Primaire
+      </button>
+      
+      <button class="admin-btn admin-btn-secondary">
+        <i class="fas fa-download mr-2"></i>Bouton Secondaire
+      </button>
+      
+      <button class="admin-btn admin-btn-primary admin-btn-sm">
+        <i class="fas fa-edit mr-1"></i>Petit Bouton
+      </button>
+    </div>
+  </div>
+  
+  <!-- Test des couleurs Tailwind -->
+  <div class="space-y-4">
+    <h2 class="text-2xl font-bold text-gray-900">Test Couleurs Tailwind</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-green-500 text-white p-4 rounded-lg text-center">
+        <div class="text-sm font-medium">Green 500</div>
+      </div>
+      <div class="bg-orange-500 text-white p-4 rounded-lg text-center">
+        <div class="text-sm font-medium">Orange 500</div>
+      </div>
+      <div class="bg-blue-500 text-white p-4 rounded-lg text-center">
+        <div class="text-sm font-medium">Blue 500</div>
+      </div>
+      <div class="bg-red-500 text-white p-4 rounded-lg text-center">
+        <div class="text-sm font-medium">Red 500</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Test des gradients -->
+  <div class="space-y-4">
+    <h2 class="text-2xl font-bold text-gray-900">Test Gradients</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-gradient-to-r from-green-600 to-orange-500 text-white p-6 rounded-lg">
+        <h3 class="text-lg font-semibold">Gradient Vert → Orange</h3>
+        <p>Ce gradient devrait aller du vert à l'orange</p>
+      </div>
+      <div class="bg-gradient-to-b from-green-900 to-green-800 text-white p-6 rounded-lg">
+        <h3 class="text-lg font-semibold">Gradient Vert Foncé</h3>
+        <p>Ce gradient devrait être vert foncé</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

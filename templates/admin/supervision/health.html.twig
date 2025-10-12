@@ -1,0 +1,17 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Supervision — Health{% endblock %}
+
+{% block admin_body %}
+  <h1 class="text-2xl font-bold mb-4">Health Checks</h1>
+  <div class="bg-white ring-1 ring-gray-200 rounded-xl p-6">
+    <ul class="space-y-2">
+      {% for key, c in checks %}
+        <li class="flex items-center justify-between">
+          <div class="font-mono text-sm">{{ key }}</div>
+          <div class="text-sm {{ c.ok ? 'text-green-600' : 'text-red-600' }}">{{ c.ok ? 'OK' : 'FAIL' }} — {{ c.message }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

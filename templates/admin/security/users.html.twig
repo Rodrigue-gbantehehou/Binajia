@@ -1,0 +1,45 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block admin_body %}
+    <div class="flex items-center justify-between mb-4">
+      <h1 class="text-2xl font-bold">Utilisateurs</h1>
+    </div>
+
+    <div class="overflow-x-auto rounded-xl ring-1 ring-gray-200 bg-white">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rôles</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Créé le</th>
+            <th class="px-4 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          {% for u in users %}
+            {% set isAdmin = 'ROLE_ADMIN' in u.roles %}
+            <tr>
+              <td class="px-4 py-3">{{ u.firstname }} {{ u.lastname }}</td>
+              <td class="px-4 py-3">{{ u.email }}</td>
+              <td class="px-4 py-3">{{ u.roles|join(', ') }}</td>
+              <td class="px-4 py-3">{{ u.createdAt ? u.createdAt|date('d/m/Y H:i') : '—' }}</td>
+              <td class="px-4 py-3 text-right">
+                <form action="{{ path('admin_security_toggle_admin', {id: u.id}) }}" method="post" class="inline">
+                  <input type="hidden" name="_token" value="{{ csrf_token('toggle_admin_' ~ u.id) }}" />
+                  <button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 {{ isAdmin ? 'bg-red-50 text-red-600 hover:bg-red-100' : 'bg-green-50 text-green-600 hover:bg-green-100' }}">
+                    <i class="fas {{ isAdmin ? 'fa-user-minus' : 'fa-user-plus' }}"></i>
+                    {{ isAdmin ? 'Retirer ROLE_ADMIN' : 'Ajouter ROLE_ADMIN' }}
+                  </button>
+                </form>
+              </td>
+            </tr>
+          {% else %}
+            <tr><td colspan="5" class="px-4 py-6 text-center text-gray-500">Aucun utilisateur</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+{% endblock %}

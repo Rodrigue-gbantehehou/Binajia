@@ -1,0 +1,15 @@
+# Configuration PHP recommandée pour résoudre les problèmes cURL
+
+# 1. Configuration des certificats SSL (optionnel)
+# curl.cainfo = "C:/php/cacert.pem"
+# openssl.cafile = "C:/php/cacert.pem"
+
+# 2. Configuration réseau (si nécessaire)
+# curl_connect_timeout = 10
+# curl_timeout = 30
+
+# 3. Configuration de sécurité (ajustez selon vos besoins)
+# openssl.capath = ""
+
+# Note : Ces configurations peuvent être ajoutées au php.ini
+# ou définies dans le code Symfony via HttpClient options

@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Payments;
+use App\Entity\MembershipCards;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,8 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Service\PdfGeneratorService;
 use App\Service\MailerService;
+use App\Service\FileUploader;
+use App\Service\MembershipCardService;
 
 class RegistrationController extends AbstractController
 {
@@ -34,7 +37,9 @@ class RegistrationController extends AbstractController
         Security $security,
         LoggerInterface $logger,
         PdfGeneratorService $pdfGenerator,
-        MailerService $mailerService
+        MailerService $mailerService,
+        FileUploader $fileUploader,
+        MembershipCardService $membershipCardService
     ): Response {
         $firstName = trim((string)$request->request->get('firstName'));
         $lastName  = trim((string)$request->request->get('lastName'));
@@ -45,8 +50,25 @@ class RegistrationController extends AbstractController
         $plan      = trim((string)$request->request->get('plan')) ?: 'standard';
         $photoData = (string)$request->request->get('photoData'); // base64 data URL (required)
 
+        // Normalize base64 data URL if sent via x-www-form-urlencoded ("+" may become spaces)
+        if ($photoData !== '' && str_starts_with($photoData, 'data:image')) {
+            $parts = explode(',', $photoData, 2);
+            if (count($parts) === 2) {
+                // Replace spaces with "+" in the base64 segment only
+                $parts[1] = str_replace(' ', '+', $parts[1]);
+                // Decode any percent-encoding that might be present
+                $parts[1] = preg_match('/%[0-9A-Fa-f]{2}/', $parts[1]) ? rawurldecode($parts[1]) : $parts[1];
+                $photoData = $parts[0] . ',' . $parts[1];
+            }
+        }
+
         if ($firstName === '' || $lastName === '' || $email === '' || $phone === '') {
             return $this->json(['ok' => false, 'message' => 'Champs requis manquants'], 400);
+        }
+
+        // Explicit check for missing photo
+        if ($photoData === '' || !str_starts_with($photoData, 'data:image')) {
+            return $this->json(['ok' => false, 'message' => 'La photo est obligatoire et doit être un Data URL base64 commençant par data:image/...'], 400);
         }
 
         // Basic server-side phone normalization (towards E.164)
@@ -100,64 +122,28 @@ class RegistrationController extends AbstractController
         // Build a member ID like BjNg-YYYY-000{id}
         $memberId = sprintf('BjNg-%s-%03d', (new \DateTime())->format('Y'), $user->getId());
 
-        // Photo is required: decode, crop (3:4 portrait), and save JPEG for card
-        $avatarPath = null;
-        if ($photoData && str_starts_with($photoData, 'data:image')) {
-            $data = explode(',', $photoData, 2);
-            if (count($data) === 2) {
-                $bin = base64_decode($data[1]);
-                if ($bin !== false) {
-                    $src = @imagecreatefromstring($bin);
-                    if ($src !== false) {
-                        $srcW = imagesx($src); $srcH = imagesy($src);
-                        // Target aspect 3:4 (width:height)
-                        $targetRatio = 3/4;
-                        $srcRatio = $srcW / max(1, $srcH);
-                        if ($srcRatio > $targetRatio) {
-                            // too wide: crop width
-                            $newW = (int) round($srcH * $targetRatio);
-                            $newH = $srcH;
-                            $srcX = (int) max(0, floor(($srcW - $newW)/2));
-                            $srcY = 0;
-                        } else {
-                            // too tall: crop height
-                            $newW = $srcW;
-                            $newH = (int) round($srcW / $targetRatio);
-                            $srcX = 0;
-                            $srcY = (int) max(0, floor(($srcH - $newH)/2));
-                        }
-                        $crop = imagecreatetruecolor($newW, $newH);
-                        imagecopy($crop, $src, 0, 0, $srcX, $srcY, $newW, $newH);
-                        // Resize to consistent output (e.g., 300x400)
-                        $outW = 300; $outH = 400;
-                        $dst = imagecreatetruecolor($outW, $outH);
-                        imagecopyresampled($dst, $crop, 0, 0, 0, 0, $outW, $outH, $newW, $newH);
-                        imagedestroy($crop);
-
-                        $dir = $this->getParameter('kernel.project_dir') . '/public/media/avatars';
-                        if (!is_dir($dir)) { @mkdir($dir, 0775, true); }
-                        $avatarPath = sprintf('/media/avatars/%d.jpg', $user->getId());
-                        $fsPath = $this->getParameter('kernel.project_dir') . $avatarPath;
-                        @imagejpeg($dst, $fsPath, 90);
-                        imagedestroy($dst);
-                        imagedestroy($src);
-                    }
-                }
-            }
-        }
-        if ($avatarPath === null) {
-            return $this->json(['ok' => false, 'message' => 'La photo est obligatoire pour générer la carte.'], 400);
+        // Photo is required: handled by FileUploader service (crop 3:4, resize 300x400)
+        try {
+            $avatarPath = $fileUploader->saveAvatarFromDataUrl($photoData, (int)$user->getId());
+        } catch (\RuntimeException $e) {
+            // In dev, expose detailed reason for faster debugging
+            $env = $_ENV['APP_ENV'] ?? $_SERVER['APP_ENV'] ?? 'prod';
+            $msg = $env === 'dev' ? ('Erreur image: ' . $e->getMessage()) : 'La photo est obligatoire pour générer la carte.';
+            return $this->json(['ok' => false, 'message' => $msg], 400);
         }
 
-        // Redirect URL to view the card
+        // Redirect URL to view the card (include query for plan and avatar)
         $url = $this->generateUrl('app_membership_card_generated', [
             'id' => $user->getId(),
+            'plan' => $plan,
+            'avatar' => $avatarPath,
         ]);
 
         // If payment details were provided by the frontend, store them
         $txId = $request->request->get('transactionId');
         $txStatus = $request->request->get('transactionStatus');
         $amount = $request->request->get('amount');
+        $cardGenerated = false;
         if ($txId) {
             $payment = new Payments();
             if ($amount !== null && $amount !== '') {
@@ -208,37 +194,11 @@ class RegistrationController extends AbstractController
             $finalStatus = $verifiedStatus ?: $txStatus;
             if (is_string($finalStatus) && in_array(strtolower($finalStatus), ['approved','succeeded','success','paid'])) {
                 try {
-                    // Génération de la carte membre PDF
-                    $cardsDir = $this->getParameter('kernel.project_dir') . '/public/media/cards';
-                    if (!is_dir($cardsDir)) { @mkdir($cardsDir, 0775, true); }
-                    $stamp = date('YmdHis');
-                    $cardFilename = sprintf('card_%d_%s.pdf', $user->getId(), $stamp);
-                    $cardPdfPath = $cardsDir . '/' . $cardFilename;
-                    $cardPdfUrl = '/media/cards/' . $cardFilename;
-
-                    // Définir la variable bgVerso (exemple de chemin d'image ou valeur par défaut)
-                    $bgVerso = '/images/card_bg_verso.jpg';
-
-                    $pdfGenerator->generatePdf(
-                        'membership/card_pdf_recto_verso.html.twig',
-                        ['bgVerso' => $bgVerso], // Ajoutez les autres variables nécessaires
-                        $cardPdfPath,
-                        'A6',
-                        'landscape'
-                    );
-
-                    // Génération du reçu PDF
-                    $receiptsDir = $this->getParameter('kernel.project_dir') . '/public/media/receipts';
-                    if (!is_dir($receiptsDir)) { @mkdir($receiptsDir, 0775, true); }
-                    $receiptPdfPath = $receiptsDir . sprintf('/receipt_%d.pdf', $payment->getId());
-
-                    $pdfGenerator->generatePdf(
-                        'invoice/receipt.html.twig',
-                        ['issuedAt' => new \DateTime()], // Ajoutez les autres variables nécessaires
-                        $receiptPdfPath,
-                        'A4',
-                        'portrait'
-                    );
+                    // Générer la carte et le reçu + persister en base via le service
+                    $result = $membershipCardService->generateAndPersist($user, $payment, $avatarPath, $memberId);
+                    $cardGenerated = true;
+                    $cardPdfUrl = $result['cardPdfUrl'];
+                    $receiptPdfPath = $result['receiptPdfPath'];
 
                     // Envoi de l'e-mail avec pièce jointe
                     $loginUrl = $this->generateUrl('app_login', [], UrlGeneratorInterface::ABSOLUTE_URL);
@@ -265,8 +225,25 @@ class RegistrationController extends AbstractController
 
                     $security->login($user);
                 } catch (\Throwable $e) {
-                    // Ignore mail errors to not bloquer le flow
+                    // Log errors for diagnostics without breaking the flow
+                    $logger->error('Membership email or PDF generation failed after approved payment', [
+                        'userId' => $user->getId(),
+                        'error' => $e->getMessage(),
+                    ]);
                 }
+            }
+        }
+
+        // If no payment or not approved yet, still generate the card PDF and persist entity (without receipt)
+        if (!$cardGenerated) {
+            try {
+                $membershipCardService->generateAndPersist($user, null, $avatarPath, $memberId);
+            } catch (\Throwable $e) {
+                // Log errors but do not block the flow
+                $logger->error('Membership card PDF generation failed (pre-redirect)', [
+                    'userId' => $user->getId(),
+                    'error' => $e->getMessage(),
+                ]);
             }
         }
 
@@ -287,6 +264,10 @@ class RegistrationController extends AbstractController
         }
         $memberId = sprintf('BjNg-%s-%03d', (new \DateTime())->format('Y'), $user->getId());
 
+        $memberCard = $em->getRepository(MembershipCards::class)->findOneBy(['user' => $user]);
+        if (!$memberCard) {
+            throw $this->createNotFoundException('Carte membre introuvable');
+        }
         // Optionally pass avatar path via query if saved
         $avatar = $request->query->get('avatar');
         $plan = $request->query->get('plan', 'standard');
@@ -304,6 +285,7 @@ class RegistrationController extends AbstractController
             'plan' => $plan,
             'avatar' => $avatar,
             'displayCountry' => $displayCountry,
+            'memberCard'=>$memberCard
         ]);
     }
 }

@@ -1,0 +1,14 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Supervision — Logs{% endblock %}
+
+{% block admin_body %}
+  <h1 class="text-2xl font-bold mb-4">Derniers journaux</h1>
+  <div class="mb-3 text-sm text-gray-600">Fichier: <code>{{ file }}</code></div>
+  <form method="get" class="mb-3 flex items-center gap-2">
+    <label>Lignes</label>
+    <input class="input w-28" type="number" name="lines" min="50" value="{{ lines }}" />
+    <button class="btn">Actualiser</button>
+  </form>
+  <pre class="bg-black text-green-200 rounded-xl p-4 overflow-auto" style="max-height: 600px; white-space: pre-wrap">{{ content }}</pre>
+{% endblock %}

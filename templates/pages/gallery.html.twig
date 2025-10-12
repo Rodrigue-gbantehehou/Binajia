@@ -1,0 +1,262 @@
+{% extends 'base.html.twig' %}
+{% block title %}Galerie — Découvrez Binajia en images{% endblock %}
+
+{% block content %}
+
+{# Hero Section #}
+<section class="relative overflow-hidden min-h-screen -mt-20 pt-20 bg-gradient-to-br from-green-800 via-emerald-700 to-amber-600 flex items-center">
+  {# Animated Background Elements #}
+  <div class="absolute top-0 right-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 text-white relative z-10 w-full">
+    <div class="text-center opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+      {# Badge #}
+      <div class="inline-flex items-center space-x-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-6">
+        <span class="h-2 w-2 rounded-full bg-amber-400"></span>
+        <span class="text-white/90 text-sm tracking-wide font-medium">GALERIE BINAJIA</span>
+      </div>
+
+      <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white drop-shadow-lg">
+        <span class="block text-amber-300 text-lg sm:text-xl md:text-2xl font-medium mb-2 tracking-wide">
+          📸 Découvrez Binajia en images
+        </span>
+        <span class="block">
+          Nos moments forts
+        </span>
+      </h1>
+      
+      <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl mx-auto">
+        Plongez dans l'univers visuel de Binajia à travers une collection d'images qui racontent notre histoire, nos événements, nos partenaires et notre impact sur les communautés du Bénin et du Nigéria.
+      </p>
+    </div>
+  </div>
+</section>
+
+{# Gallery Sections #}
+<section class="py-20 bg-gradient-to-br from-white via-yellow-50/30 to-green-50/30 relative overflow-hidden">
+  <div class="absolute inset-0 pattern-kente opacity-10 pointer-events-none"></div>
+  <div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    
+    {# Événements et Festivals #}
+    <div class="mb-20 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-100 to-amber-100 rounded-full mb-6">
+          <div class="w-2 h-2 bg-gradient-to-r from-green-600 to-amber-500 rounded-full"></div>
+          <span class="font-semibold text-green-700">Événements & Festivals</span>
+        </div>
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">Nos célébrations culturelles</h2>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% set eventImages = [
+          { url: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=800&auto=format&fit=crop', title: 'Festival Culturel Bénin-Nigéria', desc: 'Célébration de la diversité culturelle' },
+          { url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop', title: 'Concert de Musique Traditionnelle', desc: 'Artistes locaux en performance' },
+          { url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop', title: 'Exposition d\'Art Contemporain', desc: 'Œuvres d\'artistes émergents' },
+          { url: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?q=80&w=800&auto=format&fit=crop', title: 'Danse Traditionnelle', desc: 'Spectacle de danses ancestrales' },
+          { url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=800&auto=format&fit=crop', title: 'Cérémonie d\'Ouverture', desc: 'Lancement officiel des programmes' },
+          { url: 'https://images.unsplash.com/photo-1564759298141-cef86f51d4d4?q=80&w=800&auto=format&fit=crop', title: 'Marché Artisanal', desc: 'Exposition des produits locaux' }
+        ] %}
+
+        {% for image in eventImages %}
+        <div class="group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105">
+          <img src="{{ image.url }}" alt="{{ image.title }}" class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 right-4 text-white">
+            <h3 class="font-bold text-lg mb-1">{{ image.title }}</h3>
+            <p class="text-white/80 text-sm">{{ image.desc }}</p>
+          </div>
+          <div class="absolute top-4 right-4 w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {# Programmes et Formations #}
+    <div class="mb-20 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-emerald-100 to-green-100 rounded-full mb-6">
+          <div class="w-2 h-2 bg-gradient-to-r from-emerald-600 to-green-500 rounded-full"></div>
+          <span class="font-semibold text-emerald-700">Programmes & Formations</span>
+        </div>
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">Nos actions sur le terrain</h2>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {% set programImages = [
+          { url: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=800&auto=format&fit=crop', title: 'Travel Week', desc: 'Découvertes touristiques' },
+          { url: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop', title: 'Binajia Lab', desc: 'Innovation technologique' },
+          { url: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=800&auto=format&fit=crop', title: 'Exchange Programme', desc: 'Échanges de leaders' },
+          { url: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop', title: 'Market Connect', desc: 'Commerce local' }
+        ] %}
+
+        {% for image in programImages %}
+        <div class="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+          <img src="{{ image.url }}" alt="{{ image.title }}" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div class="absolute bottom-3 left-3 right-3 text-white">
+            <h3 class="font-bold text-sm mb-1">{{ image.title }}</h3>
+            <p class="text-white/80 text-xs">{{ image.desc }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {# Communauté et Partenaires #}
+    <div class="mb-20 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-amber-100 to-yellow-100 rounded-full mb-6">
+          <div class="w-2 h-2 bg-gradient-to-r from-amber-600 to-yellow-500 rounded-full"></div>
+          <span class="font-semibold text-amber-700">Communauté & Partenaires</span>
+        </div>
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">Notre réseau en action</h2>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        {% set communityImages = [
+          { url: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop', title: 'Réunion de Partenaires', desc: 'Collaboration stratégique entre institutions' },
+          { url: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80&w=800&auto=format&fit=crop', title: 'Formation des Membres', desc: 'Sessions de développement des compétences' },
+          { url: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=800&auto=format&fit=crop', title: 'Assemblée Générale', desc: 'Rencontre annuelle de la communauté' }
+        ] %}
+
+        {% for image in communityImages %}
+        <div class="group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3">
+          <img src="{{ image.url }}" alt="{{ image.title }}" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+          <div class="absolute bottom-6 left-6 right-6 text-white">
+            <h3 class="font-bold text-xl mb-2">{{ image.title }}</h3>
+            <p class="text-white/90 text-sm leading-relaxed">{{ image.desc }}</p>
+          </div>
+          <div class="absolute top-4 left-4 px-3 py-1 bg-amber-400 text-amber-900 rounded-full text-xs font-bold">
+            Nouveau
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {# Lieux Emblématiques #}
+    <div class="opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full mb-6">
+          <div class="w-2 h-2 bg-gradient-to-r from-green-600 to-emerald-500 rounded-full"></div>
+          <span class="font-semibold text-green-700">Lieux Emblématiques</span>
+        </div>
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">Patrimoine Bénin-Nigéria</h2>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        {% set placeImages = [
+          { 
+            url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1200&auto=format&fit=crop', 
+            title: 'Porte du Non-Retour - Ouidah', 
+            desc: 'Monument historique emblématique du Bénin, symbole de mémoire et de réconciliation',
+            country: 'Bénin 🇧🇯'
+          },
+          { 
+            url: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?q=80&w=1200&auto=format&fit=crop', 
+            title: 'Musée National de Lagos', 
+            desc: 'Le plus ancien musée du Nigéria, abritant une collection exceptionnelle d\'art et d\'artisanat',
+            country: 'Nigéria 🇳🇬'
+          }
+        ] %}
+
+        {% for image in placeImages %}
+        <div class="group relative rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-2">
+          <img src="{{ image.url }}" alt="{{ image.title }}" class="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+          <div class="absolute bottom-8 left-8 right-8 text-white">
+            <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium mb-4">
+              {{ image.country }}
+            </div>
+            <h3 class="font-bold text-2xl mb-3">{{ image.title }}</h3>
+            <p class="text-white/90 leading-relaxed">{{ image.desc }}</p>
+          </div>
+          <div class="absolute top-6 right-6 w-12 h-12 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Call to Action #}
+<section class="py-20 bg-gradient-to-br from-green-800 via-emerald-700 to-amber-600 relative overflow-hidden">
+  <div class="absolute top-0 right-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+  
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center text-white">
+    <div class="opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold leading-tight mb-6">
+        Rejoignez notre aventure visuelle
+      </h2>
+      
+      <p class="text-lg text-white/90 leading-relaxed mb-8 max-w-2xl mx-auto">
+        Partagez vos propres moments Binajia et contribuez à enrichir notre galerie communautaire. Chaque image raconte une histoire d'intégration et de collaboration.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="{{ path('app_membership') }}" class="group relative px-8 py-4 bg-gradient-to-r from-amber-400 to-amber-500 text-green-900 rounded-full font-bold overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50 transform">
+          <span class="relative z-10 flex items-center justify-center">
+            📸 Partager vos photos
+            <span class="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
+          </span>
+          <span class="absolute inset-0 bg-gradient-to-r from-amber-300 to-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+        </a>
+        
+        <a href="{{ path('app_events') }}" class="group px-8 py-4 bg-white/10 text-white rounded-full font-bold ring-2 ring-white/30 hover:ring-white/50 transition-all duration-300 hover:scale-105 hover:shadow-xl transform backdrop-blur-md">
+          Voir nos événements
+          <span class="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Scroll animations
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollElements = document.querySelectorAll('[data-scroll]');
+    
+    const elementInView = (el, dividend = 1) => {
+      const elementTop = el.getBoundingClientRect().top;
+      return (
+        elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+      );
+    };
+    
+    const displayScrollElement = (element) => {
+      element.classList.add('opacity-100', 'translate-y-0');
+      element.classList.remove('opacity-0', 'translate-y-16', 'translate-y-20');
+    };
+    
+    const handleScrollAnimation = () => {
+      scrollElements.forEach((el) => {
+        if (elementInView(el, 1.25)) {
+          displayScrollElement(el);
+        }
+      });
+    };
+    
+    handleScrollAnimation();
+    window.addEventListener('scroll', () => {
+      handleScrollAnimation();
+    });
+  });
+</script>
+
+{% endblock %}

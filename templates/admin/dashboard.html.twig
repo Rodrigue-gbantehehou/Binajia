@@ -1,122 +1,313 @@
 {% extends 'admin/base.html.twig' %}
 
-{# Fallback KPIs if controller didn't provide them #}
-{% set kpis = kpis|default([
-  { label: 'Revenus 30j', value: '—' },
-  { label: 'Nouveaux membres', value: '—' },
-  { label: 'Cartes générées', value: '—' },
-  { label: 'Erreurs 24h', value: '—' }
-]) %}
-
 {% block admin_body %}
+  <!-- Welcome Header -->
+  <div class="mb-6 md:mb-8">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Tableau de bord</h1>
+        <p class="text-sm md:text-base text-gray-600 mt-1">Bienvenue dans votre espace d'administration BINAJIA</p>
+      </div>
+      <div class="flex items-center space-x-3">
+        <div class="text-right hidden sm:block">
+          <div class="text-xs md:text-sm text-gray-500">Dernière connexion</div>
+          <div class="text-xs md:text-sm font-medium">{{ "now"|date("d/m/Y H:i") }}</div>
+        </div>
+        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+          <i class="fas fa-user text-white"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Stats Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-    <div class="bg-white rounded-lg shadow p-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
+    <div class="bg-white rounded-2xl shadow-lg border border-green-100 p-4 md:p-6 relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-600 to-orange-500"></div>
       <div class="flex items-center justify-between">
-        <div>
-          <p class="text-gray-500">Membres totaux</p>
-          <h3 class="text-2xl font-bold">{{ stats.totalMembers|default('—') }}</h3>
-          <p class="text-green-500 text-sm">{{ stats.membersGrowth|default('+0% ce mois') }}</p>
+        <div class="flex-1">
+          <p class="text-xs md:text-sm font-medium text-gray-600 mb-1">Membres totaux</p>
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">247</h3>
+          <p class="text-xs md:text-sm text-green-600 font-medium mt-2">
+            <i class="fas fa-arrow-up mr-1"></i>
+            <span class="hidden sm:inline">+12% ce mois</span>
+            <span class="sm:hidden">+12%</span>
+          </p>
         </div>
-        <div class="bg-indigo-100 text-indigo-800 p-3 rounded-full">
-          <i class="fas fa-users text-xl"></i>
+        <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+          <i class="fas fa-users text-white text-lg md:text-xl"></i>
         </div>
       </div>
+      <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-green-100 to-green-200 rounded-full opacity-30"></div>
     </div>
-    <div class="bg-white rounded-lg shadow p-6">
+    
+    <div class="bg-white rounded-2xl shadow-lg border border-orange-100 p-4 md:p-6 relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 to-red-500"></div>
       <div class="flex items-center justify-between">
-        <div>
-          <p class="text-gray-500">Événements</p>
-          <h3 class="text-2xl font-bold">{{ stats.eventsCount|default('—') }}</h3>
-          <p class="text-green-500 text-sm">{{ stats.newEvents|default('+0 nouveaux') }}</p>
+        <div class="flex-1">
+          <p class="text-xs md:text-sm font-medium text-gray-600 mb-1">Événements</p>
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">18</h3>
+          <p class="text-xs md:text-sm text-orange-600 font-medium mt-2">
+            <i class="fas fa-calendar-plus mr-1"></i>
+            <span class="hidden sm:inline">+3 ce mois</span>
+            <span class="sm:hidden">+3</span>
+          </p>
         </div>
-        <div class="bg-yellow-100 text-yellow-800 p-3 rounded-full">
-          <i class="fas fa-calendar-alt text-xl"></i>
+        <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+          <i class="fas fa-calendar-alt text-white text-lg md:text-xl"></i>
         </div>
       </div>
+      <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full opacity-30"></div>
     </div>
-    <div class="bg-white rounded-lg shadow p-6">
+
+    <div class="bg-white rounded-2xl shadow-lg border border-blue-100 p-4 md:p-6 relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-green-500"></div>
       <div class="flex items-center justify-between">
-        <div>
-          <p class="text-gray-500">Revenus</p>
-          <h3 class="text-2xl font-bold">{{ stats.revenueTotal|default('—') }}</h3>
-          <p class="text-green-500 text-sm">{{ stats.revenueGrowth|default('+0% ce mois') }}</p>
+        <div class="flex-1">
+          <p class="text-xs md:text-sm font-medium text-gray-600 mb-1">Revenus totaux</p>
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">15,400 XOF</h3>
+          <p class="text-xs md:text-sm text-green-600 font-medium mt-2">
+            <i class="fas fa-arrow-up mr-1"></i>
+            <span class="hidden sm:inline">+8.2% ce mois</span>
+            <span class="sm:hidden">+8.2%</span>
+          </p>
         </div>
-        <div class="bg-green-100 text-green-800 p-3 rounded-full">
-          <i class="fas fa-money-bill-wave text-xl"></i>
+        <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-green-600 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+          <i class="fas fa-money-bill-wave text-white text-lg md:text-xl"></i>
+        </div>
+      </div>
+      <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-green-100 to-orange-100 rounded-full opacity-30"></div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg border border-purple-100 p-4 md:p-6 relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-orange-500"></div>
+      <div class="flex items-center justify-between">
+        <div class="flex-1">
+          <p class="text-xs md:text-sm font-medium text-gray-600 mb-1">Cartes générées</p>
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">156</h3>
+          <p class="text-xs md:text-sm text-orange-600 font-medium mt-2">
+            <i class="fas fa-id-card mr-1"></i>
+            <span class="hidden sm:inline">+24 cette semaine</span>
+            <span class="sm:hidden">+24</span>
+          </p>
+        </div>
+        <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-600 to-green-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+          <i class="fas fa-id-card text-white text-lg md:text-xl"></i>
+        </div>
+      </div>
+      <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-orange-100 to-green-100 rounded-full opacity-30"></div>
+    </div>
+  </div>
+
+  <!-- Analytics Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8">
+    <!-- Revenue Chart -->
+    <div class="lg:col-span-2 bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 md:mb-6 gap-3">
+        <h3 class="text-base md:text-lg font-semibold text-gray-900">Évolution des revenus</h3>
+        <div class="flex space-x-2">
+          <button class="px-2 md:px-3 py-1 text-xs font-medium bg-indigo-100 text-indigo-700 rounded-full">7j</button>
+          <button class="px-2 md:px-3 py-1 text-xs font-medium text-gray-500 hover:bg-gray-100 rounded-full">30j</button>
+          <button class="px-2 md:px-3 py-1 text-xs font-medium text-gray-500 hover:bg-gray-100 rounded-full">90j</button>
+        </div>
+      </div>
+      <div class="relative" style="height: 250px;">
+        <canvas id="revenueChart" class="w-full h-full"></canvas>
+      </div>
+    </div>
+
+    <!-- Top Countries -->
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+      <h3 class="text-base md:text-lg font-semibold text-gray-900 mb-4 md:mb-6">Pays les plus actifs</h3>
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-6 bg-green-500 rounded-sm flex items-center justify-center">
+              <span class="text-white text-xs font-bold">BJ</span>
+            </div>
+            <span class="text-sm font-medium">Bénin</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <div class="w-20 bg-gray-200 rounded-full h-2">
+              <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+            </div>
+            <span class="text-sm text-gray-600">85%</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-6 bg-orange-500 rounded-sm flex items-center justify-center">
+              <span class="text-white text-xs font-bold">NG</span>
+            </div>
+            <span class="text-sm font-medium">Nigeria</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <div class="w-20 bg-gray-200 rounded-full h-2">
+              <div class="bg-orange-500 h-2 rounded-full" style="width: 72%"></div>
+            </div>
+            <span class="text-sm text-gray-600">72%</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-6 bg-blue-500 rounded-sm flex items-center justify-center">
+              <span class="text-white text-xs font-bold">FR</span>
+            </div>
+            <span class="text-sm font-medium">France</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <div class="w-20 bg-gray-200 rounded-full h-2">
+              <div class="bg-blue-500 h-2 rounded-full" style="width: 45%"></div>
+            </div>
+            <span class="text-sm text-gray-600">45%</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-6 bg-red-500 rounded-sm flex items-center justify-center">
+              <span class="text-white text-xs font-bold">CA</span>
+            </div>
+            <span class="text-sm font-medium">Canada</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <div class="w-20 bg-gray-200 rounded-full h-2">
+              <div class="bg-red-500 h-2 rounded-full" style="width: 28%"></div>
+            </div>
+            <span class="text-sm text-gray-600">28%</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Recent Activities -->
-  <div class="bg-white rounded-lg shadow p-6 mb-6">
-    <h2 class="text-xl font-bold mb-4">Activités récentes</h2>
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utilisateur</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          {% set activities = activities|default([
-            { name: 'Admin User', email: 'admin@binajia.org', avatar: '/media/avatar.png', action: "Création d'événement", date: '—', status: 'Complété' },
-            { name: 'Manager User', email: 'manager@binajia.org', avatar: '/media/avatar.png', action: 'Modification membre', date: '—', status: 'Complété' },
-            { name: 'Employee User', email: 'employee@binajia.org', avatar: '/media/avatar.png', action: 'Nouvelle réservation', date: '—', status: 'En attente' }
-          ]) %}
-          {% for a in activities %}
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="flex items-center">
-                <img class="h-10 w-10 rounded-full object-cover" src="{{ a.avatar }}" alt="">
-                <div class="ml-4">
-                  <div class="text-sm font-medium text-gray-900">{{ a.name }}</div>
-                  <div class="text-sm text-gray-500">{{ a.email }}</div>
-                </div>
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ a.action }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ a.date }}</td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              {% set ok = a.status == 'Complété' %}
-              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ ok ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">{{ a.status }}</span>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+  <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-8 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="text-lg font-semibold text-gray-900">Activités récentes</h3>
+      <a href="{{ path('admin_audit_index') }}" class="admin-btn admin-btn-secondary text-sm">
+        <i class="fas fa-external-link-alt"></i>
+        Voir tout
+      </a>
+    </div>
+    <div class="space-y-4">
+      {% set activities = activities|default([
+        { name: 'Jean Dupont', email: 'jean@example.com', avatar: '/media/avatar.png', action: "Nouvelle inscription", date: 'Il y a 5 min', status: 'success', icon: 'fa-user-plus' },
+        { name: 'Marie Martin', email: 'marie@example.com', avatar: '/media/avatar.png', action: 'Paiement effectué', date: 'Il y a 12 min', status: 'success', icon: 'fa-credit-card' },
+        { name: 'Admin', email: 'admin@binajia.org', avatar: '/media/avatar.png', action: 'Carte régénérée', date: 'Il y a 25 min', status: 'info', icon: 'fa-id-card' },
+        { name: 'Paul Kouassi', email: 'paul@example.com', avatar: '/media/avatar.png', action: 'Réservation événement', date: 'Il y a 1h', status: 'warning', icon: 'fa-calendar' }
+      ]) %}
+      {% for a in activities %}
+        <div class="flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-lg transition-colors">
+          <div class="w-10 h-10 bg-gradient-to-br from-gray-400 to-gray-500 rounded-full flex items-center justify-center">
+            <i class="fas {{ a.icon|default('fa-user') }} text-white text-sm"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center space-x-2">
+              <p class="text-sm font-medium text-gray-900">{{ a.name }}</p>
+              <span class="admin-badge admin-badge-{{ a.status }}">{{ a.action }}</span>
+            </div>
+            <p class="text-sm text-gray-500">{{ a.email }} • {{ a.date }}</p>
+          </div>
+          <div class="flex-shrink-0">
+            <i class="fas fa-chevron-right text-gray-400"></i>
+          </div>
+        </div>
+      {% endfor %}
     </div>
   </div>
 
   <!-- Quick Actions -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-    <a href="#" class="bg-white rounded-lg shadow p-6 flex flex-col items-center justify-center hover:shadow-lg transition">
-      <div class="bg-indigo-100 text-indigo-800 p-4 rounded-full mb-3">
-        <i class="fas fa-user-plus text-2xl"></i>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+    <a href="{{ path('admin_members_index') }}" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 flex flex-col items-center justify-center text-center group transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-blue-200">
+      <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform">
+        <i class="fas fa-user-plus text-white text-lg md:text-xl"></i>
       </div>
-      <h3 class="font-bold text-center">Ajouter un membre</h3>
+      <h3 class="text-sm md:text-base font-semibold text-gray-900 mb-1 md:mb-2">Gérer les membres</h3>
+      <p class="text-xs md:text-sm text-gray-600 hidden sm:block">Ajouter, modifier et gérer les membres</p>
     </a>
-    <a href="#" class="bg-white rounded-lg shadow p-6 flex flex-col items-center justify-center hover:shadow-lg transition">
-      <div class="bg-yellow-100 text-yellow-800 p-4 rounded-full mb-3">
-        <i class="fas fa-calendar-plus text-2xl"></i>
+    
+    <a href="{{ path('admin_events_new') }}" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 flex flex-col items-center justify-center text-center group transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-orange-200">
+      <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform">
+        <i class="fas fa-calendar-plus text-white text-lg md:text-xl"></i>
       </div>
-      <h3 class="font-bold text-center">Créer un événement</h3>
+      <h3 class="text-sm md:text-base font-semibold text-gray-900 mb-1 md:mb-2">Créer un événement</h3>
+      <p class="text-xs md:text-sm text-gray-600 hidden sm:block">Organiser de nouveaux événements</p>
     </a>
-    <a href="#" class="bg-white rounded-lg shadow p-6 flex flex-col items-center justify-center hover:shadow-lg transition">
-      <div class="bg-green-100 text-green-800 p-4 rounded-full mb-3">
-        <i class="fas fa-file-invoice-dollar text-2xl"></i>
+    
+    <a href="{{ path('admin_payments_export') }}" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 flex flex-col items-center justify-center text-center group transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-green-200">
+      <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform">
+        <i class="fas fa-file-invoice-dollar text-white text-lg md:text-xl"></i>
       </div>
-      <h3 class="font-bold text-center">Générer un rapport</h3>
+      <h3 class="text-sm md:text-base font-semibold text-gray-900 mb-1 md:mb-2">Exporter les données</h3>
+      <p class="text-xs md:text-sm text-gray-600 hidden sm:block">Générer des rapports et exports</p>
     </a>
-    <a href="#" class="bg-white rounded-lg shadow p-6 flex flex-col items-center justify-center hover:shadow-lg transition">
-      <div class="bg-blue-100 text-blue-800 p-4 rounded-full mb-3">
-        <i class="fas fa-cog text-2xl"></i>
+    
+    <a href="{{ path('admin_settings_index') }}" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 flex flex-col items-center justify-center text-center group transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-purple-200">
+      <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform">
+        <i class="fas fa-cog text-white text-lg md:text-xl"></i>
       </div>
-      <h3 class="font-bold text-center">Paramètres</h3>
+      <h3 class="text-sm md:text-base font-semibold text-gray-900 mb-1 md:mb-2">Paramètres</h3>
+      <p class="text-xs md:text-sm text-gray-600 hidden sm:block">Configuration de l'application</p>
     </a>
   </div>
+
+  <script>
+    // Revenue Chart
+    const ctx = document.getElementById('revenueChart');
+    if (ctx) {
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+          datasets: [{
+            label: 'Revenus (XOF)',
+            data: [12000, 19000, 15000, 25000, 22000, 30000, 28000],
+            borderColor: '#2D7A4F',
+            backgroundColor: 'rgba(45, 122, 79, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: '#f5880b',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 3,
+            pointRadius: 8,
+            pointHoverRadius: 10,
+            pointHoverBackgroundColor: '#F59E0B'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: 'rgba(0, 0, 0, 0.05)'
+              },
+              ticks: {
+                callback: function(value) {
+                  return value.toLocaleString() + ' XOF';
+                }
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          },
+          elements: {
+            point: {
+              hoverBackgroundColor: 'rgb(79, 70, 229)'
+            }
+          }
+        }
+      });
+    }
+  </script>
 {% endblock %}

@@ -30,6 +30,23 @@ class PdfGeneratorService
         $dompdf->setPaper($paper, $orientation);
         $dompdf->render();
         $pdfOutput = $dompdf->output();
-        @file_put_contents($outputPath, $pdfOutput);
+
+        // Ensure target directory exists
+        $dir = dirname($outputPath);
+        if (!is_dir($dir)) {
+            if (!@mkdir($dir, 0775, true) && !is_dir($dir)) {
+                throw new \RuntimeException('Cannot create PDF directory: ' . $dir);
+            }
+        }
+        if (!is_writable($dir)) {
+            throw new \RuntimeException('PDF directory not writable: ' . $dir);
+        }
+
+        $bytes = file_put_contents($outputPath, $pdfOutput);
+        if ($bytes === false || $bytes === 0) {
+            $last = error_get_last();
+            $err = $last['message'] ?? 'unknown error';
+            throw new \RuntimeException('Failed to save PDF at ' . $outputPath . ' (' . $err . ')');
+        }
     }
 }

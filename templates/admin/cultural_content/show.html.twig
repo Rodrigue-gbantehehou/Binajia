@@ -1,0 +1,118 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ content.title }}{% endblock %}
+
+{% block admin_body %}
+  <div class="space-y-6">
+    {# Back Button #}
+    <div>
+      <a href="{{ path('admin_cultural_content_index') }}" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+        <i class="fas fa-arrow-left"></i>
+        <span>Retour à la galerie</span>
+      </a>
+    </div>
+
+    {# Content Header #}
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+      <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="px-3 py-1 text-sm font-medium rounded-full {{ content.type == 'photo' ? 'bg-blue-100 text-blue-800' : (content.type == 'video' ? 'bg-purple-100 text-purple-800' : (content.type == 'event' ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800')) }}">
+              <i class="fas {{ content.type == 'photo' ? 'fa-image' : (content.type == 'video' ? 'fa-video' : (content.type == 'event' ? 'fa-calendar' : 'fa-map-marker-alt')) }} mr-1"></i>
+              {{ content.type|capitalize }}
+            </span>
+          </div>
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ content.title }}</h1>
+          <div class="flex items-center gap-4 text-sm text-gray-600">
+            <span><i class="fas fa-globe mr-1"></i>{{ content.country|default('Non spécifié') }}</span>
+            <span><i class="fas fa-clock mr-1"></i>{{ content.createdAt ? content.createdAt|date('d/m/Y à H:i') : 'Date inconnue' }}</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="{{ path('admin_cultural_content_edit', {id: content.id}) }}" class="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
+            <i class="fas fa-edit mr-2"></i>Modifier
+          </a>
+          <form method="post" action="{{ path('admin_cultural_content_delete', {id: content.id}) }}" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce contenu ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete_content_' ~ content.id) }}">
+            <button type="submit" class="px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors">
+              <i class="fas fa-trash mr-2"></i>Supprimer
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    {# Media Display #}
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+      {% if content.type == 'video' and content.videoUrl %}
+        <div class="aspect-video bg-gray-900 rounded-lg overflow-hidden">
+          <iframe src="{{ content.videoUrl }}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
+        </div>
+      {% elseif content.image %}
+        <div class="rounded-lg overflow-hidden">
+          <img src="{{ asset('media/' ~ content.image) }}" alt="{{ content.title }}" class="w-full h-auto">
+        </div>
+      {% else %}
+        <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
+          <div class="text-center">
+            <i class="fas fa-image text-gray-400 text-6xl mb-4"></i>
+            <p class="text-gray-500">Aucun média disponible</p>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    {# Description #}
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">
+        <i class="fas fa-align-left text-orange-500 mr-2"></i>Description
+      </h2>
+      <div class="prose max-w-none text-gray-700">
+        {{ content.description|default('Aucune description disponible')|nl2br }}
+      </div>
+    </div>
+
+    {# Additional Info #}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+          <i class="fas fa-info-circle text-blue-500 mr-2"></i>Informations
+        </h3>
+        <dl class="space-y-3">
+          <div>
+            <dt class="text-sm font-medium text-gray-500">Type</dt>
+            <dd class="mt-1 text-sm text-gray-900">{{ content.type|capitalize }}</dd>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">Pays</dt>
+            <dd class="mt-1 text-sm text-gray-900">{{ content.country|default('Non spécifié') }}</dd>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">Date de création</dt>
+            <dd class="mt-1 text-sm text-gray-900">{{ content.createdAt ? content.createdAt|date('d/m/Y à H:i') : 'Date inconnue' }}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+          <i class="fas fa-chart-bar text-green-500 mr-2"></i>Statistiques
+        </h3>
+        <dl class="space-y-3">
+          <div>
+            <dt class="text-sm font-medium text-gray-500">Vues</dt>
+            <dd class="mt-1 text-sm text-gray-900">—</dd>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">Téléchargements</dt>
+            <dd class="mt-1 text-sm text-gray-900">—</dd>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">Partages</dt>
+            <dd class="mt-1 text-sm text-gray-900">—</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+{% endblock %}

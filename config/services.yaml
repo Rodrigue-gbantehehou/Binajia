@@ -22,3 +22,9 @@ services:
         arguments:
             $publicDir: '%kernel.project_dir%/public'
     App\Service\MailerService: ~
+    App\Service\FileUploader:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+    App\Service\MembershipCardService:
+        arguments:
+            $projectDir: '%kernel.project_dir%'

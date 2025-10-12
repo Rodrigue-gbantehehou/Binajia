@@ -36,7 +36,7 @@ class MembershipCards
     private ?string $pdfurl = null;
 
     #[ORM\ManyToOne(inversedBy: 'membershipCards')]
-    private ?user $user = null;
+    private ?User $user = null;
 
     public function getId(): ?int
     {

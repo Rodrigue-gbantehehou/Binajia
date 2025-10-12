@@ -1,0 +1,19 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Lieu {{ place.name }}{% endblock %}
+
+{% block admin_body %}
+  <div class="space-y-6">
+    <div class="bg-white rounded-xl ring-1 ring-gray-200 p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h1 class="text-2xl font-bold">{{ place.name }}</h1>
+        <a class="btn" href="{{ path('admin_places_edit', {id: place.id}) }}">Modifier</a>
+      </div>
+      <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div><dt class="text-gray-500">Ville</dt><dd class="font-semibold">{{ place.city ?: '—' }}</dd></div>
+        <div><dt class="text-gray-500">Pays</dt><dd class="font-semibold">{{ place.country ?: '—' }}</dd></div>
+      </dl>
+      <div class="mt-4"><dt class="text-gray-500">Description</dt><dd>{{ place.description ?: '—' }}</dd></div>
+    </div>
+  </div>
+{% endblock %}

@@ -119,7 +119,8 @@
 				}
 			</style>
 		{% endblock %}
-		<body class="min-h-full bg-cream text-charcoal font-sans">
+	</head>
+	<body class="min-h-full bg-cream text-charcoal font-sans">
 			{% block header %}
 				<nav class="fixed w-full top-0 z-50 navbar-gradient shadow-lg transition-all duration-300" role="navigation" aria-label="Navigation principale">
 					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
@@ -208,11 +209,11 @@
 				<div id="menu-overlay" class="hidden fixed inset-0 bg-black/50 z-40"></div>
 			{% endblock %}
 
-			<main class="pt-2"> {% block content %}{% endblock %}
+			<main class="pt-20"> {% block content %}{% endblock %}
 				</main>
 
 				{% block footer %}
-					<footer class="bg-charcoal text-white py-16 mt-24">
+					<footer class="bg-charcoal text-white py-16 ">
 						<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 							<div class="grid md:grid-cols-5 gap-12 mb-12">
 								<div>
@@ -283,5 +284,4 @@
 					<script src="/scripts/app.js" defer></script>
 				{% endblock %}
 			</body>
-		</head>
 	</html>
