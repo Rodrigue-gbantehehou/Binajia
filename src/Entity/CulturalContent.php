@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\CulturalcontentRepository;
+use App\Repository\Repository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 

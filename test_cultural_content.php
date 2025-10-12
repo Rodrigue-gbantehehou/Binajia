@@ -1,6 +1,6 @@
 <?php
 
-// Test rapide pour vérifier que le contrôleur CulturalContent fonctionne
+// Test rapide pour vérifier que le contrôleur  fonctionne
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Symfony\Component\HttpFoundation\Request;
