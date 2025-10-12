@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement confirmé - Bienvenue chez BINAJIA !</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8fafc;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            background: linear-gradient(135deg, #10b981, #f59e0b);
+            color: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+        .success-icon {
+            background: #10b981;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin: 0 auto 20px;
+        }
+        .title {
+            color: #1f2937;
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .subtitle {
+            color: #10b981;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 10px 0 0;
+        }
+        .payment-details {
+            background: #f0fdf4;
+            border: 1px solid #10b981;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid #dcfce7;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #f59e0b);
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .next-steps {
+            background: #f0f9ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+        }
+        .step-number {
+            background: #0ea5e9;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">B</div>
+            <div class="success-icon">✓</div>
+            <h1 class="title">Paiement confirmé !</h1>
+            <p class="subtitle">Bienvenue dans la communauté BINAJIA</p>
+        </div>
+
+        <div class="content">
+            <p>Félicitations <strong>{{ firstName }}</strong> ! 🎉</p>
+            
+            <p>Votre paiement a été confirmé avec succès. Vous êtes maintenant officiellement membre de BINAJIA et votre carte de membre a été activée.</p>
+
+            <div class="payment-details">
+                <h3 style="margin-top: 0; color: #10b981;">💳 Détails du paiement</h3>
+                <div class="detail-row">
+                    <span>Référence :</span>
+                    <span><strong>{{ reference }}</strong></span>
+                </div>
+                <div class="detail-row">
+                    <span>Date :</span>
+                    <span>{{ "now"|date("d/m/Y à H:i") }}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Statut :</span>
+                    <span style="color: #10b981;"><strong>✅ CONFIRMÉ</strong></span>
+                </div>
+                <div class="detail-row">
+                    <span>Montant :</span>
+                    <span><strong>{{ amount|number_format(0, ',', ' ') }} {{ currency }}</strong></span>
+                </div>
+            </div>
+
+            <p style="text-align: center;">
+                <a href="{{ dashboardUrl }}" class="button">🚀 Accéder à mon espace</a>
+            </p>
+
+            <div class="next-steps">
+                <h3 style="margin-top: 0; color: #0ea5e9;">🎯 Prochaines étapes</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Téléchargez votre carte</strong><br>
+                        Vous recevrez un email séparé avec votre carte de membre au format PDF
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Complétez votre profil</strong><br>
+                        Ajoutez une photo et complétez vos informations personnelles
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Explorez la communauté</strong><br>
+                        Découvrez les événements, projets et opportunités disponibles
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>Participez activement</strong><br>
+                        Rejoignez nos initiatives et contribuez au développement Bénin-Nigéria
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 15px; margin: 20px 0;">
+                <strong>📧 Important :</strong> Conservez cet email comme preuve de paiement. Un reçu officiel vous sera envoyé séparément.
+            </div>
+
+            <h3 style="color: #10b981;">🤝 Merci de nous faire confiance</h3>
+            <p>En rejoignant BINAJIA, vous contribuez à renforcer les liens entre le Bénin et le Nigéria. Ensemble, nous bâtissons un avenir prospère pour nos deux nations.</p>
+
+            <p><strong>Besoin d'aide ?</strong> Notre équipe est là pour vous accompagner dans cette aventure. N'hésitez pas à nous contacter.</p>
+        </div>
+
+        <div class="footer">
+            <p><strong>BINAJIA</strong> - Association Bénin-Nigéria</p>
+            <p>Support : <a href="mailto:contact@binajia.org">contact@binajia.org</a> | Téléphone : +229 XX XX XX XX</p>
+            <p style="font-size: 12px; color: #9ca3af;">
+                Cet email a été envoyé automatiquement. Merci de ne pas y répondre directement.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

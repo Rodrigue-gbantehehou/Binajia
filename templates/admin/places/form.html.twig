@@ -1,0 +1,116 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ place ? 'Modifier' : 'Créer' }} un lieu{% endblock %}
+
+{% block admin_body %}
+  <div class="space-y-6">
+    {# Header #}
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">
+          <i class="fas fa-map-marker-alt text-orange-500 mr-3"></i>
+          {{ place ? 'Modifier' : 'Créer' }} un lieu
+        </h1>
+        <p class="text-gray-600 mt-1">Gérez les lieux pour vos événements</p>
+      </div>
+      <a href="{{ path('admin_places_index') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-green-500">
+        <i class="fas fa-arrow-left"></i>Retour
+      </a>
+    </div>
+
+    {# Form #}
+    <form method="post" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 space-y-6">
+      {# Informations générales #}
+      <div class="border-b border-gray-200 pb-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">
+          <i class="fas fa-info-circle text-green-500 mr-2"></i>Informations du lieu
+        </h2>
+        
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Nom du lieu <span class="text-red-500">*</span>
+            </label>
+            <input 
+              type="text"
+              name="name" 
+              value="{{ place ? place.name : '' }}" 
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+              placeholder="Ex: Palais des Congrès de Cotonou"
+            />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Description
+            </label>
+            <textarea 
+              name="description" 
+              rows="5"
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+              placeholder="Décrivez le lieu, sa capacité, ses équipements..."
+            >{{ place ? place.description : '' }}</textarea>
+          </div>
+        </div>
+      </div>
+
+      {# Localisation #}
+      <div class="border-b border-gray-200 pb-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">
+          <i class="fas fa-globe text-blue-500 mr-2"></i>Localisation
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Pays <span class="text-red-500">*</span>
+            </label>
+            <select 
+              name="country"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+            >
+              <option value="">Sélectionnez un pays</option>
+              <option value="Bénin" {{ place and place.country == 'Bénin' ? 'selected' : '' }}>Bénin</option>
+              <option value="Nigeria" {{ place and place.country == 'Nigeria' ? 'selected' : '' }}>Nigeria</option>
+              <option value="France" {{ place and place.country == 'France' ? 'selected' : '' }}>France</option>
+              <option value="Canada" {{ place and place.country == 'Canada' ? 'selected' : '' }}>Canada</option>
+              <option value="Autre" {{ place and place.country == 'Autre' ? 'selected' : '' }}>Autre</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Ville <span class="text-red-500">*</span>
+            </label>
+            <input 
+              type="text"
+              name="city" 
+              value="{{ place ? place.city : '' }}" 
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+              placeholder="Ex: Cotonou"
+            />
+          </div>
+        </div>
+      </div>
+
+      {# Actions #}
+      <div class="flex items-center justify-between pt-4">
+        <div class="text-sm text-gray-500">
+          <i class="fas fa-info-circle mr-1"></i>
+          Les champs marqués d'un <span class="text-red-500">*</span> sont obligatoires
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="{{ path('admin_places_index') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-green-500">
+            <i class="fas fa-times"></i>Annuler
+          </a>
+          <button type="submit" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-gradient-to-r from-green-600 to-orange-500 text-white shadow-lg hover:-translate-y-0.5 hover:shadow-xl">
+            <i class="fas fa-save"></i>{{ place ? 'Mettre à jour' : 'Créer le lieu' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock %}

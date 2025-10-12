@@ -1,13 +1,175 @@
 {% extends 'base.html.twig' %}
+
 {% block title %}Admin — Binajia{% endblock %}
 
 {% block styles %}
   {{ parent() }}
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    .active-tab { background-color: var(--color-accent); color: #fff; }
-    /* Remove top padding coming from base layout's <main class="pt-16"> for admin pages */
-    body > main.pt-16 { padding-top: 0 !important; }
+    /* Remove top padding from main for admin pages */
+    main {
+      padding-top: 0 !important;
+    }
+    
+    /* Custom Scrollbar for Sidebar */
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .sidebar::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+    .sidebar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+    }
+    .sidebar::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+    
+    /* Smooth scrolling */
+    .sidebar {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Admin Components with Tailwind CSS */
+    .admin-card {
+      @apply bg-white rounded-2xl shadow-lg border border-gray-100 p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+    }
+    
+    .admin-btn {
+      @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    }
+    
+    .admin-btn-primary {
+      @apply bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg hover:from-green-700 hover:to-emerald-700 hover:-translate-y-0.5 hover:shadow-xl focus:ring-green-500;
+    }
+    
+    .admin-btn-secondary {
+      @apply bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-green-500 focus:ring-green-500;
+    }
+    
+    .admin-btn-danger {
+      @apply bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg hover:from-red-700 hover:to-red-800 hover:-translate-y-0.5 hover:shadow-xl focus:ring-red-500;
+    }
+    
+    .admin-btn-sm {
+      @apply px-3 py-2 text-sm;
+    }
+    
+    .admin-input {
+      @apply w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300;
+    }
+    
+    .admin-select {
+      @apply w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 bg-white;
+    }
+    
+    .admin-badge {
+      @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+    }
+    
+    .admin-badge-success {
+      @apply bg-green-100 text-green-800;
+    }
+    
+    .admin-badge-warning {
+      @apply bg-yellow-100 text-yellow-800;
+    }
+    
+    .admin-badge-danger {
+      @apply bg-red-100 text-red-800;
+    }
+    
+    .admin-badge-info {
+      @apply bg-blue-100 text-blue-800;
+    }
+    
+    .admin-table {
+      @apply min-w-full divide-y divide-gray-200;
+    }
+    
+    .admin-table th {
+      @apply px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50;
+    }
+    
+    .admin-table td {
+      @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
+    }
+    
+    .admin-table tr:hover {
+      @apply bg-gray-50;
+    }
+    
+    .admin-stats-card {
+      @apply bg-white rounded-2xl shadow-lg border border-gray-100 p-6 relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+    }
+    
+    .admin-loading {
+      @apply inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin;
+    }
+    
+    .admin-flash {
+      @apply p-4 rounded-xl border-l-4 mb-4 transition-all duration-500;
+    }
+    
+    .admin-flash.success {
+      @apply bg-green-50 border-green-500 text-green-700;
+    }
+    
+    .admin-flash.error {
+      @apply bg-red-50 border-red-500 text-red-700;
+    }
+    
+    .admin-flash.warning {
+      @apply bg-yellow-50 border-yellow-500 text-yellow-700;
+    }
+    
+    .admin-flash.info {
+      @apply bg-blue-50 border-blue-500 text-blue-700;
+    }
+    
+    /* Animation utilities */
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    .slide-up {
+      animation: slideUp 0.5s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { 
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Responsive improvements */
+    @media (max-width: 768px) {
+      .admin-card {
+        @apply p-4;
+      }
+      
+      .admin-btn {
+        @apply px-4 py-2 text-sm;
+      }
+      
+      .admin-table th,
+      .admin-table td {
+        @apply px-3 py-3;
+      }
+    }
   </style>
 {% endblock %}
 
@@ -16,115 +178,132 @@
 {% block footer %}{% endblock %}
 
 {% block content %}
-<div class="bg-gray-100">
-  <div class="flex min-h-[calc(100vh-4rem)]">
+<div class="min-h-screen bg-gray-100">
+  <div class="flex h-screen overflow-hidden">
     <!-- Sidebar -->
-    <aside class="sidebar w-64 hidden md:block fixed h-full overflow-y-auto text-white" style="background: linear-gradient(135deg, var(--color-accent-dark), var(--color-primary-dark));">
-      <div class="p-4 flex items-center space-x-2 border-b border-white/10">
-        <img src="/media/logo.jpeg" alt="Logo" class="h-8 w-8 rounded-full object-cover">
-        <span class="text-xl font-bold">BINAJIA ADMIN</span>
+    <aside class="sidebar w-64 hidden md:block fixed h-screen overflow-hidden bg-gradient-to-b from-green-900 to-green-800 text-white flex flex-col">
+      <div class="p-4 border-b border-white/10 flex-shrink-0">
+        <div class="flex items-center space-x-2">
+          <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+            <i class="fas fa-crown text-white text-base"></i>
+          </div>
+          <div>
+            <div class="text-lg font-bold bg-gradient-to-r from-orange-300 to-green-300 bg-clip-text text-transparent">BINAJIA</div>
+            <div class="text-xs text-orange-200">Admin</div>
+          </div>
+        </div>
       </div>
-      <div class="p-4">
+      <div class="p-2 flex-1">
         <nav>
-          <ul class="space-y-2">
+          <ul class="space-y-1">
             <li>
-              <a href="{{ path('admin_dashboard') }}" class="flex items-center space-x-2 p-2 rounded hover:bg-white/10 active-tab">
-                <i class="fas fa-tachometer-alt"></i>
-                <span>Tableau de bord</span>
+              <a href="{{ path('admin_dashboard') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_dashboard' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-chart-line w-4 text-orange-300"></i>
+                <span>Dashboard</span>
               </a>
             </li>
-            <li class="px-2 mt-3 text-xs uppercase text-white/70 tracking-wide">Gestion</li>
-            <li class="has-submenu">
-              <a href="#" class="flex items-center justify-between p-2 rounded hover:bg-white/10">
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-users"></i>
-                  <span>Membres & Cartes</span>
-                </div>
-                <i class="fas fa-chevron-down text-xs"></i>
+            
+            <li class="px-2 mt-4 mb-2 text-xs uppercase text-orange-200 tracking-wide font-semibold">Gestion</li>
+            <li>
+              <a href="{{ path('admin_members_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_members' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-users w-4 text-green-300"></i>
+                <span>Membres</span>
               </a>
-              <ul class="submenu hidden pl-6 mt-1 space-y-1">
-                <li><a href="{{ path('admin_members_index') }}" class="block p-2 rounded hover:bg-white/10">Membres</a></li>
-                <li><a href="{{ path('admin_cards_index') }}" class="block p-2 rounded hover:bg-white/10">Cartes</a></li>
-                <li><a href="{{ path('admin_payments_index') }}" class="block p-2 rounded hover:bg-white/10">Paiements</a></li>
-                <li><a href="{{ path('admin_receipts_index') }}" class="block p-2 rounded hover:bg-white/10">Reçus</a></li>
-              </ul>
             </li>
-            <li class="has-submenu">
-              <a href="#" class="flex items-center justify-between p-2 rounded hover:bg-white/10">
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-calendar-alt"></i>
-                  <span>Événements & Lieux</span>
-                </div>
-                <i class="fas fa-chevron-down text-xs"></i>
+            <li>
+              <a href="{{ path('admin_cards_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_cards' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-id-card w-4 text-orange-300"></i>
+                <span>Cartes</span>
               </a>
-              <ul class="submenu hidden pl-6 mt-1 space-y-1">
-                <li><a href="{{ path('admin_events_index') }}" class="block p-2 rounded hover:bg-white/10">Événements</a></li>
-                <li><a href="{{ path('admin_places_index') }}" class="block p-2 rounded hover:bg-white/10">Lieux</a></li>
-                <li><a href="{{ path('admin_reservations_index') }}" class="block p-2 rounded hover:bg-white/10">Réservations</a></li>
-              </ul>
             </li>
-            <li class="px-2 mt-3 text-xs uppercase text-white/70 tracking-wide">Supervision</li>
-            <li class="has-submenu">
-              <a href="#" class="flex items-center justify-between p-2 rounded hover:bg-white/10">
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-heartbeat"></i>
-                  <span>Santé & Logs</span>
-                </div>
-                <i class="fas fa-chevron-down text-xs"></i>
+            <li>
+              <a href="{{ path('admin_payments_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_payments' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-credit-card w-4 text-green-300"></i>
+                <span>Paiements</span>
               </a>
-              <ul class="submenu hidden pl-6 mt-1 space-y-1">
-                <li><a href="{{ path('admin_health_index') }}" class="block p-2 rounded hover:bg-white/10">Health Checks</a></li>
-                <li><a href="{{ path('admin_logs_index') }}" class="block p-2 rounded hover:bg-white/10">Logs</a></li>
-                <li><a href="{{ path('admin_metrics_index') }}" class="block p-2 rounded hover:bg-white/10">Métriques</a></li>
-              </ul>
             </li>
-            <li class="px-2 mt-3 text-xs uppercase text-white/70 tracking-wide">Sécurité & Audit</li>
-            <li class="has-submenu">
-              <a href="#" class="flex items-center justify-between p-2 rounded hover:bg-white/10">
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-user-shield"></i>
-                  <span>Sécurité</span>
-                </div>
-                <i class="fas fa-chevron-down text-xs"></i>
+            
+            <li class="px-2 mt-4 mb-2 text-xs uppercase text-orange-200 tracking-wide font-semibold">Culture</li>
+            <li>
+              <a href="{{ path('admin_events_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_events' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-calendar-alt w-4 text-green-300"></i>
+                <span>Événements</span>
               </a>
-              <ul class="submenu hidden pl-6 mt-1 space-y-1">
-                <li><a href="{{ path('admin_security_users') }}" class="block p-2 rounded hover:bg-white/10">Utilisateurs</a></li>
-                <li><a href="{{ path('admin_security_roles') }}" class="block p-2 rounded hover:bg-white/10">Rôles</a></li>
-                <li><a href="{{ path('admin_security_2fa') }}" class="block p-2 rounded hover:bg-white/10">2FA</a></li>
-              </ul>
             </li>
-            <li><a href="{{ path('admin_audit_index') }}" class="block p-2 rounded hover:bg-white/10 flex items-center space-x-2"><i class="fas fa-clipboard-list"></i><span>Audit</span></a></li>
-            <li class="px-2 mt-3 text-xs uppercase text-white/70 tracking-wide">Réglages & API</li>
-            <li><a href="{{ path('admin_settings_index') }}" class="block p-2 rounded hover:bg-white/10 flex items-center space-x-2"><i class="fas fa-sliders"></i><span>Réglages</span></a></li>
-            <li><a href="{{ path('admin_api_index') }}" class="block p-2 rounded hover:bg-white/10 flex items-center space-x-2"><i class="fas fa-plug"></i><span>API</span></a></li>
+            <li>
+              <a href="{{ path('admin_places_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_places' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-map-marker-alt w-4 text-orange-300"></i>
+                <span>Lieux</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ path('admin_cultural_content_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_cultural_content' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-images w-4 text-green-300"></i>
+                <span>Galerie</span>
+              </a>
+            </li>
+            
+            <li class="px-2 mt-4 mb-2 text-xs uppercase text-orange-200 tracking-wide font-semibold">Configuration</li>
+            <li>
+              <a href="{{ path('admin_settings_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_settings' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-cog w-4 text-orange-300"></i>
+                <span>Réglages</span>
+              </a>
+            </li>
           </ul>
         </nav>
       </div>
     </aside>
 
     <!-- Main content -->
-    <div class="content flex-1 md:ml-64 w-full">
+    <div class="flex-1 md:ml-64 flex flex-col h-screen overflow-hidden">
       <!-- Top bar -->
-      <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+      <header class="bg-gradient-to-r from-green-600 to-orange-500 shadow-lg p-4 flex justify-between items-center z-10 flex-shrink-0">
         <div class="flex items-center space-x-4">
-          <button id="sidebarToggle" class="text-gray-600 hover:text-gray-900 md:hidden">
+          <button id="sidebarToggle" class="text-white hover:text-orange-200 md:hidden">
             <i class="fas fa-bars"></i>
           </button>
-          <h1 class="text-xl font-bold">Tableau de bord</h1>
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+              <i class="fas fa-tachometer-alt text-white"></i>
+            </div>
+            <h1 class="text-xl font-bold text-white">Administration BINAJIA</h1>
+          </div>
         </div>
         <div class="flex items-center space-x-4">
-          <button class="relative text-gray-600 hover:text-gray-900" title="Notifications">
-            <i class="fas fa-bell"></i>
-            <span class="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-red-500"></span>
+          <div class="hidden md:flex items-center space-x-2 bg-white/10 rounded-full px-3 py-1">
+            <i class="fas fa-clock text-white/80 text-sm"></i>
+            <span class="text-white/90 text-sm" id="currentTime"></span>
+          </div>
+          <button class="relative text-white hover:text-orange-200 transition-colors" title="Notifications">
+            <i class="fas fa-bell text-lg"></i>
+            <span class="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-orange-400 animate-pulse"></span>
           </button>
-          <a href="{{ path('app_logout') }}" class="text-gray-600 hover:text-gray-900" title="Quitter">
-            <i class="fas fa-sign-out-alt"></i>
+          <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+            <i class="fas fa-user text-white text-sm"></i>
+          </div>
+          <a href="{{ path('app_logout') }}" class="text-white hover:text-orange-200 transition-colors" title="Déconnexion">
+            <i class="fas fa-sign-out-alt text-lg"></i>
           </a>
         </div>
       </header>
 
-      <main class="p-6">
+      <main class="flex-1 p-6 overflow-y-auto">
+        {# Flash messages #}
+        {% for type, messages in app.flashes %}
+          {% for message in messages %}
+            <div class="mb-4 p-4 rounded-lg border-l-4 {{ type == 'success' ? 'bg-green-50 border-green-500 text-green-700' : 'bg-red-50 border-red-500 text-red-700' }}">
+              <div class="flex items-center">
+                <i class="fas {{ type == 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle' }} mr-3"></i>
+                {{ message }}
+              </div>
+            </div>
+          {% endfor %}
+        {% endfor %}
+
+        {# Support both block names for child templates #}
         {% block admin_body %}{% endblock %}
+        {% block body %}{% endblock %}
       </main>
     </div>
   </div>
@@ -133,9 +312,12 @@
 
 {% block scripts %}
   {{ parent() }}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="{{ asset('js/admin.js') }}"></script>
   <script>
-    // Toggle sidebar on mobile
     document.addEventListener('DOMContentLoaded', function() {
+      // Toggle sidebar on mobile
       var toggle = document.getElementById('sidebarToggle');
       if (toggle) {
         toggle.addEventListener('click', function() {
@@ -145,23 +327,92 @@
           if (content) { content.classList.toggle('ml-0'); content.classList.toggle('md:ml-64'); }
         });
       }
-      // Toggle submenus
+
+      // Toggle submenus with smooth animation
       document.querySelectorAll('.has-submenu > a').forEach(function(a){
         a.addEventListener('click', function(e){
           e.preventDefault();
           var submenu = this.nextElementSibling;
-          if (submenu) submenu.classList.toggle('hidden');
+          if (submenu) {
+            submenu.style.transition = 'all 0.3s ease';
+            submenu.classList.toggle('hidden');
+          }
           var icon = this.querySelector('.fa-chevron-down');
-          if (icon) { icon.classList.toggle('transform'); icon.classList.toggle('rotate-180'); }
+          if (icon) { 
+            icon.style.transition = 'transform 0.3s ease';
+            icon.classList.toggle('transform'); 
+            icon.classList.toggle('rotate-180'); 
+          }
         });
       });
-      // Active tab
-      document.querySelectorAll('nav a').forEach(function(link){
-        link.addEventListener('click', function(){
-          document.querySelectorAll('nav a').forEach(function(i){ i.classList.remove('active-tab'); });
-          this.classList.add('active-tab');
+
+      // Auto-hide flash messages
+      setTimeout(function() {
+        document.querySelectorAll('.admin-flash').forEach(function(flash) {
+          flash.style.transition = 'all 0.5s ease';
+          flash.style.opacity = '0';
+          flash.style.transform = 'translateY(-20px)';
+          setTimeout(function() {
+            flash.remove();
+          }, 500);
+        });
+      }, 5000);
+
+      // Add loading states to buttons
+      document.querySelectorAll('.admin-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (this.type === 'submit' || this.tagName === 'BUTTON') {
+            var originalText = this.innerHTML;
+            this.innerHTML = '<div class="admin-loading mr-2"></div>Chargement...';
+            this.disabled = true;
+            setTimeout(function() {
+              btn.innerHTML = originalText;
+              btn.disabled = false;
+            }, 2000);
+          }
         });
       });
+
+      // Animate stat cards on load
+      document.querySelectorAll('.admin-card').forEach(function(card, index) {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(function() {
+          card.style.transition = 'all 0.6s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 100);
+      });
+
+      // Update current time
+      function updateTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('fr-FR', { 
+          hour: '2-digit', 
+          minute: '2-digit' 
+        });
+        const timeElement = document.getElementById('currentTime');
+        if (timeElement) {
+          timeElement.textContent = timeString;
+        }
+      }
+      updateTime();
+      setInterval(updateTime, 60000);
+
+      // Add responsive behavior
+      function handleResize() {
+        const sidebar = document.querySelector('.sidebar');
+        const content = document.querySelector('.content');
+        if (window.innerWidth < 768) {
+          sidebar?.classList.add('hidden');
+          content?.classList.remove('md:ml-64');
+        } else {
+          sidebar?.classList.remove('hidden');
+          content?.classList.add('md:ml-64');
+        }
+      }
+      window.addEventListener('resize', handleResize);
+      handleResize();
     });
   </script>
 {% endblock %}

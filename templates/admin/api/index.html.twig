@@ -1,0 +1,103 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}API & Intégrations{% endblock %}
+
+{% block admin_body %}
+  <div class="space-y-6">
+    <h1 class="text-2xl font-bold">API & Intégrations</h1>
+
+    <!-- API Endpoints -->
+    <div class="bg-white rounded-xl ring-1 ring-gray-200 p-6">
+      <h2 class="text-xl font-semibold mb-4">Points d'accès API</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">URL</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Méthode</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            {% for endpoint in apiConfig.endpoints %}
+              <tr>
+                <td class="px-4 py-3">{{ endpoint.name }}</td>
+                <td class="px-4 py-3 font-mono text-sm">{{ endpoint.url }}</td>
+                <td class="px-4 py-3">
+                  <span class="px-2 py-1 text-xs rounded-full {{ endpoint.method == 'GET' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' }}">
+                    {{ endpoint.method }}
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="px-2 py-1 text-xs rounded-full {{ endpoint.status == 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
+                    {{ endpoint.status == 'active' ? 'Actif' : 'Inactif' }}
+                  </span>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Webhooks -->
+    <div class="bg-white rounded-xl ring-1 ring-gray-200 p-6">
+      <h2 class="text-xl font-semibold mb-4">Webhooks</h2>
+      <div class="space-y-4">
+        {% for webhook in apiConfig.webhooks %}
+          <div class="border rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-semibold">{{ webhook.name }}</h3>
+              <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Actif</span>
+            </div>
+            <div class="text-sm text-gray-600 mb-2">{{ webhook.url }}</div>
+            <div class="flex flex-wrap gap-1">
+              {% for event in webhook.events %}
+                <span class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-700">{{ event }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- API Keys -->
+    <div class="bg-white rounded-xl ring-1 ring-gray-200 p-6">
+      <h2 class="text-xl font-semibold mb-4">Clés API</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Clé</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Créée</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dernière utilisation</th>
+              <th class="px-4 py-3"></th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            {% for key in apiConfig.apiKeys %}
+              <tr>
+                <td class="px-4 py-3">{{ key.name }}</td>
+                <td class="px-4 py-3 font-mono text-sm">{{ key.key }}</td>
+                <td class="px-4 py-3 text-sm">{{ key.created ? key.created|date('d/m/Y') : '—' }}</td>
+                <td class="px-4 py-3 text-sm">{{ key.lastUsed ? key.lastUsed|date('d/m/Y H:i') : '—' }}</td>
+                <td class="px-4 py-3 text-right">
+                  <button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 bg-red-50 text-red-600 hover:bg-red-100">
+                    <i class="fas fa-times"></i>Révoquer
+                  </button>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4">
+        <button class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-gradient-to-r from-green-600 to-orange-500 text-white shadow-lg hover:-translate-y-0.5 hover:shadow-xl">
+          <i class="fas fa-key"></i>Générer nouvelle clé
+        </button>
+      </div>
+    </div>
+  </div>
+{% endblock %}

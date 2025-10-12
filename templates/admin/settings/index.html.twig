@@ -1,0 +1,323 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Paramètres — Administration{% endblock %}
+
+{% block admin_body %}
+  <div class="space-y-8">
+    {# Header Section #}
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">
+          <i class="fas fa-cog text-green-600 mr-3"></i>Paramètres de l'application
+        </h1>
+        <p class="text-gray-600">Configurez et gérez les paramètres globaux de Binajia</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="admin-btn admin-btn-secondary" data-action="export" data-entity="config" data-type="json">
+          <i class="fas fa-download"></i>Exporter la config
+        </button>
+        <button class="admin-btn admin-btn-primary" data-action="save-settings">
+          <i class="fas fa-save"></i>Sauvegarder
+        </button>
+      </div>
+    </div>
+
+    {# Navigation Tabs #}
+    <div class="border-b border-gray-200">
+      <nav class="-mb-px flex space-x-8">
+        <button class="tab-button active py-2 px-1 border-b-2 border-green-500 font-medium text-sm text-green-600" data-tab="general">
+          <i class="fas fa-cog mr-2"></i>Général
+        </button>
+        <button class="tab-button py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="email">
+          <i class="fas fa-envelope mr-2"></i>Email
+        </button>
+        <button class="tab-button py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="payment">
+          <i class="fas fa-credit-card mr-2"></i>Paiements
+        </button>
+        <button class="tab-button py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="security">
+          <i class="fas fa-shield-alt mr-2"></i>Sécurité
+        </button>
+        <button class="tab-button py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="advanced">
+          <i class="fas fa-code mr-2"></i>Avancé
+        </button>
+      </nav>
+    </div>
+
+    {# General Settings Tab #}
+    <div id="general-tab" class="tab-content">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-6">
+          {# Site Information #}
+          <div class="admin-card">
+            <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+              <i class="fas fa-info-circle text-blue-500 mr-3"></i>Informations du site
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Nom de l'application</label>
+                <input type="text" value="BINAJIA" class="admin-input">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Version</label>
+                <input type="text" value="2.1.0" class="admin-input" readonly>
+              </div>
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <textarea rows="3" class="admin-input">Réseau des Ambassadeurs pour l'Intégration Bénin-Nigéria & Afrique</textarea>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">URL du site</label>
+                <input type="url" value="https://binajia.org" class="admin-input">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Email de contact</label>
+                <input type="email" value="contact@binajia.org" class="admin-input">
+              </div>
+            </div>
+          </div>
+
+          {# Localization #}
+          <div class="admin-card">
+            <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+              <i class="fas fa-globe text-green-500 mr-3"></i>Localisation
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Langue par défaut</label>
+                <select class="admin-select">
+                  <option value="fr" selected>Français</option>
+                  <option value="en">English</option>
+                  <option value="yo">Yoruba</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Fuseau horaire</label>
+                <select class="admin-select">
+                  <option value="Africa/Porto-Novo" selected>Africa/Porto-Novo (WAT)</option>
+                  <option value="Africa/Lagos">Africa/Lagos (WAT)</option>
+                  <option value="Europe/Paris">Europe/Paris (CET)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Devise</label>
+                <select class="admin-select">
+                  <option value="XOF" selected>XOF (Franc CFA)</option>
+                  <option value="NGN">NGN (Naira)</option>
+                  <option value="EUR">EUR (Euro)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {# Quick Actions Sidebar #}
+        <div class="space-y-6">
+          <div class="admin-card">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Actions rapides</h3>
+            <div class="space-y-3">
+              <button class="w-full admin-btn admin-btn-secondary text-left" data-action="clear-cache">
+                <i class="fas fa-sync-alt mr-3"></i>Vider le cache
+              </button>
+              <button class="w-full admin-btn admin-btn-secondary text-left" data-action="optimize-db">
+                <i class="fas fa-database mr-3"></i>Optimiser la DB
+              </button>
+              <button class="w-full admin-btn admin-btn-secondary text-left" data-action="backup">
+                <i class="fas fa-file-export mr-3"></i>Backup complet
+              </button>
+              <button class="w-full admin-btn admin-btn-danger text-left" data-action="maintenance" data-active="false">
+                <i class="fas fa-exclamation-triangle mr-3"></i>Mode maintenance
+              </button>
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Statistiques système</h3>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-600">Espace disque</span>
+                <span class="text-sm font-medium">2.4 GB / 10 GB</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-green-600 h-2 rounded-full" style="width: 24%"></div>
+              </div>
+              
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-600">Mémoire</span>
+                <span class="text-sm font-medium">512 MB / 1 GB</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-orange-500 h-2 rounded-full" style="width: 51%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# Email Settings Tab #}
+    <div id="email-tab" class="tab-content hidden">
+      <div class="admin-card">
+        <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+          <i class="fas fa-envelope text-blue-500 mr-3"></i>Configuration Email
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Serveur SMTP</label>
+            <input type="text" value="smtp.gmail.com" class="admin-input">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Port</label>
+            <input type="number" value="587" class="admin-input">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nom d'utilisateur</label>
+            <input type="email" value="noreply@binajia.org" class="admin-input">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
+            <input type="password" value="••••••••" class="admin-input">
+          </div>
+          <div class="md:col-span-2">
+            <label class="flex items-center">
+              <input type="checkbox" checked class="rounded border-gray-300 text-green-600 focus:ring-green-500 mr-2">
+              <span class="text-sm text-gray-700">Utiliser TLS/SSL</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# Payment Settings Tab #}
+    <div id="payment-tab" class="tab-content hidden">
+      <div class="admin-card">
+        <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+          <i class="fas fa-credit-card text-green-500 mr-3"></i>Paramètres de paiement
+        </h3>
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Clé publique FedaPay</label>
+              <input type="text" value="pk_live_••••••••" class="admin-input">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Clé secrète FedaPay</label>
+              <input type="password" value="sk_live_••••••••" class="admin-input">
+            </div>
+          </div>
+          <div class="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+            <div class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-3"></i>
+              <span class="text-sm font-medium text-green-800">Mode production activé</span>
+            </div>
+            <button class="text-sm text-green-600 hover:text-green-800">Configurer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# Security Settings Tab #}
+    <div id="security-tab" class="tab-content hidden">
+      <div class="admin-card">
+        <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+          <i class="fas fa-shield-alt text-red-500 mr-3"></i>Paramètres de sécurité
+        </h3>
+        <div class="space-y-6">
+          <div class="flex items-center justify-between p-4 bg-red-50 rounded-lg">
+            <div>
+              <h4 class="text-sm font-medium text-red-800">Authentification à deux facteurs</h4>
+              <p class="text-sm text-red-600">Recommandé pour les comptes administrateurs</p>
+            </div>
+            <button class="admin-btn admin-btn-danger admin-btn-sm">Activer</button>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Durée de session (minutes)</label>
+              <input type="number" value="120" class="admin-input">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Tentatives de connexion max</label>
+              <input type="number" value="5" class="admin-input">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# Advanced Settings Tab #}
+    <div id="advanced-tab" class="tab-content hidden">
+      <div class="admin-card">
+        <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+          <i class="fas fa-code text-purple-500 mr-3"></i>Configuration avancée
+        </h3>
+        <div class="bg-gray-50 rounded-lg p-4 mb-6">
+          <p class="text-sm text-gray-600 mb-2">
+            <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+            Variables d'environnement actuelles
+          </p>
+        </div>
+        <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {% for k, v in config %}
+            <div class="bg-gray-50 rounded-lg p-4">
+              <dt class="text-sm font-medium text-gray-700 mb-1">{{ k }}</dt>
+              <dd class="font-mono text-sm text-gray-900 break-all bg-white p-2 rounded border">{{ v is not null ? v : '—' }}</dd>
+            </div>
+          {% endfor %}
+        </dl>
+        <div class="mt-6 p-4 bg-yellow-50 rounded-lg">
+          <p class="text-sm text-yellow-800">
+            <i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>
+            <strong>Astuce :</strong> Placez vos valeurs sensibles dans <code class="bg-yellow-100 px-1 rounded">.env.local</code> (non versionné) pour l'environnement local.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {# Save Button #}
+    <div class="flex justify-end">
+      <button class="admin-btn admin-btn-primary" data-action="save-settings">
+        <i class="fas fa-save mr-2"></i>Enregistrer les modifications
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Tab functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const targetTab = this.dataset.tab;
+          
+          // Remove active class from all buttons
+          tabButtons.forEach(btn => {
+            btn.classList.remove('active', 'border-green-500', 'text-green-600');
+            btn.classList.add('border-transparent', 'text-gray-500');
+          });
+          
+          // Add active class to clicked button
+          this.classList.add('active', 'border-green-500', 'text-green-600');
+          this.classList.remove('border-transparent', 'text-gray-500');
+          
+          // Hide all tab contents
+          tabContents.forEach(content => {
+            content.classList.add('hidden');
+          });
+          
+          // Show target tab content
+          document.getElementById(targetTab + '-tab').classList.remove('hidden');
+        });
+      });
+      
+      // Animate cards on load
+      const cards = document.querySelectorAll('.admin-card');
+      cards.forEach((card, index) => {
+        setTimeout(() => {
+          card.classList.add('fade-in');
+        }, index * 100);
+      });
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,330 @@
+{% extends 'base.html.twig' %}
+{% block title %}Programmes — Les 6 projets phares de Binajia{% endblock %}
+
+{% block content %}
+
+{# Hero Section #}
+<section class="relative overflow-hidden min-h-screen -mt-20 pt-20 bg-gradient-to-br from-green-800 via-emerald-700 to-amber-600 flex items-center">
+  {# Animated Background Elements #}
+  <div class="absolute top-0 right-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 text-white relative z-10 w-full">
+    <div class="text-center opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+      {# Badge #}
+      <div class="inline-flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-amber-400 to-green-400 rounded-full border-2 border-green-800 shadow-xl mb-6">
+        <div class="w-3 h-3 bg-green-900 rounded-full"></div>
+        <span class="font-black text-green-900 text-lg">NOS 6 PROJETS PHARES</span>
+        <div class="w-3 h-3 bg-green-900 rounded-full"></div>
+      </div>
+
+      <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white drop-shadow-lg">
+        <span class="block text-amber-300 text-lg sm:text-xl md:text-2xl font-medium mb-2 tracking-wide">
+          Construire des ponts par l'action
+        </span>
+        <span class="block">
+          Six programmes dynamiques
+        </span>
+      </h1>
+      
+      <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mx-auto">
+        Des <span class="font-bold text-amber-300">initiatives concrètes</span> pour connecter <span class="font-bold text-green-300">cultures, économies et jeunesses</span> du Bénin et du Nigéria. Chaque programme répond à un besoin spécifique et contribue à notre vision d'une Afrique unie et prospère.
+      </p>
+    </div>
+  </div>
+</section>
+
+{# Programs Grid Section #}
+<section class="py-20 bg-gradient-to-br from-white via-yellow-50/30 to-green-50/30 relative overflow-hidden">
+  <div class="absolute inset-0 pattern-kente opacity-10 pointer-events-none"></div>
+  <div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    {% set programs = [
+      { 
+        title: 'Binajia Travel Week', 
+        subtitle: 'Semaine de découvertes croisées',
+        desc: 'Une semaine dédiée aux découvertes croisées dans les deux pays. Ce programme s\'adresse aux jeunes, touristes et voyageurs désireux d\'explorer les richesses culturelles et naturelles du Bénin et du Nigéria.',
+        target: 'Jeunes, touristes, voyageurs',
+        img: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=800&auto=format&fit=crop', 
+        color: 'amber', 
+        impact: '500+ voyageurs/an',
+        details: [
+          'Circuits touristiques guidés',
+          'Échanges culturels immersifs',
+          'Découverte du patrimoine local',
+          'Rencontres avec les communautés'
+        ]
+      },
+      { 
+        title: 'Binajia Lab', 
+        subtitle: 'Laboratoire d\'innovation',
+        desc: 'Un laboratoire d\'innovation dédié à l\'écologie, la technologie et le design créatif. Ce programme accompagne les jeunes créatifs, étudiants et startups dans le développement de solutions innovantes.',
+        target: 'Jeunes créatifs, étudiants, startups',
+        img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop', 
+        color: 'green', 
+        impact: '100+ projets innovants',
+        details: [
+          'Incubation de projets tech',
+          'Solutions écologiques durables',
+          'Design thinking workshops',
+          'Mentorat par des experts'
+        ]
+      },
+      { 
+        title: 'Exchange Programme', 
+        subtitle: 'Mobilité des talents',
+        desc: 'Programme d\'échange pour jeunes leaders et artistes favorisant la mobilité des talents entre le Bénin et le Nigéria. Une opportunité unique de développement personnel et professionnel.',
+        target: 'Étudiants, leaders communautaires',
+        img: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=800&auto=format&fit=crop', 
+        color: 'emerald', 
+        impact: '200+ leaders formés',
+        details: [
+          'Échanges académiques',
+          'Stages professionnels',
+          'Résidences artistiques',
+          'Leadership training'
+        ]
+      },
+      { 
+        title: 'Market Connect', 
+        subtitle: 'Collaboration économique',
+        desc: 'Plateforme de collaboration économique locale connectant artisans, commerçants et femmes entrepreneures. Un écosystème pour développer le commerce transfrontalier.',
+        target: 'Artisans, commerçants, femmes',
+        img: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop', 
+        color: 'yellow', 
+        impact: '1000+ entrepreneurs',
+        details: [
+          'Marketplace numérique',
+          'Formation en entrepreneuriat',
+          'Facilitation du commerce',
+          'Microfinancement'
+        ]
+      },
+      { 
+        title: 'Culture Fest', 
+        subtitle: 'Festival multiculturel',
+        desc: 'Festival culturel célébrant la musique, les masques traditionnels et la gastronomie des deux pays. Un événement grand public qui rassemble artistes et communautés.',
+        target: 'Grand public, artistes',
+        img: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=800&auto=format&fit=crop', 
+        color: 'green', 
+        impact: '50+ événements/an',
+        details: [
+          'Concerts et spectacles',
+          'Expositions d\'art traditionnel',
+          'Festivals gastronomiques',
+          'Ateliers culturels'
+        ]
+      },
+      { 
+        title: 'Transit', 
+        subtitle: 'Libre circulation',
+        desc: 'Programme de plaidoyer pour la libre circulation des savoirs et des talents entre les institutions et la société civile. Une initiative pour briser les barrières.',
+        target: 'Institutions, société civile',
+        img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=800&auto=format&fit=crop', 
+        color: 'emerald', 
+        impact: 'Libre circulation',
+        details: [
+          'Plaidoyer institutionnel',
+          'Facilitation des visas',
+          'Échange de bonnes pratiques',
+          'Harmonisation des politiques'
+        ]
+      }
+    ] %}
+
+    <div class="grid lg:grid-cols-2 gap-12">
+      {% for program in programs %}
+      <div class="group bg-white rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 200 }}ms">
+        <div class="relative overflow-hidden rounded-t-3xl">
+          <img src="{{ program.img }}" alt="{{ program.title }}" class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+          <div class="absolute top-4 right-4 px-4 py-2 bg-{{ program.color }}-400 text-white rounded-full font-bold text-sm shadow-lg">
+            {{ program.impact }}
+          </div>
+          <div class="absolute bottom-4 left-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-{{ program.color }}-400 to-{{ program.color }}-600 rounded-2xl flex items-center justify-center shadow-xl">
+              <img src="{{ program.img }}" alt="Logo {{ program.title }}" class="w-10 h-10 object-contain rounded-lg">
+            </div>
+          </div>
+        </div>
+        
+        <div class="p-8">
+          <div class="mb-4">
+            <h3 class="font-bold text-2xl text-gray-900 mb-2 group-hover:text-{{ program.color }}-600 transition-colors">{{ program.title }}</h3>
+            <p class="text-{{ program.color }}-600 font-semibold text-lg">{{ program.subtitle }}</p>
+          </div>
+          
+          <p class="text-gray-700 leading-relaxed mb-6">{{ program.desc }}</p>
+          
+          <div class="mb-6">
+            <h4 class="font-bold text-gray-900 mb-3">Public cible:</h4>
+            <div class="inline-flex items-center px-4 py-2 bg-{{ program.color }}-100 text-{{ program.color }}-800 text-sm font-bold rounded-full">
+              {{ program.target }}
+            </div>
+          </div>
+          
+          <div class="mb-6">
+            <h4 class="font-bold text-gray-900 mb-3">Activités clés:</h4>
+            <ul class="space-y-2">
+              {% for detail in program.details %}
+              <li class="flex items-center text-gray-600">
+                <svg class="w-4 h-4 text-{{ program.color }}-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                {{ detail }}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          
+          <div class="flex items-center justify-between">
+            <a href="#" class="group/btn px-6 py-3 bg-gradient-to-r from-{{ program.color }}-400 to-{{ program.color }}-600 text-white rounded-full font-semibold transition-all duration-300 hover:shadow-lg">
+              En savoir plus
+              <span class="inline-block transition-transform group-hover/btn:translate-x-1 ml-1">→</span>
+            </a>
+            <div class="text-right">
+              <div class="text-2xl font-black text-{{ program.color }}-600">{{ program.impact }}</div>
+              <div class="text-xs text-gray-500">Impact annuel</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{# Impact Statistics #}
+<section class="py-20 bg-gradient-to-br from-green-50 via-amber-50 to-green-50 relative overflow-hidden">
+  <div class="absolute top-0 right-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+      <div class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-100 to-amber-100 rounded-full mb-6">
+        <div class="w-2 h-2 bg-gradient-to-r from-green-600 to-amber-500 rounded-full"></div>
+        <span class="font-semibold text-green-700">Notre Impact</span>
+      </div>
+      
+      <h2 class="font-serif text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-amber-600 bg-clip-text text-transparent leading-tight mb-6">
+        Des résultats concrets
+      </h2>
+      
+      <p class="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+        Depuis notre lancement, nos programmes ont généré un impact significatif sur les communautés du Bénin et du Nigéria.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {% set stats = [
+        { number: '1850+', label: 'Bénéficiaires directs', color: 'green' },
+        { number: '6', label: 'Programmes actifs', color: 'amber' },
+        { number: '125+', label: 'Partenaires', color: 'emerald' },
+        { number: '2', label: 'Pays connectés', color: 'yellow' }
+      ] %}
+
+      {% for stat in stats %}
+      <div class="group bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 150 }}ms">
+        <div class="p-8 text-center">
+          <div class="w-16 h-16 bg-gradient-to-br from-{{ stat.color }}-400 to-{{ stat.color }}-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-shadow">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+          </div>
+          <div class="text-4xl font-black text-{{ stat.color }}-600 mb-2">{{ stat.number }}</div>
+          <div class="text-gray-600 font-medium">{{ stat.label }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{# Call to Action #}
+<section class="py-20 bg-gradient-to-br from-green-800 via-emerald-700 to-amber-600 relative overflow-hidden">
+  <div class="absolute top-0 right-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+  
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center text-white">
+    <div class="opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+      <h2 class="font-serif text-3xl md:text-4xl font-bold leading-tight mb-6">
+        Rejoignez nos programmes
+      </h2>
+      
+      <p class="text-lg text-white/90 leading-relaxed mb-8 max-w-2xl mx-auto">
+        Que vous soyez entrepreneur, artiste, étudiant ou leader communautaire, il y a un programme Binajia fait pour vous. Rejoignez-nous dans cette aventure panafricaine.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="{{ path('app_membership') }}" class="group relative px-8 py-4 bg-gradient-to-r from-amber-400 to-amber-500 text-green-900 rounded-full font-bold overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50 transform">
+          <span class="relative z-10 flex items-center justify-center">
+            Devenir membre
+            <span class="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
+          </span>
+          <span class="absolute inset-0 bg-gradient-to-r from-amber-300 to-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+        </a>
+        
+        <a href="{{ path('app_events') }}" class="group px-8 py-4 bg-white/10 text-white rounded-full font-bold ring-2 ring-white/30 hover:ring-white/50 transition-all duration-300 hover:scale-105 hover:shadow-xl transform backdrop-blur-md">
+          Voir les événements
+          <span class="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
+        </a>
+      </div>
+      
+      {# Program Stats #}
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+        <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+          <div class="text-2xl md:text-3xl font-black text-white mb-1">6</div>
+          <div class="text-white/80 text-xs">Programmes</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+          <div class="text-2xl md:text-3xl font-black text-white mb-1">1850+</div>
+          <div class="text-white/80 text-xs">Participants</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+          <div class="text-2xl md:text-3xl font-black text-white mb-1">125+</div>
+          <div class="text-white/80 text-xs">Partenaires</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+          <div class="text-2xl md:text-3xl font-black text-white mb-1">100%</div>
+          <div class="text-white/80 text-xs">Satisfaction</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Scroll animations
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollElements = document.querySelectorAll('[data-scroll]');
+    
+    const elementInView = (el, dividend = 1) => {
+      const elementTop = el.getBoundingClientRect().top;
+      return (
+        elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+      );
+    };
+    
+    const displayScrollElement = (element) => {
+      element.classList.add('opacity-100', 'translate-y-0');
+      element.classList.remove('opacity-0', 'translate-y-16', 'translate-y-20');
+    };
+    
+    const handleScrollAnimation = () => {
+      scrollElements.forEach((el) => {
+        if (elementInView(el, 1.25)) {
+          displayScrollElement(el);
+        }
+      });
+    };
+    
+    handleScrollAnimation();
+    window.addEventListener('scroll', () => {
+      handleScrollAnimation();
+    });
+  });
+</script>
+
+{% endblock %}

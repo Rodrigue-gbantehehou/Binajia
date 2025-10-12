@@ -1,0 +1,155 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Galerie Culturelle{% endblock %}
+
+{% block admin_body %}
+  <div class="space-y-6">
+    {# Header Section #}
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+          <i class="fas fa-images text-orange-500 mr-2"></i>Galerie Culturelle
+        </h1>
+        <p class="text-sm md:text-base text-gray-600">Photos et vidéos des événements et lieux historiques</p>
+      </div>
+      <div class="flex items-center gap-2 md:gap-3">
+        <button class="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-base rounded-xl font-semibold transition-all duration-300 bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-green-500">
+          <i class="fas fa-download"></i>
+          <span class="hidden sm:inline">Exporter</span>
+        </button>
+        <a href="{{ path('admin_cultural_content_new') }}" class="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-base rounded-xl font-semibold transition-all duration-300 bg-gradient-to-r from-green-600 to-orange-500 text-white shadow-lg hover:-translate-y-0.5 hover:shadow-xl">
+          <i class="fas fa-plus"></i>
+          <span class="hidden sm:inline">Ajouter</span>
+        </a>
+      </div>
+    </div>
+
+    {# Quick Stats #}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      <div class="bg-white rounded-2xl shadow-lg border border-green-100 p-4 md:p-6 relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 bg-gradient-to-br from-blue-50 to-blue-100 border-l-4 border-blue-500">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-images text-white text-lg md:text-xl"></i>
+            </div>
+          </div>
+          <div class="ml-3 md:ml-4">
+            <p class="text-xs md:text-sm font-medium text-blue-600">Total Photos</p>
+            <p class="text-xl md:text-2xl font-bold text-blue-900">{{ contents|filter(c => c.type == 'photo')|length }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-2xl shadow-lg border border-green-100 p-4 md:p-6 relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 bg-gradient-to-br from-purple-50 to-purple-100 border-l-4 border-purple-500">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-purple-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-video text-white text-lg md:text-xl"></i>
+            </div>
+          </div>
+          <div class="ml-3 md:ml-4">
+            <p class="text-xs md:text-sm font-medium text-purple-600">Vidéos</p>
+            <p class="text-xl md:text-2xl font-bold text-purple-900">{{ contents|filter(c => c.type == 'video')|length }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-2xl shadow-lg border border-green-100 p-4 md:p-6 relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 bg-gradient-to-br from-green-50 to-green-100 border-l-4 border-green-500">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-green-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-calendar-alt text-white text-lg md:text-xl"></i>
+            </div>
+          </div>
+          <div class="ml-3 md:ml-4">
+            <p class="text-xs md:text-sm font-medium text-green-600">Événements</p>
+            <p class="text-xl md:text-2xl font-bold text-green-900">{{ contents|filter(c => c.type == 'event')|length }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-2xl shadow-lg border border-green-100 p-4 md:p-6 relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 bg-gradient-to-br from-orange-50 to-orange-100 border-l-4 border-orange-500">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-map-marker-alt text-white text-lg md:text-xl"></i>
+            </div>
+          </div>
+          <div class="ml-3 md:ml-4">
+            <p class="text-xs md:text-sm font-medium text-orange-600">Lieux</p>
+            <p class="text-xl md:text-2xl font-bold text-orange-900">{{ contents|filter(c => c.type == 'place')|length }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# Filters #}
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6">
+      <form method="get" class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1">
+          <input type="text" name="q" value="{{ q }}" placeholder="Rechercher..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+        </div>
+        <div class="w-full md:w-48">
+          <select name="type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+            <option value="">Tous les types</option>
+            <option value="photo" {{ type == 'photo' ? 'selected' : '' }}>Photos</option>
+            <option value="video" {{ type == 'video' ? 'selected' : '' }}>Vidéos</option>
+            <option value="event" {{ type == 'event' ? 'selected' : '' }}>Événements</option>
+            <option value="place" {{ type == 'place' ? 'selected' : '' }}>Lieux</option>
+          </select>
+        </div>
+        <button type="submit" class="px-6 py-2 bg-gradient-to-r from-green-600 to-orange-500 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
+          <i class="fas fa-search mr-2"></i>Rechercher
+        </button>
+      </form>
+    </div>
+
+    {# Gallery Grid #}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+      {% for content in contents %}
+        <a href="{{ path('admin_cultural_content_show', {id: content.id}) }}" class="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+          <div class="relative h-48 bg-gray-200 overflow-hidden">
+            {% if content.image %}
+              <img src="{{ asset('media/' ~ content.image) }}" alt="{{ content.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+            {% else %}
+              <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                <i class="fas fa-image text-gray-400 text-4xl"></i>
+              </div>
+            {% endif %}
+            <div class="absolute top-2 right-2">
+              <span class="px-2 py-1 text-xs font-medium rounded-full {{ content.type == 'photo' ? 'bg-blue-500' : (content.type == 'video' ? 'bg-purple-500' : (content.type == 'event' ? 'bg-green-500' : 'bg-orange-500')) }} text-white">
+                <i class="fas {{ content.type == 'photo' ? 'fa-image' : (content.type == 'video' ? 'fa-video' : (content.type == 'event' ? 'fa-calendar' : 'fa-map-marker-alt')) }} mr-1"></i>
+                {{ content.type|capitalize }}
+              </span>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-gray-900 mb-1 line-clamp-1">{{ content.title }}</h3>
+            <p class="text-sm text-gray-600 line-clamp-2 mb-2">{{ content.description|default('Aucune description') }}</p>
+            <div class="flex items-center justify-between text-xs text-gray-500">
+              <span><i class="fas fa-globe mr-1"></i>{{ content.country|default('—') }}</span>
+              <span><i class="fas fa-clock mr-1"></i>{{ content.createdAt ? content.createdAt|date('d/m/Y') : '—' }}</span>
+            </div>
+          </div>
+        </a>
+      {% else %}
+        <div class="col-span-full text-center py-12">
+          <i class="fas fa-images text-gray-300 text-6xl mb-4"></i>
+          <p class="text-gray-500 text-lg">Aucun contenu trouvé</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    {# Pagination #}
+    {% if pages > 1 %}
+      <div class="flex justify-center items-center gap-2 mt-6">
+        {% for p in 1..pages %}
+          <a href="?page={{ p }}{% if q %}&q={{ q }}{% endif %}{% if type %}&type={{ type }}{% endif %}" 
+             class="px-4 py-2 rounded-lg font-medium transition-all {{ p == page ? 'bg-gradient-to-r from-green-600 to-orange-500 text-white shadow-lg' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
+            {{ p }}
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

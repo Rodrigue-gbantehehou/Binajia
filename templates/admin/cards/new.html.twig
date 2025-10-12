@@ -1,0 +1,359 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nouvelle Carte{% endblock %}
+
+{% block admin_body %}
+  <div class="space-y-6">
+    {# Back Button #}
+    <div>
+      <a href="{{ path('admin_cards_index') }}" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+        <i class="fas fa-arrow-left"></i>
+        <span>Retour aux cartes</span>
+      </a>
+    </div>
+
+    {# Header #}
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+        <i class="fas fa-id-card text-orange-500 mr-2"></i>Créer une nouvelle carte
+      </h1>
+      <p class="text-sm md:text-base text-gray-600">Générer une carte de membre pour un utilisateur</p>
+    </div>
+
+    {# Mode Selection Tabs #}
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+      <div class="border-b border-gray-200">
+        <nav class="-mb-px flex">
+          <button type="button" id="existing-user-tab" 
+                  class="tab-btn active flex-1 py-4 px-6 text-center font-medium text-sm border-b-2 border-green-500 text-green-600 bg-green-50">
+            <i class="fas fa-users mr-2"></i>Utilisateur existant
+          </button>
+          <button type="button" id="new-user-tab" 
+                  class="tab-btn flex-1 py-4 px-6 text-center font-medium text-sm border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+            <i class="fas fa-user-plus mr-2"></i>Nouvel utilisateur
+          </button>
+        </nav>
+      </div>
+
+      {# Existing User Form #}
+      <form method="post" id="existing-user-form" class="tab-content p-6">
+        <input type="hidden" name="mode" value="existing">
+        <div class="space-y-6">
+          {# User Selection #}
+          <div>
+            <label for="user_id" class="block text-sm font-medium text-gray-700 mb-2">
+              <i class="fas fa-user text-blue-500 mr-2"></i>Sélectionner un membre *
+            </label>
+            <select id="user_id" name="user_id" required 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all">
+              <option value="">-- Choisir un membre --</option>
+              {% for user in users %}
+                <option value="{{ user.id }}">
+                  {{ user.firstname }} {{ user.lastname }} ({{ user.email }})
+                </option>
+              {% endfor %}
+            </select>
+            <p class="mt-2 text-sm text-gray-500">
+              <i class="fas fa-info-circle mr-1"></i>
+              Seuls les membres sans carte active sont éligibles
+            </p>
+          </div>
+
+          {# Photo Upload for existing user #}
+          <div>
+            <label for="photo_existing" class="block text-sm font-medium text-gray-700 mb-2">
+              <i class="fas fa-camera text-purple-500 mr-2"></i>Photo du membre (optionnel)
+            </label>
+            <div class="mt-1 flex items-center space-x-4">
+              <div class="flex-shrink-0">
+                <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden border-2 border-gray-300">
+                  <img id="photo-preview-existing" class="w-full h-full object-cover" style="display: none;">
+                  <i class="fas fa-user text-gray-400 text-2xl"></i>
+                </div>
+              </div>
+              <div class="flex-1">
+                <input type="file" id="photo_existing" name="photo_existing" accept="image/*" 
+                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
+                <p class="mt-2 text-sm text-gray-500">
+                  <i class="fas fa-info-circle mr-1"></i>
+                  Formats acceptés : JPG, PNG, GIF. Taille max : 2MB
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {# Role for existing user #}
+          <div>
+            <label for="role_existing" class="block text-sm font-medium text-gray-700 mb-2">
+              <i class="fas fa-crown text-orange-500 mr-2"></i>Rôle sur la carte
+            </label>
+            <select id="role_existing" name="role" 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all">
+              <option value="MEMBRE">Membre</option>
+              <option value="PRÉSIDENT">Président</option>
+              <option value="VICE-PRÉSIDENT">Vice-Président</option>
+              <option value="SECRÉTAIRE">Secrétaire</option>
+              <option value="TRÉSORIER">Trésorier</option>
+              <option value="CONSEILLER">Conseiller</option>
+            </select>
+          </div>
+
+          {# Actions for existing user #}
+          <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
+            <button type="submit" 
+                    class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-orange-500 text-white rounded-xl font-semibold shadow-lg hover:-translate-y-0.5 hover:shadow-xl transition-all">
+              <i class="fas fa-plus"></i>
+              Créer la carte
+            </button>
+            <a href="{{ path('admin_cards_index') }}" 
+               class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-xl font-semibold hover:bg-gray-50 transition-all">
+              <i class="fas fa-times"></i>
+              Annuler
+            </a>
+          </div>
+        </div>
+      </form>
+
+      {# New User Form #}
+      <form method="post" id="new-user-form" class="tab-content hidden p-6">
+        <input type="hidden" name="mode" value="new">
+        <div class="space-y-6">
+          {# Personal Information #}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="firstname" class="block text-sm font-medium text-gray-700 mb-2">
+                <i class="fas fa-user text-blue-500 mr-2"></i>Prénom *
+              </label>
+              <input type="text" id="firstname" name="firstname" required 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                     placeholder="Prénom du membre">
+            </div>
+            <div>
+              <label for="lastname" class="block text-sm font-medium text-gray-700 mb-2">
+                <i class="fas fa-user text-blue-500 mr-2"></i>Nom *
+              </label>
+              <input type="text" id="lastname" name="lastname" required 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                     placeholder="Nom de famille">
+            </div>
+          </div>
+
+          {# Contact Information #}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                <i class="fas fa-envelope text-green-500 mr-2"></i>Email *
+              </label>
+              <input type="email" id="email" name="email" required 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                     placeholder="email@exemple.com">
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
+                <i class="fas fa-phone text-green-500 mr-2"></i>Téléphone
+              </label>
+              <input type="tel" id="phone" name="phone" 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                     placeholder="+229 XX XX XX XX">
+            </div>
+          </div>
+
+          {# Location Information #}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="country" class="block text-sm font-medium text-gray-700 mb-2">
+                <i class="fas fa-flag text-orange-500 mr-2"></i>Pays
+              </label>
+              <select id="country" name="country" 
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all">
+                <option value="">-- Sélectionner un pays --</option>
+                <option value="benin">🇧🇯 Bénin</option>
+                <option value="nigeria">🇳🇬 Nigéria</option>
+                <option value="france">🇫🇷 France</option>
+                <option value="canada">🇨🇦 Canada</option>
+                <option value="other">🌍 Autre</option>
+              </select>
+            </div>
+            <div>
+              <label for="city" class="block text-sm font-medium text-gray-700 mb-2">
+                <i class="fas fa-city text-orange-500 mr-2"></i>Ville
+              </label>
+              <input type="text" id="city" name="city" 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                     placeholder="Ville de résidence">
+            </div>
+          </div>
+
+          {# Photo Upload #}
+          <div>
+            <label for="photo" class="block text-sm font-medium text-gray-700 mb-2">
+              <i class="fas fa-camera text-purple-500 mr-2"></i>Photo du membre
+            </label>
+            <div class="mt-1 flex items-center space-x-4">
+              <div class="flex-shrink-0">
+                <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden border-2 border-gray-300">
+                  <img id="photo-preview" class="w-full h-full object-cover" style="display: none;">
+                  <i class="fas fa-user text-gray-400 text-2xl"></i>
+                </div>
+              </div>
+              <div class="flex-1">
+                <input type="file" id="photo" name="photo" accept="image/*" 
+                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
+                <p class="mt-2 text-sm text-gray-500">
+                  <i class="fas fa-info-circle mr-1"></i>
+                  Formats acceptés : JPG, PNG, GIF. Taille max : 2MB
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {# Role for new user #}
+          <div>
+            <label for="role_new" class="block text-sm font-medium text-gray-700 mb-2">
+              <i class="fas fa-crown text-orange-500 mr-2"></i>Rôle sur la carte
+            </label>
+            <select id="role_new" name="role" 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all">
+              <option value="MEMBRE">Membre</option>
+              <option value="PRÉSIDENT">Président</option>
+              <option value="VICE-PRÉSIDENT">Vice-Président</option>
+              <option value="SECRÉTAIRE">Secrétaire</option>
+              <option value="TRÉSORIER">Trésorier</option>
+              <option value="CONSEILLER">Conseiller</option>
+            </select>
+          </div>
+
+          {# Info Box for new user #}
+          <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg">
+            <div class="flex items-start">
+              <i class="fas fa-user-plus text-green-500 mt-1 mr-3"></i>
+              <div class="text-sm text-green-700">
+                <p class="font-medium mb-1">Création automatique :</p>
+                <ul class="list-disc list-inside space-y-1">
+                  <li>Compte utilisateur créé automatiquement</li>
+                  <li>Mot de passe temporaire généré</li>
+                  <li>Email de bienvenue envoyé</li>
+                  <li>Carte générée immédiatement</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {# Actions for new user #}
+          <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
+            <button type="submit" 
+                    class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-orange-500 text-white rounded-xl font-semibold shadow-lg hover:-translate-y-0.5 hover:shadow-xl transition-all">
+              <i class="fas fa-user-plus"></i>
+              Créer l'utilisateur et la carte
+            </button>
+            <a href="{{ path('admin_cards_index') }}" 
+               class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-xl font-semibold hover:bg-gray-50 transition-all">
+              <i class="fas fa-times"></i>
+              Annuler
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    {# Preview Card #}
+    <div class="bg-gradient-to-br from-green-50 to-orange-50 rounded-2xl shadow-lg border border-gray-100 p-6">
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">
+        <i class="fas fa-eye text-green-500 mr-2"></i>Aperçu de la carte
+      </h2>
+      <div class="bg-white rounded-lg p-4 shadow-inner">
+        <div class="aspect-[1.586/1] bg-gradient-to-br from-green-600 to-orange-500 rounded-lg flex items-center justify-center">
+          <div class="text-white text-center">
+            <i class="fas fa-id-card text-6xl mb-3 opacity-50"></i>
+            <p class="text-sm font-medium">La carte sera générée après la création</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const existingTab = document.getElementById('existing-user-tab');
+      const newTab = document.getElementById('new-user-tab');
+      const existingForm = document.getElementById('existing-user-form');
+      const newForm = document.getElementById('new-user-form');
+
+      function switchTab(activeTab, inactiveTab, activeForm, inactiveForm) {
+        // Update tab styles
+        activeTab.classList.add('active', 'border-green-500', 'text-green-600', 'bg-green-50');
+        activeTab.classList.remove('border-transparent', 'text-gray-500');
+        
+        inactiveTab.classList.remove('active', 'border-green-500', 'text-green-600', 'bg-green-50');
+        inactiveTab.classList.add('border-transparent', 'text-gray-500');
+
+        // Show/hide forms
+        activeForm.classList.remove('hidden');
+        inactiveForm.classList.add('hidden');
+
+        // Update form requirements
+        if (activeForm === newForm) {
+          // Make new user form fields required
+          newForm.querySelectorAll('input[required]').forEach(input => {
+            input.setAttribute('required', 'required');
+          });
+          // Remove required from existing user form
+          existingForm.querySelector('#user_id').removeAttribute('required');
+        } else {
+          // Make existing user form field required
+          existingForm.querySelector('#user_id').setAttribute('required', 'required');
+          // Remove required from new user form
+          newForm.querySelectorAll('input[required]').forEach(input => {
+            input.removeAttribute('required');
+          });
+        }
+      }
+
+      existingTab.addEventListener('click', function() {
+        switchTab(existingTab, newTab, existingForm, newForm);
+      });
+
+      newTab.addEventListener('click', function() {
+        switchTab(newTab, existingTab, newForm, existingForm);
+      });
+
+      // Initialize with existing user tab active
+      switchTab(existingTab, newTab, existingForm, newForm);
+
+      // Photo preview functionality for existing user
+      const photoInputExisting = document.getElementById('photo_existing');
+      const photoPreviewExisting = document.getElementById('photo-preview-existing');
+      
+      if (photoInputExisting) {
+        photoInputExisting.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file) {
+            // Validate file size (2MB max)
+            if (file.size > 2 * 1024 * 1024) {
+              alert('La taille de l\'image ne doit pas dépasser 2MB');
+              e.target.value = '';
+              return;
+            }
+            
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+              alert('Veuillez sélectionner un fichier image valide');
+              e.target.value = '';
+              return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              photoPreviewExisting.src = e.target.result;
+              photoPreviewExisting.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+          } else {
+            photoPreviewExisting.style.display = 'none';
+            photoPreviewExisting.src = '';
+          }
+        });
+      }
+    });
+  </script>
+{% endblock %}

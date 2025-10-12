@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\CulturalContentRepository;
+use App\Repository\CulturalcontentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CulturalContentRepository::class)]
-class CulturalContent
+#[ORM\Entity(repositoryClass: CulturalcontentRepository::class)]
+class Culturalcontent
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

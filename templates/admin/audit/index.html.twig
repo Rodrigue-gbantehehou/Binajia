@@ -1,0 +1,44 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Audit{% endblock %}
+
+{% block admin_body %}
+  <div class="space-y-4">
+    <div class="flex items-center justify-between mb-4">
+      <h1 class="text-2xl font-bold">Journal d'audit</h1>
+    </div>
+
+    <div class="overflow-x-auto rounded-xl ring-1 ring-gray-200 bg-white">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date/Heure</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Utilisateur</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cible</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">IP</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Détails</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          {% for log in auditLogs %}
+            <tr>
+              <td class="px-4 py-3 text-sm">{{ log.timestamp ? log.timestamp|date('d/m/Y H:i') : '—' }}</td>
+              <td class="px-4 py-3 text-sm">{{ log.user }}</td>
+              <td class="px-4 py-3 text-sm">
+                <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">{{ log.action }}</span>
+              </td>
+              <td class="px-4 py-3 text-sm font-mono">{{ log.target }}</td>
+              <td class="px-4 py-3 text-sm font-mono">{{ log.ip }}</td>
+              <td class="px-4 py-3 text-sm text-gray-600">{{ log.details }}</td>
+            </tr>
+          {% else %}
+            <tr><td colspan="6" class="px-4 py-6 text-center text-gray-500">Aucune entrée d'audit</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="text-sm text-gray-600">Total: {{ total }}</div>
+  </div>
+{% endblock %}

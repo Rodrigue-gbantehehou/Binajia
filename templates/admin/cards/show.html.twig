@@ -1,0 +1,53 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Carte {{ card.cardnumberC }}{% endblock %}
+
+{% block admin_body %}
+  <div class="space-y-6">
+    <div class="bg-white rounded-xl ring-1 ring-gray-200 p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h1 class="text-2xl font-bold">Carte {{ card.cardnumberC }}</h1>
+        <div class="flex items-center gap-2">
+          <form action="{{ path('admin_cards_regenerate', {id: card.id}) }}" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token('regenerate_card_' ~ card.id) }}" />
+            <button class="btn">Régénérer PDF</button>
+          </form>
+          {% if card.status %}
+            <form action="{{ path('admin_cards_revoke', {id: card.id}) }}" method="post">
+              <input type="hidden" name="_token" value="{{ csrf_token('revoke_card_' ~ card.id) }}" />
+              <button class="btn-danger">Révoquer</button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+      <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div><dt class="text-gray-500">Membre</dt><dd class="font-semibold">{{ card.user ? (card.user.firstname ~ ' ' ~ card.user.lastname) : '—' }}</dd></div>
+        <div><dt class="text-gray-500">Statut</dt><dd class="font-semibold">{{ card.status ? 'Active' : 'Révoquée' }}</dd></div>
+        <div><dt class="text-gray-500">Émise</dt><dd class="font-semibold">{{ card.issuedate ? card.issuedate|date('d/m/Y') : '—' }}</dd></div>
+        <div><dt class="text-gray-500">Expire</dt><dd class="font-semibold">{{ card.expiryDate ? card.expiryDate|date('d/m/Y') : '—' }}</dd></div>
+        <div><dt class="text-gray-500">Photo</dt><dd class="font-semibold">{{ card.photo ?: '—' }}</dd></div>
+        <div><dt class="text-gray-500">PDF</dt><dd class="font-semibold">{% if card.pdfurl %}<a class="text-primary" href="{{ card.pdfurl }}" target="_blank">Ouvrir PDF</a>{% else %}—{% endif %}</dd></div>
+      </dl>
+    </div>
+
+    <div class="bg-white rounded-xl ring-1 ring-gray-200 p-6">
+      <h2 class="text-xl font-semibold mb-4">Aperçu</h2>
+      <div class="flex items-start gap-6">
+        <div class="w-40 h-56 ring-1 ring-gray-200 rounded overflow-hidden bg-gray-50 flex items-center justify-center">
+          {% if card.photo %}
+            <img src="{{ card.photo }}" alt="Photo" class="w-full h-full object-cover" />
+          {% else %}
+            <span class="text-gray-400 text-sm">Pas de photo</span>
+          {% endif %}
+        </div>
+        <div class="flex-1">
+          {% if card.pdfurl %}
+            <iframe src="{{ card.pdfurl }}" class="w-full h-96 rounded"></iframe>
+          {% else %}
+            <div class="text-gray-500">Aucun PDF disponible. Cliquez sur Régénérer PDF.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

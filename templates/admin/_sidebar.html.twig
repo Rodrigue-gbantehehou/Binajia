@@ -4,17 +4,29 @@
     <a href="{{ path('admin_dashboard') }}" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 {{ app.request.get('_route') starts with 'admin_dashboard' ? 'bg-neutral-50 text-primary' : '' }}">
       <span>Tableau de bord</span>
     </a>
-    <a href="#users" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50">
+    <a href="{{ path('admin_members_index') }}" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 {{ app.request.get('_route') starts with 'admin_members_' ? 'bg-neutral-50 text-primary' : '' }}">
       <span>Utilisateurs</span>
     </a>
-    <a href="#events" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50">
+    <a href="{{ path('admin_events_index') }}" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 {{ app.request.get('_route') starts with 'admin_events_' ? 'bg-neutral-50 text-primary' : '' }}">
       <span>Événements & Tickets</span>
     </a>
-    <a href="#payments" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50">
+    <a href="{{ path('admin_payments_index') }}" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 {{ app.request.get('_route') starts with 'admin_payments_' ? 'bg-neutral-50 text-primary' : '' }}">
       <span>Paiements & Statistiques</span>
     </a>
-    <a href="#places" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50">
+    <a href="{{ path('admin_places_index') }}" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 {{ app.request.get('_route') starts with 'admin_places_' ? 'bg-neutral-50 text-primary' : '' }}">
       <span>Lieux culturels</span>
+    </a>
+    <a href="{{ path('admin_receipts_index') }}" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 {{ app.request.get('_route') starts with 'admin_receipts_' ? 'bg-neutral-50 text-primary' : '' }}">
+      <span>Reçus</span>
+    </a>
+    <a href="{{ path('admin_health_index') }}" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 {{ app.request.get('_route') starts with 'admin_health_' ? 'bg-neutral-50 text-primary' : '' }}">
+      <span>Supervision — Health</span>
+    </a>
+    <a href="{{ path('admin_logs_index') }}" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 {{ app.request.get('_route') starts with 'admin_logs_' ? 'bg-neutral-50 text-primary' : '' }}">
+      <span>Supervision — Logs</span>
+    </a>
+    <a href="{{ path('admin_metrics_index') }}" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 {{ app.request.get('_route') starts with 'admin_metrics_' ? 'bg-neutral-50 text-primary' : '' }}">
+      <span>Supervision — Métriques</span>
     </a>
   </nav>
 </aside>

@@ -1,0 +1,24 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Paiement {{ payment.reference }}{% endblock %}
+
+{% block admin_body %}
+  <div class="space-y-6">
+    <div class="bg-white rounded-xl ring-1 ring-gray-200 p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h1 class="text-2xl font-bold">Paiement {{ payment.reference }}</h1>
+        <form action="{{ path('admin_payments_verify', {id: payment.id}) }}" method="post">
+          <input type="hidden" name="_token" value="{{ csrf_token('verify_payment_' ~ payment.id) }}" />
+          <button class="btn">Vérifier FedaPay</button>
+        </form>
+      </div>
+      <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div><dt class="text-gray-500">Date</dt><dd class="font-semibold">{{ payment.paymentdate ? payment.paymentdate|date('d/m/Y H:i') : '—' }}</dd></div>
+        <div><dt class="text-gray-500">Montant</dt><dd class="font-semibold">{{ payment.amount ?: '—' }}</dd></div>
+        <div><dt class="text-gray-500">Statut</dt><dd class="font-semibold">{{ payment.status ?: '—' }}</dd></div>
+        <div><dt class="text-gray-500">Référence</dt><dd class="font-semibold">{{ payment.reference ?: '—' }}</dd></div>
+        <div><dt class="text-gray-500">Membre</dt><dd class="font-semibold">{{ payment.user ? (payment.user.firstname ~ ' ' ~ payment.user.lastname ~ ' (' ~ payment.user.email ~ ')') : '—' }}</dd></div>
+      </dl>
+    </div>
+  </div>
+{% endblock %}
