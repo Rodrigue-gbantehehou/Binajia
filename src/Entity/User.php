@@ -78,12 +78,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Evenement::class, mappedBy: 'createdBy')]
     private Collection $evenements;
 
+    /**
+     * @var Collection<int, PasswordResetToken>
+     */
+    #[ORM\OneToMany(targetEntity: PasswordResetToken::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $passwordResetTokens;
+
     public function __construct()
     {
         $this->membershipCards = new ArrayCollection();
         $this->payments = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->evenements = new ArrayCollection();
+        $this->passwordResetTokens = new ArrayCollection();
         $this->createdAt = new \DateTime();
     }
 
@@ -366,6 +373,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($evenement->getCreatedBy() === $this) {
                 $evenement->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PasswordResetToken>
+     */
+    public function getPasswordResetTokens(): Collection
+    {
+        return $this->passwordResetTokens;
+    }
+
+    public function addPasswordResetToken(PasswordResetToken $passwordResetToken): static
+    {
+        if (!$this->passwordResetTokens->contains($passwordResetToken)) {
+            $this->passwordResetTokens->add($passwordResetToken);
+            $passwordResetToken->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePasswordResetToken(PasswordResetToken $passwordResetToken): static
+    {
+        if ($this->passwordResetTokens->removeElement($passwordResetToken)) {
+            // set the owning side to null (unless already changed)
+            if ($passwordResetToken->getUser() === $this) {
+                $passwordResetToken->setUser(null);
             }
         }
 
