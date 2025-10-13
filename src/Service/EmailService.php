@@ -12,8 +12,7 @@ class EmailService
     public function __construct(
         private MailerInterface $mailer,
         private LoggerInterface $logger,
-        private string $fromEmail = 'contact@binajia.org',
-        private string $fromName = 'BINAJIA'
+        private ConfigurationService $config
     ) {}
 
     /**
@@ -23,16 +22,16 @@ class EmailService
     {
         try {
             $email = (new TemplatedEmail())
-                ->from($this->fromEmail)
+                ->from($this->config->getFromEmail())
                 ->to($toEmail)
                 ->subject('Bienvenue chez BINAJIA - Vos identifiants de connexion')
                 ->htmlTemplate('emails/welcome.html.twig')
                 ->context([
                     'firstName' => $firstName,
                     'lastName' => $lastName,
-                    'email' => $toEmail,
+                    'userEmail' => $toEmail,
                     'tempPassword' => $tempPassword,
-                    'loginUrl' => 'https://binajia.org/login'
+                    'loginUrl' => $this->config->getLoginUrl()
                 ]);
 
             $this->mailer->send($email);
@@ -55,7 +54,7 @@ class EmailService
     {
         try {
             $email = (new TemplatedEmail())
-                ->from($this->fromEmail)
+                ->from($this->config->getFromEmail())
                 ->to($toEmail)
                 ->subject('Votre carte de membre BINAJIA est prête !')
                 ->htmlTemplate('emails/card_created.html.twig')
@@ -63,7 +62,7 @@ class EmailService
                     'firstName' => $firstName,
                     'cardNumber' => $cardNumber,
                     'pdfUrl' => $pdfUrl,
-                    'downloadUrl' => 'https://binajia.org' . $pdfUrl
+                    'downloadUrl' => $this->config->getDownloadUrl($pdfUrl)
                 ]);
 
             $this->mailer->send($email);
@@ -86,7 +85,7 @@ class EmailService
     {
         try {
             $email = (new TemplatedEmail())
-                ->from($this->fromEmail)
+                ->from($this->config->getFromEmail())
                 ->to($toEmail)
                 ->subject('Finaliser votre adhésion BINAJIA - Paiement requis')
                 ->htmlTemplate('emails/payment_request.html.twig')
@@ -117,7 +116,7 @@ class EmailService
     {
         try {
             $email = (new TemplatedEmail())
-                ->from($this->fromEmail)
+                ->from($this->config->getFromEmail())
                 ->to($toEmail)
                 ->subject('Paiement confirmé - Bienvenue dans la communauté BINAJIA !')
                 ->htmlTemplate('emails/payment_confirmation.html.twig')
@@ -126,7 +125,7 @@ class EmailService
                     'reference' => $reference,
                     'amount' => $amount,
                     'currency' => 'FCFA',
-                    'dashboardUrl' => 'https://binajia.org/dashboard'
+                    'dashboardUrl' => $this->config->getDashboardUrl()
                 ]);
 
             $this->mailer->send($email);

@@ -28,3 +28,21 @@ services:
     App\Service\MembershipCardService:
         arguments:
             $projectDir: '%kernel.project_dir%'
+    
+    App\Command\TestEmailCardCommand:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+    
+    App\Command\FixEmailCardCommand:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+    
+    App\Command\TestFullRegistrationCommand:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+    
+    App\Command\TestPdfStylesCommand:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+    
+    App\Command\TestEmailToRodrigueCommand: ~

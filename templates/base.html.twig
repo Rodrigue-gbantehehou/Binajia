@@ -11,7 +11,33 @@
 		{% block styles %}
 			<link rel="preconnect" href="https://fonts.googleapis.com">
 			<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
-			<link rel="stylesheet" href="{{ asset('build/app.css') }}">
+			<script src="https://cdn.tailwindcss.com"></script>
+			<script>
+				tailwind.config = {
+					theme: {
+						extend: {
+							colors: {
+								'primary': '#0a4b1e',
+								'primary-dark': '#08381a',
+								'primary-light': '#062e15',
+								'secondary': '#2D7A4F',
+								'secondary-dark': '#1F5438',
+								'secondary-light': '#3A8C63',
+								'accent': '#f5880b',
+								'accent-dark': '#F59E0B',
+								'accent-light': '#d97706',
+								'cream': '#FAF8F5',
+								'charcoal': '#2B2520'
+							},
+							fontFamily: {
+								'sans': ['Roboto', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+								'serif': ['Roboto']
+							}
+						}
+					}
+				}
+			</script>
+			<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 			<style>
 				/* Fallback to support legacy JS that toggles `active` */
 				.mobile-menu.active {
@@ -134,7 +160,22 @@
 							</a>
 						</div>
 						<div class="hidden md:flex items-center space-x-8">
-							<a href="{{ path('app_home') }}" class="nav-link text-charcoal hover:text-primary font-medium">Accueil</a>
+							<!-- Dropdown Accueil -->
+							<div class="relative group">
+								<button class="nav-link text-charcoal hover:text-primary font-medium flex items-center">
+									Accueil
+									<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+									</svg>
+								</button>
+								<div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+									<div class="py-2">
+										<a href="{{ path('app_home') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Accueil Actuel</a>
+										<a href="{{ path('app_homepage') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Nouvelle Page (Twig)</a>
+										<a href="{{ path('app_homepage_full') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Page Complète (HTML)</a>
+									</div>
+								</div>
+							</div>
 							<a href="{{ path('app_about') }}" class="nav-link text-charcoal hover:text-primary font-medium">À propos</a>
 							<a href="{{ path('app_events') }}" class="nav-link text-charcoal hover:text-primary font-medium">Événements</a>
 							<a href="{{ path('app_places') }}" class="nav-link text-charcoal hover:text-primary font-medium">Lieux</a>
@@ -187,7 +228,14 @@
 						</button>
 					</div>
 					<div class="space-y-4">
-						<a href="{{ path('app_home') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Accueil</a>
+						<!-- Section Accueil -->
+						<div class="border-b border-gray-200 pb-4">
+							<h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Pages d'accueil</h3>
+							<a href="{{ path('app_home') }}" class="block text-charcoal hover:text-primary font-medium py-2 px-4 rounded-lg hover:bg-cream transition-all">Accueil Actuel</a>
+							<a href="{{ path('app_homepage') }}" class="block text-charcoal hover:text-primary font-medium py-2 px-4 rounded-lg hover:bg-cream transition-all">Nouvelle Page (Twig)</a>
+							<a href="{{ path('app_homepage_full') }}" class="block text-charcoal hover:text-primary font-medium py-2 px-4 rounded-lg hover:bg-cream transition-all">Page Complète (HTML)</a>
+						</div>
+						<!-- Navigation principale -->
 						<a href="{{ path('app_about') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">À propos</a>
 						<a href="{{ path('app_events') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Événements</a>
 						<a href="{{ path('app_places') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Lieux</a>
@@ -227,7 +275,13 @@
 									<h4 class="font-semibold text-lg mb-4">Navigation</h4>
 									<ul class="space-y-2">
 										<li>
-											<a href="{{ path('app_home') }}" class="text-gray-400 hover:text-primary transition-colors">Accueil</a>
+											<a href="{{ path('app_home') }}" class="text-gray-400 hover:text-primary transition-colors">Accueil Actuel</a>
+										</li>
+										<li>
+											<a href="{{ path('app_homepage') }}" class="text-gray-400 hover:text-primary transition-colors">Nouvelle Page</a>
+										</li>
+										<li>
+											<a href="{{ path('app_homepage_full') }}" class="text-gray-400 hover:text-primary transition-colors">Page Complète</a>
 										</li>
 										<li>
 											<a href="{{ path('app_about') }}" class="text-gray-400 hover:text-primary transition-colors">À propos</a>
@@ -279,9 +333,7 @@
 				{% endblock %}
 
 				{% block scripts %}
-					<script src="{{ asset('build/runtime.js') }}" defer></script>
-					<script src="{{ asset('build/app.js') }}" defer></script>
-					<script src="/scripts/app.js" defer></script>
+					<script src="{{ asset('js/app.js') }}" defer></script>
 				{% endblock %}
 			</body>
 	</html>

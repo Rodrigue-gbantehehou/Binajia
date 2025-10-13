@@ -45,8 +45,21 @@ class HomeController extends AbstractController
     #[Route('/home/c', name: 'app_home_c')]
     public function indexC(EntityManagerInterface $entityManager): Response
     {
-        $contents = $entityManager->getRepository(CulturalContent::class)->findAll();
-        $places = $entityManager->getRepository(CulturalContent::class)->findBy(['type' => 'lieu']);
-        return $this->render('home/index_c.html.twig', compact('contents', 'places'));
+        $places = $entityManager->getRepository(CulturalContent::class)->findAll();
+        return $this->render('home/index_c.html.twig', compact( 'places'));
+    }
+
+    #[Route('/homepage', name: 'app_homepage')]
+    public function homepage(): Response
+    {
+        // Page d'accueil principale avec Twig
+        return $this->render('home/index.html.twig');
+    }
+
+    #[Route('/homepage-full', name: 'app_homepage_full')]
+    public function homepageFull(): Response
+    {
+        // Page d'accueil complète HTML
+        return $this->render('home/homepage_full.html.twig');
     }
 }

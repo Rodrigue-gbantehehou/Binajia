@@ -1,0 +1,217 @@
+/* Styles personnalisés pour BINAJIA */
+
+/* Configuration Tailwind personnalisée */
+:root {
+    --primary-light: #f7f7f7;
+    --primary: #008751;
+    --primary-dark: #005731;
+    --secondary-light: #f7f7f7;
+    --secondary: #1a7431;
+    --secondary-dark: #0d5c26;
+    --yellow-benin: #FCD116;
+    --red-benin: #E8112D;
+    --green-nigeria: #008751;
+}
+
+/* Animations personnalisées */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.animate-bounce { animation: bounce 2s infinite; }
+.animate-blob { animation: blob 7s infinite; }
+.animation-delay-2000 { animation-delay: 2s; }
+.animation-delay-4000 { animation-delay: 4s; }
+
+/* Styles pour les cartes de membre */
+.membership-card {
+    width: 450px;
+    height: 280px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.membership-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+}
+
+.card-header {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: relative;
+}
+
+.card-body {
+    background: linear-gradient(135deg, #1F5438 0%, #2D7A4F 100%);
+    height: 220px;
+    padding: 15px 20px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255, 255, 255, 0.02) 20px, rgba(255, 255, 255, 0.02) 40px),
+        repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(255, 255, 255, 0.02) 20px, rgba(255, 255, 255, 0.02) 40px);
+    pointer-events: none;
+}
+
+/* Drapeaux */
+.flag {
+    width: 28px;
+    height: 20px;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.flag-benin {
+    background: linear-gradient(to right, #008751 0%, #008751 40%, transparent 40%, transparent 100%),
+                linear-gradient(to bottom, #FCD116 0%, #FCD116 50%, #E8112D 50%, #E8112D 100%);
+}
+
+.flag-nigeria {
+    background: linear-gradient(to right, #008751 0%, #008751 33%, white 33%, white 66%, #008751 66%, #008751 100%);
+}
+
+/* Backgrounds personnalisés */
+.hero-bg {
+    background: linear-gradient(135deg, rgba(0, 135, 81, 0.9), rgba(26, 116, 49, 0.9)), 
+                url('/media/hero-split.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.benin-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('https://images.unsplash.com/photo-1580502304784-8985b7eb8990');
+    background-size: cover;
+    background-position: center;
+}
+
+.nigeria-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('https://images.unsplash.com/photo-1529107386315-e1a2ed508132');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Effets de texte */
+.gradient-text {
+    background: linear-gradient(to right, #ffffff, #c9c900);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+/* Formulaires flottants */
+.floating-label {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.floating-label input,
+.floating-label select {
+    border: 1px solid #ccc;
+    padding: 15px 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.floating-label label {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    color: #999;
+    pointer-events: none;
+    transition: 0.2s ease all;
+    background: white;
+    padding: 0 5px;
+}
+
+.floating-label input:focus ~ label,
+.floating-label input:not(:placeholder-shown) ~ label,
+.floating-label select:focus ~ label,
+.floating-label select:not([value=""]) ~ label {
+    top: -10px;
+    font-size: 12px;
+    color: #4a5568;
+}
+
+/* Boutons personnalisés */
+.btn-binajia {
+    background: linear-gradient(135deg, #2D7A4F 0%, #1F5438 100%);
+    color: white;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-binajia:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(45, 122, 79, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .membership-card {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        height: auto;
+    }
+    
+    .card-header, .card-body {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .hero-bg {
+        padding-top: 100px !important;
+        padding-bottom: 40px !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .membership-card {
+        min-height: 200px;
+    }
+    
+    h1, h2, h3 {
+        font-size: 1.2rem !important;
+    }
+}
