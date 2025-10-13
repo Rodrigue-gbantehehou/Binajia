@@ -1,0 +1,2203 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binajia – Réseau de Jeunes d'Ambassadeurs pour l'Intégration Socioculturelle entre le Bénin et le Nigéria
+    </title>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#f7f7f7',    // Blanc du Bénin
+                            DEFAULT: '#008751',   // Vert du Bénin
+                            dark: '#005731',
+                        },
+                        secondary: {
+                            light: '#f7f7f7',     // Blanc du Nigeria 
+                            DEFAULT: '#1a7431',   // Vert du Nigeria
+                            dark: '#0d5c26',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        ::selection {
+            background: #f59e0b;
+            color: #000000;
+        }
+
+        ::-moz-selection {
+            background: #f59e0b;
+            color: #000000;
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(0, 135, 81, 0.9), rgba(26, 116, 49, 0.9)), url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .benin-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1580502304784-8985b7eb8990?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .nigeria-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1529107386315-e1a2ed508132?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .payment-card {
+            perspective: 1000px;
+        }
+
+        .payment-card-inner {
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .payment-card:hover .payment-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .payment-card-front,
+        .payment-card-back {
+            backface-visibility: hidden;
+        }
+
+        .payment-card-back {
+            transform: rotateY(180deg);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        .floating-label {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .floating-label input,
+        .floating-label select {
+            border: 1px solid #ccc;
+            padding: 15px 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .floating-label label {
+            position: absolute;
+            top: 15px;
+            left: 10px;
+            color: #999;
+            pointer-events: none;
+            transition: 0.2s ease all;
+            background: white;
+            padding: 0 5px;
+        }
+
+        .floating-label input:focus~label,
+        .floating-label input:not(:placeholder-shown)~label,
+        .floating-label select:focus~label,
+        .floating-label select:not([value=""])~label {
+            top: -10px;
+            font-size: 12px;
+            color: #4a5568;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #ffffff, #c9c900);
+            /* vert -> jaune */
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* pour Safari/Chrome */
+            color: transparent;
+            /* fallback */
+        }
+
+        .card-container {
+            perspective: 1000px;
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .membership-card {
+            width: 450px;
+            height: 280px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .membership-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Header */
+        .card-header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .card-header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .flag {
+            width: 28px;
+            height: 20px;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .flag-benin {
+            background: linear-gradient(to right, #008751 0%, #008751 40%, transparent 40%, transparent 100%),
+                linear-gradient(to bottom, #FCD116 0%, #FCD116 50%, #E8112D 50%, #E8112D 100%);
+        }
+
+        .flag-nigeria {
+            background: linear-gradient(to right, #008751 0%, #008751 33%, white 33%, white 66%, #008751 66%, #008751 100%);
+        }
+
+        .binajia-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: #1F5438;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .association-text {
+            font-size: 9px;
+            color: #1F5438;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: -3px;
+        }
+
+        .card-logo {
+            width: 80px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #1F5438;
+            font-weight: 700;
+        }
+
+        /* Body */
+        .card-body {
+            background: linear-gradient(135deg, #1F5438 0%, #2D7A4F 100%);
+            height: 220px;
+            padding: 15px 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255, 255, 255, 0.02) 20px, rgba(255, 255, 255, 0.02) 40px),
+                repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(255, 255, 255, 0.02) 20px, rgba(255, 255, 255, 0.02) 40px);
+            pointer-events: none;
+        }
+
+        .card-type {
+            font-size: 11px;
+            font-weight: 300;
+            margin-bottom: 2px;
+            opacity: 0.9;
+        }
+
+        .card-main-content {
+            display: flex;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-photo {
+            width: 85px;
+            height: 100px;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-photo-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .card-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title-section {
+            margin-bottom: 8px;
+        }
+
+        .ambassador-title {
+            font-size: 16px;
+            font-weight: 900;
+            color: #F59E0B;
+            text-transform: uppercase;
+            line-height: 1.2;
+            margin-bottom: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        .united-text {
+            font-size: 10px;
+            font-style: italic;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .member-details {
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .detail-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .detail-label {
+            opacity: 0.8;
+            font-weight: 300;
+            min-width: 65px;
+        }
+
+        .detail-value {
+            font-weight: 600;
+        }
+
+        .member-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .card-footer {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 10px;
+            z-index: 1;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .role-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: #F59E0B;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+
+        .footer-detail {
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .footer-detail strong {
+            font-weight: 600;
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+
+        .contact-info {
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        /* Back of card */
+        .card-back {
+            background: linear-gradient(135deg, #1F5438 0%, #2D7A4F 100%);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-back::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(255, 255, 255, 0.03) 30px, rgba(255, 255, 255, 0.03) 60px),
+                repeating-linear-gradient(-45deg, transparent, transparent 30px, rgba(255, 255, 255, 0.03) 30px, rgba(255, 255, 255, 0.03) 60px);
+            pointer-events: none;
+        }
+
+        .back-logo {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-logo-text {
+            font-size: 40px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .back-info {
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #F59E0B;
+        }
+
+        .back-description {
+            font-size: 12px;
+            opacity: 0.9;
+            line-height: 1.6;
+            max-width: 350px;
+        }
+
+        .back-contacts {
+            margin-top: 20px;
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+
+
+        .photo-upload-icon {
+            font-size: 40px;
+            color: #2D7A4F;
+            margin-bottom: 10px;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #2D7A4F 0%, #1F5438 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(45, 122, 79, 0.3);
+        }
+
+        /* Modern Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #2D7A4F 0%, #1F5438 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(45, 122, 79, 0.2);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(45, 122, 79, 0.3);
+            background: linear-gradient(135deg, #34A853 0%, #2D7A4F 100%);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(45, 122, 79, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #2D7A4F;
+            padding: 12px 24px;
+            border: 2px solid #2D7A4F;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: #2D7A4F;
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn-secondary:hover::before {
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 122, 79, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            padding: 10px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(45deg, #F59E0B, #EAB308, #84CC16);
+            background-size: 300% 300%;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 3s ease infinite;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn-glass:hover::before {
+            left: 100%;
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-3d {
+            background: linear-gradient(145deg, #2D7A4F, #1F5438);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 
+                0 8px 0 #1a4a32,
+                0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.1s ease;
+        }
+
+        .btn-3d:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 10px 0 #1a4a32,
+                0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-3d:active {
+            transform: translateY(4px);
+            box-shadow: 
+                0 4px 0 #1a4a32,
+                0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Button responsive styles */
+        @media (max-width: 768px) {
+            .btn-primary, .btn-secondary, .btn-gradient {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .btn-3d {
+                padding: 10px 20px;
+                box-shadow: 
+                    0 6px 0 #1a4a32,
+                    0 6px 20px rgba(0, 0, 0, 0.2);
+            }
+            
+            .btn-3d:hover {
+                box-shadow: 
+                    0 8px 0 #1a4a32,
+                    0 8px 25px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .max-w-7xl {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-bg {
+                padding-top: 120px !important;
+                padding-bottom: 60px !important;
+            }
+            
+            .hero-bg h1 {
+                font-size: 1.8rem !important;
+                line-height: 1.3;
+            }
+            
+            .hero-bg p {
+                font-size: 1rem !important;
+            }
+            
+            .card-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .membership-card {
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto;
+                height: auto;
+            }
+            
+            .grid.grid-cols-1.md\:grid-cols-3 {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            
+            .grid.grid-cols-1.md\:grid-cols-2 {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .flex.flex-col.md\:flex-row {
+                flex-direction: column !important;
+                gap: 2rem !important;
+            }
+            
+            .p-8.md\:p-12 {
+                padding: 1.5rem !important;
+            }
+            
+            .card-header, .card-body, .card-footer {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            
+            .card-photo {
+                width: 70px;
+                height: 85px;
+            }
+            
+            .card-logo {
+                width: 60px;
+                height: 35px;
+                font-size: 9px;
+            }
+            
+            .text-3xl.md\:text-4xl {
+                font-size: 1.8rem !important;
+            }
+            
+            .text-2xl.md\:text-3xl {
+                font-size: 1.5rem !important;
+            }
+        }
+        @media (max-width: 640px) {
+            .membership-card {
+                min-height: 200px;
+                max-width: 350px;
+            }
+            
+            .hero-bg {
+                padding-top: 100px !important;
+                padding-bottom: 40px !important;
+            }
+            
+            .hero-bg h1 {
+                font-size: 1.5rem !important;
+                line-height: 1.2;
+            }
+            
+            .text-3xl, .text-2xl {
+                font-size: 1.3rem !important;
+            }
+            
+            .text-xl {
+                font-size: 1.1rem !important;
+            }
+            
+            .px-6.py-3 {
+                padding: 0.5rem 1rem !important;
+                font-size: 0.9rem !important;
+            }
+            
+            .space-y-4 > * + * {
+                margin-top: 1rem !important;
+            }
+            
+            .gap-8 {
+                gap: 1rem !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-yellow-500 via-yellow-400 to-green-600 shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center">
+                        <img src="https://huggingface.co/spaces/Babangida77/binajia/resolve/main/images/binajia%20logo.jpg"
+                            alt="Binajia Logo" class="h-10 w-10 rounded-full">
+                        <span
+                            class="ml-2 text-xl font-bold text-white bg-gradient-to-r from-green-500 to-green-700 px-4 py-1 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-pulse">
+                            B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
+
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-800 hover:text-green-600 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+
+                <!-- Desktop menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="{{ path('app_home') }}" class="text-white hover:text-green-600 font-medium">Accueil</a>
+                    <a href="{{ path('app_about') }}" class="text-white hover:text-green-600 font-medium">À propos</a>
+                    <a href="{{ path('app_events') }}" class="text-white hover:text-green-600 font-medium">Événements</a>
+                    <a href="{{ path('app_places') }}" class="text-white hover:text-green-600 font-medium">Lieux</a>
+                    <a href="{{ path('app_contact') }}" class="text-white hover:text-green-600 font-medium">Contact</a>
+
+                    <a href="{{ path('app_membership') }}" class="btn-gradient text-sm px-3 py-2">
+                        <i class="fas fa-star mr-1"></i>Devenir membre
+                    </a>
+
+                    <a href="{{ path('app_contact') }}" class="btn-outline text-sm px-3 py-2">
+                        <i class="fas fa-sign-in-alt mr-1"></i>Connexion
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="{{ path('app_home') }}" class="block px-3 py-2 text-gray-800 hover:text-green-600">Accueil</a>
+                <a href="{{ path('app_about') }}" class="block px-3 py-2 text-gray-800 hover:text-green-600">À propos</a>
+                <a href="{{ path('app_events') }}" class="block px-3 py-2 text-gray-800 hover:text-green-600">Événements</a>
+                <a href="{{ path('app_places') }}" class="block px-3 py-2 text-gray-800 hover:text-green-600">Lieux</a>
+                <a href="{{ path('app_contact') }}" class="block px-3 py-2 text-gray-800 hover:text-green-600">Contact</a>
+                <a href="{{ path('app_membership') }}" class="block px-3 py-2 bg-green-600 text-white rounded-md text-center mb-2">Devenir membre</a>
+                <a href="{{ path('app_contact') }}" class="block px-3 py-2 bg-yellow-500 text-white rounded-md text-center">Connexion</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg text-white pt-32 pb-20 px-4 md:px-0">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center relative z-0">
+            <div class="md:w-1/2 mb-10 md:mb-0 text-center md:text-left">
+                <h1 class="text-3xl sm:text-4xl md:text-4xl font-bold mb-6 md:mb-8 text-shadow-lg">
+                    Binajia – Réseau des Ambassadeurs pour l’Intégration entre le
+                    <span class="text-yellow-400">Bénin</span>, le <span class="text-green-400">Nigéria</span> et l'Afrique
+                </h1>
+                <h1 class="text-xl sm:text-2xl md:text-3xl font-bold animate-bounce mb-4">Découvrez la richesse culturelle du Bénin et du Nigeria</h1>
+                <p class="text-base sm:text-lg md:text-xl mb-4">Binajia est un réseau engagé qui connecte le Bénin et le Nigéria à travers des événements, des réservations et des expériences uniques. Il promeut l’intégration socioculturelle et le développement transfrontalier en Afrique.</p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
+                    <button onclick="goToPlaces()" class="btn-3d mr-4">
+                        <i class="fas fa-compass mr-2"></i>Explorer
+                    </button>
+                    <button onclick="showMembershipInfo()" class="btn-gradient">
+                        <i class="fas fa-star mr-2"></i>Devenir membre
+                    </button>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center w-full">
+                <div class="relative w-full max-w-md">
+                    <div
+                        class="absolute -top-6 -left-6 w-32 h-32 bg-primary-light rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+                    </div>
+                    <div
+                        class="absolute -bottom-8 -right-8 w-32 h-32 bg-secondary rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+                    </div>
+                    <div
+                        class="absolute top-20 -right-4 w-32 h-32 bg-primary rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
+                    </div>
+                    <div class="relative bg-green-100 rounded-lg shadow-xl ">
+                        <div class="bg-green-600 p-4  text-center">
+                            <h3 class="text-2xl font-bold text-white text-center">Prochains événements</h3>
+                        </div>
+
+                        <div class="flex items-center gap-4 py-3 justify-center">
+                            <button onclick="goToEvents()" class="btn-secondary mr-2">
+                                <i class="fas fa-ticket-alt mr-2"></i>Tickets
+                            </button>
+
+                            <button onclick="goToPlaces()" class="btn-secondary">
+                                <i class="fas fa-calendar-check mr-2"></i>Réservation
+                            </button>
+                        </div>
+
+
+                        <div class="space-y-4 gap-4 px-6">
+                            <div class="flex hover:scale-105  items-start">
+                                <div class="bg-green-100 text-green-800 rounded-lg p-3 mr-4">
+                                    <i class="fas fa-calendar-alt text-xl"></i>
+                                </div>
+                                <a href="https://weloveyafestival.com/">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Festival weloveya</h4>
+                                        <p class="text-gray-600">15-18 Août 2025</p>
+                                        <p class="text-sm text-gray-500 mt-1">Cotonou, Bénin</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="flex hover:scale-105  items-start">
+                                <div class="bg-yellow-100 text-yellow-800 rounded-lg p-3 mr-4">
+                                    <i class="fas fa-landmark text-xl"></i>
+                                </div>
+                                <a href="https://vodundays.bj/">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">10 janvier Vodun days</h4>
+                                        <p class="text-gray-600">22 Septembre 2025</p>
+                                        <p class="text-sm text-gray-500 mt-1">Lagos, Nigeria</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="flex hover:scale-105  items-start">
+                                <div class="bg-green-100 text-green-800 rounded-lg p-3 mr-4">
+                                    <i class="fas fa-hotel text-xl"></i>
+                                </div>
+                                <a href="https://eticket.bj/">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Promotion hôtelière spéciale</h4>
+                                        <p class="text-gray-600">Tout le mois d'Octobre</p>
+                                        <p class="text-sm text-gray-500 mt-1">Bénin & Nigeria</p>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class=" p-4 text-center">
+                            <button onclick="goToEvents()" class="btn-primary w-full mb-4">
+                                <i class="fas fa-calendar-alt mr-2"></i>Voir tous les événements
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promoter Section -->
+    <section class="py-16 px-4 animate-on-scroll" style="background-color: #fffbeb;">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-8 md:p-12 fade-in">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="md:6 p-2  ">
+                        <div class="membership-card mt-2" id="cardFront">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-header-title">
+                                        <div class="flag flag-benin"></div>
+                                        <span class="binajia-title">BINAJIA</span>
+                                        <div class="flag flag-nigeria"></div>
+                                    </div>
+                                    <div class="association-text">Association Bénino-Nigériane</div>
+                                </div>
+                                <div class="card-logo">LOGO</div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="card-type">Carte de Membre / Membership card</div>
+
+                                <div class="card-main-content">
+                                    <div class="card-photo">
+                                        <div class="card-photo-placeholder" id="photoPreview">PHOTO</div>
+                                    </div>
+
+                                    <div class="card-info">
+                                        <div class="card-title-section">
+                                            <div class="ambassador-title" id="cardRole">
+                                                AMBASSADOR FOR<br>MOBILITY & INTEGRATION
+                                            </div>
+                                            <div class="united-text">United to grow together</div>
+                                        </div>
+
+                                        <div class="member-details">
+                                            <div class="member-name" id="cardName">Nom Complet</div>
+                                            <div class="detail-row">
+                                                <span class="detail-label">Tél :</span>
+                                                <span class="detail-value" id="cardPhone">+229 XX XX XX XX XX</span>
+                                            </div>
+                                            <div class="detail-row">
+                                                <span class="detail-label">Nationality :</span>
+                                                <span class="detail-value" id="cardNationality">Bénin</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer">
+                                    <div class="footer-left">
+
+                                        <div class="footer-detail">
+                                            <strong>ID :</strong> <span id="cardId">BjNg-2025-XXX</span>
+                                        </div>
+                                        <div class="footer-detail">
+                                            <strong>Expiration :</strong> <span id="cardExpiry">01/06/2028</span>
+                                        </div>
+                                        <div class="footer-detail">
+                                            <span style="opacity: 0.7;">Date d'adhésion :</span> <span
+                                                id="cardJoinDate">01/06/2025</span><br>
+                                            <span style="opacity: 0.7; font-size: 9px;">Joining date</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="footer-right">
+                                        <div class="contact-info">
+                                            <div><strong>binajia@binajia.org</strong></div>
+                                            <div>(+229) 01 46 10 10 50</div>
+                                            <div>(+234) 707 047 7730</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="membership-card mt-2" id="cardBack">
+                            <div class="card-back">
+                                <div class="back-logo">
+                                    <div class="back-logo-text">B</div>
+                                </div>
+                                <div class="back-info">
+                                    <div class="back-title">BINAJIA</div>
+                                    <div class="back-description">
+                                        Association Bénino-Nigériane pour la mobilité et l'intégration culturelle.
+                                        Ensemble pour développer nos communautés et renforcer nos liens.
+                                    </div>
+                                    <div class="back-contacts">
+                                        <div>🌍 www.binajia.org</div>
+                                        <div>📧 binajia@hotmail.com</div>
+                                        <div>📱 (+229) 01 46 10 10 50 | (+234) 707 047 7730</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:6  p-2">
+                      
+                        <div
+                            class="bg-gradient-to-r from-yellow-100 to-green-100 rounded-lg p-6 border-l-4 border-yellow-500">
+                            <h3 class="text-2xl font-bold text-green-800"> BINAJIA — Une frontière devient un pont
+                            </h3>
+                                <h1 class="text-2xl font-semibold text-green-600 ">Carte Binajia</h1>
+                                <p class="text-lg text-gray-700 ">Le privilège d’appartenir à un réseau panafricain
+                                </p>
+
+                                <div class="text-gray-700 ">
+                                    <p>La Carte Binajia vous donne accès à un réseau de partenaires au Bénin, au Nigéria
+                                        et dans d’autres pays africains. Elle vous permet de bénéficier de réductions
+                                        exclusives, d’accès prioritaires et d’offres personnalisées dans les domaines de
+                                        la culture, du tourisme, du commerce et de la formation.</p>
+                                </div>
+
+                                <h2 class="text-2xl font-semibold text-green-600 ">Vos avantages</h2>
+                                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                    <li>Réductions immédiates chez nos partenaires (restaurants, hôtels, musées,
+                                        boutiques…)</li>
+                                    <li>Accès VIP à certains événements Binajia</li>
+                                    <li>Offres spéciales sur les réservations et services locaux</li>
+                                    <li>Tarifs préférentiels pour les formations et ateliers Binajia</li>
+                                    <li>Reconnaissance en tant qu’ambassadeur de l’intégration africaine</li>
+                                </ul>
+
+                                <h2 class="text-2xl font-semibold text-green-600 ">Où utiliser votre carte</h2>
+                                <ul class="list-disc list-inside text-gray-700  space-y-2">
+                                    <li>Partout au Bénin 🇧🇯 chez nos partenaires</li>
+                                    <li>Partout au Nigéria 🇳🇬 chez nos partenaires</li>
+                                    <li>Bientôt dans d’autres pays en Afrique et dans le monde</li>
+                                </ul>
+
+                                <h2 class="text-2xl font-semibold text-green-600 ">Comment obtenir la carte</h2>
+                                <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                                    <li>Inscrivez-vous en ligne ou lors d’un événement Binajia</li>
+                                    <li>Payez une cotisation annuelle</li>
+                                    <li>Recevez votre carte physique ou numérique</li>
+                                    <li>Activez-la via notre application ou notre site web</li>
+                                </ol>
+
+                                <h2 class="text-2xl font-semibold text-green-600 ">Devenir partenaire</h2>
+                                <p class="text-gray-700 mb-4">
+                                    Vous êtes une entreprise, un espace culturel ou un prestataire de services ?
+                                    Rejoignez le réseau Binajia et proposez vos offres aux détenteurs de la carte.
+                                </p>
+
+                                <div class="text-gray-700">
+                                    <p>Contact: <a href="mailto:binajia@binajia.org"
+                                            class="text-green-600 underline">binajia@binajia.org</a></p>
+                                    <p>📞 Téléphone: <span class="font-medium">+229 01 46 10 10 50</span></p>
+                                </div>
+                           
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 bg-gradient-to-r from-green-700 to-green-900 animate-on-scroll">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold text-yellow-400 mb-4">À propos de Binajia</h2>
+                <div class="w-20 h-1 bg-yellow-600 mx-auto"></div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10 animate-on-scroll slide-in-left">
+                    <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1630&q=80"
+                        alt="About Binajia" class="rounded-lg shadow-xl w-full">
+                </div>
+                <div class="md:w-1/2 animate-on-scroll slide-in-right">
+                    <h3 class="text-2xl font-bold text-white mb-6">Notre mission</h3>
+                    <p class="text-white mb-6">Chez Binajia, notre mission est de favoriser l’intégration socioculturelle et économique entre le Bénin, le Nigéria et l’ensemble du continent africain. Nous croyons en une Afrique unie, dynamique et fière de ses identités multiples.</p>
+
+                    <div class="space-y-6">
+                        <div class="flex">
+                            <div class="bg-green-100 text-green-800 rounded-full p-3 mr-4">
+                                <i class="fas fa-handshake text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-yellow-400 mb-2">Partenariats stratégiques</h4>
+                                <p class="text-white">Nous collaborons avec des institutions gouvernementales, des
+                                    entreprises locales et des organisations culturelles pour offrir des expériences
+                                    authentiques.</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="bg-yellow-100 text-yellow-800 rounded-full p-3 mr-4">
+                                <i class="fas fa-users text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-yellow-400 mb-2">Communauté engagée</h4>
+                                <p class="text-white">Plus de 5,000 membres actifs bénéficient de nos services et
+                                    participent à nos événements chaque année.</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="py-16 px-4 bg-gradient-to-b from-primary-light/10 to-secondary-dark/10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">🧩 Nos 6 Projets Phares</h2>
+                <div class="w-20 h-1 bg-yellow-500 mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div
+                    class="bg-white rounded-xl shadow-md p-6 border-t-4 border-yellow-400 transform transition hover:-translate-y-1">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Binajia Travel Week</h3>
+                    <p class="text-gray-600 mb-4">Semaine de découvertes croisées dans les deux pays</p>
+                    <p class="text-sm text-yellow-600 font-medium">Jeunes, touristes, voyageurs</p>
+                    <div class="mt-4 flex space-x-2">
+                        <span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">15-22 Nov 2025</span>
+                        <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Cotonou/Lagos</span>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-white rounded-xl shadow-md p-6 border-t-4 border-green-400 transform transition hover:-translate-y-1">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Binajia Lab</h3>
+                    <p class="text-gray-600 mb-4">Laboratoire d'innovation (écologie, tech, design)</p>
+                    <p class="text-sm text-green-600 font-medium">Jeunes créatifs, étudiants, startups</p>
+                    <div class="mt-4 flex space-x-2">
+                        <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Mensuel</span>
+                        <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">En ligne</span>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-blue-400">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Exchange Programme</h3>
+                    <p class="text-gray-600 mb-4">Programme d'échange pour jeunes leaders et artistes</p>
+                    <p class="text-sm text-blue-600 font-medium">Étudiants, leaders communautaires</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-purple-400">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Culture Fest</h3>
+                    <p class="text-gray-600 mb-4">Festival culturel : musique, masques, gastronomie</p>
+                    <p class="text-sm text-purple-600 font-medium">Grand public, artistes</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-green-400">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Market Connect</h3>
+                    <p class="text-gray-600 mb-4">Plateforme de collaboration économique locale</p>
+                    <p class="text-sm text-green-600 font-medium">Artisans, commerçants, femmes</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-red-400">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Transit</h3>
+                    <p class="text-gray-600 mb-4">Promotion de la libre circulation et des savoirs</p>
+                    <p class="text-sm text-red-600 font-medium">Institutions, société civile</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 px-4 bg-white animate-on-scroll">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Nos Services</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Découvrez notre gamme complète de services conçus
+                    pour faciliter vos expériences entre le Bénin et le Nigeria</p>
+                <div class="w-20 h-1 bg-green-600 mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div
+                    class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                    <div class="bg-green-600 h-48 flex items-center justify-center">
+                        <i class="fas fa-calendar-check text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Réservation d'événements</h3>
+                        <p class="text-gray-600 mb-4">Réservez votre place pour des festivals, conférences et événements
+                            culturels exceptionnels dans les deux pays.</p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Festivals culturels</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Conférences économiques</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Ateliers de formation</span>
+                            </li>
+                        </ul>
+                        <button onclick="goToContact()" class="btn-secondary text-sm px-4 py-2">
+                            <i class="fas fa-info-circle mr-1"></i>En savoir plus
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div
+                    class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                    <div class="bg-yellow-500 h-48 flex items-center justify-center">
+                        <i class="fas fa-hotel text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Réservation d'hôtels</h3>
+                        <p class="text-gray-600 mb-4">Accédez à notre réseau d'hôtels partenaires avec des tarifs
+                            préférentiels dans les principales villes.</p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Hôtels 3-5 étoiles</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Maisons d'hôtes authentiques</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Résidences de vacances</span>
+                            </li>
+                        </ul>
+                        <button onclick="goToContact()" class="btn-secondary text-sm px-4 py-2">
+                            <i class="fas fa-info-circle mr-1"></i>En savoir plus
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div
+                    class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                    <div class="bg-green-500 h-48 flex items-center justify-center">
+                        <i class="fas fa-map-marked-alt text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Visites guidées</h3>
+                        <p class="text-gray-600 mb-4">Découvrez les sites emblématiques avec nos guides experts parlant
+                            français, anglais et langues locales.</p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Sites historiques</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Circuits gastronomiques</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Expériences artisanales</span>
+                            </li>
+                        </ul>
+                        <button onclick="goToContact()" class="btn-secondary text-sm px-4 py-2">
+                            <i class="fas fa-info-circle mr-1"></i>En savoir plus
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center">
+                <button onclick="showMembershipInfo()" class="btn-gradient">
+                    <i class="fas fa-rocket mr-2"></i>Accéder à tous nos services
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration and Payment Section -->
+    
+
+    <!-- Discover Section -->
+    <section id="discover" class="py-20 px-4 bg-gray-50 animate-on-scroll">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Découvrez le Bénin et le Nigeria</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Explorez les merveilles culturelles et naturelles de
+                    ces deux pays fascinants</p>
+                <div class="w-20 h-1 bg-green-600 mx-auto mt-4"></div>
+            </div>
+
+            <!-- Benin Discovery -->
+            <div class="beni rounded-xl shadow-xl overflow-hidden mb-16 text-white">
+                <div class="bg-yellow-500  p-8 md:p-12">
+                    <div class="max-w-3xl">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">Découverte du Bénin</h3>
+                        <p class="mb-6">Le Bénin, berceau du vodoun, offre un mélange unique d'histoire, de culture et
+                            de nature. Des palais royaux d'Abomey aux villages sur pilotis de Ganvié, découvrez un pays
+                            riche en traditions.</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-white bg-opacity-20 rounded-lg p-4 backdrop-filter backdrop-blur-sm">
+                                <i class="fas fa-landmark text-2xl mb-2"></i>
+                                <h4 class="font-bold">Porte du Non-Retour</h4>
+                                <p class="text-sm">Mémorial de la traite négrière à Ouidah</p>
+                            </div>
+                            <div class="bg-white bg-opacity-20 rounded-lg p-4 backdrop-filter backdrop-blur-sm">
+                                <i class="fas fa-water text-2xl mb-2"></i>
+                                <h4 class="font-bold">Ganvié</h4>
+                                <p class="text-sm">La "Venise de l'Afrique" sur le lac Nokoué</p>
+                            </div>
+                            <div class="bg-white bg-opacity-20 rounded-lg p-4 backdrop-filter backdrop-blur-sm">
+                                <i class="fas fa-park text-2xl mb-2"></i>
+                                <h4 class="font-bold">Pendjari</h4>
+                                <p class="text-sm">Parc national abritant éléphants et lions</p>
+                            </div>
+                        </div>
+
+                        <a href="#"
+                            class="inline-block bg-white text-green-600 hover:bg-gray-100 px-6 py-2 rounded-md font-medium transition duration-300">
+                            Explorer le Bénin
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nigeria Discovery -->
+            <div class="nigeria-bg rounded-xl shadow-xl overflow-hidden text-white">
+                <div class="bg-green-600  p-8 md:p-12">
+                    <div class="max-w-3xl">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">Découverte du Nigeria</h3>
+                        <p class="mb-6">Le Nigeria, géant de l'Afrique, vous émerveillera par sa diversité. Des
+                            gratte-ciel de Lagos aux chutes d'Erin Ijesha, en passant par les cultures Yoruba, Igbo et
+                            Haoussa, c'est une expérience inoubliable.</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-white bg-opacity-20 rounded-lg p-4 backdrop-filter backdrop-blur-sm">
+                                <i class="fas fa-city text-2xl mb-2"></i>
+                                <h4 class="font-bold">Lagos</h4>
+                                <p class="text-sm">Métropole vibrante et centre économique</p>
+                            </div>
+                            <div class="bg-white bg-opacity-20 rounded-lg p-4 backdrop-filter backdrop-blur-sm">
+                                <i class="fas fa-monument text-2xl mb-2"></i>
+                                <h4 class="font-bold">Sukur</h4>
+                                <p class="text-sm">Patrimoine mondial avec son paysage culturel</p>
+                            </div>
+                            <div class="bg-white bg-opacity-20 rounded-lg p-4 backdrop-filter backdrop-blur-sm">
+                                <i class="fas fa-mountain text-2xl mb-2"></i>
+                                <h4 class="font-bold">Obudu</h4>
+                                <p class="text-sm">Station montagneuse et ranch de bétail</p>
+                            </div>
+                        </div>
+
+                        <a href="#"
+                            class="inline-block bg-white text-green-600 hover:bg-gray-100 px-6 py-2 rounded-md font-medium transition duration-300">
+                            Explorer le Nigeria
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Tours -->
+            <div class="mt-16">
+                <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">Circuits populaires</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Tour 1 -->
+                    <div
+                        class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                        <img src="https://images.unsplash.com/photo-1581434682228-9a3d2a1c3a5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Tour Benin" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-lg">Trésors du Bénin</h4>
+                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">5
+                                    jours</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">Explorez Cotonou, Ouidah, Abomey et Ganvié dans ce
+                                circuit complet.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-green-600">À partir de 150,000 FCFA</span>
+                                <a href="#" class="text-sm text-green-600 hover:underline">Détails</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tour 2 -->
+                    <div
+                        class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                        <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed508132?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Tour Nigeria" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-lg">Aventure nigériane</h4>
+                                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">7
+                                    jours</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">Découvrez Lagos, Abuja, les chutes d'Erin Ijesha et le
+                                parc Yankari.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-green-600">À partir de 75,000 NGN</span>
+                                <a href="#" class="text-sm text-green-600 hover:underline">Détails</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tour 3 -->
+                    <div
+                        class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                        <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
+                            alt="Combiné" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-lg">Combiné Bénin-Nigeria</h4>
+                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">10 jours</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">Expérience complète des deux pays avec guide
+                                francophone.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-green-600">À partir de 300,000 FCFA</span>
+                                <a href="#" class="text-sm text-green-600 hover:underline">Détails</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-center">
+                    <button onclick="goToPlaces()" class="btn-primary">
+                        <i class="fas fa-route mr-2"></i>Voir tous les circuits
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hotels & Restaurants -->
+    <section class="py-16 px-4 bg-gray-100 animate-on-scroll">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Nos Hôtels & Restaurants Partenaires</h2>
+                <div class="w-20 h-1 bg-green-600 mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Hotel 1 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105">
+                    <img src="http://static.photos/hotel/640x360/1" alt="Hôtel La Plage"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Hôtel La Plage</h3>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Cotonou, Bénin</p>
+                        <div class="flex justify-between items-center">
+                            <a href="#" class="text-green-600 hover:underline">Voir disponibilités</a>
+                            <span class="font-bold">À partir de 45,000 FCFA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Restaurant 1 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105">
+                    <img src="http://static.photos/restaurant/640x360/1" alt="Maquis du Lac"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Maquis du Lac</h3>
+                        <p class="text-gray-600 mb-4">Lagos, Nigeria</p>
+                        <div class="flex items-center mb-4">
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm mr-2">Gastronomie
+                                locale</span>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Terrasse vue
+                                lac</span>
+                        </div>
+                        <a href="#" class="text-green-600 hover:underline">Voir le menu</a>
+                    </div>
+                </div>
+
+                <!-- Hotel 2 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105">
+                    <img src="http://static.photos/hotel/640x360/2" alt="Eko Hotels & Suites"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Eko Hotels & Suites</h3>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Lagos, Nigeria</p>
+                        <div class="flex justify-between items-center">
+                            <a href="#" class="text-green-600 hover:underline">Voir disponibilités</a>
+                            <span class="font-bold">À partir de 25,000 NGN</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Calendar -->
+    <section class="py-16 px-4 bg-white animate-on-scroll">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Calendrier des Événements</h2>
+                <div class="w-20 h-1 bg-green-600 mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Event 1 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden border-l-4 border-yellow-500">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-yellow-100 text-yellow-800 rounded-lg p-3 mr-4">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">Festival Interculturel</h3>
+                                <p class="text-gray-600">15-18 Novembre 2025</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-4">Festival annuel mettant en avant les cultures béninoise et
+                            nigériane à travers musique, danse et gastronomie.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <i class="fas fa-map-marker-alt text-yellow-500 mr-2"></i>
+                                <span class="text-gray-600">Place de l'Étoile Rouge, Cotonou</span>
+                            </div>
+                            <a href="#" class="text-green-600 hover:underline">Détails</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden border-l-4 border-green-500">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-green-100 text-green-800 rounded-lg p-3 mr-4">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">Atelier Entrepreneuriat</h3>
+                                <p class="text-gray-600">5 Décembre 2025</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-4">Formation intensive sur le commerce transfrontalier et les
+                            opportunités économiques entre Bénin et Nigeria.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <i class="fas fa-map-marker-alt text-green-500 mr-2"></i>
+                                <span class="text-gray-600">Centre Binajia, Lagos</span>
+                            </div>
+                            <a href="#" class="text-green-600 hover:underline">Détails</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden border-l-4 border-green-500">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-green-100 text-green-800 rounded-lg p-3 mr-4">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">Dîner Gastronomique</h3>
+                                <p class="text-gray-600">20 Janvier 2026</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-4">Dégustation de spécialités culinaires des deux pays avec chefs
+                            étoilés béninois et nigérians.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <i class="fas fa-map-marker-alt text-green-500 mr-2"></i>
+                                <span class="text-gray-600">Restaurant Le Wouri, Porto-Novo</span>
+                            </div>
+                            <a href="#" class="text-green-600 hover:underline">Détails</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <button onclick="goToEvents()" class="btn-primary">
+                    <i class="fas fa-calendar-alt mr-2"></i>Voir tous les événements
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 px-4 bg-gray-50 animate-on-scroll">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Témoignages</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Ce que nos membres disent de leur expérience avec
+                    Binajia</p>
+                <div class="w-20 h-1 bg-green-600 mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Testimonial"
+                            class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Amina Diallo</h4>
+                            <p class="text-sm text-gray-600">Membre depuis 2021</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Grâce à Binajia, j'ai pu découvrir des aspects du Nigeria que je
+                        n'aurais jamais connus seule. Leur réseau d'hôtels partenaires offre des tarifs vraiment
+                        intéressants."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Testimonial"
+                            class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">John Okonkwo</h4>
+                            <p class="text-sm text-gray-600">Membre Premium</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Le festival culturel organisé par Binajia était exceptionnel. J'ai
+                        rencontré des artisans béninois et établi des contacts commerciaux précieux pour mon
+                        entreprise."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Testimonial"
+                            class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Fatou N'Diaye</h4>
+                            <p class="text-sm text-gray-600">Membre Standard</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Le système de paiement est très sécurisé et facile à utiliser. J'ai
+                        particulièrement apprécié l'option Mobile Money qui est très pratique en Afrique."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 bg-gray-50 animate-on-scroll">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Contactez-nous</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Nous sommes là pour répondre à vos questions et vous
+                    accompagner</p>
+                <div class="w-20 h-1 bg-green-600 mx-auto mt-4"></div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-10">
+                <!-- Contact Info -->
+                <div class="lg:w-1/3">
+                    <div class="bg-white rounded-lg shadow-lg p-8 h-full">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">Nos coordonnées</h3>
+
+                        <div class="space-y-6">
+                            <div class="flex">
+                                <div class="bg-green-100 text-green-800 rounded-full p-3 mr-4">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Bureau principal</h4>
+                                    <p class="text-gray-600">Rue 256, Cotonou, Bénin</p>
+                                </div>
+                            </div>
+
+                            <div class="flex">
+                                <div class="bg-yellow-100 text-yellow-800 rounded-full p-3 mr-4">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Téléphone</h4>
+                                    <p class="text-gray-600">+229 21 34 56 78</p>
+                                    <p class="text-gray-600">+234 80 12 34 56 78 (Nigeria)</p>
+                                </div>
+                            </div>
+
+                            <div class="flex">
+                                <div class="bg-green-100 text-green-800 rounded-full p-3 mr-4">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Email</h4>
+                                    <p class="text-gray-600">contact@binajia.org</p>
+                                    <p class="text-gray-600">info@binajia.org</p>
+                                </div>
+                            </div>
+
+                            <div class="flex">
+                                <div class="bg-blue-100 text-blue-800 rounded-full p-3 mr-4">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Heures d'ouverture</h4>
+                                    <p class="text-gray-600">Lundi - Vendredi: 8h - 18h</p>
+                                    <p class="text-gray-600">Samedi: 9h - 13h</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8">
+                            <h4 class="font-semibold text-gray-800 mb-4">Suivez-nous</h4>
+                            <div class="flex space-x-4">
+                                <a href="#"
+                                    class="bg-gray-100 hover:bg-gray-200 text-gray-800 p-3 rounded-full transition duration-300">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#"
+                                    class="bg-gray-100 hover:bg-gray-200 text-gray-800 p-3 rounded-full transition duration-300">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#"
+                                    class="bg-gray-100 hover:bg-gray-200 text-gray-800 p-3 rounded-full transition duration-300">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#"
+                                    class="bg-gray-100 hover:bg-gray-200 text-gray-800 p-3 rounded-full transition duration-300">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="lg:w-2/3">
+                    <div class="bg-white rounded-lg shadow-lg p-8 h-full">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">Envoyez-nous un message</h3>
+
+                        <form id="contactForm">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="floating-label">
+                                    <input type="text" id="contactName" placeholder=" " required>
+                                    <label for="contactName">Votre nom</label>
+                                </div>
+                                <div class="floating-label">
+                                    <input type="email" id="contactEmail" placeholder=" " required>
+                                    <label for="contactEmail">Votre email</label>
+                                </div>
+                            </div>
+
+                            <div class="floating-label mt-4">
+                                <input type="text" id="contactSubject" placeholder=" " required>
+                                <label for="contactSubject">Sujet</label>
+                            </div>
+
+                            <div class="mt-4">
+                                <label for="contactMessage"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                                <textarea id="contactMessage" rows="5"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-primary w-full mt-6">
+                                <i class="fas fa-paper-plane mr-2"></i>Envoyer le message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer
+        class="bg-gradient-to-br from-secondary-dark to-gray-900 text-white py-12 px-4 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"
+        style="background: linear-gradient(135deg, #005731, #0d5c26);">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <img src="https://huggingface.co/spaces/Babangida77/binajia/resolve/main/images/binajia%20logo.jpg"
+                            alt="Binajia Logo" class="h-8 w-8 mr-2 rounded-full">
+                        <span
+                            class="text-white bg-gradient-to-r from-green-500 to-green-700 px-3 py-1 rounded-full shadow-md">
+                            B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
+                        </span>
+                    </h3>
+                    <p class="text-gray-400">Promouvoir les échanges culturels et économiques entre le Bénin et le
+                        Nigeria depuis 2020.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Liens rapides</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{{ path('app_home') }}" class="text-gray-400 hover:text-white transition duration-300">Accueil</a>
+                        </li>
+                        <li><a href="{{ path('app_about') }}" class="text-gray-400 hover:text-white transition duration-300">À propos</a>
+                        </li>
+                        <li><a href="{{ path('app_events') }}"
+                                class="text-gray-400 hover:text-white transition duration-300">Événements</a></li>
+                        <li><a href="{{ path('app_places') }}"
+                                class="text-gray-400 hover:text-white transition duration-300">Lieux</a></li>
+                        <li><a href="{{ path('app_contact') }}"
+                                class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{{ path('app_events') }}" class="text-gray-400 hover:text-white transition duration-300">Événements</a>
+                        </li>
+                        <li><a href="{{ path('app_places') }}" class="text-gray-400 hover:text-white transition duration-300">Réservations
+                                hôtels</a></li>
+                        <li><a href="{{ path('app_places') }}" class="text-gray-400 hover:text-white transition duration-300">Visites
+                                guidées</a></li>
+                        <li><a href="{{ path('app_contact') }}" class="text-gray-400 hover:text-white transition duration-300">Assistance
+                                voyage</a></li>
+                        <li><a href="{{ path('app_about') }}" class="text-gray-400 hover:text-white transition duration-300">Formations
+                                interculturelles</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Contact</h4>
+                    <address class="not-italic text-gray-400">
+                        <p>Rue 256, Cotonou</p>
+                        <p>Bénin</p>
+                        <p class="mt-2">Email: contact@binajia.org</p>
+                        <p>Tél: +229 21 34 56 78</p>
+                    </address>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2025 Binajia. Tous droits réservés.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animate-on-scroll class
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            animateElements.forEach(el => observer.observe(el));
+        });
+
+        // Utility functions
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const headerHeight = document.querySelector('nav').offsetHeight;
+                const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        function showMembershipInfo() {
+            window.location.href = '{{ path('app_membership') }}';
+        }
+        
+        function goToEvents() {
+            window.location.href = '{{ path('app_events') }}';
+        }
+        
+        function goToPlaces() {
+            window.location.href = '{{ path('app_places') }}';
+        }
+        
+        function goToContact() {
+            window.location.href = '{{ path('app_contact') }}';
+        }
+
+        function openExternalLink(url) {
+            window.open(url, '_blank');
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const tabId = this.getAttribute('data-tab');
+
+                // Remove active class from all buttons and content
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active', 'text-green-600', 'border-green-600');
+                    btn.classList.add('text-gray-600', 'hover:text-green-600');
+                });
+
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Add active class to clicked button and corresponding content
+                this.classList.add('active', 'text-green-600', 'border-green-600');
+                this.classList.remove('text-gray-600', 'hover:text-green-600');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(this);
+                const name = document.getElementById('contactName').value;
+                const email = document.getElementById('contactEmail').value;
+                const subject = document.getElementById('contactSubject').value;
+                const message = document.getElementById('contactMessage').value;
+                
+                // Simple validation
+                if (!name || !email || !subject || !message) {
+                    alert('Veuillez remplir tous les champs.');
+                    return;
+                }
+                
+                // Simulate form submission
+                this.style.opacity = '0.7';
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Envoi en cours...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    alert('Message envoyé avec succès! Notre équipe vous répondra dans les plus brefs délais.');
+                    this.reset();
+                    this.style.opacity = '1';
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 2000);
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (mobileMenu) {
+                        mobileMenu.classList.add('hidden');
+                    }
+
+                    scrollToSection(targetId.substring(1));
+                }
+            });
+        });
+
+        // Add click handlers for external links
+        document.addEventListener('DOMContentLoaded', function() {
+            // External event links
+            const externalLinks = {
+                'weloveyafestival': 'https://weloveyafestival.com/',
+                'vodundays': 'https://vodundays.bj/',
+                'eticket': 'https://eticket.bj/'
+            };
+
+            // Add slide-in animations to hero sections on load
+            setTimeout(() => {
+                const heroLeft = document.querySelector('#home .md\\:w-1\\/2:first-child');
+                const heroRight = document.querySelector('#home .md\\:w-1\\/2:last-child');
+                
+                if (heroLeft) heroLeft.classList.add('slide-in-left');
+                if (heroRight) heroRight.classList.add('slide-in-right');
+            }, 300);
+        });
+
+        // Add hover effects to cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.hover\\:scale-105');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

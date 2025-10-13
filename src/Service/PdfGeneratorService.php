@@ -20,9 +20,24 @@ class PdfGeneratorService
     public function generatePdf(string $template, array $params, string $outputPath, string $paper = 'A4', string $orientation = 'portrait'): void
     {
         $options = new Options();
+        
+        // Configuration de base
         $options->set('defaultFont', 'DejaVu Sans');
         $options->setIsRemoteEnabled(true);
         $options->setChroot($this->publicDir);
+        
+        // Options critiques pour les styles CSS
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isPhpEnabled', true);
+        $options->set('isFontSubsettingEnabled', true);
+        $options->set('defaultMediaType', 'screen');
+        $options->set('isCssFloatEnabled', true);
+        $options->set('isJavascriptEnabled', false); // Désactiver JS pour éviter les conflits
+        
+        // Options de debug désactivées pour la production
+        $options->set('debugKeepTemp', false);
+        $options->set('debugCss', false);
+        $options->set('debugLayout', false);
 
         $dompdf = new Dompdf($options);
         $html = $this->twig->render($template, $params);

@@ -1,0 +1,327 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Binajia - Réseau d'Ambassadeurs Bénin-Nigéria{% endblock %}
+
+{% block stylesheets %}
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+.hero-bg {
+    background: linear-gradient(135deg, rgba(0, 135, 81, 0.9), rgba(26, 116, 49, 0.9)), 
+                url('{{ asset('media/hero-split.jpg') }}');
+    background-size: cover; background-position: center;
+}
+.membership-card {
+    width: 450px; height: 280px; background: white; border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); overflow: hidden; position: relative;
+    transition: transform 0.3s ease;
+}
+.card-header {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    height: 60px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; position: relative;
+}
+.card-body {
+    background: linear-gradient(135deg, #1F5438 0%, #2D7A4F 100%);
+    height: 220px; padding: 15px 20px; color: white; position: relative;
+}
+.flag { width: 28px; height: 20px; border-radius: 3px; }
+.flag-benin {
+    background: linear-gradient(to right, #008751 0%, #008751 40%, transparent 40%, transparent 100%),
+                linear-gradient(to bottom, #FCD116 0%, #FCD116 50%, #E8112D 50%, #E8112D 100%);
+}
+.flag-nigeria {
+    background: linear-gradient(to right, #008751 0%, #008751 33%, white 33%, white 66%, #008751 66%, #008751 100%);
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<!-- Navigation -->
+<nav class="bg-gradient-to-r from-yellow-500 via-yellow-400 to-green-600 shadow-lg fixed w-full z-10">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+                <a href="{{ path('app_home') }}" class="flex items-center">
+                    <img src="{{ asset('media/logo.jpeg') }}" alt="Binajia Logo" class="h-10 w-10 rounded-full">
+                    <span class="ml-2 text-xl font-bold text-white bg-gradient-to-r from-green-500 to-green-700 px-4 py-1 rounded-full shadow-lg">
+                        B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
+                    </span>
+                </a>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="text-white hover:text-green-600 font-medium">Accueil</a>
+                <a href="#about" class="text-white hover:text-green-600 font-medium">À propos</a>
+                <a href="#services" class="text-white hover:text-green-600 font-medium">Services</a>
+                <a href="#contact" class="text-white hover:text-green-600 font-medium">Contact</a>
+                <a href="{{ path('app_membership') }}" class="px-4 py-2 bg-primary text-white font-semibold rounded-md hover:bg-primary-dark transition-all">
+                    Devenir membre
+                </a>
+                <a href="{{ path('app_login') }}" class="px-4 py-2 bg-primary text-white font-semibold rounded-md hover:bg-primary-dark transition-all">
+                    Connexion
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="home" class="hero-bg text-white pt-32 pb-20 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-10 md:mb-0 text-center md:text-left">
+            <h1 class="text-3xl md:text-4xl font-bold mb-6">
+                Binajia – Réseau des Ambassadeurs pour l'Intégration entre le
+                <span class="text-yellow-400">Bénin</span>, le <span class="text-green-400">Nigéria</span> et l'Afrique
+            </h1>
+            <p class="text-lg mb-6">
+                Binajia connecte le Bénin et le Nigéria à travers des événements, réservations et expériences uniques. 
+                Nous promouvons l'intégration socioculturelle et le développement transfrontalier en Afrique.
+            </p>
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="#services" class="px-6 py-3 bg-gradient-to-b from-green-600 to-green-700 text-white font-bold rounded-lg shadow-lg hover:scale-105 transition-all">
+                    Explorer
+                </a>
+                <a href="{{ path('app_membership') }}" class="px-6 py-3 bg-gradient-to-b from-green-600 to-green-700 text-white font-bold rounded-lg shadow-lg hover:scale-105 transition-all">
+                    Devenir membre
+                </a>
+            </div>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+            <div class="bg-white rounded-lg shadow-xl p-6 max-w-md">
+                <div class="bg-green-600 p-4 text-center rounded-t-lg">
+                    <h3 class="text-2xl font-bold text-white">Prochains événements</h3>
+                </div>
+                <div class="space-y-4 p-4">
+                    <div class="flex items-start hover:scale-105 transition-transform">
+                        <div class="bg-green-100 text-green-800 rounded-lg p-3 mr-4">
+                            <i class="fas fa-calendar-alt text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Festival weloveya</h4>
+                            <p class="text-gray-600">15-18 Août 2025</p>
+                            <p class="text-sm text-gray-500">Cotonou, Bénin</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start hover:scale-105 transition-transform">
+                        <div class="bg-yellow-100 text-yellow-800 rounded-lg p-3 mr-4">
+                            <i class="fas fa-landmark text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Vodun days</h4>
+                            <p class="text-gray-600">10 Janvier 2025</p>
+                            <p class="text-sm text-gray-500">Ouidah, Bénin</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Carte Binajia Section -->
+<section class="py-16 px-4 bg-yellow-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <div class="flex flex-col lg:flex-row items-center gap-8">
+                <div class="lg:w-1/2">
+                    <div class="membership-card">
+                        <div class="card-header">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <div class="flag flag-benin"></div>
+                                    <span class="text-2xl font-bold text-green-800">BINAJIA</span>
+                                    <div class="flag flag-nigeria"></div>
+                                </div>
+                                <div class="text-xs text-green-800 font-semibold">Association Bénino-Nigériane</div>
+                            </div>
+                            <div class="bg-gray-200 px-3 py-2 rounded text-xs font-bold text-green-800">LOGO</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-xs mb-3 opacity-90">Carte de Membre / Membership card</div>
+                            <div class="flex gap-4">
+                                <div class="w-20 h-24 bg-white rounded border-2 border-gray-300 flex items-center justify-center">
+                                    <span class="text-xs text-gray-500 font-bold">PHOTO</span>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="mb-3">
+                                        <div class="text-sm font-bold text-yellow-400 mb-1">AMBASSADOR FOR MOBILITY & INTEGRATION</div>
+                                        <div class="text-xs italic opacity-80">United to grow together</div>
+                                    </div>
+                                    <div class="text-sm space-y-1">
+                                        <div class="font-bold">Nom Complet</div>
+                                        <div><span class="opacity-70">Tél :</span> +229 XX XX XX XX</div>
+                                        <div><span class="opacity-70">Nationality :</span> Bénin</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-4 left-5 right-5 flex justify-between text-xs">
+                                <div>
+                                    <div><strong>ID :</strong> BNJ-2025-XXX</div>
+                                    <div><strong>Expiration :</strong> 01/06/2028</div>
+                                </div>
+                                <div class="text-right">
+                                    <div><strong>binajia@binajia.org</strong></div>
+                                    <div>(+229) 01 46 10 10 50</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <div class="bg-gradient-to-r from-yellow-100 to-green-100 rounded-lg p-6 border-l-4 border-yellow-500">
+                        <h3 class="text-2xl font-bold text-green-800 mb-4">BINAJIA — Une frontière devient un pont</h3>
+                        <h2 class="text-xl font-semibold text-green-600 mb-2">Carte Binajia</h2>
+                        <p class="text-lg text-gray-700 mb-4">Le privilège d'appartenir à un réseau panafricain</p>
+                        
+                        <h3 class="text-lg font-semibold text-green-600 mb-2">Vos avantages</h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1 mb-4">
+                            <li>Réductions chez nos partenaires</li>
+                            <li>Accès VIP aux événements Binajia</li>
+                            <li>Tarifs préférentiels formations</li>
+                            <li>Reconnaissance d'ambassadeur</li>
+                        </ul>
+                        
+                        <div class="mt-6">
+                            <a href="{{ path('app_membership') }}" class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all">
+                                Obtenir ma carte
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-20 px-4 bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Nos Services</h2>
+            <div class="w-20 h-1 bg-green-600 mx-auto"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white rounded-lg shadow-lg p-6 hover:scale-105 transition-transform">
+                <div class="bg-green-600 h-32 flex items-center justify-center rounded-lg mb-4">
+                    <i class="fas fa-calendar-check text-white text-4xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Réservation d'événements</h3>
+                <p class="text-gray-600 mb-4">Festivals, conférences et événements culturels dans les deux pays.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-6 hover:scale-105 transition-transform">
+                <div class="bg-yellow-500 h-32 flex items-center justify-center rounded-lg mb-4">
+                    <i class="fas fa-hotel text-white text-4xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Réservation d'hôtels</h3>
+                <p class="text-gray-600 mb-4">Réseau d'hôtels partenaires avec tarifs préférentiels.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-6 hover:scale-105 transition-transform">
+                <div class="bg-green-500 h-32 flex items-center justify-center rounded-lg mb-4">
+                    <i class="fas fa-map-marked-alt text-white text-4xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Visites guidées</h3>
+                <p class="text-gray-600 mb-4">Découvrez les sites emblématiques avec nos guides experts.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-20 px-4 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Contactez-nous</h2>
+            <div class="w-20 h-1 bg-green-600 mx-auto"></div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div class="bg-gray-50 rounded-lg p-8">
+                <h3 class="text-xl font-bold mb-6">Nos coordonnées</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-envelope text-green-600 mr-3"></i>
+                        <span>binajia@binajia.org</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-phone text-green-600 mr-3"></i>
+                        <span>+229 01 46 10 10 50</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-phone text-green-600 mr-3"></i>
+                        <span>+234 707 047 7730</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-8">
+                <h3 class="text-xl font-bold mb-6">Envoyez-nous un message</h3>
+                <form>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <input type="text" placeholder="Votre nom" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500">
+                        <input type="email" placeholder="Votre email" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500">
+                    </div>
+                    <input type="text" placeholder="Sujet" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 mb-4">
+                    <textarea placeholder="Votre message" rows="4" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 mb-4"></textarea>
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition-all">
+                        Envoyer le message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gradient-to-br from-green-800 to-gray-900 text-white py-12 px-4">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4 flex items-center">
+                    <img src="{{ asset('media/logo.jpeg') }}" alt="Binajia Logo" class="h-8 w-8 mr-2 rounded-full">
+                    <span class="text-white bg-gradient-to-r from-green-500 to-green-700 px-3 py-1 rounded-full">
+                        B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
+                    </span>
+                </h3>
+                <p class="text-gray-400">Promouvoir les échanges culturels et économiques entre le Bénin et le Nigeria.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4">Liens rapides</h4>
+                <ul class="space-y-2">
+                    <li><a href="#home" class="text-gray-400 hover:text-white transition">Accueil</a></li>
+                    <li><a href="#services" class="text-gray-400 hover:text-white transition">Services</a></li>
+                    <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4">Services</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition">Événements</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition">Réservations hôtels</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition">Visites guidées</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4">Contact</h4>
+                <p class="text-gray-400">Email: binajia@binajia.org</p>
+                <p class="text-gray-400">Tél: +229 01 46 10 10 50</p>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+            <p class="text-gray-400">© 2025 Binajia. Tous droits réservés.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+</script>
+{% endblock %}
