@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\PasswordResetToken;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -135,6 +136,41 @@ class EmailService
         } catch (\Exception $e) {
             $this->logger->error('Erreur envoi email confirmation paiement', [
                 'email' => $toEmail,
+                'error' => $e->getMessage()
+            ]);
+            return false;
+        }
+    }
+
+    /**
+     * Envoie un email de réinitialisation de mot de passe
+     */
+    public function sendPasswordResetEmail(PasswordResetToken $token): bool
+    {
+        try {
+            $user = $token->getUser();
+            $resetUrl = $this->config->getBaseUrl() . '/reset-password/' . $token->getToken();
+
+            $email = (new TemplatedEmail())
+                ->from($this->config->getFromEmail())
+                ->to($user->getEmail())
+                ->subject('Réinitialisation de votre mot de passe - BINAJIA')
+                ->htmlTemplate('emails/password_reset.html.twig')
+                ->context([
+                    'firstName' => $user->getFirstName(),
+                    'lastName' => $user->getLastName(),
+                    'resetUrl' => $resetUrl,
+                    'expiresAt' => $token->getExpiresAt(),
+                    'userEmail' => $user->getEmail()
+                ]);
+
+            $this->mailer->send($email);
+            $this->logger->info('Email de réinitialisation de mot de passe envoyé', ['email' => $user->getEmail()]);
+            return true;
+
+        } catch (\Exception $e) {
+            $this->logger->error('Erreur envoi email réinitialisation mot de passe', [
+                'email' => $token->getUser()->getEmail(),
                 'error' => $e->getMessage()
             ]);
             return false;
