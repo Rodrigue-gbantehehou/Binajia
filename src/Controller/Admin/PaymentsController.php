@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\Admin;
 
 use App\Entity\Payments;
@@ -40,11 +41,21 @@ class PaymentsController extends AbstractController
         if ($to) {
             $conds[] = 'p.paymentdate <= :to';
         }
-        if ($conds) { $qb->where(implode(' AND ', $conds)); }
-        if ($q !== '') { $qb->setParameter('q', '%'.strtolower($q).'%'); }
-        if ($status !== '') { $qb->setParameter('status', strtolower($status)); }
-        if ($from) { $qb->setParameter('from', new \DateTime($from.' 00:00:00')); }
-        if ($to) { $qb->setParameter('to', new \DateTime($to.' 23:59:59')); }
+        if ($conds) {
+            $qb->where(implode(' AND ', $conds));
+        }
+        if ($q !== '') {
+            $qb->setParameter('q', '%' . strtolower($q) . '%');
+        }
+        if ($status !== '') {
+            $qb->setParameter('status', strtolower($status));
+        }
+        if ($from) {
+            $qb->setParameter('from', new \DateTime($from . ' 00:00:00'));
+        }
+        if ($to) {
+            $qb->setParameter('to', new \DateTime($to . ' 23:59:59'));
+        }
 
         $qbCount = clone $qb;
         $total = (int) ($qbCount->select('COUNT(p.id)')->getQuery()->getSingleScalarResult() ?? 0);
@@ -56,6 +67,15 @@ class PaymentsController extends AbstractController
             ->getQuery()->getResult();
 
         $pages = (int) ceil(max(1, $total) / $size);
+        // Paiements totaux approuvés
+        $totalPayments = $em->getRepository(Payments::class)
+            ->createQueryBuilder('p')
+            ->select('COALESCE(SUM(p.amount), 0)')
+            ->where('p.status = :status')
+            ->setParameter('status', 'approved')
+            ->getQuery()
+            ->getSingleScalarResult();
+
 
         return $this->render('admin/payments/index.html.twig', [
             'payments' => $items,
@@ -67,6 +87,7 @@ class PaymentsController extends AbstractController
             'size' => $size,
             'total' => $total,
             'pages' => $pages,
+            'totalpayments' => $totalPayments,
         ]);
     }
 
@@ -74,8 +95,10 @@ class PaymentsController extends AbstractController
     public function show(int $id, EntityManagerInterface $em): Response
     {
         $payment = $em->getRepository(Payments::class)->find($id);
-        if (!$payment) { throw $this->createNotFoundException('Paiement introuvable'); }
-        return $this->render('admin/payments/show.html.twig', [ 'payment' => $payment ]);
+        if (!$payment) {
+            throw $this->createNotFoundException('Paiement introuvable');
+        }
+        return $this->render('admin/payments/show.html.twig', ['payment' => $payment]);
     }
 
     #[Route('/admin/payments/{id}/verify', name: 'admin_payments_verify', methods: ['POST'], requirements: ['id' => '\d+'])]
@@ -83,8 +106,10 @@ class PaymentsController extends AbstractController
     {
         $token = (string) $request->request->get('_token');
         $payment = $em->getRepository(Payments::class)->find($id);
-        if (!$payment) { throw $this->createNotFoundException('Paiement introuvable'); }
-        if (!$this->isCsrfTokenValid('verify_payment_'.$payment->getId(), $token)) {
+        if (!$payment) {
+            throw $this->createNotFoundException('Paiement introuvable');
+        }
+        if (!$this->isCsrfTokenValid('verify_payment_' . $payment->getId(), $token)) {
             throw $this->createAccessDeniedException('Token CSRF invalide');
         }
         $secret = $_ENV['FEDAPAY_SECRET_KEY'] ?? $_SERVER['FEDAPAY_SECRET_KEY'] ?? null;
@@ -131,13 +156,27 @@ class PaymentsController extends AbstractController
             ->leftJoin('p.user', 'u')->addSelect('u');
 
         $conds = [];
-        if ($status !== '') { $conds[] = 'LOWER(p.status) = :status'; }
-        if ($from) { $conds[] = 'p.paymentdate >= :from'; }
-        if ($to) { $conds[] = 'p.paymentdate <= :to'; }
-        if ($conds) { $qb->where(implode(' AND ', $conds)); }
-        if ($status !== '') { $qb->setParameter('status', strtolower($status)); }
-        if ($from) { $qb->setParameter('from', new \DateTime($from.' 00:00:00')); }
-        if ($to) { $qb->setParameter('to', new \DateTime($to.' 23:59:59')); }
+        if ($status !== '') {
+            $conds[] = 'LOWER(p.status) = :status';
+        }
+        if ($from) {
+            $conds[] = 'p.paymentdate >= :from';
+        }
+        if ($to) {
+            $conds[] = 'p.paymentdate <= :to';
+        }
+        if ($conds) {
+            $qb->where(implode(' AND ', $conds));
+        }
+        if ($status !== '') {
+            $qb->setParameter('status', strtolower($status));
+        }
+        if ($from) {
+            $qb->setParameter('from', new \DateTime($from . ' 00:00:00'));
+        }
+        if ($to) {
+            $qb->setParameter('to', new \DateTime($to . ' 23:59:59'));
+        }
 
         $rows = $qb->orderBy('p.paymentdate', 'DESC')->getQuery()->getResult();
 
@@ -152,7 +191,7 @@ class PaymentsController extends AbstractController
                 $p->getStatus() ?? '',
                 $p->getReference() ?? '',
                 $u?->getEmail() ?? '',
-                ($u?->getFirstname().' '.$u?->getLastname()) ?: '',
+                ($u?->getFirstname() . ' ' . $u?->getLastname()) ?: '',
             ]);
         }
         rewind($out);

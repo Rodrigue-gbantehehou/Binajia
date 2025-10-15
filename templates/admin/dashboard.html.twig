@@ -27,7 +27,7 @@
       <div class="flex items-center justify-between">
         <div class="flex-1">
           <p class="text-xs md:text-sm font-medium text-gray-600 mb-1">Membres totaux</p>
-          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">247</h3>
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">{{ stats.totalMembers }}</h3>
           <p class="text-xs md:text-sm text-green-600 font-medium mt-2">
             <i class="fas fa-arrow-up mr-1"></i>
             <span class="hidden sm:inline">+12% ce mois</span>
@@ -46,7 +46,7 @@
       <div class="flex items-center justify-between">
         <div class="flex-1">
           <p class="text-xs md:text-sm font-medium text-gray-600 mb-1">Événements</p>
-          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">18</h3>
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">{{ stats.eventsCount }}</h3>
           <p class="text-xs md:text-sm text-orange-600 font-medium mt-2">
             <i class="fas fa-calendar-plus mr-1"></i>
             <span class="hidden sm:inline">+3 ce mois</span>
@@ -64,12 +64,13 @@
       <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-green-500"></div>
       <div class="flex items-center justify-between">
         <div class="flex-1">
+       
           <p class="text-xs md:text-sm font-medium text-gray-600 mb-1">Revenus totaux</p>
-          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">15,400 XOF</h3>
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">{{ stats.revenueTotal }}</h3>
           <p class="text-xs md:text-sm text-green-600 font-medium mt-2">
             <i class="fas fa-arrow-up mr-1"></i>
-            <span class="hidden sm:inline">+8.2% ce mois</span>
-            <span class="sm:hidden">+8.2%</span>
+            <span class="hidden sm:inline">{{ stats.revenueGrowth }}</span>
+            <span class="sm:hidden">{{ stats.revenueGrowth }}</span>
           </p>
         </div>
         <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-green-600 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
@@ -84,7 +85,7 @@
       <div class="flex items-center justify-between">
         <div class="flex-1">
           <p class="text-xs md:text-sm font-medium text-gray-600 mb-1">Cartes générées</p>
-          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">156</h3>
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">{{ stats.cardsGenerated }}</h3>
           <p class="text-xs md:text-sm text-orange-600 font-medium mt-2">
             <i class="fas fa-id-card mr-1"></i>
             <span class="hidden sm:inline">+24 cette semaine</span>
@@ -258,10 +259,10 @@
       new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+          labels: {{ labels|json_encode|raw }},
           datasets: [{
             label: 'Revenus (XOF)',
-            data: [12000, 19000, 15000, 25000, 22000, 30000, 28000],
+            data: {{ values|json_encode|raw }},
             borderColor: '#2D7A4F',
             backgroundColor: 'rgba(45, 122, 79, 0.1)',
             borderWidth: 3,

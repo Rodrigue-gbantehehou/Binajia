@@ -1,32 +1,351 @@
-{% extends 'base.html.twig' %}
-{% block title %}Carte Membre - BINAJIA{% endblock %}
+<!DOCTYPE html>
+<html lang="fr">
 
-{% block content %}
-<section class="pt-28 pb-10 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="max-w-3xl">
-      <h1 class="font-serif text-4xl md:text-5xl font-bold text-charcoal">Carte de membre</h1>
-      <p class="mt-3 text-gray-600">Aperçu de la carte numérique et du modèle impression. Votre photo et vos informations s'intègrent automatiquement.</p>
-      <div class="mt-6 inline-flex gap-3">
-        <a href="{{ path('app_membership') }}" class="px-5 py-3 rounded-xl border-2 border-primary text-primary font-semibold">Retour à l'adhésion</a>
-        <button onclick="window.print()" class="px-5 py-3 rounded-xl bg-gradient-to-br from-primary to-accent text-white font-semibold">Imprimer</button>
-      </div>
-    </div>
-  </div>
-</section>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Carte de Membre BINAJIA</title>
+		<style>
+			/* Police compatible Dompdf */
+			body {
+				font-family: "DejaVu Sans", Arial, sans-serif;
+				margin: 0;
+				padding: 20px;
+				background: #ffffff;
+			}
 
-<section class="py-10 bg-cream">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-start">
-    <div>
-      <h2 class="font-semibold text-charcoal mb-3">Carte numérique</h2>
-      {% include 'partials/member-card-digital.html.twig' with { user: user } %}
-      <p class="mt-3 text-sm text-gray-500">À utiliser dans l'application (QR / contrôle d'accès, etc.).</p>
-    </div>
-    <div>
-      <h2 class="font-semibold text-charcoal mb-3">Modèle impression (A4/PDF)</h2>
-      {% include 'partials/member-card-print.html.twig' with { user: user } %}
-      <p class="mt-3 text-sm text-gray-500">Idéal pour export PDF ou impression haute définition.</p>
-    </div>
-  </div>
-</section>
-{% endblock %}
+			/* Container centré contenant deux cartes côte à côte */
+			.card-container {
+				align-items: center;
+			}
+
+			.card-box {
+				display: block;
+				width: 450px;
+				height: 280px;
+				margin: 0 auto 20px;
+				overflow: hidden;
+				border: 1px solid #cfcfcf;
+				background: #ffffff;
+			}
+
+			.card-recto {
+				;
+				/*	page-break-after: always;*/
+			}
+
+
+			/* Header simple */
+			.card-header {
+				background-color: #f59e0b;
+				height: 50px;
+				padding: 8px 12px;
+				box-sizing: border-box;
+				color: #083a2a;
+				font-weight: 800;
+				font-size: 20px;
+				line-height: 44px;
+			}
+
+			.header-left {
+				display: inline-block;
+				vertical-align: middle;
+				margin-right: 8px;
+			}
+
+			.flag {
+				display: inline-block;
+				width: 28px;
+				height: 20px;
+				border-radius: 3px;
+				vertical-align: middle;
+				margin-right: 6px;
+			}
+
+			.flag-benin {
+				background: linear-gradient(to bottom, #FCD116 0, #E8112D 100%);
+			}
+
+			.flag-nigeria {
+				background: linear-gradient(to right, #008751 0, #008751 100%);
+			}
+
+			.header-title {
+				font-size: 25px;
+				letter-spacing: 1px;
+				color: #083a2a;
+			}
+
+			/* Body avec layout en table pour meilleur alignement */
+			.card-body {
+				background-color: #1f5438;
+				color: #ffffff;
+				height: 220px;
+				padding: 12px 14px;
+				box-sizing: border-box;
+				position: relative;
+			}
+
+			.card-content {
+				display: table;
+			}
+
+			.card-info-cell {
+				display: table-cell;
+				vertical-align: top;
+				text-align: left;
+				padding-left: 12px;
+			}
+
+			/* Photo */
+			.card-photo {
+				width: 85px;
+				height: 100px;
+				background: #ffffff;
+				border: 1px solid #bfbfbf;
+				border-radius: 6px;
+				text-align: center;
+				color: #666;
+				box-sizing: border-box;
+			}
+
+			/* Styles texte */
+			.role {
+				color: #f59e0b;
+				font-weight: 800;
+				font-size: 14px;
+				text-transform: uppercase;
+				margin-bottom: 1px;
+				line-height: 1.2;
+			}
+
+			.tagline {
+				font-style: italic;
+				font-size: 10px;
+				opacity: 0.95;
+				margin-bottom: 19px;
+			}
+
+			.member-name {
+				font-weight: 700;
+				font-size: 15px;
+				margin-bottom: 6px;
+				line-height: 1.2;
+				bottom: 20px;
+				position: relative;
+				object-fit: cover;
+			}
+
+			.detail-row {
+				font-size: 11px;
+				margin-bottom: 2px;
+				line-height: 1.3;
+				bottom: 20px;
+				position: relative;
+
+			}
+
+			.detail-label {
+				font-weight: 700;
+			}
+
+			.detail-value {
+				opacity: 0.9;
+			}
+
+			/* Footer */
+			.card-footer {
+				left: 14px;
+				right: 14px;
+				bottom: 12px;
+				font-size: 10px;
+				color: #f2f2f2;
+				height: 25px;
+				line-height: 12px;
+			}
+
+			.badge {
+				display: inline-block;
+				background: rgba(245, 158, 11, 0.18);
+				padding: 4px 8px;
+				border-radius: 4px;
+				color: #f59e0b;
+				font-weight: 800;
+				font-size: 10px;
+				text-transform: uppercase;
+				margin-top: -8px;
+				bottom: 15px;
+				position: relative;
+			}
+
+			.footer-right {
+				text-align: left;
+				font-size: 10px;
+				line-height: 12px;
+			}
+
+			/* Back card styles */
+			.back-body {
+				background-color: #1f5438;
+				color: #ffffff;
+				height: 250px;
+				padding: 18px 14px;
+				box-sizing: border-box;
+				text-align: center;
+			}
+
+			.back-logo {
+
+				margin: 0 auto;
+
+				font-weight: 900;
+				font-size: 40px;
+				color: #f59e0b;
+			}
+
+			.back-title {
+				color: #f59e0b;
+				font-weight: 800;
+			}
+
+			.back-desc {
+				font-size: 11px;
+				line-height: 1.4;
+				opacity: 0.95;
+			}
+			.footer-sub {
+				display: table;
+				bottom: 10px;
+				position: relative;
+			}
+			.footer-position {
+				display: table-cell;
+				vertical-align: top;
+				text-align: left;
+				position: relative;
+				padding-right: 9px;
+			}
+
+
+			/* Clear floats */
+			.clearfix {
+				clear: both;
+			}
+
+			/* Configuration des pages pour impression */
+
+
+			/* Force une nouvelle page pour le verso */
+			.page-break {
+				page-break-before: always;
+			}
+			.qr-wrapper {
+				width: 90px;
+				flex-shrink: 0; /* le QR code ne se réduit pas */
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="card-container">
+			<div class="card-box card-recto">
+				<div class="card-header">
+					<div class="header-left" style="position:relative;bottom:10px;">
+						<img src="{{ asset('media/benin.png') }}" style="width: 30px; height: 20px; object-fit: cover;" alt="">
+						<span class="header-title">BINAJIA</span>
+						<img src="{{ asset('media/nigeria.png') }}" style="width: 30px; height: 20px; object-fit: cover; " alt="">
+					</div>
+					<img src="{{ asset('media/logo.jpeg') }}" style="width: 70px; height: 50px; object-fit: cover; margin-left: 140px; margin-top: 10px;" alt="">
+					<span style="object-fit: covr; font-size: 10px; text-transform: uppercase; position:relative;bottom:60px;">association benino-nigériane</span>
+				</div>
+				<div class="card-body">
+					<div class="card-content">
+						<div class="card-photo-cell">
+							<div class="card-photo">
+								{% if avatar %}
+									<img src="{{ avatar }}" style="width:83px;height:98px;object-fit:cover;border-radius:5px;" alt="Photo membre">
+								{% else %}
+									<div style="font-size:10px;color:#999;line-height:20px;padding-top:40px;">PHOTO</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="card-info-cell">
+							<div class="role">'MEMBRE BINAJIA'</div>
+							<div class="tagline">United to grow together</div>
+							<div class="member-name">{{ name|default('Nom Complet') }}</div>
+							<div class="detail-row">
+								<span class="detail-label">Tél :</span>
+								<span class="detail-value">{{ phone|default('+229 XX XX XX XX') }}</span>
+							</div>
+							<div class="detail-row">
+								<span class="detail-label">Nationalité :</span>
+								<span class="detail-value">{{ nationality|default('Bénin') }}</span>
+							</div>
+						</div>
+						<div class="card-info-cell qr-wrapper">
+							{% if qrCode is defined and qrCode %}
+								<img src="{{ qrCode }}" style="width:90px;height:90px;object-fit:cover;border-radius:5px;left:80px;position:relative;" alt="QR Code">
+							{% else %}
+								<div style="width:90px;height:90px;border:1px solid #f59e0b;border-radius:5px;left:80px;position:relative;text-align:center;line-height:90px;font-size:8px;color:#f59e0b;">QR CODE</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="card-footer">
+						<div class="footer-sub">
+							<div class="footer-position">
+								<div>
+									<strong>ID :</strong>
+									{{ memberId|default('BjNg-2025-XXX') }}
+								</div>
+								<div>
+									<strong>Exp :</strong>
+									{{ expiry|default('01/06/2028') }}
+								</div>
+							</div>
+
+							<div class="footer-position">
+								<div>
+									<strong>Date d'adhésion :</strong>
+									{{ joinDate|default('01/06/2024') }}
+								</div>
+								<div>
+									<strong>Join Date
+									</strong>
+								</div>
+							</div>
+							<div class="footer-position" style="text-align: right;">
+								<div>
+									<strong>binajia@binajia.com</strong>
+								</div>
+								<div>
+									<strong>(+229) 01 46 10 10 50</strong>
+								</div>
+								<div>
+									<strong>(+234) 707 047 7730</strong>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card-box card-verso">
+
+				<div class="back-body">
+					<div class="back-logo">BINAJIA</div>
+					<div class="back-title">Association Bénino-Nigériane</div>
+					<div class="back-desc">
+						Association pour la mobilité et l'intégration culturelle. Ensemble pour développer nos communautés
+												                    et renforcer nos liens.
+					</div>
+					<div style="margin-top:12px;font-size:11px;opacity:0.95;">
+						binajia@hotmail.com &nbsp;|&nbsp; (+229) 01 46 10 10 50
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

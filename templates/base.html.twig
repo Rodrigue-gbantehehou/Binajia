@@ -148,34 +148,23 @@
 	</head>
 	<body class="min-h-full bg-cream text-charcoal font-sans">
 			{% block header %}
-				<nav class="fixed w-full top-0 z-50 navbar-gradient shadow-lg transition-all duration-300" role="navigation" aria-label="Navigation principale">
+				<nav class="bg-gradient-to-r from-yellow-500 via-yellow-400 to-green-600 shadow-lg fixed w-full z-50  transition-all duration-300" role="navigation" aria-label="Navigation principale" >
 					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
 
 						<div class="flex items-center">
-							<a href="#" class="flex items-center">
-                            <img src="/media/logo.jpeg" alt="Logo Binajia" class="h-12 w-12  object-cover shadow-md transition-transform duration-300 group-hover:scale-110">
-								<span class="ml-2 text-xl font-bold text-white bg-gradient-to-r from-green-800 to-green-600 px-3 py-1 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-bounce">
-									B<span class="text-yellow-300">I</span>NAJ<span class="text-yellow-300">I</span>A
-								</span>
-							</a>
-						</div>
+                    <a href="#" class="flex items-center">
+                        <img src="https://huggingface.co/spaces/Babangida77/binajia/resolve/main/images/binajia%20logo.jpg"
+                            alt="Binajia Logo" class="h-10 w-10 ">
+                        <span
+                            class="ml-2 text-xl font-bold text-white bg-gradient-to-r from-green-500 to-green-700 px-4 py-1 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-pulse">
+                            B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
+
+                        </span>
+                    </a>
+                </div>
 						<div class="hidden md:flex items-center space-x-8">
-							<!-- Dropdown Accueil -->
-							<div class="relative group">
-								<button class="nav-link text-charcoal hover:text-primary font-medium flex items-center">
-									Accueil
-									<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-									</svg>
-								</button>
-								<div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-									<div class="py-2">
-										<a href="{{ path('app_home') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Accueil Actuel</a>
-										<a href="{{ path('app_homepage') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Nouvelle Page (Twig)</a>
-										<a href="{{ path('app_homepage_full') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Page Complète (HTML)</a>
-									</div>
-								</div>
-							</div>
+							
+							<a href="{{ path('app_home') }}" class="nav-link text-charcoal hover:text-primary font-medium">Accueil</a>
 							<a href="{{ path('app_about') }}" class="nav-link text-charcoal hover:text-primary font-medium">À propos</a>
 							<a href="{{ path('app_events') }}" class="nav-link text-charcoal hover:text-primary font-medium">Événements</a>
 							<a href="{{ path('app_places') }}" class="nav-link text-charcoal hover:text-primary font-medium">Lieux</a>
@@ -187,10 +176,10 @@
 						<div class="flex items-center space-x-3">
 							{% if not app.user %}
 
-								<a href="{{ path('app_login', {}, false) ?? '#' }}" class="hidden md:block px-6 py-3 rounded-md bg-white border-2 border-primary text-primary  font-semibold">Connexion</a>
+								<a href="{{ path('app_login', {}, false) ?? '#' }}" class="hidden md:block px-6 py-3 rounded-full bg-white border-2 border-primary text-primary  font-semibold">Connexion</a>
 							{% endif %}
 							{% if app.user %}
-								<a href="{{ path('app_user_dashboard') }}" class="hidden md:block  px-6 py-3 rounded-md text-white  bg-primary text-center font-medium transition duration-300" style="background-color: #f59e0b;">Espace membre</a>
+								<a href="{{ path('app_user_dashboard') }}" class="hidden md:block  px-6 py-3 rounded-md text-white  bg-primary text-center rounded-full font-medium transition duration-300" style="background-color: #f59e0b;">Espace membre</a>
 								<a href="{{ path('app_logout') }}" class="hidden md:block p-2.5 rounded-full ring-1 ring-gray-300 hover:bg-primary" title="Se déconnecter" aria-label="Se déconnecter">
 									<svg class="w-5 h-5 text-charcoal" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 										<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -209,10 +198,11 @@
 									</svg>
 								</a>
 							{% else %}
-								<a href="{{ path('app_membership') }}" class="hidden md:block px-6 py-3 rounded-md  text-white  font-semibold" style="background-color: #f59e0b;"> Devenir membre</a>
-								<button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-cream rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
+							<button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-cream rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
 									<svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
 								</button>
+								<a href="{{ path('app_membership') }}" class="hidden md:block px-6 py-3  text-white rounded-full  font-semibold" style="background-color: #f59e0b;"> Devenir membre</a>
+								
 							{% endif %}
 						</div>
 					</div>
@@ -229,13 +219,7 @@
 					</div>
 					<div class="space-y-4">
 						<!-- Section Accueil -->
-						<div class="border-b border-gray-200 pb-4">
-							<h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Pages d'accueil</h3>
-							<a href="{{ path('app_home') }}" class="block text-charcoal hover:text-primary font-medium py-2 px-4 rounded-lg hover:bg-cream transition-all">Accueil Actuel</a>
-							<a href="{{ path('app_homepage') }}" class="block text-charcoal hover:text-primary font-medium py-2 px-4 rounded-lg hover:bg-cream transition-all">Nouvelle Page (Twig)</a>
-							<a href="{{ path('app_homepage_full') }}" class="block text-charcoal hover:text-primary font-medium py-2 px-4 rounded-lg hover:bg-cream transition-all">Page Complète (HTML)</a>
-						</div>
-						<!-- Navigation principale -->
+						<a href="{{ path('app_home') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Accueil</a>
 						<a href="{{ path('app_about') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">À propos</a>
 						<a href="{{ path('app_events') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Événements</a>
 						<a href="{{ path('app_places') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Lieux</a>
@@ -245,8 +229,9 @@
 						{% endif %}
 						<div class="pt-4 space-y-3">
 							{% if not app.user %}
+							<a href="{{ path('app_membership') }}" class="block w-full px-6 py-3 text-center bg-primary  hover:bg-secondary text-white px-6 py-3 rounded-md text-center font-medium transition duration-300">Devenir membre</a>
 								<a href="{{ path('app_login') }}" class="block w-full px-6 py-3 text-center bg-white border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all">Connexion</a>
-								<a href="{{ path('app_membership') }}" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-md text-center font-medium transition duration-300">Devenir membre</a>
+								
 							{% else %}
 								<a href="{{ path('app_user_dashboard') }}" class="block w-full px-6 py-3 text-center btn-primary">Espace membre</a>
 								<a href="{{ path('app_logout') }}" class="block w-full px-6 py-3 text-center bg-primary border-2 border-gray-300 text-charcoal rounded-full font-semibold hover:bg-cream transition-all">Se déconnecter</a>
@@ -275,7 +260,7 @@
 									<h4 class="font-semibold text-lg mb-4">Navigation</h4>
 									<ul class="space-y-2">
 										<li>
-											<a href="{{ path('app_home') }}" class="text-gray-400 hover:text-primary transition-colors">Accueil Actuel</a>
+											<a href="{{ path('app_home') }}" class="text-gray-400 hover:text-primary transition-colors">Accueil </a>
 										</li>
 										<li>
 											<a href="{{ path('app_homepage') }}" class="text-gray-400 hover:text-primary transition-colors">Nouvelle Page</a>

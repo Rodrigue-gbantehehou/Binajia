@@ -177,6 +177,18 @@ function updateDialFromCountry(){
     phoneEl.value = phoneEl.value.replace(/^0+/, '');
   }
 }
+document.getElementById('email').addEventListener('blur', async (e) => {
+  const email = e.target.value.trim();
+  if (!email) return;
+  const check = await checkEmailExists(email);
+  if (!check.ok) {
+    alert(check.message || 'Cet email est déjà utilisé.');
+    e.target.classList.add('border-red-500');
+  } else {
+    e.target.classList.remove('border-red-500');
+  }
+});
+
 document.addEventListener('change', (e)=>{ if(e.target && e.target.id==='country'){ updateDialFromCountry(); }});
 document.addEventListener('DOMContentLoaded', updateDialFromCountry);
 function selectPlan(p,e){
@@ -207,15 +219,60 @@ function updateProgress(){for(let i=1;i<=3;i++){const el=document.getElementById
 function handlePhotoUpload(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{photoData=e.target.result;document.getElementById('photoPreview').innerHTML='<img src="'+photoData+'" class="w-full h-full object-cover">';};r.readAsDataURL(f);}
 function getDial(){const el=document.getElementById('dialPreview');return el?el.textContent.trim():''}
 function normalizeLocalPhone(num){return (num||'').replace(/\s+/g,'').replace(/[^0-9]/g,'').replace(/^0+/,'')}
-function validateAndContinue(){
+async function validateAndContinue() {
+  const email = val('email');
+  if (!/^\S+@\S+\.\S+$/.test(email)) {
+    alert('Veuillez entrer une adresse email valide.');
+    return;
+  }
+
+  // 🔍 Vérifie si l'email est déjà utilisé
+  const check = await checkEmailExists(email);
+  if (!check.ok) {
+    alert(check.message || 'Cet email est déjà utilisé.');
+    return;
+  }
+
   const fullPhone = `${getDial()}${normalizeLocalPhone(val('phone'))}`;
-  formData={firstName:val('firstName'),lastName:val('lastName'),email:val('email'),phone:fullPhone,country:val('country'),birthDate:val('birthDate'),terms:document.getElementById('terms').checked};
-  if(!formData.firstName||!formData.lastName||!formData.email||!normalizeLocalPhone(val('phone'))||!formData.country||!formData.terms){alert('Veuillez remplir tous les champs obligatoires et accepter les conditions.');return;}
-  if(!photoData){alert('La photo de profil est obligatoire pour générer la carte.');return;}
-  if(!/^\S+@\S+\.\S+$/.test(formData.email)){alert('Veuillez entrer une adresse email valide.');return;}
+  formData = {
+    firstName: val('firstName'),
+    lastName: val('lastName'),
+    email: email,
+    phone: fullPhone,
+    country: val('country'),
+    birthDate: val('birthDate'),
+    terms: document.getElementById('terms').checked
+  };
+
+  if (!formData.firstName || !formData.lastName || !normalizeLocalPhone(val('phone')) || !formData.country || !formData.terms) {
+    alert('Veuillez remplir tous les champs obligatoires et accepter les conditions.');
+    return;
+  }
+
+  if (!photoData) {
+    alert('La photo de profil est obligatoire pour générer la carte.');
+    return;
+  }
+
   updateSummary();
   goToStep(3);
-} 
+}
+
+async function checkEmailExists(email) {
+  try {
+    const res = await fetch('{{ path('app_check_email') }}', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ email })
+    });
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    console.error('Erreur lors de la vérification email:', e);
+    return { ok: false, message: 'Erreur serveur' };
+  }
+}
+
 function val(id){return document.getElementById(id).value}
 function updateSummary(){byId('summaryName').textContent=formData.firstName+' '+formData.lastName;byId('summaryEmail').textContent=formData.email;byId('summaryPhone').textContent=formData.phone;byId('summaryCountry').textContent=(formData.country||'').replace(/^./,m=>m.toUpperCase());byId('summaryBirthDate').textContent=formData.birthDate||'Non renseignée'; if(photoData){byId('summaryPhoto').innerHTML='<img src="'+photoData+'" class="w-full h-full object-cover">'} const names={basic:'Découverte',standard:'Standard',premium:'Premium'}, prices={basic:'5 000 FCFA',standard:'15 000 FCFA',premium:'30 000 FCFA'};byId('summaryPlan').textContent='Formule '+(names[selectedPlan]||'');byId('summaryPrice').textContent=prices[selectedPlan]||'';}
 function byId(id){return document.getElementById(id)}

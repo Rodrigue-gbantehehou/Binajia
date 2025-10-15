@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PageController extends AbstractController
 {
@@ -59,5 +63,23 @@ class PageController extends AbstractController
         return $this->render('pages/membership.html.twig', [
             'countries' => $countries,
         ]);
+    }
+
+    // src/Controller/MembershipController.php
+
+    #[Route('/check-email', name: 'app_check_email', methods: ['POST'])]
+    public function checkEmail(Request $request, EntityManagerInterface $em): JsonResponse
+    {
+        $email = trim($request->request->get('email', ''));
+        if (!$email) {
+            return new JsonResponse(['ok' => false, 'message' => 'Email manquant'], 400);
+        }
+
+        $exists = $em->getRepository(User::class)->findOneBy(['email' => $email]);
+        if ($exists) {
+            return new JsonResponse(['ok' => false, 'message' => 'Cet email est déjà utilisé.']);
+        }
+
+        return new JsonResponse(['ok' => true]);
     }
 }
