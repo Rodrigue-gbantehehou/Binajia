@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\User;
@@ -49,7 +50,18 @@ class RegistrationController extends AbstractController
         $birthDate = trim((string)$request->request->get('birthDate')) ?: null;
         $plan      = trim((string)$request->request->get('plan')) ?: 'standard';
         $photoData = (string)$request->request->get('photoData'); // base64 data URL (required)
-
+        //verifier si l'utilisateur existe et qu'il à deja une carte
+        $userRepo = $em->getRepository(User::class);
+        $user = $userRepo->findOneBy(['email' => $email]);
+        if ($user) {
+            $cardRepo = $em->getRepository(MembershipCards::class);
+            $existingCard = $cardRepo->findOneBy(['user' => $user]);
+            if ($existingCard) {
+                return $this->json(['ok' => false, 'message' => 'Vous avez deja une carte']);
+                
+            }
+        }
+        
         // Normalize base64 data URL if sent via x-www-form-urlencoded ("+" may become spaces)
         if ($photoData !== '' && str_starts_with($photoData, 'data:image')) {
             $parts = explode(',', $photoData, 2);
@@ -107,7 +119,9 @@ class RegistrationController extends AbstractController
         $user->setLastname($lastName);
         $user->setPhone($rawPhone);
         $user->setCountry($country);
-        if (!$user->getCreatedAt()) { $user->setCreatedAt(new \DateTime()); }
+        if (!$user->getCreatedAt()) {
+            $user->setCreatedAt(new \DateTime());
+        }
 
         if ($isNewUser) {
             // Generate a random password and hash it
@@ -117,7 +131,7 @@ class RegistrationController extends AbstractController
             $em->persist($user);
         }
 
-        $em->flush(); // to get an ID or save updates
+        
 
         // Build a member ID like BjNg-YYYY-000{id}
         $memberId = sprintf('BjNg-%s-%03d', (new \DateTime())->format('Y'), $user->getId());
@@ -131,7 +145,8 @@ class RegistrationController extends AbstractController
             $msg = $env === 'dev' ? ('Erreur image: ' . $e->getMessage()) : 'La photo est obligatoire pour générer la carte.';
             return $this->json(['ok' => false, 'message' => $msg], 400);
         }
-
+        $user->setPhoto($avatarPath);   
+        $em->flush(); // to get an ID or save updates
         // Redirect URL to view the card (include query for plan and avatar)
         $url = $this->generateUrl('app_membership_card_generated', [
             'id' => $user->getId(),
@@ -192,7 +207,7 @@ class RegistrationController extends AbstractController
 
             // If payment approved, send credentials + card link by email
             $finalStatus = $verifiedStatus ?: $txStatus;
-            if (is_string($finalStatus) && in_array(strtolower($finalStatus), ['approved','succeeded','success','paid'])) {
+            if (is_string($finalStatus) && in_array(strtolower($finalStatus), ['approved', 'succeeded', 'success', 'paid'])) {
                 try {
                     // Générer la carte et le reçu + persister en base via le service
                     $result = $membershipCardService->generateAndPersist($user, $payment, $avatarPath, $memberId);
@@ -219,6 +234,7 @@ class RegistrationController extends AbstractController
                         $user->getEmail(),
                         'Votre adhésion Binajia — Identifiants et carte membre',
                         $htmlContent,
+                        $cardPdfUrl,
                         $receiptPdfPath,
                         'recu_binajia.pdf'
                     );
@@ -276,7 +292,9 @@ class RegistrationController extends AbstractController
         $displayCountry = $user->getCountry();
         if ($displayCountry && strlen($displayCountry) === 2 && class_exists(\Symfony\Component\Intl\Countries::class)) {
             $name = \Symfony\Component\Intl\Countries::getName(strtoupper($displayCountry), 'fr');
-            if ($name) { $displayCountry = $name; }
+            if ($name) {
+                $displayCountry = $name;
+            }
         }
 
         return $this->render('membership/card_generated.html.twig', [
@@ -285,7 +303,7 @@ class RegistrationController extends AbstractController
             'plan' => $plan,
             'avatar' => $avatar,
             'displayCountry' => $displayCountry,
-            'memberCard'=>$memberCard
+            'memberCard' => $memberCard
         ]);
     }
 }

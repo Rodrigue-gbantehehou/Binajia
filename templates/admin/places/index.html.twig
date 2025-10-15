@@ -23,8 +23,9 @@
     </div>
 
     {# Quick Stats #}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div class="admin-stats-card bg-gradient-to-br from-green-50 to-green-100 border-l-4 border-green-500">
+    <div class="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <div class="admin-stats-card bg-white rounded-2xl shadow-lg border border-gray-100 p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 bg-gradient-to-br from-green-50 to-green-100 border-l-4 border-green-500">
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
@@ -38,7 +39,7 @@
         </div>
       </div>
       
-      <div class="admin-stats-card bg-gradient-to-br from-blue-50 to-blue-100 border-l-4 border-blue-500">
+      <div class="admin-stats-card bg-white rounded-2xl shadow-lg border border-gray-100 p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 bg-gradient-to-br from-blue-50 to-blue-100 border-l-4 border-blue-500">
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
@@ -52,7 +53,7 @@
         </div>
       </div>
       
-      <div class="admin-stats-card bg-gradient-to-br from-amber-50 to-amber-100 border-l-4 border-amber-500">
+      <div class="admin-stats-card bg-white rounded-2xl shadow-lg border border-gray-100 p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 bg-gradient-to-br from-amber-50 to-amber-100 border-l-4 border-amber-500">
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <div class="w-12 h-12 bg-amber-500 rounded-lg flex items-center justify-center">
@@ -66,7 +67,7 @@
         </div>
       </div>
       
-      <div class="admin-stats-card bg-gradient-to-br from-purple-50 to-purple-100 border-l-4 border-purple-500">
+      <div class="admin-stats-card bg-white rounded-2xl shadow-lg border border-gray-100 p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 bg-gradient-to-br from-purple-50 to-purple-100 border-l-4 border-purple-500">
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
@@ -82,7 +83,7 @@
     </div>
 
     {# Advanced Filters #}
-    <div class="admin-card">
+    <div class="admin-card bg-white rounded-2xl shadow-lg border border-gray-100 p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
       <div class="flex items-center justify-between mb-6">
         <h3 class="text-lg font-semibold text-gray-900">
           <i class="fas fa-filter text-green-500 mr-2"></i>Filtres et Recherche
@@ -99,14 +100,14 @@
             <div class="relative">
               <input type="text" name="q" value="{{ q }}" 
                      placeholder="Nom, ville, description..." 
-                     class="admin-input pl-10">
-              <i class="fas fa-search absolute left-3 top-4 text-gray-400"></i>
+                     class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+              <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
             </div>
           </div>
           
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Pays</label>
-            <select name="country" class="admin-select">
+            <select name="country" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
               <option value="">Tous les pays</option>
               <option value="benin">Bénin 🇧🇯</option>
               <option value="nigeria">Nigéria 🇳🇬</option>
@@ -116,7 +117,7 @@
           
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
-            <select name="type" class="admin-select">
+            <select name="type" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
               <option value="">Tous les types</option>
               <option value="historique">Historique</option>
               <option value="culturel">Culturel</option>
@@ -139,6 +140,7 @@
 
     {# Places Table #}
     <div class="admin-card p-0 overflow-hidden">
+    <div class="overflow-x-auto"> 
       <div class="px-6 py-4 border-b border-gray-200">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <h3 class="text-lg font-semibold text-gray-900">Liste des lieux</h3>
@@ -155,25 +157,27 @@
         </div>
       </div>
       
+      <div class="admin-card p-0 overflow-hidden ">
       <div class="overflow-x-auto">
-        <table class="admin-table">
-          <thead>
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gradient-to-r from-gray-50 to-gray-100">
             <tr>
-              <th class="w-12">
+              <th class="px-6 py-4 text-text-xs font-medium text-gray-500 uppercase tracking-widerleft ">
                 <input type="checkbox" class="rounded border-gray-300 text-green-600 focus:ring-green-500">
               </th>
-              <th>Lieu</th>
-              <th class="hidden md:table-cell">Localisation</th>
-              <th class="hidden lg:table-cell">Type</th>
-              <th class="hidden sm:table-cell">Popularité</th>
-              <th class="text-right">Actions</th>
+              <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lieu</th>
+              <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Localisation</th>
+              <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+              <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Popularité</th>
+              <th class="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody>
+         <tbody class="bg-white divide-y divide-gray-200">
+         
             {% for p in places %}
               <tr class="hover:bg-gray-50 transition-colors duration-150">
-                <td>
-                  <input type="checkbox" class="rounded border-gray-300 text-green-600 focus:ring-green-500">
+                <td class="px-6 py-4">
+                  <input type="checkbox" class="event-checkbox rounded border-gray-300 text-green-600 focus:ring-green-500" >
                 </td>
                 <td>
                   <div class="flex items-center space-x-3">
@@ -187,7 +191,7 @@
                     </div>
                   </div>
                 </td>
-                <td class="hidden md:table-cell">
+                <td class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
                   <div class="text-sm text-gray-900">
                     <i class="fas fa-city text-blue-500 mr-1"></i>
                     {{ p.city ?: 'Non spécifié' }}
@@ -197,12 +201,12 @@
                     {{ p.country ?: 'Non spécifié' }}
                   </div>
                 </td>
-                <td class="hidden lg:table-cell">
+                <td class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">
                   <span class="admin-badge admin-badge-info">
                     <i class="fas fa-tag mr-1"></i>
                   </span>
                 </td>
-                <td class="hidden sm:table-cell">
+                <td class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
                   <div class="flex items-center">
                     {% set rating = random(3, 5) %}
                     {% for i in 1..5 %}
@@ -211,7 +215,7 @@
                     <span class="ml-2 text-xs text-gray-600">({{ rating }}/5)</span>
                   </div>
                 </td>
-                <td class="text-right">
+                <td class="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                   <div class="flex items-center justify-end gap-1">
                     <a href="{{ path('admin_places_show', {id: p.id}) }}" 
                        class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-sm transition-all duration-200 bg-blue-50 text-blue-600 hover:bg-blue-100" 
@@ -245,6 +249,8 @@
             {% endfor %}
           </tbody>
         </table>
+        
+      </div>
       </div>
     </div>
   </div>

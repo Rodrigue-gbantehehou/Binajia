@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\Admin;
 
 use App\Entity\Evenement;
@@ -14,7 +15,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ADMIN')]
 class DashboardController extends AbstractController
 {
-    #[Route('/admin', name: 'admin_dashboard')]
+    #[Route('/adiministration', name: 'adiministration_dashboard')]
     public function index(EntityManagerInterface $em): Response
     {
         $now = new \DateTime();
@@ -43,12 +44,16 @@ class DashboardController extends AbstractController
 
         // Revenue totals (DECIMAL string -> cast to float for display)
         $sumAll = $payRepo->createQueryBuilder('p')
-            ->select('COALESCE(SUM(p.amount), 0) as total')
+            ->select('SUM(p.amount) as total')
+            ->where('p.status = :status')
+            ->setParameter('status', 'approved')
             ->getQuery()->getSingleScalarResult();
         $sum30 = $payRepo->createQueryBuilder('p')
             ->select('COALESCE(SUM(p.amount), 0) as total')
             ->where('p.paymentdate >= :d30')
             ->setParameter('d30', $d30)
+            ->andWhere('p.status = :status')
+            ->setParameter('status', 'approved')
             ->getQuery()->getSingleScalarResult();
         $revenueTotal = (string) ($sumAll ?? '0');
         $revenue30d = (string) ($sum30 ?? '0');
@@ -72,7 +77,7 @@ class DashboardController extends AbstractController
             /** @var Payments $p */
             $u = $p->getUser();
             $activities[] = [
-                'name' => $u ? ($u->getFirstname().' '.$u->getLastname()) : '—',
+                'name' => $u ? ($u->getFirstname() . ' ' . $u->getLastname()) : '—',
                 'email' => $u?->getEmail() ?? '—',
                 'avatar' => '/media/avatar.png',
                 'action' => 'Paiement de cotisation',
@@ -87,13 +92,45 @@ class DashboardController extends AbstractController
             'membersGrowth' => sprintf('+%d ce mois', $newMembers30d),
             'eventsCount' => $eventsUpcoming,
             'newEvents' => '+0 nouveaux',
-            'revenueTotal' => $revenueTotal.' XOF',
-            'revenueGrowth' => $revenue30d.' sur 30j',
+            'revenueTotal' => $revenueTotal,
+            'revenueGrowth' => $revenue30d . ' sur 30j',
+            'cardsGenerated' => $cards30d,
         ];
+
+        // Exemple : paiements des 30 derniers jours
+        $d30 = (new \DateTime())->modify('-30 days');
+
+        $revenueData = $payRepo->createQueryBuilder('p')
+            ->select('p.paymentdate AS date, SUM(p.amount) AS total')
+            ->where('p.paymentdate >= :d30')
+            ->setParameter('d30', $d30)
+            ->andWhere('p.status = :status')
+            ->setParameter('status', 'approved')
+            ->groupBy('p.paymentdate')
+            ->orderBy('p.paymentdate', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $labels = [];
+        $values = [];
+
+        foreach ($revenueData as $row) {
+            if (is_array($row['date'])) {
+                $labels[] = (new \DateTime($row['date']['date']))->format('Y-m-d');
+            } elseif ($row['date'] instanceof \DateTimeInterface) {
+                $labels[] = $row['date']->format('Y-m-d');
+            } else {
+                $labels[] = (string) $row['date'];
+            }
+
+            $values[] = (float) $row['total'];
+        }
+
+
 
         // Some KPI tiles (optional small grid)
         $kpis = [
-            ['label' => 'Revenus 30j', 'value' => $revenue30d.' XOF'],
+            ['label' => 'Revenus 30j', 'value' => $revenue30d . ' XOF'],
             ['label' => 'Nouveaux membres', 'value' => (string) $newMembers30d],
             ['label' => 'Cartes générées (30j)', 'value' => (string) $cards30d],
             ['label' => 'Événements à venir', 'value' => (string) $eventsUpcoming],
@@ -103,6 +140,8 @@ class DashboardController extends AbstractController
             'kpis' => $kpis,
             'stats' => $stats,
             'activities' => $activities,
+            'labels' => $labels,
+            'values' => $values,
         ]);
     }
 }

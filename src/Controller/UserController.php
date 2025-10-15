@@ -64,6 +64,9 @@ class UserController extends AbstractController
             }
         }
 
+        //carte actuelle 
+        $carteActuele= $em->getRepository(MembershipCards::class)->findOneBy(['user' => $authUser]);
+
         // View model for template
         $user = (object) [
             'firstName' => $authUser->getFirstname(),
@@ -74,6 +77,7 @@ class UserController extends AbstractController
             'joinedAt' => $authUser->getCreatedAt() ?? new \DateTime(),
             'cardPdf' => $cardPdf,
             'receipts' => $receiptsByPayment,
+            'carteActuele' => $carteActuele,
         ];
 
         $tickets = [];
@@ -84,6 +88,7 @@ class UserController extends AbstractController
             'lastPayment' => $lastPayment,
             'user' => $user,
             'cards' => $cards,
+            'carteActuele' => $carteActuele,
         ]);
     }
 

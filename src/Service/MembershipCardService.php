@@ -2,10 +2,11 @@
 
 namespace App\Service;
 
-use App\Entity\MembershipCards;
 use App\Entity\User;
 use App\Entity\Payments;
 use App\Entity\Receipts;
+use App\Service\QrCodeService;
+use App\Entity\MembershipCards;
 use Doctrine\ORM\EntityManagerInterface;
 
 class MembershipCardService
@@ -14,6 +15,7 @@ class MembershipCardService
         private readonly PdfGeneratorService $pdfGenerator,
         private readonly EntityManagerInterface $em,
         private readonly string $projectDir,
+        private readonly QrCodeService $qrCodeService,
     ) {
     }
 
@@ -23,9 +25,11 @@ class MembershipCardService
      *
      * @return array{cardPdfUrl: string, receiptPdfPath: ?string}
      */
-    public function generateAndPersist(User $user, ?Payments $payment, string $avatarPath, string $memberId): array
+    public function generateAndPersist(User $user, ?Payments $payment,string $avatarPath, string $memberId): array
     {
+
         // 1) Persist the MembershipCards entity first (without pdf URL)
+        
         $card = new MembershipCards();
         $card->setCardnumberC($memberId);
         $card->setIssuedate(new \DateTime());
@@ -56,12 +60,23 @@ class MembershipCardService
         $nationality = (string)($user->getCountry() ?? '');
         $roleBadge = 'MEMBRE'; // Valeur par défaut
         $roleTitle = 'MEMBER\nBINAJIA'; // Valeur par défaut
+
         
         // Vérifier et préparer l'avatar
         $avatarFullPath = $this->prepareAvatar($avatarPath);
 
+        // Générer le QR code avec les informations du membre
+        $qrData = sprintf(
+            "BINAJIA Member\nID: %s\nName: %s\nPhone: %s\nExpiry: %s",
+            $memberId,
+            $name,
+            $phone,
+            $expiryAt->format('d/m/Y')
+        );
+        $qrCode = $this->qrCodeService->generate($qrData);
+
         $this->pdfGenerator->generatePdf(
-            'membership/card_pdf_modern.html.twig',
+            'membership/card.html.twig',
             [
                 'avatar' => $avatarFullPath,
                 'name' => $name,
@@ -72,10 +87,11 @@ class MembershipCardService
                 'memberId' => $memberId,
                 'expiry' => $expiryAt->format('d/m/Y'),
                 'joinDate' => $issuedAt->format('d/m/Y'),
+                'qrCode' => $qrCode,
             ],
             $cardPdfPath,
-            'A6',
-            'landscape'
+            'A4',
+            'portrait'
         );
 
         // 4) Generate receipt PDF only if a payment is provided
@@ -101,7 +117,7 @@ class MembershipCardService
             $receipt->setReceiptNumber(sprintf('R-%s-%d', date('YmdHis'), (int)$payment->getId()));
             $receipt->setIssuedDate(new \DateTime());
             $receipt->setPayment($payment);
-            $receipt->setPdfurl(str_replace($this->projectDir, '', $receiptPdfPath)); // public path
+            $receipt->setPdfurl($receiptPdfPath); // public path
             $this->em->persist($receipt);
             $this->em->flush();
         }
