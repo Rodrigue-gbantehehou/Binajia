@@ -82,4 +82,10 @@ class PageController extends AbstractController
 
         return new JsonResponse(['ok' => true]);
     }
+
+     #[Route('/avantages', name: 'app_avantage')]
+    public function avantage(): Response
+    {
+        return $this->render('pages/avantage.html.twig');
+    }
 }

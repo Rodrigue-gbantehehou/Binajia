@@ -5,42 +5,66 @@
   <meta charset="UTF-8" />
   <title>Reçu - {{ receiptNumber }}</title>
   <style>
-    body{ font-family: DejaVu Sans, Arial, sans-serif; font-size:12px; color:#111; }
-    .wrap{ width: 100%; }
-    .header{ display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #ddd; padding-bottom:8px; margin-bottom:12px; }
-    .brand{ font-weight:700; font-size:18px; }
-    .infos{ margin-top:8px; }
-    .grid{ display:flex; gap:24px; }
-    .col{ flex:1; }
-    .table{ width:100%; border-collapse:collapse; margin-top:10px; }
-    .table th, .table td{ border:1px solid #e5e7eb; padding:6px 8px; text-align:left; }
-    .total{ text-align:right; font-weight:700; }
-    .muted{ color:#6b7280; }
+    /* Fonts & Reset */
+    body { font-family: 'DejaVu Sans', Arial, sans-serif; font-size: 13px; color: #111; margin:0; padding:0; background-color:#f9fafb; }
+    * { box-sizing:border-box; }
+
+    .wrap { width: 90%; max-width: 800px; margin: 20px auto; background-color:#ffffff; padding:24px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.05); }
+
+    /* Header */
+    .header { display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #facc15; padding-bottom:12px; margin-bottom:20px; }
+    .brand { font-weight:700; font-size:24px; background:linear-gradient(90deg, #facc15, #22c55e); -webkit-background-clip:text; color:transparent; }
+    .logo img { height:50px; width:auto; object-fit:contain; }
+
+    /* Client & Receipt Info */
+    .infos { display:flex; justify-content:space-between; margin-bottom:20px; }
+    .col { flex:1; }
+    .col:not(:last-child) { margin-right:20px; }
+    .col strong { display:block; margin-bottom:4px; color:#111827; }
+    .muted { color:#6b7280; font-size:12px; }
+
+    /* Table */
+    .table { width:100%; border-collapse:collapse; margin-top:10px; }
+    .table th { background-color:#fef3c7; color:#92400e; font-weight:700; padding:10px; text-align:left; border:1px solid #fde68a; }
+    .table td { padding:10px; border:1px solid #fcd34d; }
+    .total { font-weight:700; text-align:right; color:#111827; }
+    .amount { text-align:right; }
+
+    /* Footer */
+    .footer { margin-top:20px; text-align:center; color:#6b7280; font-size:12px; }
+
+    /* Highlight rows */
+    .highlight { background-color:#fef9c3; }
+
+    /* Responsive */
+    @media(max-width:600px) {
+      .infos { flex-direction:column; }
+      .col:not(:last-child) { margin-right:0; margin-bottom:12px; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="header">
       <div class="brand">BINAJIA — Reçu</div>
-      <div>
-        <img src="{{ logo }}" alt="Logo" style="height:40px;width:auto;object-fit:contain;"/>
+      <div class="logo">
+        <img src="{{ logo }}" alt="Logo"/>
       </div>
     </div>
 
     <div class="infos">
-      <div class="grid">
-        <div class="col">
-          <div><strong>Client</strong></div>
-          <div>{{ user.firstname }} {{ user.lastname }}</div>
-          <div class="muted">{{ user.email }}</div>
-          {% if user.phone %}<div class="muted">{{ user.phone }}</div>{% endif %}
-        </div>
-        <div class="col">
-          <div><strong>N° de reçu</strong>: {{ receiptNumber }}</div>
-          <div>Date d'émission: {{ issuedAt|date('d/m/Y H:i') }}</div>
-          <div>Transaction: {{ payment.reference }}</div>
-          <div>Statut: {{ payment.status|capitalize }}</div>
-        </div>
+      <div class="col">
+        <strong>Client</strong>
+        <div>{{ user.firstname }} {{ user.lastname }}</div>
+        <div class="muted">{{ user.email }}</div>
+        {% if user.phone %}<div class="muted">{{ user.phone }}</div>{% endif %}
+      </div>
+      <div class="col">
+        <strong>Détails du reçu</strong>
+        <div>N° de reçu: {{ receiptNumber }}</div>
+        <div>Date: {{ issuedAt|date('d/m/Y H:i') }}</div>
+        <div>Transaction: {{ payment.reference }}</div>
+        <div>Statut: {{ payment.status|capitalize }}</div>
       </div>
     </div>
 
@@ -54,16 +78,19 @@
       <tbody>
         <tr>
           <td>Adhésion Binajia</td>
-          <td style="width:160px;">{{ payment.amount ?? '0.00' }}</td>
+          <td class="amount">{{ payment.amount ?? '0.00' }}</td>
         </tr>
-        <tr>
+        <tr class="highlight">
           <td class="total">Total</td>
-          <td class="total">{{ payment.amount ?? '0.00' }}</td>
+          <td class="total amount">{{ payment.amount ?? '0.00' }}</td>
         </tr>
       </tbody>
     </table>
 
-    <p class="muted" style="margin-top:12px;">Merci pour votre confiance. Conservez ce reçu pour vos dossiers.</p>
+    <div class="footer">
+      Merci pour votre confiance. Conservez ce reçu pour vos dossiers.<br>
+      <span style="color:#f59e0b;">BINAJIA — Un pont entre le Bénin et le Nigéria</span>
+    </div>
   </div>
 </body>
 </html>
