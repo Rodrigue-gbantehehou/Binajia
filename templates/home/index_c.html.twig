@@ -7,10 +7,10 @@
 	{# Hero Section - Style identique à CTA communauté #}
 	<section
 		id="accueil" class="relative overflow-hidden min-h-screen -mt-20 pt-20 bg-gradient-to-br from-green-100 via-green-200 to-yellow-400 shadow-lg  flex items-center" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9), rgb(255, 174, 0)), url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80');
-            background-size: cover;
-            background-position: center;">
+																								            background-size: cover;
+																								            background-position: center;">
 		{# Animated Background Elements #}
-		<div class="absolute top-0 right-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+		<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
 		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
 
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 text-white relative z-10 w-full">
@@ -22,7 +22,7 @@
 					{# Titre BINAJIA imposant #}
 					<div class="mb-8">
 						<h1 class="font-serif font-black leading-none mb-4">
-							<span class="block text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[9rem] bg-gradient-to-r from-yellow-500 via-green-500 to-emerald-600 bg-clip-text text-transparent drop-shadow-2xl tracking-tight">
+							<span class="block text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[9rem] bg-gradient-to-r from-yellow-400 via-green-500 to-emerald-600 bg-clip-text text-transparent drop-shadow-2xl tracking-tight">
 								BINAJIA
 							</span>
 						</h1>
@@ -30,8 +30,10 @@
 
 						<p class="text-xl md:text-2xl text-white font-medium tracking-wide">
 							Réseau des Ambassadeurs pour l’Intégration entre le
-                    <span class="text-yellow-400">Bénin</span>, le <span class="text-green-400">Nigéria</span> et l'Afrique
-                </p>
+							<span class="text-yellow-400">Bénin</span>, le
+							<span class="text-green-400">Nigéria</span>
+							et l'Afrique
+						</p>
 					</div>
 
 					<p class="text-sm md:text-base text-white/90 leading-relaxed max-w-2xl">
@@ -39,15 +41,15 @@
 					</p>
 
 					<div class="mt-8 flex flex-wrap gap-4">
-						<a href="#evenements" class="group px-8 py-4 rounded-full font-bold text-green-900 bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
+						<a href="{{ path('app_avantage') }}" class="group px-8 py-4 rounded-full font-bold text-green-900 bg-gradient-to-r from-yellow-400 to-yellow-400 hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
 							<span class="flex items-center">
-								Explorer les événements
+								Les avantages de Binajia
 								<svg class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
 								</svg>
 							</span>
 						</a>
-						<a href="#adhesion" class="group px-8 py-4 rounded-full font-bold text-white bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
+						<a href="{{ path('app_membership') }}" class="group px-8 py-4 rounded-full font-bold text-white bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
 							<span class="flex items-center">
 								Devenir membre
 								<svg class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
@@ -55,6 +57,7 @@
 								</svg>
 							</span>
 						</a>
+
 					</div>
 				</div>
 
@@ -66,14 +69,14 @@
 							<h3 class="font-serif text-2xl md:text-3xl font-bold mb-2 text-white text-center">Prochains événements</h3>
 							<div class="flex items-center gap-4 py-2 justify-center">
 
-								<button onclick="goToEvents()" class="group px-8 py-1 rounded-full font-bold text-white bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
+								<button onclick="goToEvents()" class="group px-8 py-1 rounded-full font-bold text-white bg-yellow-400 backdrop-blur-sm border border-white/30 hover:bg-white/20 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
 									<span class="flex items-center">
 										Tickets
-										
+
 									</span>
 								</button>
 
-								<button onclick="goToPlaces()" class="group px-8 py-1 bg-green-500 rounded-full font-bold text-white bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
+								<button onclick="goToPlaces()" class="group px-8 py-1 bg-green-500 rounded-full font-bold text-white bg-green-400 backdrop-blur-sm border border-white/30 hover:bg-white/20 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
 									<span class="flex items-center">
 										Réservation
 									</span>
@@ -83,7 +86,7 @@
 
 							<div class="space-y-3">
 								<div class="flex items-start gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/10">
-									<div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-500 rounded-xl flex items-center justify-center text-white font-bold">15</div>
+									<div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center text-white font-bold">15</div>
 									<div class="flex-1">
 										<h4 class="font-semibold text-white">Festival Bénin–Nigéria</h4>
 										<div class="text-sm text-white/80">15–18 Août 2025 • Cotonou</div>
@@ -97,14 +100,14 @@
 									</div>
 								</div>
 								<div class="flex items-start gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/10">
-									<div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center text-white font-bold">Oct</div>
+									<div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-500 rounded-xl flex items-center justify-center text-white font-bold">Oct</div>
 									<div class="flex-1">
 										<h4 class="font-semibold text-white">Promotion hôtelière spéciale</h4>
 										<div class="text-sm text-white/80">Octobre 2025 • Bénin & Nigéria</div>
 									</div>
 								</div>
 							</div>
-							<a href="{{ path('app_events') }}" class="group w-full mt-6 bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-green-900 inline-block px-6 py-4 rounded-full text-center font-bold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
+							<a href="{{ path('app_events') }}" class="group w-full mt-6 bg-gradient-to-r from-yellow-400 to-yellow-400 hover:from-yellow-300 hover:to-yellow-400 text-green-900 inline-block px-6 py-4 rounded-full text-center font-bold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
 								<span class="flex items-center justify-center">
 									Voir tous les événements
 									<svg class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
@@ -120,25 +123,31 @@
 	</section>
 
 	{# Vision + Membership card - Enhanced #}
-	<section id="apropos" class="py-14 bg-gradient-to-br from-white via-yellow-50/30 to-green-50/30 relative overflow-hidden">
+	<section
+		id="apropos" class="py-14 relative overflow-hidden bg-cover">
+		<!-- Overlay pattern -->
 		<div class="absolute inset-0 pattern-kente opacity-10 pointer-events-none"></div>
-		{# Animated Background Elements #}
-		<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+
+		<!-- Animated Background Blobs -->
+		<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
 
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-			<div class="grid md:grid-cols-12 gap-10 items-center">
+			<div
+				class="grid md:grid-cols-12 gap-10 items-center">
+
+				<!-- Texte / Vision -->
 				<div class="md:col-span-6 space-y-6 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
-					<div class="inline-flex items-center space-x-2 px-5 py-2 bg-gradient-to-r from-yellow-400/20 to-orange-400/20 backdrop-blur-sm rounded-full mb-5 border border-yellow-400/30">
+					<div class="inline-flex items-center space-x-2 px-5 py-2 bg-gradient-to-r from-yellow-400/20 to-yellow-400/20 backdrop-blur-sm rounded-full mb-5 border border-yellow-400/30">
 						<span class="relative flex h-3 w-3">
-							<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-500 opacity-75"></span>
-							<span class="relative inline-flex rounded-full h-3 w-3 bg-gradient-to-r from-yellow-500 to-orange-500"></span>
+							<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+							<span class="relative inline-flex rounded-full h-3 w-3 bg-gradient-to-r from-yellow-400 to-yellow-400"></span>
 						</span>
-						<span class="font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-orange-600">Notre Vision</span>
+						<span class="font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-400">Notre Vision</span>
 					</div>
 
 					<h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
-						<span class="inline-block bg-gradient-to-r from-yellow-600 via-orange-500 to-green-600 bg-clip-text text-transparent">
+						<span class="inline-block bg-gradient-to-r from-yellow-400 via-yellow-500 to-green-600 bg-clip-text text-transparent">
 							BINAJIA
 						</span>
 						<br>
@@ -148,22 +157,72 @@
 					<div class="mt-6 space-y-4 text-lg text-gray-700 leading-relaxed">
 						<p class="transform hover:translate-x-2 transition-transform duration-300">
 							Binajia est né d'un
-							<span class="font-bold text-yellow-600">rêve partagé</span>: transformer une frontière en passerelle. À cheval entre le Bénin et le Nigéria, nous réinventons l'unité régionale par la culture, la jeunesse et l'action locale.
+							<span class="font-bold text-yellow-400">rêve partagé</span>: transformer une frontière en passerelle.
+																																																								                        À cheval entre le Bénin et le Nigéria, nous réinventons l'unité régionale par la culture, la jeunesse et l'action locale.
 						</p>
 						<p class="transform hover:translate-x-2 transition-transform duration-300">
 							Nous créons des
 							<span class="font-bold text-green-600">ponts durables</span>
-							grâce à des initiatives concrètes et inclusives, en valorisant nos complémentarités culturelles, économiques et sociales.
+							grâce à des initiatives concrètes et inclusives,
+																																																	                        en valorisant nos complémentarités culturelles, économiques et sociales.
 						</p>
 					</div>
 
+					<!-- Accordéon Description -->
+					<div class="space-y-2 mt-6">
+						<div class="border border-yellow-400 rounded-xl overflow-hidden">
+							<button class="w-full text-left px-5 py-3 bg-yellow-200 hover:bg-yellow-400 font-semibold text-green-800 flex justify-between items-center accordion-header">
+								Vos avantages
+								<span class="accordion-icon">▲</span>
+							</button>
+							<div class="px-5 py-3 accordion-content text-gray-700">
+								<ul class="list-disc list-inside space-y-2">
+									<li>Réductions immédiates chez nos partenaires (restaurants, hôtels, musées, boutiques…)</li>
+									<li>Accès VIP à certains événements Binajia</li>
+									<li>Offres spéciales sur les réservations et services locaux</li>
+									<li>Tarifs préférentiels pour les formations et ateliers Binajia</li>
+									<li>Reconnaissance en tant qu’ambassadeur de l’intégration africaine</li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="border border-green-400 rounded-xl overflow-hidden">
+							<button class="w-full text-left px-5 py-3 bg-green-200 hover:bg-green-300 font-semibold text-green-900 flex justify-between items-center accordion-header">
+								Où utiliser votre carte
+								<span class="accordion-icon">▼</span>
+							</button>
+							<div class="px-5 py-3 accordion-content text-gray-700 hidden">
+								<ul class="list-disc list-inside space-y-2">
+									<li>Partout au Bénin 🇧🇯 chez nos partenaires</li>
+									<li>Partout au Nigéria 🇳🇬 chez nos partenaires</li>
+									<li>Bientôt dans d’autres pays en Afrique et dans le monde</li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="border border-yellow-400 rounded-xl overflow-hidden">
+							<button class="w-full text-left px-5 py-3 bg-yellow-200 hover:bg-yellow-400 font-semibold text-green-800 flex justify-between items-center accordion-header">
+								Comment obtenir la carte
+								<span class="accordion-icon">▼</span>
+							</button>
+							<div class="px-5 py-3 accordion-content text-gray-700 hidden">
+								<ol class="list-decimal list-inside space-y-2">
+									<li>Inscrivez-vous en ligne ou lors d’un événement Binajia</li>
+									<li>Payez une cotisation annuelle</li>
+									<li>Recevez votre carte physique ou numérique</li>
+									<li>Activez-la via notre application ou notre site web</li>
+								</ol>
+							</div>
+						</div>
+					</div>
+
 					<div class="mt-8 flex flex-wrap gap-4">
-						<a href="{{ path('app_membership') }}" class="group relative px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 rounded-full font-bold overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/50 transform">
+						<a href="{{ path('app_membership') }}" class="group relative px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-400 text-gray-900 rounded-full font-bold overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-yellow-400 transform">
 							<span class="relative z-10 flex items-center">
 								Devenir membre
 								<span class="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
 							</span>
-							<span class="absolute inset-0 bg-gradient-to-r from-yellow-300 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+							<span class="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
 						</a>
 						<a href="{{ path('app_about') }}" class="group px-8 py-4 bg-white text-gray-900 rounded-full font-bold ring-2 ring-gray-300 hover:ring-green-500 transition-all duration-300 hover:scale-105 hover:shadow-xl transform">
 							En savoir plus
@@ -172,95 +231,85 @@
 					</div>
 				</div>
 
-				<div class="md:col-span-6">
-					<div
-						class="relative flex justify-center md:justify-start">
-						{# Animated Glow Effects #}
-						<div class="absolute -top-8 -left-8 w-32 h-32 md:w-48 md:h-48 bg-yellow-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
-						<div class="absolute -bottom-8 -right-4 w-40 h-40 md:w-64 md:h-64 bg-green-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
-						<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-72 md:h-72 bg-orange-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+				<!-- Cartes Membre -->
+				<div class="md:col-span-6 relative flex justify-center md:justify-start">
+					<div class="absolute -top-8 -left-8 w-32 h-32 md:w-48 md:h-48 bg-yellow-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
+					<div class="absolute -bottom-8 -right-4 w-40 h-40 md:w-64 md:h-64 bg-green-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
+					<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-72 md:h-72 bg-yellow-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
 
-						{# Membership Cards Display - Enhanced with scroll animation #}
-						<div
-							class="relative group opacity-0 translate-y-20 transition-all duration-1000 ease-out delay-300" data-scroll="fade-up">
-							{# Background glow effect #}
-							<div class="absolute inset-0 bg-gradient-to-br from-yellow-400 via-orange-500 to-green-500 rounded-3xl blur-lg opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+					<div class="relative group opacity-0 translate-y-20 transition-all duration-1000 ease-out delay-300" data-scroll="fade-up">
+						<div class="absolute inset-0 bg-gradient-to-br from-yellow-400 via-yellow-500 to-green-500 rounded-3xl blur-lg opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
 
-							{# Card container #}
-							<div class="relative bg-gradient-to-br from-yellow-400 via-orange-500 to-green-500 rounded-3xl p-2 shadow-2xl transform hover:scale-105 transition-all duration-500 max-w-[600px] mx-auto">
-								<div class="bg-white rounded-2xl p-4 overflow-hidden">
-									<img
-									src="{{ asset('media/binajia/cartes.png') }}" alt="Cartes de membre Binajia" class="w-full h-auto rounded-xl shadow-lg">
-
-									{# Overlay info #}
-									<div class="mt-4 text-center">
-										<h3 class="font-bold text-xl bg-gradient-to-r from-yellow-600 to-green-600 bg-clip-text text-transparent mb-2">
-											Cartes de Membre
-										</h3>
-										<p class="text-gray-600 text-sm">Votre passeport pour l'intégration Bénin-Nigéria</p>
-
-										{# Status indicators #}
-										<div class="mt-3 flex justify-center space-x-3">
-											<div class="flex items-center space-x-1">
-												<div class="w-2 h-2 bg-green-500 rounded-full"></div>
-												<span class="text-xs text-gray-500">Actif</span>
-											</div>
-											<div class="flex items-center space-x-1">
-												<div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
-												<span class="text-xs text-gray-500">Premium</span>
-											</div>
-											<div class="flex items-center space-x-1">
-												<div class="w-2 h-2 bg-orange-500 rounded-full"></div>
-												<span class="text-xs text-gray-500">VIP</span>
-											</div>
+						<div class="relative bg-gradient-to-br from-yellow-400 via-yellow-500 to-green-500 rounded-3xl p-2 shadow-2xl transform hover:scale-105 transition-all duration-500 max-w-[600px] mx-auto">
+							<div class="bg-white rounded-2xl p-4 overflow-hidden">
+								<img src="{{ asset('media/binajia/cartes.png') }}" alt="Cartes de membre Binajia" class="w-full h-auto rounded-xl shadow-lg">
+								<div class="mt-4 text-center">
+									<h3 class="font-bold text-xl bg-gradient-to-r from-yellow-400 to-green-600 bg-clip-text text-transparent mb-2">
+										Cartes de Membre
+									</h3>
+									<p class="text-gray-600 text-sm">Votre passeport pour l'intégration Bénin-Nigéria</p>
+									<div class="mt-3 flex justify-center space-x-3">
+										<div class="flex items-center space-x-1">
+											<div class="w-2 h-2 bg-green-500 rounded-full"></div>
+											<span class="text-xs text-gray-500">Actif</span>
+										</div>
+										<div class="flex items-center space-x-1">
+											<div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
+											<span class="text-xs text-gray-500">Premium</span>
+										</div>
+										<div class="flex items-center space-x-1">
+											<div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+											<span class="text-xs text-gray-500">VIP</span>
 										</div>
 									</div>
 								</div>
 							</div>
 
-							{# Enhanced Sparkle Effects #}
-							<div class="absolute -top-3 -right-3 w-8 h-8 bg-yellow-300 rounded-full animate-ping opacity-75"></div>
+							<!-- Sparkle effects -->
+							<div class="absolute -top-3 -right-3 w-8 h-8 bg-yellow-400 rounded-full animate-ping opacity-75"></div>
 							<div class="absolute -bottom-3 -left-3 w-6 h-6 bg-green-300 rounded-full animate-ping opacity-75 animation-delay-1000"></div>
-							<div class="absolute top-1/4 -right-2 w-4 h-4 bg-orange-300 rounded-full animate-ping opacity-60 animation-delay-2000"></div>
+							<div class="absolute top-1/4 -right-2 w-4 h-4 bg-yellow-300 rounded-full animate-ping opacity-60 animation-delay-2000"></div>
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	</section>
 
+
 	{# Mission - Design stable et moderne #}
 	<section
-		id="mission" class="py-20 bg-gradient-to-br from-green-50 via-amber-50 to-green-50 relative overflow-hidden">
+		id="mission" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9), rgb(255, 174, 0))" class="py-10 bg-gradient-to-br from-green-50 via-yellow-50 to-green-50 relative overflow-hidden">
 		{# Background decorative elements #}
 		<div class="absolute top-0 right-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
-		<div class="absolute bottom-0 left-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+		<div class="absolute bottom-0 left-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
 
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 			<div class="grid md:grid-cols-12 gap-12 items-center">
 				<div
 					class="md:col-span-7 space-y-8 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
 					{# Badge #}
-					<div class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-100 to-amber-100 rounded-full mb-5">
-						<div class="w-2 h-2 bg-gradient-to-r from-green-600 to-amber-500 rounded-full"></div>
+					<div class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-100 to-yellow-100 rounded-full mb-5">
+						<div class="w-2 h-2 bg-gradient-to-r from-green-600 to-yellow-500 rounded-full"></div>
 						<span class="font-semibold text-green-700">Notre Mission</span>
 					</div>
 
 					{# Title #}
-					<h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-amber-600 bg-clip-text text-transparent leading-tight">
+					<h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-400 via-green-300 to-yellow-400 bg-clip-text text-transparent leading-tight">
 						Connecter les Cultures
 					</h2>
 
 					{# Description #}
-					<div class="space-y-4 text-lg text-gray-700 leading-relaxed">
+					<div class="space-y-4 text-lg text-white leading-relaxed">
 						<p class="transform hover:translate-x-2 transition-transform duration-300">
 							Nous créons des
-							<span class="font-bold text-green-600">ponts durables</span>
+							<span class="font-bold text-yellow-400">ponts durables</span>
 							entre le Bénin et le Nigéria à travers la culture, l'innovation et la collaboration active.
 						</p>
 						<p class="transform hover:translate-x-2 transition-transform duration-300">
 							Notre mission est de
-							<span class="font-bold text-amber-600">valoriser l'identité commune</span>
+							<span class="font-bold text-yellow-400">valoriser l'identité commune</span>
 							tout en célébrant la richesse de nos diversités culturelles et économiques.
 						</p>
 					</div>
@@ -280,7 +329,7 @@
 						</div>
 
 						<div class="flex items-start space-x-4 p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
-							<div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg">
+							<div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-400 rounded-xl flex items-center justify-center shadow-lg">
 								<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
 								</svg>
@@ -307,7 +356,7 @@
 					{# CTA amélioré #}
 					<div class="mt-12 opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-500" data-scroll="fade-up">
 						<a
-							href="{{ path('app_about') }}" class="group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-600 via-emerald-600 to-green-700 text-white font-bold rounded-full overflow-hidden transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:shadow-green-500/50 transform">
+							href="{{ path('app_about') }}" class="group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-yellow-400 via-yellow-400 to-yellow-400 text-white font-bold rounded-full overflow-hidden transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:shadow-green-500/50 transform">
 							{# Effet de brillance animé #}
 							<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
 
@@ -327,7 +376,7 @@
 						</a>
 
 						{# Texte d'accompagnement #}
-						<p class="mt-4 text-sm text-gray-600 text-center max-w-md">
+						<p class="mt-4 text-sm text-white text-center max-w-md">
 							Plongez dans l'aventure Binajia et découvrez comment nous construisons des ponts entre les cultures
 						</p>
 					</div>
@@ -338,30 +387,30 @@
 						class="relative flex justify-center md:justify-start">
 						{# Glow Effects #}
 						<div class="absolute -top-8 -left-8 w-32 h-32 md:w-48 md:h-48 bg-green-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-						<div class="absolute -bottom-8 -right-4 w-40 h-40 md:w-64 md:h-64 bg-amber-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+						<div class="absolute -bottom-8 -right-4 w-40 h-40 md:w-64 md:h-64 bg-yellow-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
 
 						{# Network Image #}
-						<div class="relative inline-block bg-gradient-to-br from-green-400 via-emerald-500 to-amber-500 rounded-3xl p-1 shadow-2xl mx-auto max-w-[450px] transform hover:scale-105 transition-all duration-500">
+						<div class="relative inline-block bg-gradient-to-br from-green-400 via-emerald-500 to-yellow-500 rounded-3xl p-1 shadow-2xl mx-auto max-w-[450px] transform hover:scale-105 transition-all duration-500">
 							<div class="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-6 overflow-hidden">
 								<img
 								src="{{ asset('/media/binajia/network-benin-nigeria.jpg') }}" alt="Réseau Bénin-Nigéria" class="w-full h-80 object-cover rounded-2xl shadow-lg">
 
 								{# Overlay content #}
 								<div class="mt-4 text-center">
-									<h3 class="font-bold text-xl bg-gradient-to-r from-green-600 to-amber-600 bg-clip-text text-transparent mb-2">
+									<h3 class="font-bold text-xl bg-gradient-to-r from-green-600 to-yellow-400 bg-clip-text text-transparent mb-2">
 										Réseau Bénin-Nigéria
 									</h3>
 									<p class="text-gray-600 text-sm">Connecter les cultures, créer l'avenir</p>
 									<div class="mt-3 flex justify-center space-x-2">
 										<div class="w-3 h-3 bg-green-500 rounded-full"></div>
-										<div class="w-3 h-3 bg-amber-500 rounded-full"></div>
+										<div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
 										<div class="w-3 h-3 bg-emerald-500 rounded-full"></div>
 									</div>
 								</div>
 							</div>
 
 							{# Sparkle Effects #}
-							<div class="absolute -top-2 -right-2 w-6 h-6 bg-amber-300 rounded-full animate-ping"></div>
+							<div class="absolute -top-2 -right-2 w-6 h-6 bg-yellow-300 rounded-full animate-ping"></div>
 							<div class="absolute -bottom-2 -left-2 w-4 h-4 bg-green-300 rounded-full animate-ping"></div>
 						</div>
 					</div>
@@ -377,7 +426,7 @@
 		<div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
 			<div class="flex items-end justify-between">
 				<div>
-					<h2 class="font-serif text-3xl font-bold text-charcoal">Lieux emblématiques</h2>
+					<h2 class="font-serif text-3xl  font-bold text-yellow-400">Lieux emblématiques</h2>
 					<p class="mt-2 text-gray-600">Explorez les sites historiques et culturels du Bénin et du Nigéria</p>
 				</div>
 				<a href="{{ path('app_places') }}" class="text-primary font-semibold">Voir tous →</a>
@@ -409,190 +458,192 @@
 					<div class="mt-6 flex items-center justify-center gap-2" id="places-dots" aria-label="Pagination des lieux"></div>
 				</div>
 			</div>
-		</section>
 
-		{# Donations - Design intégré avec logo #}
-		<section
-			id="dons" class="py-20 bg-gradient-to-br from-green-50 via-amber-50 to-green-50 relative overflow-hidden">
-			{# Background decorative elements #}
+		</div>
+	</section>
 
-			<div class="absolute top-0 right-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
-			<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+	{# Donations - Design intégré avec logo #}
+	<section
+		id="dons" class="py-20 bg-gradient-to-br from-green-400 via-yellow-400 to-yellow-400 relative overflow-hidden">
+		{# Background decorative elements #}
 
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-				<div class="grid md:grid-cols-12 gap-12 items-center">
-					<div class="md:col-span-6 space-y-6">
-						<div class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-100 to-amber-100 rounded-full mb-6 border border-green-200">
-							<div class="w-2 h-2 bg-gradient-to-r from-green-600 to-amber-500 rounded-full"></div>
-							<span class="font-semibold text-green-700">Soutenez notre mission</span>
-						</div>
+		<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
 
-						<h2 class="font-serif text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-amber-600 bg-clip-text text-transparent leading-tight">
-							Construisons ensemble l'avenir
-						</h2>
-
-						<div class="space-y-4 text-lg text-gray-700 leading-relaxed">
-							<p class="transform hover:translate-x-2 transition-transform duration-300">
-								Chaque contribution aide à
-								<span class="font-bold text-green-600">faire vivre des projets culturels</span>
-								et des échanges authentiques entre le Bénin et le Nigéria.
-							</p>
-							<p class="transform hover:translate-x-2 transition-transform duration-300">
-								Votre soutien permet de
-								<span class="font-bold text-amber-600">créer des opportunités</span>
-								pour les jeunes, artistes et entrepreneurs des deux pays.
-							</p>
-						</div>
-
-						<div class="flex flex-wrap gap-4">
-							<a href="#" class="group relative px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-full hover:from-green-700 hover:to-emerald-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
-								<span class="flex items-center">
-									Faire un don
-									<svg class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-									</svg>
-								</span>
-							</a>
-							<a href="#" class="group px-8 py-4 bg-white text-gray-900 rounded-full font-semibold ring-2 ring-gray-300 hover:ring-green-500 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-								En savoir plus
-								<span class="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
-							</a>
-						</div>
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+			<div class="grid md:grid-cols-12 gap-12 items-center">
+				<div class="md:col-span-6 space-y-6">
+					<div class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-100 to-yellow-100 rounded-full mb-6 border border-green-200">
+						<div class="w-2 h-2 bg-gradient-to-r from-green-600 to-yellow-500 rounded-full"></div>
+						<span class="font-semibold text-green-700">Soutenez notre mission</span>
 					</div>
 
-					<div class="md:col-span-6">
-						<div
-							class="relative flex justify-center md:justify-start">
-							{# Animated Glow Effects #}
-							<div class="absolute -top-8 -left-8 w-32 h-32 md:w-48 md:h-48 bg-green-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-							<div class="absolute -bottom-8 -right-4 w-40 h-40 md:w-64 md:h-64 bg-amber-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+					<h2 class="font-serif text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-yellow-400 bg-clip-text text-transparent leading-tight">
+						Construisons ensemble l'avenir
+					</h2>
 
-							{# Logo Design Integration #}
-							<div class="relative inline-block bg-gradient-to-br from-green-400 via-emerald-500 to-amber-500 rounded-3xl p-1 shadow-2xl mx-auto max-w-[400px] transform hover:scale-105 transition-all duration-500">
-								<div class="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-8 overflow-hidden">
-									<img
-									src="{{ asset('/media/binajia/logo-design.jpg') }}" alt="Logo Design Binajia" class="w-full h-auto object-contain">
+					<div class="space-y-4 text-lg text-white leading-relaxed">
+						<p class="transform hover:translate-x-2 transition-transform duration-300">
+							Chaque contribution aide à
+							<span class="font-bold text-green-600">faire vivre des projets culturels</span>
+							et des échanges authentiques entre le Bénin et le Nigéria.
+						</p>
+						<p class="transform hover:translate-x-2 transition-transform duration-300">
+							Votre soutien permet de
+							<span class="font-bold text-green-600">créer des opportunités</span>
+							pour les jeunes, artistes et entrepreneurs des deux pays.
+						</p>
+					</div>
 
-									{# Overlay branding #}
-									<div class="mt-6 text-center">
-										<h3 class="font-bold text-2xl bg-gradient-to-r from-green-600 to-amber-600 bg-clip-text text-transparent mb-2">
-											BINAJIA
-										</h3>
-										<p class="text-gray-600 text-sm font-medium">United to grow together</p>
-										<p class="text-gray-500 text-xs mt-1">Unis pour grandir ensemble</p>
+					<div class="flex flex-wrap gap-4">
+						<a href="#" class="group relative px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-full hover:from-green-700 hover:to-emerald-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+							<span class="flex items-center">
+								Faire un don
+								<svg class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+								</svg>
+							</span>
+						</a>
+						<a href="#" class="group px-8 py-4 bg-white text-gray-900 rounded-full font-semibold ring-2 ring-gray-300 hover:ring-green-500 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+							En savoir plus
+							<span class="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
+						</a>
+					</div>
+				</div>
 
-										<div class="mt-4 flex justify-center space-x-3">
-											<div class="w-4 h-4 bg-green-500 rounded-full shadow-md"></div>
-											<div class="w-4 h-4 bg-amber-500 rounded-full shadow-md"></div>
-											<div class="w-4 h-4 bg-emerald-500 rounded-full shadow-md"></div>
-										</div>
+				<div class="md:col-span-6">
+					<div
+						class="relative flex justify-center md:justify-start">
+						{# Animated Glow Effects #}
+						<div class="absolute -top-8 -left-8 w-32 h-32 md:w-48 md:h-48 bg-green-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+						<div class="absolute -bottom-8 -right-4 w-40 h-40 md:w-64 md:h-64 bg-yellow-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+
+						{# Logo Design Integration #}
+						<div class="relative inline-block bg-gradient-to-br from-green-400 via-emerald-500 to-yellow-500 rounded-3xl p-1 shadow-2xl mx-auto max-w-[400px] transform hover:scale-105 transition-all duration-500">
+							<div class="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-8 overflow-hidden">
+								<img
+								src="{{ asset('/media/binajia/logo-design.jpg') }}" alt="Logo Design Binajia" class="w-full h-auto object-contain">
+
+								{# Overlay branding #}
+								<div class="mt-6 text-center">
+									<h3 class="font-bold text-2xl bg-gradient-to-r from-green-600 to-yellow-400 bg-clip-text text-transparent mb-2">
+										BINAJIA
+									</h3>
+									<p class="text-gray-600 text-sm font-medium">United to grow together</p>
+									<p class="text-gray-500 text-xs mt-1">Unis pour grandir ensemble</p>
+
+									<div class="mt-4 flex justify-center space-x-3">
+										<div class="w-4 h-4 bg-green-500 rounded-full shadow-md"></div>
+										<div class="w-4 h-4 bg-yellow-500 rounded-full shadow-md"></div>
+										<div class="w-4 h-4 bg-emerald-500 rounded-full shadow-md"></div>
 									</div>
 								</div>
-
-								{# Sparkle Effects #}
-								<div class="absolute -top-3 -right-3 w-8 h-8 bg-amber-300 rounded-full animate-ping opacity-75"></div>
-								<div class="absolute -bottom-3 -left-3 w-6 h-6 bg-green-300 rounded-full animate-ping opacity-75"></div>
-								<div class="absolute top-1/4 -right-2 w-4 h-4 bg-emerald-300 rounded-full animate-ping opacity-60"></div>
 							</div>
+
+							{# Sparkle Effects #}
+							<div class="absolute -top-3 -right-3 w-8 h-8 bg-yellow-300 rounded-full animate-ping opacity-75"></div>
+							<div class="absolute -bottom-3 -left-3 w-6 h-6 bg-green-300 rounded-full animate-ping opacity-75"></div>
+							<div class="absolute top-1/4 -right-2 w-4 h-4 bg-emerald-300 rounded-full animate-ping opacity-60"></div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</section>
+		</div>
+	</section>
 
 
-		{# Events highlight - Enhanced #}
-		<section id="evenements" class="py-14 bg-gradient-to-br from-green-50 via-amber-50 to-green-50 relative overflow-hidden">
-			{# Animated Background #}
-			{# Animated Background Elements #}<div class="absolute top-0 right-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"> </div>
-			<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+	{# Events highlight - Enhanced #}
+	<section id="evenements" class="py-14 bg-gradient-to-br from-green-50 via-yellow-50 to-green-50 relative overflow-hidden">
+		{# Animated Background #}
+		{# Animated Background Elements #}<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"> </div>
+		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
 
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-				<div class="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
-					<div class="opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
-						<div class="inline-flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-400/20 to-amber-400/20 backdrop-blur-sm rounded-full mb-4 border border-green-400/30">
-							<div class="w-2 h-2 bg-gradient-to-r from-green-600 to-amber-500 rounded-full"></div>
-							<span class="font-bold text-green-600">Ne manquez rien</span>
-						</div>
-						<h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900">
-							<span class="bg-gradient-to-r from-green-600 to-amber-600 bg-clip-text text-transparent">Événements</span>
-							à venir
-						</h2>
-						<p class="mt-2 text-gray-600 text-base md:text-lg">Découvrez nos prochaines expériences culturelles</p>
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+			<div class="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
+				<div class="opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+					<div class="inline-flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-400/20 to-yellow-400/20 backdrop-blur-sm rounded-full mb-4 border border-green-400/30">
+						<div class="w-2 h-2 bg-gradient-to-r from-green-600 to-yellow-500 rounded-full"></div>
+						<span class="font-bold text-green-600">Ne manquez rien</span>
 					</div>
-					<a href="#" class="group mt-4 md:mt-0 inline-flex items-center text-green-600 font-bold text-lg hover:text-green-700 transition-colors">
-						Voir tous
-						<span class="inline-block ml-2 transition-transform group-hover:translate-x-2">→</span>
-					</a>
+					<h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900">
+						<span class="bg-gradient-to-r from-green-600 to-yellow-400 bg-clip-text text-transparent">Événements à venir</span>
+						
+					</h2>
+					<p class="mt-2 text-gray-600 text-base md:text-lg">Découvrez nos prochaines expériences culturelles</p>
 				</div>
+				<a href="#" class="group mt-4 md:mt-0 inline-flex items-center text-green-600 font-bold text-lg hover:text-green-700 transition-colors">
+					Voir tous
+					<span class="inline-block ml-2 transition-transform group-hover:translate-x-2">→</span>
+				</a>
+			</div>
 
-				<div class="mt-6 grid md:grid-cols-3 gap-6">
-					{% set cards = [
-        {date:'15–18 Août 2025', city:'Cotonou', title:'Festival culturel Bénin–Nigéria', img:'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop', color:'amber'},
+			<div class="mt-6 grid md:grid-cols-3 gap-6">
+				{% set cards = [
+        {date:'15–18 Août 2025', city:'Cotonou', title:'Festival culturel Bénin–Nigéria', img:'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop', color:'yellow'},
         {date:'22 Septembre 2025', city:'Lagos', title:'Visite guidée de Lagos', img:'https://images.unsplash.com/photo-1564759298141-cef86f51d4d4?q=80&w=1200&auto=format&fit=crop', color:'green'},
         {date:'Octobre 2025', city:'Bénin & Nigéria', title:'Promotion hôtelière spéciale', img:'https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=1200&auto=format&fit=crop', color:'emerald'}
       ] %}
-					{% for c in cards %}
-						<div class="group rounded-3xl overflow-hidden bg-white shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 200 }}ms">
-							<div class="relative h-56 overflow-hidden">
-								<img src="{{ c.img }}" alt="{{ c.title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-								<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-								<div class="absolute top-4 right-4 px-4 py-2 bg-{{ c.color }}-400 text-white rounded-full font-bold text-sm shadow-lg">
-									Nouveau
-								</div>
-							</div>
-							<div class="p-5">
-								<div class="flex items-center gap-2 text-sm text-gray-500 mb-2">
-									<span class="flex items-center">
-										<svg class="w-4 h-4 mr-1 text-{{ c.color }}-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-										{{ c.date }}
-									</span>
-									<span>•</span>
-									<span class="flex items-center">
-										<svg class="w-4 h-4 mr-1 text-{{ c.color }}-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-										{{ c.city }}
-									</span>
-								</div>
-								<h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-{{ c.color }}-600 transition-colors">{{ c.title }}</h3>
-								<button class="w-full px-5 py-3 bg-gradient-to-r from-{{ c.color }}-400 to-{{ c.color }}-600 text-white rounded-full font-semibold transition-all duration-300 hover:shadow-lg">
-									Réserver maintenant
-								</button>
+				{% for c in cards %}
+					<div class="group rounded-3xl overflow-hidden bg-white shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 200 }}ms">
+						<div class="relative h-56 overflow-hidden">
+							<img src="{{ c.img }}" alt="{{ c.title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+							<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+							<div class="absolute top-4 right-4 px-4 py-2 bg-yellow-400 text-white rounded-full font-bold text-sm shadow-lg">
+								Nouveau
 							</div>
 						</div>
-					{% endfor %}
-				</div>
-			</div>
-		</section>
-
-		{# Nos 6 Projets Phares - Couleurs logo #}
-		<section id="projets" class="py-16 bg-gradient-to-br from-green-50 via-amber-50 to-green-50 relative overflow-hidden">
-			{# Animated Background #}
-			{# Animated Background Elements #}<div class="absolute top-0 right-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"> </div>
-			<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
-
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-				<div class="text-center mb-12 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
-					<div class="inline-flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-amber-400 to-green-400 rounded-full border-2 border-green-800 shadow-xl mb-6">
-						<div class="w-3 h-3 bg-green-900 rounded-full"></div>
-						<span class="font-black text-green-900 text-lg">NOS 6 PROJETS PHARES</span>
-						<div class="w-3 h-3 bg-green-900 rounded-full"></div>
+						<div class="p-5">
+							<div class="flex items-center gap-2 text-sm text-gray-500 mb-2">
+								<span class="flex items-center">
+									<svg class="w-4 h-4 mr-1 text-yellow-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+									{{ c.date }}
+								</span>
+								<span>•</span>
+								<span class="flex items-center">
+									<svg class="w-4 h-4 mr-1 text-yellow-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+									{{ c.city }}
+								</span>
+							</div>
+							<h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-yellow-400 transition-colors">{{ c.title }}</h3>
+							<button class="w-full px-5 py-3 bg-gradient-to-r from-yellow-400 to-yellow-400 text-white rounded-full font-semibold transition-all duration-300 hover:shadow-lg">
+								Réserver maintenant
+							</button>
+						</div>
 					</div>
-					<h2 class="font-serif text-3xl md:text-4xl font-bold text-green-900 mb-3">
-						<span class="bg-gradient-to-r from-green-600 via-emerald-600 to-amber-600 bg-clip-text text-transparent">
-							Construire des ponts par l'action
-						</span>
-					</h2>
-					<p class="text-base md:text-lg text-green-700 max-w-3xl mx-auto leading-relaxed">
-						Des
-						<span class="font-bold text-amber-600">initiatives concrètes</span>
-						pour connecter
-						<span class="font-bold text-green-600">cultures, économies et jeunesses</span>
-						du Bénin et du Nigéria.
-					</p>
-				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
 
-				{% set projects = [
-      { title: 'Binajia Travel Week', desc: "Semaine de découvertes croisées dans les deux pays — Jeunes, touristes, voyageurs", img: asset('/media/travel.jfif'), color: 'amber', impact: '500+ voyageurs/an' },
+	{# Nos 6 Projets Phares - Couleurs logo #}
+	<section id="projets" class="py-16 bg-gradient-to-br from-green-50 via-yellow-50 to-green-50 relative overflow-hidden">
+		{# Animated Background #}
+		{# Animated Background Elements #}<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"> </div>
+		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+			<div class="text-center mb-12 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+				<div class="inline-flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-yellow-400 to-green-400 rounded-full border-2 border-green-800 shadow-xl mb-6">
+					<div class="w-3 h-3 bg-green-900 rounded-full"></div>
+					<span class="font-black text-green-900 text-lg">NOS 6 PROJETS PHARES</span>
+					<div class="w-3 h-3 bg-green-900 rounded-full"></div>
+				</div>
+				<h2 class="font-serif text-3xl md:text-4xl font-bold text-green-900 mb-3">
+					<span class="bg-gradient-to-r from-green-600 via-emerald-600 to-yellow-400 bg-clip-text text-transparent">
+						Construire des ponts par l'action
+					</span>
+				</h2>
+				<p class="text-base md:text-lg text-green-700 max-w-3xl mx-auto leading-relaxed">
+					Des
+					<span class="font-bold text-yellow-400">initiatives concrètes</span>
+					pour connecter
+					<span class="font-bold text-green-600">cultures, économies et jeunesses</span>
+					du Bénin et du Nigéria.
+				</p>
+			</div>
+
+			{% set projects = [
+      { title: 'Binajia Travel Week', desc: "Semaine de découvertes croisées dans les deux pays — Jeunes, touristes, voyageurs", img: asset('/media/travel.jfif'), color: 'yellow', impact: '500+ voyageurs/an' },
       { title: 'Binajia Lab', desc: "Laboratoire d'innovation (écologie, tech, design) — Jeunes créatifs, étudiants, startups", img: asset('/media/lab.jfif'), color: 'green', impact: '100+ projets innovants' },
       { title: 'Exchange Programme', desc: "Programme d'échange pour jeunes leaders et artistes — Étudiants, leaders communautaires", img: asset('/media/exchange.jfif'), color: 'emerald', impact: '200+ leaders formés' },
       { title: 'Market Connect', desc: "Plateforme de collaboration économique locale — Artisans, commerçants, femmes", img: asset('/media/market.jfif'), color: 'yellow', impact: '1000+ entrepreneurs' },
@@ -600,205 +651,205 @@
       { title: 'Transit', desc: "Promotion de la libre circulation et des savoirs — Institutions, société civile", img: asset('/media/transit.jfif'), color: 'emerald', impact: 'Libre circulation' }
     ] %}
 
-				<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-					{% for p in projects %}
-						<div class="group relative rounded-3xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 150 }}ms">
-							<div class="absolute inset-0 bg-gradient-to-br from-{{ p.color }}-400/20 to-{{ p.color }}-600/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+			<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+				{% for p in projects %}
+					<div class="group relative rounded-3xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 150 }}ms">
+						<div class="absolute inset-0 bg-gradient-to-br from-{{ p.color }}-400/20 to-{{ p.color }}-600/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+						<div class="relative p-6">
+							<div class="mb-5">
+								<div class="w-20 h-20 bg-gradient-to-br from-{{ p.color }}-400 to-{{ p.color }}-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300">
+									<img src="{{ p.img }}" alt="Logo {{ p.title }}" class="w-12 h-12 object-contain rounded-lg">
+								</div>
+							</div>
+							<h3 class="font-bold text-xl text-green-900 mb-2 group-hover:text-{{ p.color }}-600 transition-colors">{{ p.title }}</h3>
+							<p class="text-green-700 mb-3 leading-relaxed">{{ p.desc }}</p>
+							<div class="flex items-center justify-between">
+								<span class="px-3 py-1 bg-{{ p.color }}-100 text-{{ p.color }}-800 text-xs font-bold rounded-full">{{ p.impact }}</span>
+								<a href="#" class="group/btn px-5 py-3 bg-gradient-to-r from-{{ p.color }}-400 to-{{ p.color }}-600 text-white rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-lg">
+									Découvrir
+									<span class="inline-block transition-transform group-hover/btn:translate-x-1 ml-1">→</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+
+	{# Testimonials - Couleurs logo #}
+	<section
+		class="py-14 bg-gradient-to-br from-green-50 via-yellow-50 to-green-50 relative overflow-hidden">
+		{# Animated Background Elements #}
+		<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+
+		<div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-12 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+				<div class="inline-flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-green-400 to-yellow-400 rounded-full border-2 border-green-800 shadow-xl mb-6">
+					<div class="w-3 h-3 bg-green-900 rounded-full"></div>
+					<span class="font-black text-green-900 text-lg">ILS NOUS FONT CONFIANCE</span>
+					<div class="w-3 h-3 bg-green-900 rounded-full"></div>
+				</div>
+				<h2 class="font-serif text-3xl md:text-4xl font-bold text-green-900">
+					<span class="bg-gradient-to-r from-green-600 to-yellow-400 bg-clip-text text-transparent">
+						Ils en parlent
+					</span>
+				</h2>
+			</div>
+
+			<div class="relative">
+				{% set testimonials = [
+        { q:'Une vraie passerelle entre cultures voisines. Binajia a changé ma vision du monde !', a:'Nadège, Cotonou', img: asset('/media/testimonial-1.jpg'), rating: 5, country: 'Bénin' },
+        { q:'Des événements de qualité exceptionnelle, une communauté chaleureuse et authentique.', a:'Tunde, Lagos', img: asset('/media/testimonial-2.jpg'), rating: 5, country: 'Nigéria' },
+        { q:'Fier de faire partie du mouvement qui construit des ponts entre nos deux nations.', a:'Sonia, Paris', img: asset('/media/testimonial-3.jpg'), rating: 5, country: 'France' }
+      ] %}
+
+				<div class="grid md:grid-cols-3 gap-6">
+					{% for t in testimonials %}
+						<div class="group relative bg-white rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 200 }}ms">
+							<div class="absolute inset-0 bg-gradient-to-br from-yellow-400/10 to-green-400/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 							<div class="relative p-6">
-								<div class="mb-5">
-									<div class="w-20 h-20 bg-gradient-to-br from-{{ p.color }}-400 to-{{ p.color }}-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300">
-										<img src="{{ p.img }}" alt="Logo {{ p.title }}" class="w-12 h-12 object-contain rounded-lg">
+								<div class="flex items-center gap-4 mb-5">
+									<div class="relative">
+										<img src="{{ t.img }}" alt="Photo de {{ t.a }}" class="w-16 h-16 rounded-full object-cover ring-4 ring-yellow-400 shadow-xl group-hover:shadow-2xl group-hover:shadow-yellow-500/50 transition-shadow">
+										<div class="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
+											<svg class="w-3 h-3 text-white" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+										</div>
+									</div>
+									<div class="flex-1">
+										<div class="font-bold text-base md:text-lg text-green-900">{{ t.a }}</div>
+										<div class="text-sm text-green-600">{{ t.country }}</div>
+										<div class="flex items-center mt-1">
+											{% for i in 1..t.rating %}
+												<div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+											{% endfor %}
+										</div>
 									</div>
 								</div>
-								<h3 class="font-bold text-xl text-green-900 mb-2 group-hover:text-{{ p.color }}-600 transition-colors">{{ p.title }}</h3>
-								<p class="text-green-700 mb-3 leading-relaxed">{{ p.desc }}</p>
-								<div class="flex items-center justify-between">
-									<span class="px-3 py-1 bg-{{ p.color }}-100 text-{{ p.color }}-800 text-xs font-bold rounded-full">{{ p.impact }}</span>
-									<a href="#" class="group/btn px-5 py-3 bg-gradient-to-r from-{{ p.color }}-400 to-{{ p.color }}-600 text-white rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-lg">
-										Découvrir
-										<span class="inline-block transition-transform group-hover/btn:translate-x-1 ml-1">→</span>
-									</a>
+								<p class="text-green-800 text-base md:text-lg leading-relaxed italic">“{{ t.q }}”</p>
+								<div class="mt-5 flex items-center justify-between">
+									<span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full">Membre vérifié</span>
+									<div class="flex items-center text-green-600 text-sm">
+										<div class="w-3 h-3 bg-green-600 rounded-full mr-2"></div>
+										Utile
+									</div>
 								</div>
 							</div>
 						</div>
 					{% endfor %}
 				</div>
 			</div>
-		</section>
+		</div>
+	</section>
 
-		{# Testimonials - Couleurs logo #}
-		<section
-			class="py-14 bg-gradient-to-br from-green-50 via-amber-50 to-green-50 relative overflow-hidden">
-			{# Animated Background Elements #}
-			<div class="absolute top-0 right-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
-			<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
 
-			<div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div class="text-center mb-12 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
-					<div class="inline-flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-green-400 to-amber-400 rounded-full border-2 border-green-800 shadow-xl mb-6">
-						<div class="w-3 h-3 bg-green-900 rounded-full"></div>
-						<span class="font-black text-green-900 text-lg">ILS NOUS FONT CONFIANCE</span>
-						<div class="w-3 h-3 bg-green-900 rounded-full"></div>
-					</div>
-					<h2 class="font-serif text-3xl md:text-4xl font-bold text-green-900">
-						<span class="bg-gradient-to-r from-green-600 to-amber-600 bg-clip-text text-transparent">
-							Ils en parlent
+	{# CTA - Rejoignez la communauté avec image #}
+	<section
+		id="adhesion" class="py-20 bg-gradient-to-br from-green-800 via-emerald-700 to-yellow-400 relative overflow-hidden">
+		{# Animated Background Elements #}
+		<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+			<div class="grid md:grid-cols-12 gap-10 items-center">
+				<div class="md:col-span-7 space-y-6 text-white opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+
+
+					<h2 class="font-serif text-3xl md:text-4xl lg:text-5xl font-bold leading-tight drop-shadow-lg">
+						Rejoignez la
+						<span class="inline-block bg-gradient-to-r from-yellow-300 to-yellow-400 bg-clip-text text-transparent">
+							communauté Binajia
 						</span>
 					</h2>
-				</div>
 
-				<div class="relative">
-					{% set testimonials = [
-        { q:'Une vraie passerelle entre cultures voisines. Binajia a changé ma vision du monde !', a:'Nadège, Cotonou', img: asset('/media/testimonial-1.jpg'), rating: 5, country: 'Bénin' },
-        { q:'Des événements de qualité exceptionnelle, une communauté chaleureuse et authentique.', a:'Tunde, Lagos', img: asset('/media/testimonial-2.jpg'), rating: 5, country: 'Nigéria' },
-        { q:'Fier de faire partie du mouvement qui construit des ponts entre nos deux nations.', a:'Sonia, Paris', img: asset('/media/testimonial-3.jpg'), rating: 5, country: 'France' }
-      ] %}
-
-					<div class="grid md:grid-cols-3 gap-6">
-						{% for t in testimonials %}
-							<div class="group relative bg-white rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 200 }}ms">
-								<div class="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-green-400/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-								<div class="relative p-6">
-									<div class="flex items-center gap-4 mb-5">
-										<div class="relative">
-											<img src="{{ t.img }}" alt="Photo de {{ t.a }}" class="w-16 h-16 rounded-full object-cover ring-4 ring-amber-400 shadow-xl group-hover:shadow-2xl group-hover:shadow-amber-500/50 transition-shadow">
-											<div class="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
-												<svg class="w-3 h-3 text-white" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-											</div>
-										</div>
-										<div class="flex-1">
-											<div class="font-bold text-base md:text-lg text-green-900">{{ t.a }}</div>
-											<div class="text-sm text-green-600">{{ t.country }}</div>
-											<div class="flex items-center mt-1">
-												{% for i in 1..t.rating %}
-													<div class="w-3 h-3 bg-amber-400 rounded-full"></div>
-												{% endfor %}
-											</div>
-										</div>
-									</div>
-									<p class="text-green-800 text-base md:text-lg leading-relaxed italic">“{{ t.q }}”</p>
-									<div class="mt-5 flex items-center justify-between">
-										<span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full">Membre vérifié</span>
-										<div class="flex items-center text-green-600 text-sm">
-											<div class="w-3 h-3 bg-green-600 rounded-full mr-2"></div>
-											Utile
-										</div>
-									</div>
-								</div>
-							</div>
-						{% endfor %}
+					<div class="mt-6 space-y-4 text-lg leading-relaxed">
+						<p class="transform hover:translate-x-2 transition-transform duration-300">
+							Accédez à des
+							<span class="font-bold text-yellow-300">événements exclusifs</span>, des avantages membres privilégiés et un réseau transfrontalier dynamique.
+						</p>
+						<p class="transform hover:translate-x-2 transition-transform duration-300">
+							Connectez-vous avec des
+							<span class="font-bold text-green-300">entrepreneurs, artistes et leaders</span>
+							du Bénin et du Nigéria dans une communauté unie et solidaire.
+						</p>
 					</div>
-				</div>
-			</div>
-		</section>
 
-
-		{# CTA - Rejoignez la communauté avec image #}
-		<section
-			id="adhesion" class="py-20 bg-gradient-to-br from-green-800 via-emerald-700 to-amber-600 relative overflow-hidden">
-			{# Animated Background Elements #}
-			<div class="absolute top-0 right-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
-			<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
-
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-				<div class="grid md:grid-cols-12 gap-10 items-center">
-					<div class="md:col-span-7 space-y-6 text-white opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
-
-
-						<h2 class="font-serif text-3xl md:text-4xl lg:text-5xl font-bold leading-tight drop-shadow-lg">
-							Rejoignez la
-							<span class="inline-block bg-gradient-to-r from-amber-300 to-yellow-300 bg-clip-text text-transparent">
-								communauté Binajia
-							</span>
-						</h2>
-
-						<div class="mt-6 space-y-4 text-lg leading-relaxed">
-							<p class="transform hover:translate-x-2 transition-transform duration-300">
-								Accédez à des
-								<span class="font-bold text-amber-300">événements exclusifs</span>, des avantages membres privilégiés et un réseau transfrontalier dynamique.
-							</p>
-							<p class="transform hover:translate-x-2 transition-transform duration-300">
-								Connectez-vous avec des
-								<span class="font-bold text-green-300">entrepreneurs, artistes et leaders</span>
-								du Bénin et du Nigéria dans une communauté unie et solidaire.
-							</p>
-						</div>
-
-						<div class="mt-8 flex flex-wrap gap-4">
-							<a href="{{ path('app_membership') }}" class="group relative px-8 py-4 bg-gradient-to-r from-amber-400 to-amber-500 text-green-900 rounded-full font-bold overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50 transform">
-								<span class="relative z-10 flex items-center">
-									Adhérer maintenant
-									<span class="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
-								</span>
-								<span class="absolute inset-0 bg-gradient-to-r from-amber-300 to-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-							</a>
-							<a href="#evenements" class="group px-8 py-4 bg-white/10 text-white rounded-full font-bold ring-2 ring-white/30 hover:ring-white/50 transition-all duration-300 hover:scale-105 hover:shadow-xl transform backdrop-blur-md">
-								Découvrir nos événements
+					<div class="mt-8 flex flex-wrap gap-4">
+						<a href="{{ path('app_membership') }}" class="group relative px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-green-900 rounded-full font-bold overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/50 transform">
+							<span class="relative z-10 flex items-center">
+								Adhérer maintenant
 								<span class="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
-							</a>
-						</div>
-
-						{# Trust Indicators #}
-						<div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
-							<div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
-								<div class="text-2xl md:text-3xl font-black text-white mb-1">500+</div>
-								<div class="text-white/80 text-xs">Membres</div>
-							</div>
-							<div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
-								<div class="text-2xl md:text-3xl font-black text-white mb-1">50+</div>
-								<div class="text-white/80 text-xs">Événements/an</div>
-							</div>
-							<div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
-								<div class="text-2xl md:text-3xl font-black text-white mb-1">2</div>
-								<div class="text-white/80 text-xs">Pays</div>
-							</div>
-							<div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
-								<div class="text-2xl md:text-3xl font-black text-white mb-1">100%</div>
-								<div class="text-white/80 text-xs">Satisfaction</div>
-							</div>
-						</div>
+							</span>
+							<span class="absolute inset-0 bg-gradient-to-r from-yellow-300 to-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+						</a>
+						<a href="#evenements" class="group px-8 py-4 bg-white/10 text-white rounded-full font-bold ring-2 ring-white/30 hover:ring-white/50 transition-all duration-300 hover:scale-105 hover:shadow-xl transform backdrop-blur-md">
+							Découvrir nos événements
+							<span class="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
+						</a>
 					</div>
 
-					<div class="md:col-span-5">
-						<div
-							class="relative flex justify-center md:justify-start">
-							{# Animated Glow Effects #}
-							<div class="absolute -top-8 -left-8 w-32 h-32 md:w-48 md:h-48 bg-amber-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
-							<div class="absolute -bottom-8 -right-4 w-40 h-40 md:w-64 md:h-64 bg-green-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
-							<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-72 md:h-72 bg-emerald-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+					{# Trust Indicators #}
+					<div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+						<div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+							<div class="text-2xl md:text-3xl font-black text-white mb-1">500+</div>
+							<div class="text-white/80 text-xs">Membres</div>
+						</div>
+						<div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+							<div class="text-2xl md:text-3xl font-black text-white mb-1">50+</div>
+							<div class="text-white/80 text-xs">Événements/an</div>
+						</div>
+						<div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+							<div class="text-2xl md:text-3xl font-black text-white mb-1">2</div>
+							<div class="text-white/80 text-xs">Pays</div>
+						</div>
+						<div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+							<div class="text-2xl md:text-3xl font-black text-white mb-1">100%</div>
+							<div class="text-white/80 text-xs">Satisfaction</div>
+						</div>
+					</div>
+				</div>
 
-							{# Community Image with Enhanced Animation #}
-							<div class="relative inline-block bg-gradient-to-br from-amber-400 via-green-500 to-emerald-500 rounded-3xl p-1 shadow-2xl mx-auto max-w-[340px] sm:max-w-[380px] transform hover:scale-105 hover:rotate-1 transition-all duration-500">
-								<div class="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-6 overflow-hidden">
-									<img
-									src="{{ asset('/media/binajia/member-smiling.jpg') }}" alt="Communauté Binajia" class="w-full h-80 object-cover rounded-2xl shadow-lg">
+				<div class="md:col-span-5">
+					<div
+						class="relative flex justify-center md:justify-start">
+						{# Animated Glow Effects #}
+						<div class="absolute -top-8 -left-8 w-32 h-32 md:w-48 md:h-48 bg-yellow-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
+						<div class="absolute -bottom-8 -right-4 w-40 h-40 md:w-64 md:h-64 bg-green-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
+						<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-72 md:h-72 bg-emerald-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
 
-									{# Overlay content #}
-									<div class="mt-4 text-center">
-										<h3 class="font-bold text-xl text-gray-900 mb-2">Rejoignez-nous</h3>
-										<p class="text-gray-600 text-sm">Une communauté unie pour l'Afrique de l'Ouest</p>
-										<div class="mt-3 flex justify-center space-x-2">
-											<div class="w-3 h-3 bg-green-500 rounded-full"></div>
-											<div class="w-3 h-3 bg-amber-500 rounded-full"></div>
-											<div class="w-3 h-3 bg-emerald-500 rounded-full"></div>
-										</div>
+						{# Community Image with Enhanced Animation #}
+						<div class="relative inline-block bg-gradient-to-br from-yellow-400 via-green-500 to-emerald-500 rounded-3xl p-1 shadow-2xl mx-auto max-w-[340px] sm:max-w-[380px] transform hover:scale-105 hover:rotate-1 transition-all duration-500">
+							<div class="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-6 overflow-hidden">
+								<img
+								src="{{ asset('/media/binajia/member-smiling.jpg') }}" alt="Communauté Binajia" class="w-full h-80 object-cover rounded-2xl shadow-lg">
+
+								{# Overlay content #}
+								<div class="mt-4 text-center">
+									<h3 class="font-bold text-xl text-gray-900 mb-2">Rejoignez-nous</h3>
+									<p class="text-gray-600 text-sm">Une communauté unie pour l'Afrique de l'Ouest</p>
+									<div class="mt-3 flex justify-center space-x-2">
+										<div class="w-3 h-3 bg-green-500 rounded-full"></div>
+										<div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+										<div class="w-3 h-3 bg-emerald-500 rounded-full"></div>
 									</div>
 								</div>
-
-								{# Sparkle Effect #}
-								<div class="absolute -top-2 -right-2 w-6 h-6 bg-amber-300 rounded-full animate-ping"></div>
-								<div class="absolute -bottom-2 -left-2 w-4 h-4 bg-green-300 rounded-full animate-ping"></div>
 							</div>
+
+							{# Sparkle Effect #}
+							<div class="absolute -top-2 -right-2 w-6 h-6 bg-yellow-300 rounded-full animate-ping"></div>
+							<div class="absolute -bottom-2 -left-2 w-4 h-4 bg-green-300 rounded-full animate-ping"></div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</section>
+		</div>
+	</section>
 
 
-		<script>
+	<script>
 
-			function goToEvents() {
+		function goToEvents() {
 window.location.href = "{{ path('app_events') }}";
 }
 
@@ -841,6 +892,32 @@ window.addEventListener('scroll', () => {
 handleScrollAnimation();
 });
 });
-		</script>
 
-	{% endblock %}
+
+document.querySelectorAll('.accordion-header').forEach(button => {
+const content = button.nextElementSibling;
+// Ouvrir le premier élément par défaut
+if (button.querySelector('.accordion-icon').textContent === '▲') {
+content.classList.remove('hidden');
+content.style.maxHeight = content.scrollHeight + "px";
+} else {
+content.classList.add('hidden');
+content.style.maxHeight = 0;
+}
+
+button.addEventListener('click', () => {
+const isOpen = ! content.classList.contains('hidden');
+if (isOpen) {
+content.style.maxHeight = 0;
+content.classList.add('hidden');
+button.querySelector('.accordion-icon').textContent = '▼';
+} else {
+content.classList.remove('hidden');
+content.style.maxHeight = content.scrollHeight + "px";
+button.querySelector('.accordion-icon').textContent = '▲';
+}
+});
+});
+	</script>
+
+{% endblock %}

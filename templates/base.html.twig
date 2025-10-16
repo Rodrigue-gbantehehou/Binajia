@@ -164,11 +164,11 @@
                 </div>
 						<div class="hidden md:flex items-center space-x-8">
 							
-							<a href="{{ path('app_home') }}" class="nav-link text-charcoal hover:text-primary font-medium">Accueil</a>
-							<a href="{{ path('app_about') }}" class="nav-link text-charcoal hover:text-primary font-medium">À propos</a>
-							<a href="{{ path('app_events') }}" class="nav-link text-charcoal hover:text-primary font-medium">Événements</a>
-							<a href="{{ path('app_places') }}" class="nav-link text-charcoal hover:text-primary font-medium">Lieux</a>
-							<a href="{{ path('app_contact') }}" class="nav-link text-charcoal hover:text-primary font-medium">Contact</a>
+							<a href="{{ path('app_home') }}" class="nav-link text-white hover:text-primary font-medium">Accueil</a>
+							<a href="{{ path('app_avantage') }}" class="nav-link text-white hover:text-primary font-medium">Explorer</a>
+							<a href="{{ path('app_events') }}" class="nav-link text-white hover:text-primary font-medium">Événements</a>
+							<a href="{{ path('app_about') }}" class="nav-link text-white hover:text-primary font-medium">A propos</a>
+							<a href="{{ path('app_contact') }}" class="nav-link text-white hover:text-primary font-medium">Contact</a>
 							{% if is_granted('ROLE_ADMIN') %}
 								<a href="{{ path('admin_dashboard') }}" class="nav-link text-charcoal hover:text-primary font-medium">Admin</a>
 							{% endif %}
@@ -201,7 +201,7 @@
 							<button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-cream rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
 									<svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
 								</button>
-								<a href="{{ path('app_membership') }}" class="hidden md:block px-6 py-3  text-white rounded-full  font-semibold" style="background-color: #f59e0b;"> Devenir membre</a>
+								<a href="{{ path('app_membership') }}" class="hidden md:block px-6 py-3  text-white rounded-full bg-yellow-400 outline outline-2 outline-white font-semibold"> Devenir membre</a>
 								
 							{% endif %}
 						</div>
@@ -219,13 +219,13 @@
 					</div>
 					<div class="space-y-4">
 						<!-- Section Accueil -->
-						<a href="{{ path('app_home') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Accueil</a>
-						<a href="{{ path('app_about') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">À propos</a>
-						<a href="{{ path('app_events') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Événements</a>
-						<a href="{{ path('app_places') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Lieux</a>
-						<a href="{{ path('app_contact') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Contact</a>
+						<a href="{{ path('app_home') }}" class="block text-white hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Accueil</a>
+						<a href="{{ path('app_avantage') }}" class="block text-white hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Explorer</a>
+						<a href="{{ path('app_events') }}" class="block text-white hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Événements</a>
+						<a href="{{ path('app_about') }}" class="block text-white hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">A propos</a>
+						<a href="{{ path('app_contact') }}" class="block text-white hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Contact</a>
 						{% if is_granted('ROLE_ADMIN') %}
-							<a href="{{ path('admin_dashboard') }}" class="block text-charcoal hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Admin</a>
+							<a href="{{ path('admin_dashboard') }}" class="block text-white hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Admin</a>
 						{% endif %}
 						<div class="pt-4 space-y-3">
 							{% if not app.user %}
@@ -233,7 +233,7 @@
 								<a href="{{ path('app_login') }}" class="block w-full px-6 py-3 text-center bg-white border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all">Connexion</a>
 								
 							{% else %}
-								<a href="{{ path('app_user_dashboard') }}" class="block w-full px-6 py-3 text-center btn-primary">Espace membre</a>
+								<a href="{{ path('app_user_dashboard') }}" class="block w-full rounded-full px-6 py-3 text-center btn-primary">Espace membre</a>
 								<a href="{{ path('app_logout') }}" class="block w-full px-6 py-3 text-center bg-primary border-2 border-gray-300 text-charcoal rounded-full font-semibold hover:bg-cream transition-all">Se déconnecter</a>
 							{% endif %}
 						</div>
@@ -267,25 +267,22 @@
 									<h4 class="font-semibold text-lg mb-4">Navigation</h4>
 									<ul class="space-y-2">
 										<li>
-											<a href="{{ path('app_home') }}" class="text-gray-400 hover:text-primary transition-colors">Accueil </a>
+											<a href="{{ path('app_home') }}" class="text-gray-400 hover:text-white transition-colors">Accueil </a>
+										</li>
+										
+
+									
+										<li>
+											<a href="{{ path('app_about') }}" class="text-gray-400 hover:text-white transition-colors">À propos</a>
 										</li>
 										<li>
-											<a href="{{ path('app_homepage') }}" class="text-gray-400 hover:text-primary transition-colors">Nouvelle Page</a>
+											<a href="{{ path('app_events') }}" class="text-gray-400 hover:text-white transition-colors">Événements</a>
 										</li>
 										<li>
-											<a href="{{ path('app_homepage_full') }}" class="text-gray-400 hover:text-primary transition-colors">Page Complète</a>
+											<a href="{{ path('app_places') }}" class="text-gray-400 hover:text-white transition-colors">Lieux</a>
 										</li>
 										<li>
-											<a href="{{ path('app_about') }}" class="text-gray-400 hover:text-primary transition-colors">À propos</a>
-										</li>
-										<li>
-											<a href="{{ path('app_events') }}" class="text-gray-400 hover:text-primary transition-colors">Événements</a>
-										</li>
-										<li>
-											<a href="{{ path('app_places') }}" class="text-gray-400 hover:text-primary transition-colors">Lieux</a>
-										</li>
-										<li>
-											<a href="{{ path('app_contact') }}" class="text-gray-400 hover:text-primary transition-colors">Contact</a>
+											<a href="{{ path('app_contact') }}" class="text-gray-400 hover:text-white transition-colors">Contact</a>
 										</li>
 									</ul>
 								</div>
@@ -293,16 +290,16 @@
 									<h4 class="font-semibold text-lg mb-4">Services</h4>
 									<ul class="space-y-2">
 										<li>
-											<a href="#" class="text-gray-400 hover:text-primary transition-colors">Réservations</a>
+											<a href="#" class="text-gray-400 hover:text-white transition-colors">Réservations</a>
 										</li>
 										<li>
-											<a href="{{ path('app_membership') }}" class="text-gray-400 hover:text-primary transition-colors">Devenir membre</a>
+											<a href="{{ path('app_membership') }}" class="text-gray-400 hover:text-white transition-colors">Devenir membre</a>
 										</li>
 										<li>
-											<a href="#" class="text-gray-400 hover:text-primary transition-colors">Événements privés</a>
+											<a href="#" class="text-gray-400 hover:text-white transition-colors">Événements privés</a>
 										</li>
 										<li>
-											<a href="#" class="text-gray-400 hover:text-primary transition-colors">Partenariats</a>
+											<a href="#" class="text-gray-400 hover:text-white transition-colors">Partenariats</a>
 										</li>
 									</ul>
 								</div>

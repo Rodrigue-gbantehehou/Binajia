@@ -1,0 +1,472 @@
+{% extends 'base.html.twig' %}
+{% block title %}Avantages — Binajia
+{% endblock %}
+
+{% block content %}
+	<style>
+		body {
+			font-family: 'Open Sans', sans-serif;
+		}
+		h1,
+		h2,
+		h3,
+		h4 {
+			font-family: 'Montserrat', sans-serif;
+		}
+		.btn-hover:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+			transition: all 0.3s;
+		}
+		.feature-card:hover {
+			transform: translateY(-5px);
+			transition: transform 0.3s;
+		}
+		.text-shadow {
+			text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+		}
+		.animate-fade-in {
+			animation: fadeIn 1s ease-out forwards;
+		}
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+	</style>
+
+
+	<header style="background: linear-gradient(135deg,  rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.36), rgb(255, 174, 0)), url('{{ asset('media/binajia/amazone.jpg') }}');
+																												            background-size: cover;
+																												            background-position: center;" class="relative overflow-hidden bg-gradient-to-r from-green-600 to-yellow-500 text-white py-20 px-4 text-center animate-fade-in opacity-20">
+
+		<div class="max-w-6xl mx-auto relative z-10">
+			<h1 class="text-4xl md:text-6xl font-extrabold mb-6 flex items-center justify-center">
+				<i data-feather="globe" class="mr-4 animate-pulse"></i>
+				<span class="bg-clip-text text-transparent bg-gradient-to-r from-white to-yellow-200">
+					BINAJIA EXPLOREZ LE BÉNIN & NIGERIA
+				</span>
+			</h1>
+			<p class="text-2xl md:text-3xl font-semibold mb-8 text-shadow">Avec nos guides touristiques certifiés</p>
+			<div class="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-3xl mx-auto">
+				<p class="text-xl md:text-2xl leading-relaxed">
+					Voyages personnalisés - Culture • Histoire • Nature • Spiritualité
+				</p>
+			</div>
+			<a href="#formulaire" class="mt-10 inline-block bg-white text-gray-900 font-extrabold py-4 px-10 rounded-full text-xl hover:bg-yellow-100 transform transition-all duration-300 hover:scale-105 shadow-xl">
+				<i data-feather="compass" class="mr-2"></i>
+				COMMENCER MON AVENTURE
+			</a>
+		</div>
+	</header>
+	<!-- Benin Section -->
+	<!-- Discover Section -->
+	<section id="discover" class="py-20 px-4 bg-gray-50 animate-on-scroll">
+		<div class="max-w-7xl mx-auto">
+			<div class="text-center mb-16 fade-in">
+				<h2 class="text-3xl md:text-4xl font-bold text-gray-800 from-green-600 to-yellow-500 mb-4">Découvrez le Bénin et le Nigeria</h2>
+				<p class="text-xl text-gray-600 max-w-3xl mx-auto">Explorez les merveilles culturelles et naturelles de
+					                    ces deux pays fascinants</p>
+				<div class="w-20 h-1 bg-green-600 mx-auto mt-4"></div>
+			</div>
+
+			<!-- Benin Discovery -->
+			<div class="beni rounded-xl shadow-xl overflow-hidden mb-16 text-white">
+				<div class="bg-yellow-500  p-8 md:p-12">
+					<div class="max-w-3xl">
+						<h3 class="text-2xl md:text-3xl font-bold mb-4">Découverte du Bénin</h3>
+						<p class="mb-6">Le Bénin, berceau du vodoun, offre un mélange unique d'histoire, de culture et
+							                            de nature. Des palais royaux d'Abomey aux villages sur pilotis de Ganvié, découvrez un pays
+							                            riche en traditions.</p>
+
+						<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+							<div class="bg-white bg-opacity-20 rounded-lg p-4 backdrop-filter backdrop-blur-sm">
+								<i class="fas fa-landmark text-2xl mb-2"></i>
+								<h4 class="font-bold">Porte du Non-Retour</h4>
+								<p class="text-sm">Mémorial de la traite négrière à Ouidah</p>
+							</div>
+							<div class="bg-white bg-opacity-20 rounded-lg p-4 backdrop-filter backdrop-blur-sm">
+								<i class="fas fa-water text-2xl mb-2"></i>
+								<h4 class="font-bold">Ganvié</h4>
+								<p class="text-sm">La "Venise de l'Afrique" sur le lac Nokoué</p>
+							</div>
+							<div class="bg-white bg-opacity-20 rounded-lg p-4 backdrop-filter backdrop-blur-sm">
+								<i class="fas fa-park text-2xl mb-2"></i>
+								<h4 class="font-bold">Pendjari</h4>
+								<p class="text-sm">Parc national abritant éléphants et lions</p>
+							</div>
+						</div>
+
+						<a href="#" class="inline-block bg-white text-green-600 hover:bg-gray-100 px-6 py-2 rounded-md font-medium transition duration-300">
+							Explorer le Bénin
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Nigeria Discovery -->
+			<div class="nigeria-bg rounded-xl shadow-xl overflow-hidden text-white">
+				<div class="bg-green-600  p-8 md:p-12">
+					<div class="max-w-3xl">
+						<h3 class="text-2xl md:text-3xl font-bold mb-4">Découverte du Nigeria</h3>
+						<p class="mb-6">Le Nigeria, géant de l'Afrique, vous émerveillera par sa diversité. Des
+							                            gratte-ciel de Lagos aux chutes d'Erin Ijesha, en passant par les cultures Yoruba, Igbo et
+							                            Haoussa, c'est une expérience inoubliable.</p>
+
+						<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+							<div class="bg-white bg-opacity-20 rounded-lg p-4 backdrop-filter backdrop-blur-sm">
+								<i class="fas fa-city text-2xl mb-2"></i>
+								<h4 class="font-bold">Lagos</h4>
+								<p class="text-sm">Métropole vibrante et centre économique</p>
+							</div>
+							<div class="bg-white bg-opacity-20 rounded-lg p-4 backdrop-filter backdrop-blur-sm">
+								<i class="fas fa-monument text-2xl mb-2"></i>
+								<h4 class="font-bold">Sukur</h4>
+								<p class="text-sm">Patrimoine mondial avec son paysage culturel</p>
+							</div>
+							<div class="bg-white bg-opacity-20 rounded-lg p-4 backdrop-filter backdrop-blur-sm">
+								<i class="fas fa-mountain text-2xl mb-2"></i>
+								<h4 class="font-bold">Obudu</h4>
+								<p class="text-sm">Station montagneuse et ranch de bétail</p>
+							</div>
+						</div>
+
+						<a href="#" class="inline-block bg-white text-green-600 hover:bg-gray-100 px-6 py-2 rounded-md font-medium transition duration-300">
+							Explorer le Nigeria
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Featured Tours -->
+			<div class="mt-16">
+				<h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">Circuits populaires</h3>
+
+				<div
+					class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+					<!-- Tour 1 -->
+					<div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+						<img src="https://images.unsplash.com/photo-1581434682228-9a3d2a1c3a5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Tour Benin" class="w-full h-48 object-cover">
+						<div class="p-6">
+							<div class="flex justify-between items-start mb-2">
+								<h4 class="font-bold text-lg">Trésors du Bénin</h4>
+								<span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">5
+									                                    jours</span>
+							</div>
+							<p class="text-gray-600 text-sm mb-4">Explorez Cotonou, Ouidah, Abomey et Ganvié dans ce
+								                                circuit complet.</p>
+							<div class="flex justify-between items-center">
+								<span class="font-bold text-green-600">À partir de 150,000 FCFA</span>
+								<a href="#" class="text-sm text-green-600 hover:underline">Détails</a>
+							</div>
+						</div>
+					</div>
+
+					<!-- Tour 2 -->
+					<div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+						<img src="https://images.unsplash.com/photo-1529107386315-e1a2ed508132?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Tour Nigeria" class="w-full h-48 object-cover">
+						<div class="p-6">
+							<div class="flex justify-between items-start mb-2">
+								<h4 class="font-bold text-lg">Aventure nigériane</h4>
+								<span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">7
+									                                    jours</span>
+							</div>
+							<p class="text-gray-600 text-sm mb-4">Découvrez Lagos, Abuja, les chutes d'Erin Ijesha et le
+								                                parc Yankari.</p>
+							<div class="flex justify-between items-center">
+								<span class="font-bold text-green-600">À partir de 75,000 NGN</span>
+								<a href="#" class="text-sm text-green-600 hover:underline">Détails</a>
+							</div>
+						</div>
+					</div>
+
+					<!-- Tour 3 -->
+					<div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+						<img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Combiné" class="w-full h-48 object-cover">
+						<div class="p-6">
+							<div class="flex justify-between items-start mb-2">
+								<h4 class="font-bold text-lg">Combiné Bénin-Nigeria</h4>
+								<span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">10 jours</span>
+							</div>
+							<p class="text-gray-600 text-sm mb-4">Expérience complète des deux pays avec guide
+								                                francophone.</p>
+							<div class="flex justify-between items-center">
+								<span class="font-bold text-green-600">À partir de 300,000 FCFA</span>
+								<a href="#" class="text-sm text-green-600 hover:underline">Détails</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="mt-12 text-center">
+					<button onclick="goToPlaces()" class="btn-primary">
+						<i class="fas fa-route mr-2"></i>Voir tous les circuits
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Hotels & Restaurants -->
+	<section class="py-16 px-4 bg-gray-100 animate-on-scroll">
+		<div class="max-w-7xl mx-auto">
+			<div class="text-center mb-16 fade-in">
+				<h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Nos Hôtels & Restaurants Partenaires</h2>
+				<div class="w-20 h-1 bg-green-600 mx-auto"></div>
+			</div>
+
+			<div
+				class="grid grid-cols-1 md:grid-cols-3 gap-8">
+				<!-- Hotel 1 -->
+				<div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105">
+					<img src="http://static.photos/hotel/640x360/1" alt="Hôtel La Plage" class="w-full h-48 object-cover">
+					<div class="p-6">
+						<div class="flex justify-between items-start">
+							<h3 class="text-xl font-bold text-gray-800 mb-2">Hôtel La Plage</h3>
+							<div class="flex text-yellow-400">
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+							</div>
+						</div>
+						<p class="text-gray-600 mb-4">Cotonou, Bénin</p>
+						<div class="flex justify-between items-center">
+							<a href="#" class="text-green-600 hover:underline">Voir disponibilités</a>
+							<span class="font-bold">À partir de 45,000 FCFA</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Restaurant 1 -->
+				<div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105">
+					<img src="http://static.photos/restaurant/640x360/1" alt="Maquis du Lac" class="w-full h-48 object-cover">
+					<div class="p-6">
+						<h3 class="text-xl font-bold text-gray-800 mb-2">Maquis du Lac</h3>
+						<p class="text-gray-600 mb-4">Lagos, Nigeria</p>
+						<div class="flex items-center mb-4">
+							<span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm mr-2">Gastronomie
+								                                locale</span>
+							<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Terrasse vue
+								                                lac</span>
+						</div>
+						<a href="#" class="text-green-600 hover:underline">Voir le menu</a>
+					</div>
+				</div>
+
+				<!-- Hotel 2 -->
+				<div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105">
+					<img src="http://static.photos/hotel/640x360/2" alt="Eko Hotels & Suites" class="w-full h-48 object-cover">
+					<div class="p-6">
+						<div class="flex justify-between items-start">
+							<h3 class="text-xl font-bold text-gray-800 mb-2">Eko Hotels & Suites</h3>
+							<div class="flex text-yellow-400">
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+							</div>
+						</div>
+						<p class="text-gray-600 mb-4">Lagos, Nigeria</p>
+						<div class="flex justify-between items-center">
+							<a href="#" class="text-green-600 hover:underline">Voir disponibilités</a>
+							<span class="font-bold">À partir de 25,000 NGN</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="relative py-20 px-4 bg-white overflow-hidden" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9), rgb(255, 174, 0)), url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80');
+																											            background-size: cover;
+																											            background-position: center;">
+
+		<div class="max-w-6xl mx-auto relative z-10">
+			<div class="text-center mb-16">
+				<h2 class="text-4xl font-extrabold text-white bg-gradient-to-r from-green-600 to-yellow-500 mb-6 bg-clip-text text-transparent">
+					POURQUOI CHOISIR BINAJIA VOYAGES?
+				</h2>
+				<p class="text-xl text-white max-w-3xl mx-auto leading-relaxed">
+					Nous créons des expériences de voyage authentiques, sécurisées et profondément immersives en Afrique de l'Ouest.
+				</p>
+			</div>
+			<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+				<div class="feature-card bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:border-yellow-400 transform transition-all duration-300 hover:-translate-y-2">
+					<div class="text-green-500 mb-6">
+						<i data-feather="award" class="w-12 h-12"></i>
+					</div>
+					<h3 class="text-xl font-bold mb-4 text-gray-800">Expertise Locale Authentique</h3>
+					<p class="text-gray-600 leading-relaxed">Nos guides natifs certifiés partagent avec passion leur connaissance intime du terrain.</p>
+				</div>
+
+				<div class="feature-card bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:border-green-400 transform transition-all duration-300 hover:-translate-y-2">
+					<div class="text-yellow-500 mb-6">
+						<i data-feather="shield" class="w-12 h-12"></i>
+					</div>
+					<h3 class="text-xl font-bold mb-4 text-gray-800">Sécurité Garantie</h3>
+					<p class="text-gray-600 leading-relaxed">Hébergements premium et transports privés sélectionnés pour votre tranquillité.</p>
+				</div>
+
+				<div class="feature-card bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:border-yellow-400 transform transition-all duration-300 hover:-translate-y-2">
+					<div class="text-green-500 mb-6">
+						<i data-feather="sliders" class="w-12 h-12"></i>
+					</div>
+					<h3 class="text-xl font-bold mb-4 text-gray-800">Personnalisation Totale</h3>
+					<p class="text-gray-600 leading-relaxed">Chaque itinéraire est conçu sur mesure selon vos centres d'intérêt et votre rythme.</p>
+				</div>
+
+				<div class="feature-card bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:border-green-400 transform transition-all duration-300 hover:-translate-y-2">
+					<div class="text-yellow-500 mb-6">
+						<i data-feather="compass" class="w-12 h-12"></i>
+					</div>
+					<h3 class="text-xl font-bold mb-4 text-gray-800">Immersion Profonde</h3>
+					<p class="text-gray-600 leading-relaxed">Accès privilégié à des expériences culturelles uniques et rencontres authentiques.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<style>
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+		.animate-fade-in {
+			animation: fadeIn 1s ease-out forwards;
+		}
+		.text-shadow {
+			text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+		}
+	</style>
+	<!-- Booking Form -->
+	<section id="formulaire" class="py-12 px-4 bg-gray-100">
+		<div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
+			<h2 class="text-3xl font-bold text-green-500 mb-6 text-center">
+				<i data-feather="edit-2" class="inline mr-2"></i>
+				Formulaire de réservation
+			</h2>
+
+			<form class="space-y-6">
+				<div class="grid md:grid-cols-2 gap-6">
+					<div>
+						<label class="block text-gray-700 mb-2">Nom complet</label>
+						<input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+					</div>
+					<div>
+						<label class="block text-gray-700 mb-2">Email</label>
+						<input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+					</div>
+				</div>
+
+				<div class="grid md:grid-cols-2 gap-6">
+					<div>
+						<label class="block text-gray-700 mb-2">Téléphone</label>
+						<input type="tel" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+					</div>
+					<div>
+						<label class="block text-gray-700 mb-2">Pays de résidence</label>
+						<input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+					</div>
+				</div>
+
+				<div>
+					<label class="block text-gray-700 mb-2">Destination souhaitée</label>
+					<select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+						<option value="">-- Sélectionnez --</option>
+						<option>Bénin</option>
+						<option>Nigeria</option>
+						<option>Les deux</option>
+					</select>
+				</div>
+
+				<div class="grid md:grid-cols-2 gap-6">
+					<div>
+						<label class="block text-gray-700 mb-2">Dates de voyage</label>
+						<input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+					</div>
+					<div>
+						<label class="block text-gray-700 mb-2">Nombre de voyageurs</label>
+						<input type="number" min="1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+					</div>
+				</div>
+
+				<div>
+					<label class="block text-gray-700 mb-2">Type de voyage</label>
+					<select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+						<option>Individuel</option>
+						<option>Famille</option>
+						<option>Groupe</option>
+					</select>
+				</div>
+
+				<div>
+					<label class="block text-gray-700 mb-2">Centres d'intérêt</label>
+					<div class="flex flex-wrap gap-2">
+						<label class="inline-flex items-center">
+							<input type="checkbox" class="form-checkbox text-green-500">
+							<span class="ml-2">Culture</span>
+						</label>
+						<label class="inline-flex items-center">
+							<input type="checkbox" class="form-checkbox text-green-500">
+							<span class="ml-2">Nature</span>
+						</label>
+						<label class="inline-flex items-center">
+							<input type="checkbox" class="form-checkbox text-green-500">
+							<span class="ml-2">Spiritualité</span>
+						</label>
+						<label class="inline-flex items-center">
+							<input type="checkbox" class="form-checkbox text-green-500">
+							<span class="ml-2">Artisanat</span>
+						</label>
+						<label class="inline-flex items-center">
+							<input type="checkbox" class="form-checkbox text-green-500">
+							<span class="ml-2">Autre</span>
+						</label>
+					</div>
+				</div>
+
+				<div>
+					<label class="block text-gray-700 mb-2">Budget estimé</label>
+					<select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+						<option>-- Sélectionnez --</option>
+						<option>500-1000 €</option>
+						<option>1000-2000 €</option>
+						<option>2000-3000 €</option>
+						<option>3000-5000 €</option>
+						<option>+5000 €</option>
+					</select>
+				</div>
+
+				<div>
+					<label class="block text-gray-700 mb-2">Commentaires ou demandes spécifiques</label>
+					<textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" rows="4"></textarea>
+				</div>
+
+				<div class="text-center">
+					<button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300">
+						<i data-feather="send" class="mr-2"></i>
+						Envoyer ma demande
+					</button>
+				</div>
+			</form>
+		</div>
+	</section>
+
+
+	<script>
+		feather.replace();
+	</script>
+</body></html>{% endblock %}
