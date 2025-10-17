@@ -4,16 +4,137 @@
 
 {% block admin_body %}
   <div class="space-y-6">
-    <div class="bg-white rounded-xl ring-1 ring-gray-200 p-6">
-      <div class="flex items-center justify-between mb-4">
-        <h1 class="text-2xl font-bold">{{ place.name }}</h1>
-        <a class="btn" href="{{ path('admin_places_edit', {id: place.id}) }}">Modifier</a>
+    {# Header #}
+    <div class="flex items-center justify-between">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <a href="{{ path('admin_places_index') }}" class="text-gray-500 hover:text-gray-700 transition-colors">
+            <i class="fas fa-arrow-left"></i>
+          </a>
+          <h1 class="text-3xl font-bold text-gray-900">
+            <i class="fas fa-map-marker-alt text-orange-500 mr-3"></i>
+            {{ place.name }}
+          </h1>
+        </div>
+        <p class="text-gray-600">Détails du lieu</p>
       </div>
-      <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div><dt class="text-gray-500">Ville</dt><dd class="font-semibold">{{ place.city ?: '—' }}</dd></div>
-        <div><dt class="text-gray-500">Pays</dt><dd class="font-semibold">{{ place.country ?: '—' }}</dd></div>
-      </dl>
-      <div class="mt-4"><dt class="text-gray-500">Description</dt><dd>{{ place.description ?: '—' }}</dd></div>
+      <div class="flex items-center gap-3">
+        <a href="{{ path('admin_places_edit', {id: place.id}) }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-gradient-to-r from-green-600 to-orange-500 text-white shadow-lg hover:-translate-y-0.5 hover:shadow-xl">
+          <i class="fas fa-edit"></i>Modifier
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {# Place Image #}
+      {% if place.image %}
+        <div class="lg:col-span-3">
+          <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+            <img src="{{ path('secure_upload', {'filename': place.image}) }}" alt="Image de {{ place.name }}" class="w-full h-64 object-cover">
+          </div>
+        </div>
+      {% endif %}
+
+      {# Main Info #}
+      <div class="lg:col-span-2 space-y-6">
+        {# Place Details Card #}
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+            <i class="fas fa-info-circle text-green-500 mr-2"></i>
+            Informations du lieu
+          </h2>
+
+          <div class="space-y-4">
+            <div class="flex items-start">
+              <div class="w-32 text-sm font-medium text-gray-500">Nom</div>
+              <div class="flex-1 text-gray-900 font-semibold">{{ place.name }}</div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="w-32 text-sm font-medium text-gray-500">Description</div>
+              <div class="flex-1 text-gray-700">{{ place.description ?: '—' }}</div>
+            </div>
+          </div>
+        </div>
+
+        {# Location Card #}
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+            <i class="fas fa-globe text-blue-500 mr-2"></i>
+            Localisation
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-gray-50 rounded-lg p-4">
+              <div class="text-sm font-medium text-gray-500 mb-1">Ville</div>
+              <div class="text-gray-900 font-semibold">{{ place.city ?: '—' }}</div>
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-4">
+              <div class="text-sm font-medium text-gray-500 mb-1">Pays</div>
+              <div class="text-gray-900 font-semibold">{{ place.country ?: '—' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {# Sidebar #}
+      <div class="space-y-6">
+        {# Quick Stats #}
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Statistiques</h3>
+
+          <div class="space-y-4">
+            <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                  <i class="fas fa-calendar-check text-white"></i>
+                </div>
+                <div>
+                  <div class="text-sm text-gray-600">Événements</div>
+                  <div class="text-xl font-bold text-gray-900">0</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                  <i class="fas fa-users text-white"></i>
+                </div>
+                <div>
+                  <div class="text-sm text-gray-600">Participants</div>
+                  <div class="text-xl font-bold text-gray-900">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {# Actions #}
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Actions rapides</h3>
+
+          <div class="space-y-3">
+            <button class="w-full inline-flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-200 bg-blue-50 text-blue-700 hover:bg-blue-100">
+              <i class="fas fa-map"></i>
+              Voir sur la carte
+            </button>
+
+            <button class="w-full inline-flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-200 bg-green-50 text-green-700 hover:bg-green-100">
+              <i class="fas fa-share-alt"></i>
+              Partager
+            </button>
+
+            <form method="post" action="{{ path('admin_places_delete', {id: place.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce lieu ? Cette action est irréversible.')">
+              <button type="submit" class="w-full inline-flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-200 bg-red-50 text-red-700 hover:bg-red-100">
+                <i class="fas fa-trash"></i>
+                Supprimer le lieu
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}

@@ -21,7 +21,7 @@ class ApiController extends AbstractController
                 ['name' => 'Cards API', 'url' => '/api/cards', 'method' => 'GET', 'status' => 'inactive'],
             ],
             'webhooks' => [
-                ['name' => 'FedaPay Payment', 'url' => 'https://api.fedapay.com/webhooks', 'events' => ['payment.succeeded', 'payment.failed']],
+                ['name' => 'FedaPay Payment', 'url' => 'https://efasmartimmobilier.com/webhook', 'events' => ['payment.succeeded', 'payment.failed']],
                 ['name' => 'Email Service', 'url' => 'https://hooks.slack.com/services/...', 'events' => ['user.registered']],
             ],
             'apiKeys' => [

@@ -11,6 +11,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class UserController extends AbstractController
 {
+    private string $uploadDirectory;
+
+    public function __construct(string $uploadDir)
+    {
+        $this->uploadDirectory = $uploadDir;
+    }
     #[Route('/dashboard', name: 'app_user_dashboard')]
     public function dashboardA(EntityManagerInterface $em): Response
     {
@@ -19,10 +25,16 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        // Ensure user has required methods before using them
+        if (!method_exists($authUser, 'getFirstname') || !method_exists($authUser, 'getLastname') ||
+            !method_exists($authUser, 'getCountry')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         // Build memberId and avatar URL
         $memberId = sprintf('BjNg-%s-%03d', (new \DateTime())->format('Y'), $authUser->getId());
         $avatarUrl = sprintf('/media/avatars/%d.jpg', $authUser->getId());
-        if (!file_exists($this->getParameter('kernel.project_dir') . $avatarUrl)) {
+        if (!file_exists($this->uploadDirectory . $avatarUrl)) {
             $avatarUrl = '/media/avatar.png';
         }
 
@@ -74,7 +86,7 @@ class UserController extends AbstractController
             'memberId' => $memberId,
             'country' => $authUser->getCountry(),
             'avatarUrl' => $avatarUrl,
-            'joinedAt' => $authUser->getCreatedAt() ?? new \DateTime(),
+            'joinedAt' => method_exists($authUser, 'getCreatedAt') ? $authUser->getCreatedAt() : new \DateTime(),
             'cardPdf' => $cardPdf,
             'receipts' => $receiptsByPayment,
             'carteActuele' => $carteActuele,

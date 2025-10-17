@@ -193,12 +193,14 @@
                   <a href="{{ path('admin_members_show', {id: m.id}) }}" class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-sm transition-all duration-200 bg-blue-50 text-blue-600 hover:bg-blue-100" title="Voir">
                     <i class="fas fa-eye text-xs"></i>
                   </a>
-                  <button class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-sm transition-all duration-200 bg-green-50 text-green-600 hover:bg-green-100 hidden sm:inline-flex" title="Modifier">
+                  <a href="{{ path('admin_members_edit', {id: m.id}) }}" class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-sm transition-all duration-200 bg-green-50 text-green-600 hover:bg-green-100 hidden sm:inline-flex" title="Modifier">
                     <i class="fas fa-edit text-xs"></i>
-                  </button>
-                  <button class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-sm transition-all duration-200 bg-red-50 text-red-600 hover:bg-red-100 hidden sm:inline-flex" title="Supprimer">
-                    <i class="fas fa-trash text-xs"></i>
-                  </button>
+                  </a>
+                  <form method="post" action="{{ path('admin_members_delete', {id: m.id}) }}" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce membre ? Cette action est irréversible.')">
+                    <button type="submit" class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-sm transition-all duration-200 bg-red-50 text-red-600 hover:bg-red-100 hidden sm:inline-flex" title="Supprimer">
+                      <i class="fas fa-trash text-xs"></i>
+                    </button>
+                  </form>
                 </div>
               </td>
             </tr>

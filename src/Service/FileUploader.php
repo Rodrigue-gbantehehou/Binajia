@@ -2,21 +2,23 @@
 
 namespace App\Service;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 class FileUploader
 {
     public function __construct(
-        private readonly string $projectDir,
+        private readonly string $uploadDir, // injecté depuis services.yaml
     ) {
     }
 
     /**
-     * Save a user's avatar from a base64 data URL.
-     * - Crops to 3:4 ratio (portrait)
-     * - Resizes to 300x400
-     * - Stores at public/media/avatars/{userId}.jpg
+     * Enregistre un avatar utilisateur depuis une image base64.
+     * - Crop ratio 3:4
+     * - Redimensionne à 300x400
+     * - Stocke dans var/uploads/membres/{userId}.jpg (hors du dossier public)
      *
-     * @return string Public path starting with /media/avatars/...
-     * @throws \RuntimeException on failure
+     * @return string Chemin absolu du fichier sauvegardé
+     * @throws \RuntimeException en cas d’erreur
      */
     public function saveAvatarFromDataUrl(string $dataUrl, int $userId): string
     {
@@ -46,13 +48,13 @@ class FileUploader
             $srcRatio = $srcW / max(1, $srcH);
 
             if ($srcRatio > $targetRatio) {
-                // Too wide: crop width
+                // Trop large → on crop la largeur
                 $newW = (int) round($srcH * $targetRatio);
                 $newH = $srcH;
                 $srcX = (int) max(0, floor(($srcW - $newW) / 2));
                 $srcY = 0;
             } else {
-                // Too tall: crop height
+                // Trop haut → on crop la hauteur
                 $newW = $srcW;
                 $newH = (int) round($srcW / $targetRatio);
                 $srcX = 0;
@@ -62,7 +64,7 @@ class FileUploader
             $crop = imagecreatetruecolor($newW, $newH);
             imagecopy($crop, $src, 0, 0, $srcX, $srcY, $newW, $newH);
 
-            // Resize to 300x400
+            // Redimensionne à 300x400
             $outW = 300;
             $outH = 400;
             $dst = imagecreatetruecolor($outW, $outH);
@@ -70,66 +72,97 @@ class FileUploader
 
             imagedestroy($crop);
 
-            $dir = $this->projectDir . '/public/media/avatars';
+            // 📁 Dossier sécurisé (hors public)
+            $dir = $this->uploadDir . '/membres';
             if (!is_dir($dir)) {
                 if (!@mkdir($dir, 0775, true) && !is_dir($dir)) {
-                    throw new \RuntimeException('Cannot create avatars directory');
+                    throw new \RuntimeException('Cannot create membres directory: ' . $dir);
                 }
             }
 
-            // Basic writability check
             if (!is_writable($dir)) {
-                throw new \RuntimeException('Avatar directory is not writable: ' . $dir);
+                throw new \RuntimeException('Upload directory not writable: ' . $dir);
             }
 
-            // Detect available output format (prefer JPEG)
+            // Détection format (JPEG > PNG)
             $canJpeg = function_exists('imagejpeg');
             $canPng  = function_exists('imagepng');
 
             if ($canJpeg) {
                 $filename = sprintf('%d.jpg', $userId);
-                $fsPath = rtrim($dir, '/\\') . DIRECTORY_SEPARATOR . $filename;
+                $fsPath = $dir . DIRECTORY_SEPARATOR . $filename;
                 if (!@imagejpeg($dst, $fsPath, 90)) {
                     $last = error_get_last();
-                    $jpegErr = $last['message'] ?? 'unknown error';
-                    // If JPEG write fails, try PNG fallback if available
+                    $jpegErr = $last['message'] ?? 'unknown';
                     if ($canPng) {
                         $filename = sprintf('%d.png', $userId);
-                        $fsPath = rtrim($dir, '/\\') . DIRECTORY_SEPARATOR . $filename;
+                        $fsPath = $dir . DIRECTORY_SEPARATOR . $filename;
                         if (!@imagepng($dst, $fsPath, 6)) {
                             $last = error_get_last();
-                            $pngErr = $last['message'] ?? 'unknown error';
-                            throw new \RuntimeException('Failed to save avatar (JPEG failed: ' . $jpegErr . ', PNG failed: ' . $pngErr . ') at ' . $fsPath);
+                            $pngErr = $last['message'] ?? 'unknown';
+                            throw new \RuntimeException("Failed to save image (JPEG: $jpegErr, PNG: $pngErr)");
                         }
-                        $publicPath = '/media/avatars/' . $filename;
                     } else {
-                        throw new \RuntimeException('Failed to save avatar (JPEG failed: ' . $jpegErr . ') at ' . $fsPath);
+                        throw new \RuntimeException("Failed to save avatar (JPEG error: $jpegErr)");
                     }
-                } else {
-                    $publicPath = '/media/avatars/' . $filename;
                 }
             } elseif ($canPng) {
                 $filename = sprintf('%d.png', $userId);
-                $fsPath = rtrim($dir, '/\\') . DIRECTORY_SEPARATOR . $filename;
-                // 0 (no compression) to 9
+                $fsPath = $dir . DIRECTORY_SEPARATOR . $filename;
                 if (!@imagepng($dst, $fsPath, 6)) {
                     $last = error_get_last();
-                    $pngErr = $last['message'] ?? 'unknown error';
-                    throw new \RuntimeException('Failed to save avatar (PNG failed: ' . $pngErr . ') at ' . $fsPath);
+                    $pngErr = $last['message'] ?? 'unknown';
+                    throw new \RuntimeException("Failed to save avatar (PNG error: $pngErr)");
                 }
-                $publicPath = '/media/avatars/' . $filename;
             } else {
                 throw new \RuntimeException('GD output (JPEG/PNG) not available');
             }
+
             imagedestroy($dst);
             imagedestroy($src);
 
-            return $publicPath;
+            // 🔒 Retourne le chemin complet (non public)
+            return $fsPath;
+
         } finally {
-            if (is_resource($src)) {
-                // In case of exceptions before manual destroy
+            if (is_resource($src) || $src instanceof \GdImage) {
                 @imagedestroy($src);
             }
         }
+    }
+
+    /**
+     * Enregistre un fichier uploadé dans un sous-dossier spécifique.
+     *
+     * @param UploadedFile $file Le fichier uploadé
+     * @param string $subDir Le sous-dossier de destination
+     * @param string|null $filename Nom de fichier personnalisé (si null, génère un nom unique)
+     * @return string Chemin absolu du fichier sauvegardé
+     * @throws \RuntimeException en cas d’erreur
+     */
+    public function saveUploadedFile(UploadedFile $file, string $subDir, string $filename = null): string
+    {
+        // Crée le dossier s'il n'existe pas dans le répertoire media/
+        $dir = $this->uploadDir . '/media/' . $subDir;
+        if (!is_dir($dir)) {
+            if (!@mkdir($dir, 0775, true) && !is_dir($dir)) {
+                throw new \RuntimeException('Cannot create directory: ' . $dir);
+            }
+        }
+
+        if (!is_writable($dir)) {
+            throw new \RuntimeException('Upload directory not writable: ' . $dir);
+        }
+
+        // Génère un nom de fichier unique si pas fourni
+        if ($filename === null) {
+            $extension = $file->guessExtension() ?? 'bin';
+            $filename = uniqid() . '.' . $extension;
+        }
+
+        // Déplace le fichier
+        $file->move($dir, $filename);
+
+        return $dir . '/' . $filename;
     }
 }

@@ -10,9 +10,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_ADMIN')]
 class CulturalContentController extends AbstractController
 {
+    private string $uploadDirectory;
+
+    public function __construct(string $uploadDir)
+    {
+        $this->uploadDirectory = $uploadDir;
+    }
     #[Route('/admin/cultural-content', name: 'admin_cultural_content_index', methods: ['GET'])]
     public function index(Request $request, EntityManagerInterface $em): Response
     {
@@ -85,8 +90,8 @@ class CulturalContentController extends AbstractController
             // Upload image
             $imageFile = $request->files->get('image');
             if ($imageFile) {
-                $projectDir = (string) $this->getParameter('kernel.project_dir');
-                $uploadsDir = $projectDir . '/public/media/cultural';
+                $projectDir = $this->uploadDirectory;
+                $uploadsDir = $projectDir . '/media/cultural';
                 if (!is_dir($uploadsDir)) {
                     @mkdir($uploadsDir, 0775, true);
                 }
@@ -124,8 +129,8 @@ class CulturalContentController extends AbstractController
             // Upload new image if provided
             $imageFile = $request->files->get('image');
             if ($imageFile) {
-                $projectDir = (string) $this->getParameter('kernel.project_dir');
-                $uploadsDir = $projectDir . '/public/media/cultural';
+                $projectDir = $this->uploadDirectory;
+                $uploadsDir = $projectDir . '/media/cultural';
                 if (!is_dir($uploadsDir)) {
                     @mkdir($uploadsDir, 0775, true);
                 }
