@@ -29,6 +29,15 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {# Event Image #}
+      {% if event.image %}
+        <div class="lg:col-span-3">
+          <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+            <img src="{{ path('secure_upload', {'filename': event.image}) }}" alt="Image de {{ event.title }}" class="w-full h-64 object-cover">
+          </div>
+        </div>
+      {% endif %}
+
       {# Main Info #}
       <div class="lg:col-span-2 space-y-6">
         {# Event Details Card #}
@@ -154,10 +163,12 @@
               Exporter données
             </button>
             
-            <button class="w-full inline-flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-200 bg-red-50 text-red-700 hover:bg-red-100">
-              <i class="fas fa-trash"></i>
-              Supprimer événement
-            </button>
+            <form method="post" action="{{ path('admin_events_delete', {id: event.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ? Cette action est irréversible.')">
+              <button type="submit" class="w-full inline-flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-200 bg-red-50 text-red-700 hover:bg-red-100">
+                <i class="fas fa-trash"></i>
+                Supprimer événement
+              </button>
+            </form>
           </div>
         </div>
       </div>

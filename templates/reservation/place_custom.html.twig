@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réserver une visite - {{ place.title }}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-green-50 via-yellow-50 to-green-50 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Réserver une visite pour <span class="text-yellow-400">{{ place.title }}</span>
+            </h1>
+            <p class="text-lg text-gray-600">
+                {{ place.country ? place.country : 'Lieu culturel' }}
+            </p>
+        </div>
+
+        <!-- Place Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-8">
+            <div class="md:flex">
+                <div class="md:w-1/3">
+                    {% if place.image %}
+                        <img src="{{ path('secure_upload', {'filename': place.image}) }}"
+                             alt="{{ place.title }}"
+                             class="w-full h-64 md:h-full object-cover">
+                    {% else %}
+                        <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?q=80&w=1200&auto=format&fit=crop"
+                             alt="{{ place.title }}"
+                             class="w-full h-64 md:h-full object-cover">
+                    {% endif %}
+                </div>
+                <div class="md:w-2/3 p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ place.title }}</h2>
+                    {% if place.description %}
+                        <p class="text-gray-600 mb-4">{{ place.description|slice(0, 200) }}{% if place.description|length > 200 %}...{% endif %}</p>
+                    {% endif %}
+                    <div class="flex items-center gap-4 text-sm text-gray-500">
+                        <span class="flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            </svg>
+                            {{ place.country ?: 'Lieu culturel' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Reservation Form -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Informations de réservation</h3>
+
+            <form method="POST" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="nom" class="block text-sm font-medium text-gray-700 mb-2">Nom complet *</label>
+                        <input type="text"
+                               id="nom"
+                               name="nom"
+                               required
+                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors {% if errors.nom is defined %}border-red-500{% endif %}"
+                               placeholder="Entrez votre nom complet">
+                        {% if errors.nom is defined %}
+                            <p class="mt-1 text-sm text-red-600">{{ errors.nom }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                        <input type="email"
+                               id="email"
+                               name="email"
+                               required
+                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors {% if errors.email is defined %}border-red-500{% endif %}"
+                               placeholder="exemple@domaine.com">
+                        {% if errors.email is defined %}
+                            <p class="mt-1 text-sm text-red-600">{{ errors.email }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="telephone" class="block text-sm font-medium text-gray-700 mb-2">Téléphone *</label>
+                        <input type="tel"
+                               id="telephone"
+                               name="telephone"
+                               required
+                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors {% if errors.telephone is defined %}border-red-500{% endif %}"
+                               placeholder="+229 XX XX XX XX">
+                        {% if errors.telephone is defined %}
+                            <p class="mt-1 text-sm text-red-600">{{ errors.telephone }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <!-- Champ vide pour maintenir l'alignement -->
+                    </div>
+                </div>
+
+                <div>
+                    <label for="commentaire" class="block text-sm font-medium text-gray-700 mb-2">Commentaire (optionnel)</label>
+                    <textarea id="commentaire"
+                              name="commentaire"
+                              rows="4"
+                              class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors"
+                              placeholder="Ajoutez un commentaire ou une demande spéciale..."></textarea>
+                </div>
+
+                <div class="flex justify-center">
+                    <button type="submit" class="px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-400 text-white rounded-full font-semibold text-lg transition-all duration-300 hover:shadow-lg hover:scale-105">
+                        Confirmer la réservation de visite
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

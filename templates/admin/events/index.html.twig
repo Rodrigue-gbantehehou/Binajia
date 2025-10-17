@@ -81,60 +81,7 @@
       </div>
     </div>
 
-    {# Advanced Filters #}
-    <div class="admin-card bg-white rounded-2xl shadow-lg border border-gray-100 p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-gray-900">
-          <i class="fas fa-filter text-orange-500 mr-2"></i>Filtres Avancés
-        </h3>
-        <button id="toggleFilters" class="text-sm text-gray-500 hover:text-gray-700">
-          <i class="fas fa-chevron-down"></i>
-        </button>
-      </div>
-      
-      <form method="get" class="space-y-4" id="filtersForm">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Recherche</label>
-            <div class="relative">
-              <input type="text" name="q" value="{{ q }}" 
-                     placeholder="Titre, lieu, description..." 
-                     class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
-              <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-            </div>
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Date de début</label>
-            <input type="date" name="from" value="{{ from }}" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Date de fin</label>
-            <input type="date" name="to" value="{{ to }}" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Statut</label>
-            <select name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
-              <option value="">Tous les statuts</option>
-              <option value="upcoming">À venir</option>
-              <option value="ongoing">En cours</option>
-              <option value="past">Terminés</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="flex items-center gap-3 pt-4">
-          <button type="submit" class="admin-btn admin-btn-primary">
-            <i class="fas fa-search mr-2"></i>Filtrer
-          </button>
-          <button type="button" onclick="resetFilters()" class="admin-btn admin-btn-secondary">
-            <i class="fas fa-times mr-2"></i>Réinitialiser
-          </button>
-        </div>
-      </form>
-    </div>
+    
 
     {# Events Table #}
     <div class="admin-card p-0 overflow-hidden">
@@ -178,10 +125,17 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
-                    <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center mr-4">
-                      <i class="fas fa-calendar-alt text-white text-lg"></i>
+                    <div class="relative">
+                      {% if e.image %}
+                        <img src="{{ path('secure_upload', {'filename': e.image}) }}" alt="Image de {{ e.title }}" class="w-12 h-12 rounded-lg object-cover border border-gray-200">
+                      {% else %}
+                        <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
+                          <i class="fas fa-calendar-alt text-white text-lg"></i>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-3 h-3 bg-gray-400 rounded-full"></div>
+                      {% endif %}
                     </div>
-                    <div>
+                    <div class="ml-4">
                       <div class="text-sm font-medium text-gray-900">{{ e.title ?: 'Sans titre' }}</div>
                       <div class="text-sm text-gray-500">ID: {{ e.id }}</div>
                     </div>
@@ -240,15 +194,17 @@
                        title="Voir les détails">
                       <i class="fas fa-eye"></i>
                     </a>
-                    <a href="#" class="text-blue-600 hover:text-blue-900 transition-colors duration-150" title="Modifier">
+                    <a href="{{ path('admin_events_edit', {id: e.id}) }}" class="text-blue-600 hover:text-blue-900 transition-colors duration-150" title="Modifier">
                       <i class="fas fa-edit"></i>
                     </a>
                     <a href="#" class="text-orange-600 hover:text-orange-900 transition-colors duration-150" title="Participants">
                       <i class="fas fa-users"></i>
                     </a>
-                    <a href="#" class="text-red-600 hover:text-red-900 transition-colors duration-150" title="Supprimer">
-                      <i class="fas fa-trash"></i>
-                    </a>
+                    <form method="post" action="{{ path('admin_events_delete', {id: e.id}) }}" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')">
+                      <button type="submit" class="text-red-600 hover:text-red-900 transition-colors duration-150" title="Supprimer">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </form>
                   </div>
                 </td>
               </tr>
@@ -258,7 +214,7 @@
                   <div class="flex flex-col items-center">
                     <i class="fas fa-calendar-alt text-gray-300 text-4xl mb-4"></i>
                     <h3 class="text-lg font-medium text-gray-900 mb-2">Aucun événement trouvé</h3>
-                    <p class="text-gray-500 mb-4">Commencez par créer votre premier événement.</p>
+                    <p class="text-gray-500 mb-4">Créez votre premier événement avec une belle image pour le promouvoir.</p>
                     <a href="{{ path('admin_events_new') }}" class="admin-btn admin-btn-primary">
                       <i class="fas fa-plus mr-2"></i>Créer un événement
                     </a>

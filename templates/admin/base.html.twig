@@ -178,7 +178,7 @@
 {% block footer %}{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-100">
+<div class="min-h-screen  bg-gray-100">
   <div class="flex h-screen overflow-hidden">
     <!-- Sidebar -->
     <aside class="sidebar w-64 hidden md:block fixed h-screen overflow-hidden bg-gradient-to-b from-green-900 to-green-800 text-white flex flex-col">
@@ -288,7 +288,7 @@
         </div>
       </header>
 
-      <main class="flex-1 p-6 overflow-y-auto">
+      <main class="flex-1 p-8 overflow-y-auto">
         {# Flash messages #}
         {% for type, messages in app.flashes %}
           {% for message in messages %}

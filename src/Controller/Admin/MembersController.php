@@ -71,10 +71,103 @@ class MembersController extends AbstractController
     public function show(int $id, EntityManagerInterface $em): Response
     {
         $user = $em->getRepository(User::class)->find($id);
-        if (!$user) { throw $this->createNotFoundException('Membre introuvable'); }
+        if (!$user) {
+            throw $this->createNotFoundException('Membre introuvable');
+        }
 
         return $this->render('admin/members/show.html.twig', [
             'user' => $user,
         ]);
+    }
+
+    #[Route('/admin/members/{id}/edit', name: 'admin_members_edit', methods: ['GET', 'POST'])]
+    public function edit(int $id, Request $request, EntityManagerInterface $em): Response
+    {
+        $user = $em->getRepository(User::class)->find($id);
+        if (!$user) {
+            throw $this->createNotFoundException('Membre introuvable');
+        }
+
+        if ($request->isMethod('POST')) {
+            // Handle form submission without Symfony forms
+            $firstname = trim($request->request->get('firstname', ''));
+            $lastname = trim($request->request->get('lastname', ''));
+            $email = trim($request->request->get('email', ''));
+            $phone = trim($request->request->get('phone', ''));
+            $country = trim($request->request->get('country', ''));
+            $roles = $request->request->all('roles');
+
+            // Validate required fields
+            if (empty($firstname) || empty($lastname) || empty($email)) {
+                $this->addFlash('error', 'Les champs prénom, nom et email sont obligatoires.');
+                return $this->render('admin/members/edit.html.twig', [
+                    'user' => $user,
+                ]);
+            }
+
+            // Check if email is already used by another user
+            $existingUser = $em->getRepository(User::class)->findOneBy(['email' => $email]);
+            if ($existingUser && $existingUser->getId() !== $user->getId()) {
+                $this->addFlash('error', 'Cet email est déjà utilisé par un autre membre.');
+                return $this->render('admin/members/edit.html.twig', [
+                    'user' => $user,
+                ]);
+            }
+
+            // Update user
+            $user->setFirstname($firstname);
+            $user->setLastname($lastname);
+            $user->setEmail($email);
+            $user->setPhone($phone);
+            $user->setCountry($country);
+
+            // Handle roles
+            if (!empty($roles) && is_array($roles)) {
+                $user->setRoles($roles);
+            }
+
+            $em->flush();
+
+            $this->addFlash('success', 'Membre modifié avec succès.');
+            return $this->redirectToRoute('admin_members_show', ['id' => $user->getId()]);
+        }
+
+        return $this->render('admin/members/edit.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/admin/members/{id}/delete', name: 'admin_members_delete', methods: ['POST'])]
+    public function delete(int $id, Request $request, EntityManagerInterface $em): Response
+    {
+        $user = $em->getRepository(User::class)->find($id);
+        if (!$user) {
+            throw $this->createNotFoundException('Membre introuvable');
+        }
+
+        // Check if this is a POST request (CSRF protection)
+        if (!$request->isMethod('POST')) {
+            throw $this->createAccessDeniedException('Méthode non autorisée');
+        }
+
+        // Prevent deletion of the current user
+        $currentUser = $this->getUser();
+        if ($currentUser && $currentUser instanceof User && $currentUser->getId() === $user->getId()) {
+            $this->addFlash('error', 'Vous ne pouvez pas supprimer votre propre compte.');
+            return $this->redirectToRoute('admin_members_index');
+        }
+
+        // Prevent deletion of admin users (optional security measure)
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            $this->addFlash('error', 'Vous ne pouvez pas supprimer un administrateur.');
+            return $this->redirectToRoute('admin_members_index');
+        }
+
+        $userEmail = $user->getEmail();
+        $em->remove($user);
+        $em->flush();
+
+        $this->addFlash('success', 'Le membre ' . $userEmail . ' a été supprimé avec succès.');
+        return $this->redirectToRoute('admin_members_index');
     }
 }
