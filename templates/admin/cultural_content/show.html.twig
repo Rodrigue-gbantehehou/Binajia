@@ -50,7 +50,7 @@
         </div>
       {% elseif content.image %}
         <div class="rounded-lg overflow-hidden">
-          <img src="{{ asset('media/' ~ content.image) }}" alt="{{ content.title }}" class="w-full h-auto">
+          <img src="{{ path('secure_upload', {'filename': content.image}) }}" alt="{{ content.title }}" class="w-full h-auto">
         </div>
       {% else %}
         <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">

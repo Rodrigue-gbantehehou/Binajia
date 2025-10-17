@@ -6,17 +6,35 @@
     <h1 class="font-serif text-4xl font-bold text-charcoal">Lieux culturels</h1>
     <p class="mt-4 text-gray-600 max-w-3xl">Explorez les lieux emblématiques et partenaires au Bénin et au Nigéria.</p>
     <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {% for i in 1..6 %}
-      {% set slug = 'lieu-' ~ i %}
+      {% for place in places %}
+      {% set slug = place.title|lower|replace({" ": "-", "'": ""}) %}
       <a href="{{ path('app_place_show', {slug: slug}) }}" class="block rounded-2xl overflow-hidden bg-white ring-1 ring-gray-200 card-hover">
-        <div class="h-40 bg-cream"></div>
+        <div class="h-40 overflow-hidden">
+          {% if place.image %}
+            <img src="{{ path('secure_upload', {'filename': place.image}) }}" alt="{{ place.title }}" class="w-full h-full object-cover">
+          {% else %}
+            <div class="w-full h-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+              <svg class="w-16 h-16 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+              </svg>
+            </div>
+          {% endif %}
+        </div>
         <div class="p-4">
-          <h3 class="font-semibold hover:text-primary">Nom du lieu {{ i }}</h3>
-          <div class="text-xs text-gray-500">Ville, Pays</div>
+          <h3 class="font-semibold hover:text-primary">{{ place.title }}</h3>
+          <div class="text-xs text-gray-500">{{ place.country ?: 'Lieu culturel' }}</div>
         </div>
       </a>
       {% endfor %}
     </div>
+
+    {% if places is empty %}
+    <div class="mt-8 text-center py-12">
+      <div class="text-gray-500 text-lg">Aucun lieu culturel disponible pour le moment.</div>
+      <p class="text-gray-400 mt-2">Revenez bientôt pour découvrir nos lieux partenaires !</p>
+    </div>
+    {% endif %}
+
   </div>
 </section>
 {% endblock %}

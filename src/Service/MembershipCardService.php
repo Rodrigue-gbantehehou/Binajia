@@ -5,7 +5,6 @@ namespace App\Service;
 use App\Entity\User;
 use App\Entity\Payments;
 use App\Entity\Receipts;
-use App\Service\QrCodeService;
 use App\Entity\MembershipCards;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -14,22 +13,20 @@ class MembershipCardService
     public function __construct(
         private readonly PdfGeneratorService $pdfGenerator,
         private readonly EntityManagerInterface $em,
-        private readonly string $projectDir,
+        private readonly string $uploadDir, // ⚡ on injecte var/uploads
         private readonly QrCodeService $qrCodeService,
     ) {
     }
 
     /**
-     * Generate the membership card PDF and optionally the receipt,
-     * persist MembershipCards entity, and return public URLs/paths.
+     * Génère la carte PDF et éventuellement le reçu, 
+     * enregistre les entités et renvoie les chemins sécurisés.
      *
-     * @return array{cardPdfUrl: string, receiptPdfPath: ?string}
+     * @return array{cardPdfPath: string, receiptPdfPath: ?string}
      */
-    public function generateAndPersist(User $user, ?Payments $payment,string $avatarPath, string $memberId): array
+    public function generateAndPersist(User $user, ?Payments $payment, string $avatarPath, string $memberId): array
     {
-
-        // 1) Persist the MembershipCards entity first (without pdf URL)
-        
+        // 1️⃣ Création de l'entité carte
         $card = new MembershipCards();
         $card->setCardnumberC($memberId);
         $card->setIssuedate(new \DateTime());
@@ -37,35 +34,34 @@ class MembershipCardService
         $card->setStatus(true);
         $card->setPhoto($avatarPath);
         $card->setUser($user);
-        $this->em->persist($card);
-        $this->em->flush(); // ensure it has an ID before generating files
 
-        // 2) Ensure directories
-        $cardsDir = $this->projectDir . '/public/media/cards';
+        $this->em->persist($card);
+        $this->em->flush();
+
+        // 2️⃣ Dossiers sécurisés
+        $cardsDir = $this->uploadDir . '/cards';
+        $receiptsDir = $this->uploadDir . '/receipts';
+
         if (!is_dir($cardsDir)) { @mkdir($cardsDir, 0775, true); }
-        $receiptsDir = $this->projectDir . '/public/media/receipts';
         if (!is_dir($receiptsDir)) { @mkdir($receiptsDir, 0775, true); }
 
-        // 3) Generate card PDF (front and back styled)
+        // 3️⃣ Génération du PDF de la carte
         $stamp = date('YmdHis');
         $cardFilename = sprintf('card_%d_%s.pdf', (int)$user->getId(), $stamp);
         $cardPdfPath = $cardsDir . '/' . $cardFilename;
-        $cardPdfUrl = '/media/cards/' . $cardFilename;
 
-        // Compute dynamic fields
         $issuedAt = new \DateTime();
         $expiryAt = (clone $issuedAt)->modify('+1 year');
         $name = trim(($user->getFirstname() ?? '') . ' ' . ($user->getLastname() ?? ''));
         $phone = (string)($user->getPhone() ?? '');
         $nationality = (string)($user->getCountry() ?? '');
-        $roleBadge = 'MEMBRE'; // Valeur par défaut
-        $roleTitle = 'MEMBER\nBINAJIA'; // Valeur par défaut
+        $roleBadge = 'MEMBRE';
+        $roleTitle = 'MEMBER\nBINAJIA';
 
-        
-        // Vérifier et préparer l'avatar
+        // 4️⃣ Avatar sécurisé
         $avatarFullPath = $this->prepareAvatar($avatarPath);
 
-        // Générer le QR code avec les informations du membre
+        // 5️⃣ QR Code
         $qrData = sprintf(
             "BINAJIA Member\nID: %s\nName: %s\nPhone: %s\nExpiry: %s",
             $memberId,
@@ -75,6 +71,7 @@ class MembershipCardService
         );
         $qrCode = $this->qrCodeService->generate($qrData);
 
+        // 6️⃣ PDF Carte
         $this->pdfGenerator->generatePdf(
             'membership/card.html.twig',
             [
@@ -89,16 +86,15 @@ class MembershipCardService
                 'joinDate' => $issuedAt->format('d/m/Y'),
                 'qrCode' => $qrCode,
             ],
-            $cardPdfPath,
-            'A4',
-            'portrait'
+            $cardPdfPath
         );
 
-        // 4) Generate receipt PDF only if a payment is provided
+        // 7️⃣ Reçu PDF (optionnel)
         $receiptPdfPath = null;
         if ($payment) {
             $receiptNumber = sprintf('R-%s-%d', date('YmdHis'), (int)$payment->getId());
             $receiptPdfPath = $receiptsDir . sprintf('/receipt_%d.pdf', (int)$payment->getId());
+
             $this->pdfGenerator->generatePdf(
                 'invoice/receipt.html.twig',
                 [
@@ -107,54 +103,41 @@ class MembershipCardService
                     'receiptNumber' => $receiptNumber,
                     'issuedAt' => new \DateTime(),
                 ],
-                $receiptPdfPath,
-                'A4',
-                'portrait'
+                $receiptPdfPath
             );
 
-            // Persist a Receipts entity linked to the payment
             $receipt = new Receipts();
-            $receipt->setReceiptNumber(sprintf('R-%s-%d', date('YmdHis'), (int)$payment->getId()));
+            $receipt->setReceiptNumber($receiptNumber);
             $receipt->setIssuedDate(new \DateTime());
             $receipt->setPayment($payment);
-            $receipt->setPdfurl($receiptPdfPath); // public path
+            $receipt->setPdfurl($receiptPdfPath);
+
             $this->em->persist($receipt);
             $this->em->flush();
         }
 
-        // 5) Update the card with the PDF URL and flush again
-        $card->setPdfurl($cardPdfUrl);
+        // 8️⃣ Mise à jour de la carte avec le chemin PDF
+        $card->setPdfurl($cardPdfPath);
         $this->em->flush();
 
         return [
-            'cardPdfUrl' => $cardPdfUrl,
+            'cardPdfPath' => $cardPdfPath,
             'receiptPdfPath' => $receiptPdfPath,
         ];
     }
 
-    /**
-     * Prépare et vérifie l'avatar pour la génération PDF avec DomPDF
-     */
     private function prepareAvatar(string $avatarPath): ?string
     {
         if (empty($avatarPath)) {
             return $this->createDefaultAvatar();
         }
 
-        // Construire le chemin absolu du fichier
-        if (str_starts_with($avatarPath, '/')) {
-            $fullPath = $this->projectDir . '/public' . $avatarPath;
-        } else {
-            $fullPath = $this->projectDir . '/public/' . ltrim($avatarPath, '/');
-        }
+        $fullPath = $this->uploadDir . '/avatars/' . basename($avatarPath);
 
-        // Vérifier si le fichier existe et est lisible
         if (!file_exists($fullPath) || !is_readable($fullPath)) {
-            error_log("Avatar file not found or not readable: " . $fullPath);
             return $this->createDefaultAvatar();
         }
 
-        // Pour DomPDF, convertir en data URI si c'est une image
         $imageInfo = @getimagesize($fullPath);
         if ($imageInfo !== false) {
             $imageData = file_get_contents($fullPath);
@@ -163,16 +146,11 @@ class MembershipCardService
             return "data:$mimeType;base64,$base64";
         }
 
-        // Si ce n'est pas une image valide, utiliser l'avatar par défaut
         return $this->createDefaultAvatar();
     }
 
-    /**
-     * Crée un avatar par défaut pour DomPDF en data URI
-     */
     private function createDefaultAvatar(): string
     {
-        // Créer une image PNG simple en data URI pour DomPDF
         $defaultImage = <<<SVG
 <svg width="80" height="95" xmlns="http://www.w3.org/2000/svg">
     <rect width="80" height="95" fill="#f0f0f0" stroke="#ccc" stroke-width="1"/>
@@ -182,7 +160,6 @@ class MembershipCardService
 </svg>
 SVG;
 
-        // Convertir le SVG en data URI
         $base64 = base64_encode($defaultImage);
         return "data:image/svg+xml;base64,$base64";
     }

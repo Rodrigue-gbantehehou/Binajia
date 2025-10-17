@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réserver - {{ evenement.title }}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-green-50 via-yellow-50 to-green-50 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Réserver pour <span class="text-yellow-400">{{ evenement.title }}</span>
+            </h1>
+            <p class="text-lg text-gray-600">
+                {{ evenement.startDate ? evenement.startDate|date('d M Y') : 'Date non définie' }} •
+                {{ evenement.location ?: 'Lieu non spécifié' }}
+                {% if evenement.country %}• {{ evenement.country }}{% endif %}
+            </p>
+        </div>
+
+        <!-- Event Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-8">
+            <div class="md:flex">
+                <div class="md:w-1/3">
+                    {% if evenement.image %}
+                        <img src="{{ path('secure_upload', {'filename': evenement.image}) }}"
+                             alt="{{ evenement.title }}"
+                             class="w-full h-64 md:h-full object-cover">
+                    {% else %}
+                        <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop"
+                             alt="{{ evenement.title }}"
+                             class="w-full h-64 md:h-full object-cover">
+                    {% endif %}
+                </div>
+                <div class="md:w-2/3 p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ evenement.title }}</h2>
+                    {% if evenement.description %}
+                        <p class="text-gray-600 mb-4">{{ evenement.description|slice(0, 200) }}{% if evenement.description|length > 200 %}...{% endif %}</p>
+                    {% endif %}
+                    <div class="flex items-center gap-4 text-sm text-gray-500">
+                        <span class="flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            {{ evenement.startDate ? evenement.startDate|date('d M Y') : 'Date non définie' }}
+                        </span>
+                        <span class="flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            </svg>
+                            {{ evenement.location ?: 'Lieu non spécifié' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reservation Form -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Informations de réservation</h3>
+
+            {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        {{ form_label(form.Nom, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-2'}}) }}
+                        {{ form_widget(form.Nom, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors'}}) }}
+                        {{ form_errors(form.Nom) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.email, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-2'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors'}}) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        {{ form_label(form.telephone, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-2'}}) }}
+                        {{ form_widget(form.telephone, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors'}}) }}
+                        {{ form_errors(form.telephone) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.paysresidence, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-2'}}) }}
+                        {{ form_widget(form.paysresidence, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors'}}) }}
+                        {{ form_errors(form.paysresidence) }}
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        {{ form_label(form.destination, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-2'}}) }}
+                        {{ form_widget(form.destination, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors'}}) }}
+                        {{ form_errors(form.destination) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.datedepart, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-2'}}) }}
+                        {{ form_widget(form.datedepart, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors'}}) }}
+                        {{ form_errors(form.datedepart) }}
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        {{ form_label(form.nbrvoyageurs, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-2'}}) }}
+                        {{ form_widget(form.nbrvoyageurs, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors'}}) }}
+                        {{ form_errors(form.nbrvoyageurs) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.typevoyage, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-2'}}) }}
+                        {{ form_widget(form.typevoyage, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors'}}) }}
+                        {{ form_errors(form.typevoyage) }}
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        {{ form_label(form.centreinteret, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-2'}}) }}
+                        {{ form_widget(form.centreinteret, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors'}}) }}
+                        {{ form_errors(form.centreinteret) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.budgetestime, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-2'}}) }}
+                        {{ form_widget(form.budgetestime, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors'}}) }}
+                        {{ form_errors(form.budgetestime) }}
+                    </div>
+                </div>
+
+                <div>
+                    {{ form_label(form.commentaire, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-2'}}) }}
+                    {{ form_widget(form.commentaire, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors', 'rows': 4}}) }}
+                    {{ form_errors(form.commentaire) }}
+                </div>
+
+                <div class="flex justify-center">
+                    <button type="submit" class="px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-400 text-white rounded-full font-semibold text-lg transition-all duration-300 hover:shadow-lg hover:scale-105">
+                        Confirmer la réservation
+                    </button>
+                </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

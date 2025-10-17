@@ -39,6 +39,26 @@
 			</script>
 			<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 			<style>
+			@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+#carousel {
+    animation: scroll 40s linear infinite;
+}
+
+#carousel:hover {
+    animation-play-state: paused;
+}
+
+#carousel article:hover {
+    animation-play-state: paused;
+}
 				/* Fallback to support legacy JS that toggles `active` */
 				.mobile-menu.active {
 					transform: translateX(0) !important;
@@ -179,27 +199,27 @@
 								<a href="{{ path('app_login', {}, false) ?? '#' }}" class="hidden md:block px-6 py-3 rounded-full bg-white border-2 border-primary text-primary  font-semibold">Connexion</a>
 							{% endif %}
 							{% if app.user %}
-								<a href="{{ path('app_user_dashboard') }}" class="hidden md:block  px-6 py-3 rounded-md text-white  bg-primary text-center rounded-full font-medium transition duration-300" style="background-color: #f59e0b;">Espace membre</a>
-								<a href="{{ path('app_logout') }}" class="hidden md:block p-2.5 rounded-full ring-1 ring-gray-300 hover:bg-primary" title="Se déconnecter" aria-label="Se déconnecter">
-									<svg class="w-5 h-5 text-charcoal" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<a href="{{ path('app_user_dashboard') }}" class="hidden md:block  px-6 py-3 text-white  bg-primary text-center rounded-full font-medium transition duration-300 bg-yellow-400 hover:bg-yellow-500 ">Espace membre</a>
+								<a href="{{ path('app_logout') }}" class="hidden md:block p-2.5 rounded-full ring-1 ring-white hover:bg-yellow-400" title="Se déconnecter" aria-label="Se déconnecter">
+									<svg class="w-5 h-5 text-white" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 										<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
 										<polyline points="16 17 21 12 16 7"/>
 										<line x1="21" y1="12" x2="9" y2="12"/>
 									</svg>
 								</a>
-								<button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-cream rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
-									<svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+								<button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-green-600 rounded-full transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
+									<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
 								</button>
-								<a href="{{ path('app_logout') }}" class="md:hidden p-2 rounded-md hover:bg-secondary transition-colors" title="Se déconnecter" aria-label="Se déconnecter">
-									<svg class="w-6 h-6 text-charcoal" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<a href="{{ path('app_logout') }}" class="md:hidden p-2 rounded-full hover:bg-secondary transition-colors" title="Se déconnecter" aria-label="Se déconnecter">
+									<svg class="w-6 h-6 text-white" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 										<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
 										<polyline points="16 17 21 12 16 7"/>
 										<line x1="21" y1="12" x2="9" y2="12"/>
 									</svg>
 								</a>
 							{% else %}
-							<button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-cream rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
-									<svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+							<button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-cream rounded-full transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
+									<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
 								</button>
 								<a href="{{ path('app_membership') }}" class="hidden md:block px-6 py-3  text-white rounded-full bg-yellow-400 outline outline-2 outline-white font-semibold"> Devenir membre</a>
 								
@@ -207,40 +227,107 @@
 						</div>
 					</div>
 				</nav>
-				<div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 p-6 hidden" aria-hidden="true">
+				<div id="mobile-menu" class="mobile-menu fixed top-0 bg-gradient-to-br from-yellow-400 to-green-500  right-0 h-full w-80 bg-white shadow-2xl z-50 p-6 hidden" aria-hidden="true">
 					<div class="flex justify-between items-center mb-8">
 						<div class="flex items-center space-x-3">
-							<img src="/media/logo.jpeg" alt="Logo Binajia" class="h-10 w-10 rounded-full object-cover">
-							<span class="font-serif text-2xl font-bold text-gradient">BINAJIA</span>
+							<img src="/media/logo.jpeg" alt="Logo Binajia" class="h-10 w-10 rounded-md object-cover">
+							<span class="font-serif text-2xl font-bold text-white">BINAJIA</span>
 						</div>
 						<button id="close-menu" class="p-2 hover:bg-cream rounded-lg transition-colors" aria-label="Fermer le menu">
 							<svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
 						</button>
 					</div>
-					<div class="space-y-4">
+					<div class="space-y-4 ">
 						<!-- Section Accueil -->
-						<a href="{{ path('app_home') }}" class="block text-white hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Accueil</a>
-						<a href="{{ path('app_avantage') }}" class="block text-white hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Explorer</a>
-						<a href="{{ path('app_events') }}" class="block text-white hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Événements</a>
-						<a href="{{ path('app_about') }}" class="block text-white hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">A propos</a>
-						<a href="{{ path('app_contact') }}" class="block text-white hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Contact</a>
+						<a href="{{ path('app_home') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Accueil</a>
+						<a href="{{ path('app_avantage') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Explorer</a>
+						<a href="{{ path('app_events') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Événements</a>
+						<a href="{{ path('app_about') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">A propos</a>
+						<a href="{{ path('app_contact') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Contact</a>
 						{% if is_granted('ROLE_ADMIN') %}
-							<a href="{{ path('admin_dashboard') }}" class="block text-white hover:text-primary font-medium text-lg py-3 px-4 rounded-lg hover:bg-cream transition-all">Admin</a>
+							<a href="{{ path('admin_dashboard') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Admin</a>
 						{% endif %}
 						<div class="pt-4 space-y-3">
 							{% if not app.user %}
-							<a href="{{ path('app_membership') }}" class="block w-full px-6 py-3 text-center bg-primary  hover:bg-secondary text-white px-6 py-3 rounded-md text-center font-medium transition duration-300">Devenir membre</a>
+							<a href="{{ path('app_membership') }}" class="block w-full px-6 py-3 text-center bg-primary  hover:bg-secondary text-white px-6 py-3 rounded-full text-center font-medium transition duration-300">Devenir membre</a>
 								<a href="{{ path('app_login') }}" class="block w-full px-6 py-3 text-center bg-white border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all">Connexion</a>
 								
 							{% else %}
 								<a href="{{ path('app_user_dashboard') }}" class="block w-full rounded-full px-6 py-3 text-center btn-primary">Espace membre</a>
-								<a href="{{ path('app_logout') }}" class="block w-full px-6 py-3 text-center bg-primary border-2 border-gray-300 text-charcoal rounded-full font-semibold hover:bg-cream transition-all">Se déconnecter</a>
+								<a href="{{ path('app_logout') }}" class="block w-full px-6 py-3 text-center bg-primary border-2 border-gray-300 text-white rounded-full font-semibold hover:bg-cream transition-all">Se déconnecter</a>
 							{% endif %}
 						</div>
 					</div>
 				</div>
 				<div id="menu-overlay" class="hidden fixed inset-0 bg-black/50 z-40"></div>
 			{% endblock %}
+
+			<!-- Flash Messages Section -->
+			<div id="flash-messages" class="fixed top-24 left-4 right-4 z-50 space-y-2">
+				{% for message in app.flashes('success') %}
+					<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
+						<div class="flex items-center">
+							<svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+								<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+							</svg>
+							<span>{{ message }}</span>
+						</div>
+						<button onclick="this.parentElement.remove()" class="text-green-500 hover:text-green-700 ml-4">
+							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+							</svg>
+						</button>
+					</div>
+				{% endfor %}
+
+				{% for message in app.flashes('error') %}
+					<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
+						<div class="flex items-center">
+							<svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+								<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+							</svg>
+							<span>{{ message }}</span>
+						</div>
+						<button onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-700 ml-4">
+							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+							</svg>
+						</button>
+					</div>
+				{% endfor %}
+
+				{% for message in app.flashes('warning') %}
+					<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
+						<div class="flex items-center">
+							<svg class="w-5 h-5 mr-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+								<path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+							</svg>
+							<span>{{ message }}</span>
+						</div>
+						<button onclick="this.parentElement.remove()" class="text-yellow-500 hover:text-yellow-700 ml-4">
+							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+							</svg>
+						</button>
+					</div>
+				{% endfor %}
+
+				{% for message in app.flashes('info') %}
+					<div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
+						<div class="flex items-center">
+							<svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+								<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+							</svg>
+							<span>{{ message }}</span>
+						</div>
+						<button onclick="this.parentElement.remove()" class="text-blue-500 hover:text-blue-700 ml-4">
+							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+							</svg>
+						</button>
+					</div>
+				{% endfor %}
+			</div>
 
 			<main class="pt-20"> {% block content %}{% endblock %}
 				</main>
@@ -295,11 +382,9 @@
 										<li>
 											<a href="{{ path('app_membership') }}" class="text-gray-400 hover:text-white transition-colors">Devenir membre</a>
 										</li>
+										
 										<li>
-											<a href="#" class="text-gray-400 hover:text-white transition-colors">Événements privés</a>
-										</li>
-										<li>
-											<a href="#" class="text-gray-400 hover:text-white transition-colors">Partenariats</a>
+											<a href="{{ path('app_partenaire') }}" class="text-gray-400 hover:text-white transition-colors">Partenariats</a>
 										</li>
 									</ul>
 								</div>

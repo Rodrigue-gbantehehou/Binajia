@@ -198,3 +198,19 @@
 .hover\:bg-secondary:hover { background-color: var(--color-secondary); }
 .hover\:text-primary:hover { color: var(--color-primary); }
 .hover\:text-white:hover { color: #fff; }
+
+/* Flash Messages Animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
