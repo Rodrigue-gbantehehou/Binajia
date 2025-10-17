@@ -13,6 +13,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ADMIN')]
 class ReceiptsController extends AbstractController
 {
+    private string $uploadDirectory;
+
+    public function __construct(string $uploadDir)
+    {
+        $this->uploadDirectory = $uploadDir;
+    }
     #[Route('/admin/receipts', name: 'admin_receipts_index', methods: ['GET'])]
     public function index(Request $request, EntityManagerInterface $em): Response
     {
@@ -51,7 +57,7 @@ class ReceiptsController extends AbstractController
         if (!$receipt) { throw $this->createNotFoundException('Reçu introuvable'); }
         $url = $receipt->getPdfurl();
         if (!$url) { throw $this->createNotFoundException('PDF manquant'); }
-        $projectDir = (string) $this->getParameter('kernel.project_dir');
+        $projectDir = $this->uploadDirectory;
         $path = $projectDir . $url;
         if (!is_file($path)) { throw $this->createNotFoundException('Fichier non trouvé'); }
         return new BinaryFileResponse($path);

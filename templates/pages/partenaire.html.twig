@@ -1,0 +1,544 @@
+{% extends 'base.html.twig' %}
+{% block title %}Nos Partenaires — Binajia
+{% endblock %}
+
+{% block content %}
+<style>
+	body {
+		font-family: 'Open Sans', sans-serif;
+	}
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-family: 'Montserrat', sans-serif;
+	}
+
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes float {
+		0,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-10px);
+		}
+	}
+
+	@keyframes slideInLeft {
+		from {
+			opacity: 0;
+			transform: translateX(-50px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes slideInRight {
+		from {
+			opacity: 0;
+			transform: translateX(50px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	.animate-fade-in-up {
+		animation: fadeInUp 0.8s ease-out forwards;
+	}
+
+	.animate-slide-left {
+		animation: slideInLeft 0.8s ease-out forwards;
+	}
+
+	.animate-slide-right {
+		animation: slideInRight 0.8s ease-out forwards;
+	}
+
+	.animate-float {
+		animation: float 3s ease-in-out infinite;
+	}
+
+	.hero-overlay {
+		background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.85), rgba(255, 174, 0, 0.9));
+	}
+
+	.card-hover {
+		transition: all 0.3s ease;
+	}
+
+	.card-hover:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+	}
+
+	.section-divider {
+		width: 80px;
+		height: 4px;
+		background: linear-gradient(to right, #00871d, #ffae00);
+		margin: 0 auto;
+	}
+
+	.gradient-text {
+		background: linear-gradient(135deg, #00871d, #ffae00);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.partner-icon {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.partner-icon::before {
+		content: '';
+		position: absolute;
+		width: 120%;
+		height: 120%;
+		background: currentColor;
+		opacity: 0.1;
+		border-radius: 50%;
+		transition: all 0.3s ease;
+	}
+
+	.card-hover:hover .partner-icon::before {
+		transform: scale(1.2);
+		opacity: 0.15;
+	}
+</style>
+
+<!-- Hero Section -->
+<header class="relative overflow-hidden bg-cover bg-center min-h-[70vh] flex items-center" style="background-image: url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1200&auto=format&fit=crop');">
+	<div class="hero-overlay absolute inset-0"></div>
+
+	<div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white py-20">
+		<div class="animate-fade-in-up">
+			<div class="inline-flex items-center justify-center mb-8 animate-float">
+				<i data-feather="users" class="w-16 h-16 text-yellow-400"></i>
+			</div>
+
+			<h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+				Nos
+				<span class="text-yellow-300">Partenaires</span>
+			</h1>
+
+			<p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-95">
+				Des alliances stratégiques pour une Afrique intégrée
+			</p>
+
+			<div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 max-w-4xl mx-auto border border-white border-opacity-20">
+				<p class="text-lg md:text-xl leading-relaxed">
+					Le réseau
+					<span class="font-bold text-yellow-300">Binajia</span>
+					repose sur une diversité de partenaires qui contribuent chacun à leur manière à la réalisation de notre mission. Ces collaborations permettent de renforcer l'impact de nos programmes, d'élargir notre portée et de créer des synergies durables entre les acteurs du changement.
+				</p>
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- Introduction Section -->
+<section class="py-20 px-4 bg-white">
+	<div class="max-w-7xl mx-auto">
+		<div class="text-center mb-16">
+			<h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
+				Types de
+				<span class="gradient-text">Partenaires</span>
+			</h2>
+			<div class="section-divider mb-6"></div>
+			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
+				Cinq catégories de partenaires au service de l'intégration africaine
+			</p>
+		</div>
+
+		<!-- Stats Overview -->
+		<div class="grid md:grid-cols-5 gap-4 mb-16">
+			<div class="bg-gradient-to-br from-green-50 to-white p-6 rounded-xl shadow-md text-center border border-green-100">
+				<div class="text-4xl font-extrabold text-green-600 mb-2">25+</div>
+				<p class="text-sm text-gray-600">Institutions</p>
+			</div>
+			<div class="bg-gradient-to-br from-yellow-50 to-white p-6 rounded-xl shadow-md text-center border border-yellow-100">
+				<div class="text-4xl font-extrabold text-yellow-600 mb-2">40+</div>
+				<p class="text-sm text-gray-600">Entreprises</p>
+			</div>
+			<div class="bg-gradient-to-br from-green-50 to-white p-6 rounded-xl shadow-md text-center border border-green-100">
+				<div class="text-4xl font-extrabold text-green-600 mb-2">30+</div>
+				<p class="text-sm text-gray-600">ONG & Associations</p>
+			</div>
+			<div class="bg-gradient-to-br from-yellow-50 to-white p-6 rounded-xl shadow-md text-center border border-yellow-100">
+				<div class="text-4xl font-extrabold text-yellow-600 mb-2">20+</div>
+				<p class="text-sm text-gray-600">Espaces Culturels</p>
+			</div>
+			<div class="bg-gradient-to-br from-green-50 to-white p-6 rounded-xl shadow-md text-center border border-green-100">
+				<div class="text-4xl font-extrabold text-green-600 mb-2">15+</div>
+				<p class="text-sm text-gray-600">Universités</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Institutions Publiques -->
+<section class="py-20 px-4 bg-gradient-to-br from-green-50 to-white">
+	<div class="max-w-7xl mx-auto">
+		<div class="grid md:grid-cols-2 gap-12 items-center">
+			<div class="order-2 md:order-1">
+				<div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl card-hover">
+					<div class="partner-icon text-green-500 mb-6 w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center">
+						<i data-feather="briefcase" class="w-12 h-12"></i>
+					</div>
+
+					<h3 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
+						Institutions Publiques
+					</h3>
+
+					<div class="w-16 h-1 bg-green-500 mb-6"></div>
+
+					<div class="mb-6">
+						<h4 class="text-xl font-bold text-green-600 mb-3 flex items-center gap-2">
+							<i data-feather="target" class="w-5 h-5"></i>
+							Rôle
+						</h4>
+						<p class="text-gray-700 leading-relaxed">
+							Apportent un soutien logistique, diplomatique et territorial. Elles facilitent l'ancrage local des initiatives Binajia et assurent leur cohérence avec les politiques publiques.
+						</p>
+					</div>
+
+					<div class="bg-green-50 rounded-xl p-6">
+						<h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+							<i data-feather="check-circle" class="w-5 h-5 text-green-600"></i>
+							Contributions clés
+						</h4>
+						<ul class="space-y-3 text-gray-700">
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
+								<span>Facilitation administrative et réglementaire</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
+								<span>Mise à disposition d'espaces et infrastructures</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
+								<span>Soutien aux démarches transfrontalières</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
+								<span>Légitimité institutionnelle</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="order-1 md:order-2">
+				<div class="relative">
+					<img src="https://images.unsplash.com/photo-1541872703-74c5e44368f9?q=80&w=800&auto=format&fit=crop" alt="Institutions" class="rounded-3xl shadow-2xl">
+					<div class="absolute inset-0 bg-gradient-to-t from-green-900 to-transparent opacity-20 rounded-3xl"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Entreprises Privées -->
+<section class="py-20 px-4 bg-white">
+	<div class="max-w-7xl mx-auto">
+		<div class="grid md:grid-cols-2 gap-12 items-center">
+			<div>
+				<div class="relative">
+					<img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=800&auto=format&fit=crop" alt="Entreprises" class="rounded-3xl shadow-2xl">
+					<div class="absolute inset-0 bg-gradient-to-t from-yellow-900 to-transparent opacity-20 rounded-3xl"></div>
+				</div>
+			</div>
+
+			<div>
+				<div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl card-hover border-2 border-yellow-100">
+					<div class="partner-icon text-yellow-500 mb-6 w-20 h-20 bg-yellow-100 rounded-2xl flex items-center justify-center">
+						<i data-feather="trending-up" class="w-12 h-12"></i>
+					</div>
+
+					<h3 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
+						Entreprises Privées
+					</h3>
+
+					<div class="w-16 h-1 bg-yellow-500 mb-6"></div>
+
+					<div class="mb-6">
+						<h4 class="text-xl font-bold text-yellow-600 mb-3 flex items-center gap-2">
+							<i data-feather="target" class="w-5 h-5"></i>
+							Rôle
+						</h4>
+						<p class="text-gray-700 leading-relaxed">
+							Proposent des offres exclusives, du financement et une expertise technique. Elles soutiennent les projets Binajia à travers des ressources, des services et des opportunités de co-branding.
+						</p>
+					</div>
+
+					<div class="bg-yellow-50 rounded-xl p-6">
+						<h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+							<i data-feather="check-circle" class="w-5 h-5 text-yellow-600"></i>
+							Contributions clés
+						</h4>
+						<ul class="space-y-3 text-gray-700">
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
+								<span>Financement et sponsoring d'événements</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
+								<span>Offres exclusives pour les membres</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
+								<span>Expertise technique et innovation</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
+								<span>Opportunités d'emploi et de stage</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ONG et Associations -->
+<section class="py-20 px-4 bg-gradient-to-br from-green-50 to-white">
+	<div class="max-w-7xl mx-auto">
+		<div class="grid md:grid-cols-2 gap-12 items-center">
+			<div class="order-2 md:order-1">
+				<div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl card-hover">
+					<div class="partner-icon text-green-500 mb-6 w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center">
+						<i data-feather="heart" class="w-12 h-12"></i>
+					</div>
+
+					<h3 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
+						ONG et Associations
+					</h3>
+
+					<div class="w-16 h-1 bg-green-500 mb-6"></div>
+
+					<div class="mb-6">
+						<h4 class="text-xl font-bold text-green-600 mb-3 flex items-center gap-2">
+							<i data-feather="target" class="w-5 h-5"></i>
+							Rôle
+						</h4>
+						<p class="text-gray-700 leading-relaxed">
+							Assurent la mobilisation communautaire et développent des projets sociaux. Leur ancrage local et leur engagement citoyen renforcent l'impact social des actions menées.
+						</p>
+					</div>
+
+					<div class="bg-green-50 rounded-xl p-6">
+						<h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+							<i data-feather="check-circle" class="w-5 h-5 text-green-600"></i>
+							Contributions clés
+						</h4>
+						<ul class="space-y-3 text-gray-700">
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
+								<span>Mobilisation des communautés locales</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
+								<span>Développement de projets sociaux</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
+								<span>Sensibilisation et plaidoyer</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
+								<span>Accompagnement des populations vulnérables</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="order-1 md:order-2">
+				<div class="relative">
+					<img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=800&auto=format&fit=crop" alt="ONG" class="rounded-3xl shadow-2xl">
+					<div class="absolute inset-0 bg-gradient-to-t from-green-900 to-transparent opacity-20 rounded-3xl"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Espaces Culturels -->
+<section class="py-20 px-4 bg-white">
+	<div class="max-w-7xl mx-auto">
+		<div class="grid md:grid-cols-2 gap-12 items-center">
+			<div>
+				<div class="relative">
+					<img src="https://images.unsplash.com/photo-1514306191717-452ec28c7814?q=80&w=800&auto=format&fit=crop" alt="Culture" class="rounded-3xl shadow-2xl">
+					<div class="absolute inset-0 bg-gradient-to-t from-yellow-900 to-transparent opacity-20 rounded-3xl"></div>
+				</div>
+			</div>
+
+			<div>
+				<div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl card-hover border-2 border-yellow-100">
+					<div class="partner-icon text-yellow-500 mb-6 w-20 h-20 bg-yellow-100 rounded-2xl flex items-center justify-center">
+						<i data-feather="music" class="w-12 h-12"></i>
+					</div>
+
+					<h3 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
+						Espaces Culturels
+					</h3>
+
+					<div class="w-16 h-1 bg-yellow-500 mb-6"></div>
+
+					<div class="mb-6">
+						<h4 class="text-xl font-bold text-yellow-600 mb-3 flex items-center gap-2">
+							<i data-feather="target" class="w-5 h-5"></i>
+							Rôle
+						</h4>
+						<p class="text-gray-700 leading-relaxed">
+							Accueillent des événements et valorisent la diversité artistique. Ils sont les lieux de rencontre, de dialogue et de célébration des cultures africaines.
+						</p>
+					</div>
+
+					<div class="bg-yellow-50 rounded-xl p-6">
+						<h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+							<i data-feather="check-circle" class="w-5 h-5 text-yellow-600"></i>
+							Contributions clés
+						</h4>
+						<ul class="space-y-3 text-gray-700">
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
+								<span>Accueil d'événements culturels</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
+								<span>Promotion des artistes locaux</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
+								<span>Espaces de dialogue interculturel</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
+								<span>Valorisation du patrimoine africain</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Universités -->
+<section class="py-20 px-4 bg-gradient-to-br from-green-50 to-white">
+	<div class="max-w-7xl mx-auto">
+		<div class="grid md:grid-cols-2 gap-12 items-center">
+			<div class="order-2 md:order-1">
+				<div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl card-hover">
+					<div class="partner-icon text-green-500 mb-6 w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center">
+						<i data-feather="book-open" class="w-12 h-12"></i>
+					</div>
+
+					<h3 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
+						Universités et Centres de Formation
+					</h3>
+
+					<div class="w-16 h-1 bg-green-500 mb-6"></div>
+
+					<div class="mb-6">
+						<h4 class="text-xl font-bold text-green-600 mb-3 flex items-center gap-2">
+							<i data-feather="target" class="w-5 h-5"></i>
+							Rôle
+						</h4>
+						<p class="text-gray-700 leading-relaxed">
+							Contribuent à l'éducation, à la recherche et au mentorat. Ils accompagnent les jeunes leaders et favorisent le transfert de compétences à travers des programmes académiques et pratiques.
+						</p>
+					</div>
+
+					<div class="bg-green-50 rounded-xl p-6">
+						<h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+							<i data-feather="check-circle" class="w-5 h-5 text-green-600"></i>
+							Contributions clés
+						</h4>
+						<ul class="space-y-3 text-gray-700">
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
+								<span>Formation académique et professionnelle</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
+								<span>Recherche et innovation</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
+								<span>Mentorat des jeunes leaders</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
+								<span>Transfert de connaissances et compétences</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="order-1 md:order-2">
+				<div class="relative">
+					<img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop" alt="Universités" class="rounded-3xl shadow-2xl">
+					<div class="absolute inset-0 bg-gradient-to-t from-green-900 to-transparent opacity-20 rounded-3xl"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- CTA Devenir Partenaire -->
+<section class="py-20 px-4 bg-gradient-to-br from-green-600 to-green-800 text-white relative overflow-hidden">
+	<div class="absolute inset-0 opacity-10">
+		<div class="absolute top-10 left-10 w-64 h-64 bg-yellow-400 rounded-full blur-3xl animate-float"></div>
+		<div class="absolute bottom-10 right-10 w-96 h-96 bg-green-400 rounded-full blur-3xl" style="animation: float 4s ease-in-out infinite;"></div>
+	</div>
+
+	<div class="max-w-4xl mx-auto text-center relative z-10">
+		<div class="inline-flex items-center justify-center w-20 h-20 bg-yellow-400 rounded-full mb-8 animate-float">
+			<i data-feather="handshake" class="w-10 h-10 text-gray-900"></i>
+		</div>
+
+		<h2 class="text-4xl md:text-5xl font-extrabold mb-6">
+			Devenez Partenaire Binajia
+		</h2>
+		<p class="text-xl md:text-2xl mb-10 opacity-90 max-w-2xl mx-auto">
+			Rejoignez notre réseau et contribuez activement à l'intégration africaine
+		</p>
+
+		<div class="flex flex-wrap gap-4 justify-center mb-12">
+			<a href="#" class="inline-flex items-center gap-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-4 px-10 rounded-full text-lg transition-all shadow-xl hover:shadow-2xl transform hover:scale-105">
+				<i data-feather="send" class="w-5 h-5"></i>
+				Proposer un partenariat
+			</a>
+			<a href="#" class="inline-flex items-center gap-3 bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm text-white font-bold py-4 px-10 rounded-full text-lg transition-all shadow-xl hover:shadow-2xl transform hover:scale-105">
+				<i data-feather="phone" class="w-5 h-5"></i>
+				Contactez-nous
+			</a>
+		</div>
+	</div>
+</section>
+
+{% block javascripts %}{% endblock %}

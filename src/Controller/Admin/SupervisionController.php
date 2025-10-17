@@ -14,6 +14,13 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ADMIN')]
 class SupervisionController extends AbstractController
 {
+    private string $uploadDirectory;
+
+    public function __construct(string $uploadDir)
+    {
+        $this->uploadDirectory = $uploadDir;
+    }
+
     #[Route('/admin/supervision/health', name: 'admin_health_index', methods: ['GET'])]
     public function health(EntityManagerInterface $em): Response
     {
@@ -27,11 +34,11 @@ class SupervisionController extends AbstractController
         }
 
         // Writable media dirs
-        $projectDir = (string) $this->getParameter('kernel.project_dir');
+        $projectDir = $this->uploadDirectory;
         $dirs = [
-            $projectDir . '/public/media/avatars',
-            $projectDir . '/public/media/cards',
-            $projectDir . '/public/media/receipts',
+            $projectDir . '/media/avatars',
+            $projectDir . '/media/cards',
+            $projectDir . '/media/receipts',
         ];
         foreach ($dirs as $d) {
             if (!is_dir($d)) { @mkdir($d, 0775, true); }
@@ -48,7 +55,7 @@ class SupervisionController extends AbstractController
     {
         $lines = max(50, (int) $request->query->get('lines', 200));
         $env = $_ENV['APP_ENV'] ?? $_SERVER['APP_ENV'] ?? 'dev';
-        $projectDir = (string) $this->getParameter('kernel.project_dir');
+        $projectDir = $this->uploadDirectory;
         $logFile = $projectDir . '/var/log/' . $env . '.log';
         $content = '';
         if (is_file($logFile)) {

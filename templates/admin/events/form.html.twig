@@ -19,7 +19,7 @@
     </div>
 
     {# Form #}
-    <form method="post" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 space-y-6">
+    <form method="post" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 space-y-6">
       {# Informations générales #}
       <div class="border-b border-gray-200 pb-6">
         <h2 class="text-xl font-semibold text-gray-900 mb-4">
@@ -43,15 +43,34 @@
           
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">
-              Description <span class="text-red-500">*</span>
+              Image de l'événement
             </label>
-            <textarea 
-              name="description" 
-              rows="5"
-              required
-              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
-              placeholder="Décrivez l'événement en détail..."
-            >{{ event ? event.description : '' }}</textarea>
+            {% if event and event.image %}
+              <div class="mb-4">
+                <p class="text-sm text-gray-600 mb-2">Image actuelle :</p>
+                <div class="relative inline-block">
+                  <img src="{{ path('secure_upload', {'filename': event.image}) }}" alt="Image de l'événement" class="w-48 h-32 object-cover rounded-lg border border-gray-300">
+                  <button type="button" class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600" onclick="removeCurrentImage()">
+                    <i class="fas fa-times text-xs"></i>
+                  </button>
+                </div>
+              </div>
+            {% endif %}
+            <div class="relative">
+              <input
+                type="file"
+                name="image"
+                id="image"
+                accept="image/*"
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+                onchange="previewImage(this)"
+              />
+              <div id="image-preview" class="mt-4 hidden">
+                <p class="text-sm text-gray-600 mb-2">Aperçu :</p>
+                <img id="preview-img" src="" alt="Aperçu" class="w-48 h-32 object-cover rounded-lg border border-gray-300">
+              </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">Formats acceptés : JPG, PNG, GIF. Taille maximale : 5MB</p>
           </div>
         </div>
       </div>
@@ -149,4 +168,38 @@
       </div>
     </form>
   </div>
+
+  <script>
+    function previewImage(input) {
+      const preview = document.getElementById('image-preview');
+      const previewImg = document.getElementById('preview-img');
+
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          previewImg.src = e.target.result;
+          preview.classList.remove('hidden');
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      } else {
+        preview.classList.add('hidden');
+      }
+    }
+
+    function removeCurrentImage() {
+      if (confirm('Êtes-vous sûr de vouloir supprimer l\'image actuelle ?')) {
+        // Create a hidden input to indicate image removal
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'remove_image';
+        input.value = '1';
+        document.querySelector('form').appendChild(input);
+
+        // Hide the current image
+        event.target.closest('.relative').style.display = 'none';
+      }
+    }
+  </script>
 {% endblock %}

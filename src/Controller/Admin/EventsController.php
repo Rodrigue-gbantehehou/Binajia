@@ -2,6 +2,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Evenement;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,7 +51,7 @@ class EventsController extends AbstractController
     }
 
     #[Route('/admin/events/new', name: 'admin_events_new', methods: ['GET','POST'])]
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, FileUploader $fileUploader): Response
     {
         if ($request->isMethod('POST')) {
             $e = new Evenement();
@@ -62,15 +63,34 @@ class EventsController extends AbstractController
             $ed = $request->request->get('endDate');
             $e->setStartDate($sd ? new \DateTime($sd) : null);
             $e->setEndDate($ed ? new \DateTime($ed) : null);
+
+            // Handle image upload
+            $imageFile = $request->files->get('image');
+            if ($imageFile && $imageFile->isValid()) {
+                try {
+                    $imagePath = $fileUploader->saveUploadedFile($imageFile, 'events');
+                    $e->setImage('events/' . basename($imagePath)); // Store path with events/ directory
+                } catch (\Exception $e) {
+                    $this->addFlash('error', 'Erreur lors de l\'upload de l\'image: ' . $e->getMessage());
+                }
+            }
+
+            // Handle image removal
+            if ($request->request->get('remove_image') === '1') {
+                $e->setImage(null);
+            }
+
             $em->persist($e);
             $em->flush();
+
+            $this->addFlash('success', 'Événement créé avec succès.');
             return $this->redirectToRoute('admin_events_index');
         }
         return $this->render('admin/events/form.html.twig', [ 'event' => null ]);
     }
 
     #[Route('/admin/events/{id}/edit', name: 'admin_events_edit', methods: ['GET','POST'])]
-    public function edit(int $id, Request $request, EntityManagerInterface $em): Response
+    public function edit(int $id, Request $request, EntityManagerInterface $em, FileUploader $fileUploader): Response
     {
         $e = $em->getRepository(Evenement::class)->find($id);
         if (!$e) { throw $this->createNotFoundException('Événement introuvable'); }
@@ -83,7 +103,26 @@ class EventsController extends AbstractController
             $ed = $request->request->get('endDate');
             $e->setStartDate($sd ? new \DateTime($sd) : null);
             $e->setEndDate($ed ? new \DateTime($ed) : null);
+
+            // Handle image upload
+            $imageFile = $request->files->get('image');
+            if ($imageFile && $imageFile->isValid()) {
+                try {
+                    $imagePath = $fileUploader->saveUploadedFile($imageFile, 'events');
+                    $e->setImage('events/' . basename($imagePath)); // Store path with events/ directory
+                } catch (\Exception $e) {
+                    $this->addFlash('error', 'Erreur lors de l\'upload de l\'image: ' . $e->getMessage());
+                }
+            }
+
+            // Handle image removal
+            if ($request->request->get('remove_image') === '1') {
+                $e->setImage(null);
+            }
+
             $em->flush();
+
+            $this->addFlash('success', 'Événement modifié avec succès.');
             return $this->redirectToRoute('admin_events_index');
         }
         return $this->render('admin/events/form.html.twig', [ 'event' => $e ]);
@@ -95,5 +134,29 @@ class EventsController extends AbstractController
         $e = $em->getRepository(Evenement::class)->find($id);
         if (!$e) { throw $this->createNotFoundException('Événement introuvable'); }
         return $this->render('admin/events/show.html.twig', [ 'event' => $e ]);
+    }
+
+    #[Route('/admin/events/{id}/delete', name: 'admin_events_delete', methods: ['POST'])]
+    public function delete(int $id, Request $request, EntityManagerInterface $em): Response
+    {
+        $e = $em->getRepository(Evenement::class)->find($id);
+        if (!$e) {
+            throw $this->createNotFoundException('Événement introuvable');
+        }
+
+        // Check if this is a POST request (CSRF protection)
+        if (!$request->isMethod('POST')) {
+            throw $this->createAccessDeniedException('Méthode non autorisée');
+        }
+
+        // Prevent deletion of events that might be referenced elsewhere
+        // You can add additional checks here if needed
+
+        $eventTitle = $e->getTitle() ?: 'Sans titre';
+        $em->remove($e);
+        $em->flush();
+
+        $this->addFlash('success', 'L\'événement "' . $eventTitle . '" a été supprimé avec succès.');
+        return $this->redirectToRoute('admin_events_index');
     }
 }

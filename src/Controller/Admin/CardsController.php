@@ -24,7 +24,7 @@ class CardsController extends AbstractController
     public function __construct(
         private readonly QrCodeService $qrCodeService,
         private readonly FileUploader $fileUploader,
-
+        private string $uploadDir,
     ) {}
     private ?string $lastGeneratedPassword = null;
     #[Route('/admin/cards', name: 'admin_cards_index', methods: ['GET'])]
@@ -241,7 +241,7 @@ class CardsController extends AbstractController
                 $photoData = $parts[0] . ',' . $parts[1];
             }
         }
-dd($photoData);
+
         // Only process photo if we have valid data
         if (!empty($photoData) && is_string($photoData)) {
             try {
@@ -281,8 +281,8 @@ dd($photoData);
 
     private function generateCardPdf(MembershipCards $card, User $user, PdfGeneratorService $pdf): void
     {
-        $projectDir = (string) $this->getParameter('kernel.project_dir');
-        $cardsDir = $projectDir . '/public/media/cards';
+        $projectDir = $this->uploadDir;
+        $cardsDir = $projectDir . '/media/cards';
         if (!is_dir($cardsDir)) {
             @mkdir($cardsDir, 0775, true);
         }
@@ -354,8 +354,8 @@ dd($photoData);
             throw $this->createNotFoundException('Utilisateur introuvable pour cette carte');
         }
 
-        $projectDir = (string) $this->getParameter('kernel.project_dir');
-        $cardsDir = $projectDir . '/public/media/cards';
+        $projectDir = $this->uploadDir;
+        $cardsDir = $projectDir . '/media/cards';
         if (!is_dir($cardsDir)) {
             @mkdir($cardsDir, 0775, true);
         }

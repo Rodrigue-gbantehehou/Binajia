@@ -1,52 +1,39 @@
-# This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
-
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     fedapay_public_key: '%env(FEDAPAY_PUBLIC_KEY)%'
-services:
-    # default configuration for services in *this* file
-    _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    # 📁 Dossier sécurisé hors de public
+    upload_directory: '%kernel.project_dir%/var/uploads'
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        # 🔹 Bind global pour tous les services
+        bind:
+            $projectDir: '%kernel.project_dir%'
+            $uploadDir: '%upload_directory%'
+
+    # Tous les services dans src/
     App\:
         resource: '../src/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
-    App\Service\PdfGeneratorService:
-        arguments:
-            $publicDir: '%kernel.project_dir%/public'
+    # Services spécifiques
+    App\Service\PdfGeneratorService: ~
     App\Service\MailerService: ~
-    App\Service\FileUploader:
+    App\Service\FileUploader: ~
+    App\Service\MembershipCardService: ~
+    App\Service\PhotoUploadService: ~
+    App\Service\ConfigurationService: ~
+    App\Service\EmailService: ~
+    App\Service\CardPaymentService: ~
+    App\Service\QrCodeService:
         arguments:
-            $projectDir: '%kernel.project_dir%'
-    App\Service\MembershipCardService:
-        arguments:
-            $projectDir: '%kernel.project_dir%'
-    
-    App\Command\TestEmailCardCommand:
-        arguments:
-            $projectDir: '%kernel.project_dir%'
-    
-    App\Command\FixEmailCardCommand:
-        arguments:
-            $projectDir: '%kernel.project_dir%'
-    
-    App\Command\TestFullRegistrationCommand:
-        arguments:
-            $projectDir: '%kernel.project_dir%'
-    
-    App\Command\TestPdfStylesCommand:
-        arguments:
-            $projectDir: '%kernel.project_dir%'
-    
+            $privateStorageDir: '%kernel.project_dir%/var/uploads'
+
+    # Commandes
+    App\Command\TestEmailCardCommand: ~
+    App\Command\FixEmailCardCommand: ~
+    App\Command\TestFullRegistrationCommand: ~
+    App\Command\TestPdfStylesCommand: ~
     App\Command\TestEmailToRodrigueCommand: ~
-    App\Service\QrCodeService: ~
-    App\Service\PhotoUploadService:
-        arguments:
-            $projectDir: '%kernel.project_dir%'
+    App\Command\TestFedaPayIntegrationCommand: ~
+    App\Command\TestFedaPayConfigCommand: ~

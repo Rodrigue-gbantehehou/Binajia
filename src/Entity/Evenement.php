@@ -35,6 +35,12 @@ class Evenement
     #[ORM\ManyToOne(inversedBy: 'evenements')]
     private ?User $createdBy = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'evenement')]
+    private $reservations;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,5 +128,22 @@ class Evenement
         $this->createdBy = $createdBy;
 
         return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getReservations()
+    {
+        return $this->reservations;
     }
 }
