@@ -2,19 +2,19 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Entity\CulturalContent;
 use App\Entity\Evenement;
 use App\Entity\Reservation;
+use App\Entity\User;
 use App\Form\ReservationType;
-use App\Entity\CulturalContent;
+use App\Service\EmailService;
 use App\Service\PdfGeneratorService;
-use Symfony\Component\Intl\Countries;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PageController extends AbstractController
 {
@@ -81,8 +81,12 @@ class PageController extends AbstractController
             ];
         }
 
+        // Get FedaPay public key from environment
+        $fedapayPublicKey = $_ENV['FEDAPAY_PUBLIC_KEY'] ?? $_SERVER['FEDAPAY_PUBLIC_KEY'] ?? null;
+
         return $this->render('pages/membership.html.twig', [
             'countries' => $countries,
+            'fedapay_public_key' => $fedapayPublicKey,
         ]);
     }
 
@@ -105,8 +109,11 @@ class PageController extends AbstractController
     }
 
     #[Route('/avantages', name: 'app_avantage')]
-    public function avantage(Request $request, EntityManagerInterface $em, PdfGeneratorService $pdfGeneratorService): Response
+    public function avantage(Request $request, EntityManagerInterface $em, PdfGeneratorService $pdfGeneratorService, EmailService $emailService): Response
     {
+        // Récupérer les lieux touristiques depuis la base de données
+        $places = $em->getRepository(CulturalContent::class)->findBy([], ['createdAt' => 'DESC'], 6);
+
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
@@ -140,14 +147,17 @@ class PageController extends AbstractController
            
 
             $em->flush();
-             $this->addFlash('success', 'Facture proforma générée avec succès.');
 
-            return $this->render('reservation/facture_proforma.html.twig', [
-                'reservation' => $reservation,
-            ]);
+            // Envoyer le PDF par email
+            $emailService->sendReservationConfirmation($reservation, $pdfPath);
+
+            $this->addFlash('success', 'Facture proforma générée et envoyée par email avec succès.');
+
+        $this->redirectToRoute('app_home');
         }
         return $this->render('pages/avantage.html.twig', [
             'form' => $form->createView(),
+            'places' => $places,
         ]);
     }
 
@@ -156,5 +166,12 @@ class PageController extends AbstractController
     public function partenaire(): Response
     {
         return $this->render('pages/partenaire.html.twig');
+    }
+
+    // Social Impact page
+    #[Route('/impact-social', name: 'app_social_impact')]
+    public function socialImpact(): Response
+    {
+        return $this->render('pages/social_impact.html.twig');
     }
 }

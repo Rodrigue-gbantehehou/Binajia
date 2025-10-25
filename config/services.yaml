@@ -37,3 +37,9 @@ services:
     App\Command\TestEmailToRodrigueCommand: ~
     App\Command\TestFedaPayIntegrationCommand: ~
     App\Command\TestFedaPayConfigCommand: ~
+    App\Command\TestPaymentPdfCommand: ~
+    App\Command\TestPdfDirectCommand: ~
+    App\Command\TestBasicPdfCommand: ~
+    App\Command\SetupUploadDirsCommand: ~
+    App\Command\CheckPdfPathsCommand: ~
+    App\Command\TestPaymentRedirectCommand: ~

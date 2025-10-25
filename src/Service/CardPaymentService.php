@@ -6,9 +6,10 @@ use App\Entity\Payments;
 use App\Entity\User;
 use App\Entity\MembershipCards;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class CardPaymentService
 {
@@ -19,7 +20,9 @@ class CardPaymentService
         private EntityManagerInterface $em,
         private HttpClientInterface $httpClient,
         private LoggerInterface $logger,
-        private EmailService $emailService
+        private EmailService $emailService,
+        private MembershipCardService $membershipCardService,
+        private UrlGeneratorInterface $urlGenerator
     ) {}
 
     /**
@@ -113,6 +116,21 @@ class CardPaymentService
 
                 $this->em->flush();
 
+                // Générer les PDFs de carte et reçu
+                $pdfPaths = null;
+                if ($card) {
+                    $user = $payment->getUser();
+                    $memberId = $card->getCardnumberC();
+
+                    // Trouver le chemin de l'avatar (string vide si null)
+                    $avatarPath = $user->getPhoto() ?: '';
+
+                    // Générer les PDFs via MembershipCardService
+                    $pdfPaths = $this->generateCardAndReceipt($user, $payment, $card, $avatarPath, $memberId);
+                }
+
+                $this->em->flush();
+
                 // Envoyer les emails de confirmation
                 $user = $payment->getUser();
                 $this->emailService->sendPaymentConfirmationEmail(
@@ -129,12 +147,32 @@ class CardPaymentService
                         $card->getCardnumberC(),
                         $card->getPdfurl()
                     );
+
+                    // Envoyer le reçu par email avec pièce jointe
+                    if ($pdfPaths && $pdfPaths['receiptPdfPath']) {
+                        $this->emailService->sendReceiptEmail(
+                            $user->getEmail(),
+                            $user->getFirstname(),
+                            $payment,
+                            $pdfPaths['receiptPdfPath'] // Chemin absolu pour la pièce jointe
+                        );
+                    }
                 }
+
+                // Envoyer les identifiants de connexion par email
+                $tempPassword = 'TempPass' . rand(1000, 9999) . '!'; // Générer un mot de passe temporaire
+                $this->emailService->sendWelcomeEmail(
+                    $user->getEmail(),
+                    $user->getFirstname(),
+                    $user->getLastname(),
+                    $tempPassword
+                );
 
                 return [
                     'success' => true,
                     'status' => 'completed',
-                    'message' => 'Paiement confirmé et carte activée'
+                    'message' => 'Paiement confirmé et carte activée',
+                    'reference' => $reference
                 ];
             }
 
@@ -181,8 +219,8 @@ class CardPaymentService
                     'currency' => [
                         'iso' => self::CURRENCY
                     ],
-                    'callback_url' => 'https://binajia.org/payment/callback',
-                    'cancel_url' => 'https://binajia.org/payment/cancel',
+                    'callback_url' => $this->urlGenerator->generate('payment_callback', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                    'cancel_url' => $this->urlGenerator->generate('payment_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
                     'custom_metadata' => [
                         'user_id' => $user->getId(),
                         'card_id' => $card->getId(),
@@ -228,6 +266,27 @@ class CardPaymentService
      */
     private function verifyFedaPayTransaction(string $transactionId): array
     {
+        // Simulation pour les tests
+        if (str_starts_with($transactionId, 'TEST_TRANSACTION_')) {
+            // Extraire l'ID du paiement du transactionId
+            $paymentId = substr($transactionId, 17); // Après "TEST_TRANSACTION_"
+
+            // Chercher le paiement en base de données
+            $payment = $this->em->getRepository(Payments::class)->find($paymentId);
+
+            if ($payment) {
+                return [
+                    'success' => true,
+                    'status' => 'approved',
+                    'amount' => self::CARD_PRICE,
+                    'reference' => $payment->getReference(),
+                    'transaction_id' => $transactionId
+                ];
+            } else {
+                return ['success' => false, 'error' => 'Paiement de test non trouvé'];
+            }
+        }
+
         $secret = $_ENV['FEDAPAY_SECRET_KEY'] ?? null;
         if (!$secret) {
             return ['success' => false, 'error' => 'Clé API FedaPay manquante'];
@@ -307,5 +366,25 @@ class CardPaymentService
     public function getCurrency(): string
     {
         return self::CURRENCY;
+    }
+
+    /**
+     * Génère les PDFs de carte et reçu via MembershipCardService
+     */
+    private function generateCardAndReceipt(User $user, Payments $payment, MembershipCards $card, ?string $avatarPath, string $memberId): ?array
+    {
+        try {
+            // Utiliser le MembershipCardService injecté
+            return $this->membershipCardService->generateAndPersist($user, $payment, $avatarPath, $memberId);
+
+        } catch (\Exception $e) {
+            $this->logger->error('Erreur génération PDFs', [
+                'user_id' => $user->getId(),
+                'payment_id' => $payment->getId(),
+                'error' => $e->getMessage()
+            ]);
+
+            return null;
+        }
     }
 }

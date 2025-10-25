@@ -14,7 +14,7 @@ class MailerService
         $this->mailer = $mailer;
     }
 
-    public function sendMembershipEmail(string $to, string $subject, string $htmlContent, ?string $attachmentPath = null, ?string $attachmentName = null): void
+    public function sendMembershipEmail(string $to, string $subject, string $htmlContent, ?string $cardPdfPath = null, ?string $receiptPdfPath = null, ?string $receiptFileName = null): void
     {
         $fromAddress = $_ENV['MAIL_FROM_ADDRESS']
             ?? $_SERVER['MAIL_FROM_ADDRESS']
@@ -31,8 +31,15 @@ class MailerService
             ->subject($subject)
             ->html($htmlContent);
 
-        if ($attachmentPath && file_exists($attachmentPath)) {
-            $email->attachFromPath($attachmentPath, $attachmentName ?? basename($attachmentPath), 'application/pdf');
+        // Ajouter la carte de membre en pièce jointe
+        if ($cardPdfPath && file_exists($cardPdfPath)) {
+            $email->attachFromPath($cardPdfPath, 'carte_membre_' . basename($cardPdfPath), 'application/pdf');
+        }
+
+        // Ajouter le reçu en pièce jointe
+        if ($receiptPdfPath && file_exists($receiptPdfPath)) {
+            $receiptName = $receiptFileName ?? ('reçu_' . basename($receiptPdfPath));
+            $email->attachFromPath($receiptPdfPath, $receiptName, 'application/pdf');
         }
 
         $this->mailer->send($email);

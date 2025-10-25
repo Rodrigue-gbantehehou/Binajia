@@ -17,6 +17,11 @@ class PdfGeneratorService
         $this->uploadDir = $uploadDir;
     }
 
+    public function getTwig(): Environment
+    {
+        return $this->twig;
+    }
+
     /**
      * Génère un PDF à partir d’un template Twig.
      * 
@@ -25,11 +30,12 @@ class PdfGeneratorService
      * @param string $filename Nom du fichier PDF (ex: 'carte_123.pdf')
      * @param string $paper    Taille du papier ('A4' par défaut)
      * @param string $orientation Orientation du PDF ('portrait' ou 'landscape')
+     * @param string $outputDir Dossier de destination (optionnel, utilise uploadDir/pdf par défaut)
      * 
      * @return string Chemin complet du PDF généré
      * @throws \RuntimeException
      */
-    public function generatePdf(string $template, array $params, string $filename, string $paper = 'A4', string $orientation = 'portrait'): string
+    public function generatePdf(string $template, array $params, string $filename, string $paper = 'A4', string $orientation = 'portrait', string $outputDir = null): string
     {
         $options = new Options();
 
@@ -56,8 +62,9 @@ class PdfGeneratorService
         $dompdf->render();
         $pdfOutput = $dompdf->output();
 
-        // 📁 Emplacement sécurisé du fichier
-        $dir = $this->uploadDir . '/pdf';
+        // 📁 Emplacement du fichier - utiliser le dossier spécifié ou par défaut
+        $dir = $outputDir ?: ($this->uploadDir . '/pdf');
+
         if (!is_dir($dir)) {
             if (!@mkdir($dir, 0775, true) && !is_dir($dir)) {
                 throw new \RuntimeException('Cannot create PDF directory: ' . $dir);

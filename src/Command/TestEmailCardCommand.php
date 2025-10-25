@@ -133,7 +133,7 @@ class TestEmailCardCommand extends Command
     private function testPdfGeneration(SymfonyStyle $io): void
     {
         try {
-            $testPath = $this->projectDir . '/public/media/test_card.pdf';
+            $testPath = $this->projectDir . '/var/uploads/pdf/test_card.pdf';
             
             $this->pdfService->generatePdf(
                 'membership/card_pdf_modern.html.twig',
@@ -148,17 +148,18 @@ class TestEmailCardCommand extends Command
                     'expiry' => '31/12/2025',
                     'joinDate' => date('d/m/Y'),
                 ],
-                $testPath,
+                'test_card.pdf',
                 'A6',
                 'landscape'
             );
 
-            if (file_exists($testPath)) {
-                $size = filesize($testPath);
+            $fullPath = $this->projectDir . '/var/uploads/pdf/test_card.pdf';
+            if (file_exists($fullPath)) {
+                $size = filesize($fullPath);
                 $io->success("✅ PDF de test généré avec succès ($size bytes)");
-                @unlink($testPath); // Nettoyer le fichier de test
+                @unlink($fullPath); // Nettoyer le fichier de test
             } else {
-                $io->error("❌ Le fichier PDF n'a pas été créé");
+                $io->error("❌ Le fichier PDF n'a pas été créé à l'emplacement attendu: $fullPath");
             }
         } catch (\Exception $e) {
             $io->error("❌ Erreur de génération PDF: " . $e->getMessage());

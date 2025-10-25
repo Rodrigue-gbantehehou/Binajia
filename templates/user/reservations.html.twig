@@ -1,0 +1,177 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Réservations — BINAJIA{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <div class="bg-white rounded-lg shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Mes Réservations</h1>
+                        <p class="text-gray-600 mt-1">Gérez vos réservations d'événements et de visites touristiques</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <a href="{{ path('app_user_dashboard') }}"
+                           class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                            </svg>
+                            Retour au dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if reservations is empty %}
+        <!-- Empty State -->
+        <div class="bg-white rounded-lg shadow-sm p-12 text-center">
+            <div class="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 9l6-6m0 0v6m0-6h-6"/>
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">Aucune réservation trouvée</h3>
+            <p class="text-gray-500 mb-6">Vous n'avez pas encore effectué de réservations.</p>
+            <a href="{{ path('app_events') }}"
+               class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-medium text-white hover:bg-green-700">
+                Découvrir les événements
+            </a>
+        </div>
+        {% else %}
+        <!-- Reservations List -->
+        <div class="space-y-6">
+            {% for reservation in reservations %}
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="p-6">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <div class="flex-shrink-0">
+                                    {% if reservation.typereservation == 'evenement' %}
+                                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 9l6-6m0 0v6m0-6h-6"/>
+                                        </svg>
+                                    </div>
+                                    {% else %}
+                                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-medium text-gray-900">
+                                        {% if reservation.typereservation == 'evenement' %}
+                                            Réservation d'événement
+                                        {% else %}
+                                            Réservation de visite touristique
+                                        {% endif %}
+                                    </h3>
+                                    <p class="text-sm text-gray-500">
+                                        Référence #{{ reservation.id }} • {{ reservation.createdAt|date('d/m/Y à H:i') }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-900 mb-2">Informations personnelles</h4>
+                                    <dl class="space-y-1">
+                                        <div>
+                                            <dt class="text-sm text-gray-500 inline">Nom: </dt>
+                                            <dd class="text-sm text-gray-900 inline font-medium">{{ reservation.nom }}</dd>
+                                        </div>
+                                        <div>
+                                            <dt class="text-sm text-gray-500 inline">Email: </dt>
+                                            <dd class="text-sm text-gray-900 inline">{{ reservation.email }}</dd>
+                                        </div>
+                                        <div>
+                                            <dt class="text-sm text-gray-500 inline">Téléphone: </dt>
+                                            <dd class="text-sm text-gray-900 inline">{{ reservation.telephone }}</dd>
+                                        </div>
+                                    </dl>
+                                </div>
+
+                                {% if reservation.evenement %}
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-900 mb-2">Détails de l'événement</h4>
+                                    <div class="space-y-1">
+                                        <div>
+                                            <span class="text-sm text-gray-500">Titre: </span>
+                                            <span class="text-sm text-gray-900 font-medium">{{ reservation.evenement.titre }}</span>
+                                        </div>
+                                        {% if reservation.evenement.description %}
+                                        <div>
+                                            <span class="text-sm text-gray-500">Description: </span>
+                                            <span class="text-sm text-gray-900">{{ reservation.evenement.description|slice(0, 100) }}{% if reservation.evenement.description|length > 100 %}...{% endif %}</span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            {% if reservation.commentaire %}
+                            <div class="mb-4">
+                                <h4 class="text-sm font-medium text-gray-900 mb-2">Commentaire</h4>
+                                <p class="text-sm text-gray-700 bg-gray-50 rounded-md p-3">{{ reservation.commentaire }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="flex-shrink-0 ml-6">
+                            <div class="flex flex-col space-y-2">
+                                {% if reservation.facturepdf %}
+                                <a href="{{ asset(reservation.facturepdf) }}"
+                                   class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                                   target="_blank">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l4-4m-4 4l-4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Télécharger PDF
+                                </a>
+                                <div class="text-xs text-gray-500 text-center">
+                                    Confirmation envoyée par email
+                                </div>
+                                {% else %}
+                                <div class="inline-flex items-center px-3 py-2 border border-yellow-300 rounded-md text-sm font-medium text-yellow-700 bg-yellow-50">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                                    </svg>
+                                    En cours de traitement
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Call to Action -->
+        <div class="mt-8 bg-gradient-to-r from-green-600 to-green-700 rounded-lg shadow-lg p-6 text-center">
+            <h3 class="text-lg font-medium text-white mb-2">Vous souhaitez réserver un autre événement ?</h3>
+            <p class="text-green-100 mb-4">Découvrez tous nos événements et visites touristiques disponibles</p>
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <a href="{{ path('app_events') }}"
+                   class="inline-flex items-center px-4 py-2 bg-white text-green-600 rounded-md font-medium hover:bg-gray-50">
+                    Voir les événements
+                </a>
+                <a href="{{ path('app_places') }}"
+                   class="inline-flex items-center px-4 py-2 border border-white text-white rounded-md font-medium hover:bg-white hover:text-green-600">
+                    Découvrir les lieux
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
