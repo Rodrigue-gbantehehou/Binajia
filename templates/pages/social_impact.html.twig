@@ -10,14 +10,52 @@
         overflow: hidden;
     }
 
-    .hero-gradient::before {
-        content: '';
+    .floating-shapes {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .shape {
+        position: absolute;
+        opacity: 0.1;
+        animation: float 20s infinite ease-in-out;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-30px) rotate(180deg); }
+    }
+
+    .shape:nth-child(1) {
+        top: 10%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+        top: 60%;
+        left: 80%;
+        animation-delay: 5s;
+    }
+
+    .shape:nth-child(3) {
+        top: 80%;
+        left: 20%;
+        animation-delay: 10s;
+    }
+
+    .timeline-line {
+        background: linear-gradient(to bottom, #d1fae5, #10b981, #047857);
+    }
+
+    .impact-number {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
     .project-card {
@@ -95,124 +133,33 @@
         transform: translateY(-4px);
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
-
-    .cta-section {
-        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-        border-radius: 2rem;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .cta-section::before {
-        content: '';
-        position: absolute;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
-        top: -250px;
-        right: -250px;
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-        transition: all 0.3s ease;
-    }
-
-    .btn-primary:hover {
-        transform: scale(1.05);
-        box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.5);
-    }
-
-    .btn-outline {
-        border: 2px solid #10b981;
-        transition: all 0.3s ease;
-    }
-
-    .btn-outline:hover {
-        background: #10b981;
-        color: white;
-        transform: scale(1.05);
-    }
-
-    .floating-shapes {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        pointer-events: none;
-    }
-
-    .shape {
-        position: absolute;
-        opacity: 0.1;
-        animation: float 20s infinite ease-in-out;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translateY(0) rotate(0deg); }
-        50% { transform: translateY(-30px) rotate(180deg); }
-    }
-
-    .shape:nth-child(1) {
-        top: 10%;
-        left: 10%;
-        animation-delay: 0s;
-    }
-
-    .shape:nth-child(2) {
-        top: 60%;
-        left: 80%;
-        animation-delay: 5s;
-    }
-
-    .shape:nth-child(3) {
-        top: 80%;
-        left: 20%;
-        animation-delay: 10s;
-    }
-
-    @media (max-width: 768px) {
-        .project-image {
-            height: 200px;
-        }
-    }
-
-    .timeline-line {
-        background: linear-gradient(to bottom, #d1fae5, #10b981, #047857);
-    }
-
-    .impact-number {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
 </style>
 {% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
-<section class="hero-grdient relative pt-32 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
-    <div class="floating-shapes">
-        <svg class="shape" width="100" height="100" viewBox="0 0 100 100" fill="white">
-            <circle cx="50" cy="50" r="40"/>
-        </svg>
-        <svg class="shape" width="80" height="80" viewBox="0 0 80 80" fill="white">
-            <rect width="80" height="80" rx="10"/>
-        </svg>
-        <svg class="shape" width="60" height="60" viewBox="0 0 60 60" fill="white">
-            <polygon points="30,10 50,50 10,50"/>
-        </svg>
+<section class="relative bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 pt-32 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.1&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+
+    <!-- Floating Shapes -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-20 left-10 w-24 h-24 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+        <div class="absolute top-40 right-20 w-32 h-32 bg-emerald-300/20 rounded-full blur-2xl animate-pulse" style="animation-delay: 1s;"></div>
+        <div class="absolute bottom-20 left-20 w-16 h-16 bg-white/10 rounded-full blur-lg animate-pulse" style="animation-delay: 2s;"></div>
+        <div class="absolute top-60 left-1/2 w-20 h-20 bg-yellow-300/15 rounded-full blur-xl animate-pulse" style="animation-delay: 3s;"></div>
     </div>
 
     <div class="max-w-7xl mx-auto relative z-10">
         <div class="text-center text-white">
             <!-- Badge -->
-            <div class="inline-flex items-center bg-white/20 backdrop-blur-md rounded-full px-6 py-3 mb-8 border border-white/30">
-                <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
+            <div class="inline-flex items-center bg-white/20 backdrop-blur-md rounded-full px-6 py-3 mb-8 border border-white/30 hover:bg-white/30 transition-all duration-300">
+                <svg class="w-6 h-6 mr-3 text-emerald-200" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                 </svg>
-                <span class="font-bold text-lg">Impact Social & Développement</span>
+                <span class="font-bold text-lg text-emerald-50">Impact Social & Développement</span>
             </div>
 
             <!-- Main Headline -->
@@ -220,77 +167,60 @@
                 Bâtissons l'<span class="text-yellow-300 drop-shadow-lg">Afrique</span> de demain
             </h1>
 
-            <div class="w-32 h-1.5 bg-gradient-to-r from-yellow-300 to-green-300 mx-auto mb-8 rounded-full"></div>
+            <div class="w-32 h-1.5 bg-gradient-to-r from-yellow-300 to-emerald-300 mx-auto mb-8 rounded-full"></div>
 
             <!-- Subtitle -->
-            <p class="text-xl md:text-2xl text-green-50 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
+            <p class="text-xl md:text-2xl text-emerald-50 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
                 Ensemble, transformons notre continent par des actions concrètes en matière de solidarité, d'entrepreneuriat et de développement durable
             </p>
 
             <!-- Primary CTA Buttons -->
             <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-                <a href="#projects" class="group inline-flex items-center px-10 py-4 bg-white text-green-700 rounded-full font-bold text-lg hover:bg-green-50 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-white/20">
+                <a href="#projects" class="group inline-flex items-center px-10 py-4 bg-white text-emerald-700 rounded-full font-bold text-lg hover:bg-emerald-50 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-white/20">
                     <span>Découvrir nos projets</span>
                     <svg class="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                     </svg>
                 </a>
 
-                <a href="#join" class="group inline-flex items-center px-10 py-4 border-3 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-green-700 transition-all duration-300 hover:scale-105 backdrop-blur-sm">
-                    <svg class="w-6 h-6 mr-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
-                    </svg>
-                    <span>Nous rejoindre</span>
-                </a>
+                <div class="relative">
+                    <a href="{{path('app_membership')}}" class="group inline-flex items-center px-10 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-emerald-700 transition-all duration-300 hover:scale-105 backdrop-blur-sm">
+                        <svg class="w-6 h-6 mr-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                        </svg>
+                        <span>Nous rejoindre</span>
+                    </a>
+                    <span class="absolute -top-2 -right-2 bg-yellow-500 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">Bientôt</span>
+                </div>
             </div>
 
             <!-- Enhanced Stats -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300">
-                    <div class="text-5xl font-black text-yellow-300 mb-3 impact-number">5</div>
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                    <div class="text-5xl font-black text-yellow-300 mb-3">5</div>
                     <div class="text-white font-semibold text-sm uppercase tracking-wider">Domaines d'action</div>
-                    <div class="text-green-200 text-xs mt-1">Solidarité • Entrepreneuriat • Droits • Environnement • Propreté</div>
+                    <div class="text-emerald-200 text-xs mt-1">Solidarité • Entrepreneuriat • Droits • Environnement • Propreté</div>
                 </div>
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300">
-                    <div class="text-5xl font-black text-yellow-300 mb-3 impact-number">500+</div>
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                    <div class="text-5xl font-black text-yellow-300 mb-3">500+</div>
                     <div class="text-white font-semibold text-sm uppercase tracking-wider">Bénéficiaires</div>
-                    <div class="text-green-200 text-xs mt-1">Vies transformées au quotidien</div>
+                    <div class="text-emerald-200 text-xs mt-1">Vies transformées au quotidien</div>
                 </div>
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300">
-                    <div class="text-5xl font-black text-yellow-300 mb-3 impact-number">2</div>
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                    <div class="text-5xl font-black text-yellow-300 mb-3">2</div>
                     <div class="text-white font-semibold text-sm uppercase tracking-wider">Pays</div>
-                    <div class="text-green-200 text-xs mt-1">Bénin & Nigeria unis dans l'action</div>
+                    <div class="text-emerald-200 text-xs mt-1">Bénin & Nigeria unis dans l'action</div>
                 </div>
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
                     <div class="text-5xl font-black text-yellow-300 mb-3">∞</div>
                     <div class="text-white font-semibold text-sm uppercase tracking-wider">Impact</div>
-                    <div class="text-green-200 text-xs mt-1">Un avenir meilleur pour tous</div>
+                    <div class="text-emerald-200 text-xs mt-1">Un avenir meilleur pour tous</div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Decorative Elements -->
-    <div class="absolute top-20 left-10 w-20 h-20 bg-yellow-300/20 rounded-full blur-xl animate-pulse"></div>
-    <div class="absolute bottom-20 right-10 w-32 h-32 bg-green-300/20 rounded-full blur-xl animate-pulse" style="animation-delay: 1s;"></div>
-    <div class="absolute top-1/2 left-20 w-16 h-16 bg-white/10 rounded-full blur-lg animate-pulse" style="animation-delay: 2s;"></div>
 </section>
 
-<!-- Mission Statement -->
-<section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-    <div class="max-w-5xl mx-auto text-center">
-        <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6">
-            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
-            </svg>
-        </div>
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Notre Mission</h2>
-        <p class="text-xl text-gray-700 leading-relaxed mb-8">
-            "Unis pour grandir ensemble" - Binajia œuvre pour un développement durable, équitable et inclusif en Afrique
-        </p>
-        <div class="w-24 h-1 bg-gradient-to-r from-green-500 to-emerald-500 mx-auto rounded-full"></div>
-    </div>
-</section>
 
 <!-- Projects Grid -->
 <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-green-50">
@@ -305,8 +235,8 @@
             <div class="project-card bg-white rounded-3xl overflow-hidden shadow-lg">
                 <div class="project-image h-60 bg-cover bg-center relative" style="background-image: url('{{ asset('media/binajia/team-collaborative.jpg') }}')"></div>
                 <div class="p-6">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-2xl mb-4 icon-wrapper transition-all">
-                        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-2xl mb-4 icon-wrapper transition-all">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                         </svg>
                     </div>
@@ -315,9 +245,9 @@
                         Nous venons en aide aux démunis et aux personnes vulnérables, en agissant concrètement pour faire reculer la pauvreté et les inégalités.
                     </p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="tag bg-red-50 text-red-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Aide alimentaire</span>
-                        <span class="tag bg-pink-50 text-pink-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Soutien médical</span>
-                        <span class="tag bg-rose-50 text-rose-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Hébergement</span>
+                        <span class="tag bg-green-50 text-green-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Aide alimentaire</span>
+                        <span class="tag bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Soutien médical</span>
+                        <span class="tag bg-lime-50 text-lime-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Hébergement</span>
                     </div>
                 </div>
             </div>
@@ -326,8 +256,8 @@
             <div class="project-card bg-white rounded-3xl overflow-hidden shadow-lg">
                 <div class="project-image h-60 bg-cover bg-center relative" style="background-image: url('{{ asset('media/binajia/network-benin-nigeria.jpg') }}')"></div>
                 <div class="p-6">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-purple-100 rounded-2xl mb-4 icon-wrapper transition-all">
-                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-yellow-100 rounded-2xl mb-4 icon-wrapper transition-all">
+                        <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                         </svg>
                     </div>
@@ -336,9 +266,9 @@
                         Formations à l'entrepreneuriat, conseil personnalisé et soutien moral et financier pour construire l'avenir.
                     </p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="tag bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Formations</span>
-                        <span class="tag bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Financement</span>
-                        <span class="tag bg-violet-50 text-violet-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Mentorat</span>
+                        <span class="tag bg-yellow-50 text-yellow-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Formations</span>
+                        <span class="tag bg-amber-50 text-amber-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Financement</span>
+                        <span class="tag bg-orange-50 text-orange-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Mentorat</span>
                     </div>
                 </div>
             </div>
@@ -347,8 +277,8 @@
             <div class="project-card bg-white rounded-3xl overflow-hidden shadow-lg">
                 <div class="project-image h-60 bg-cover bg-center relative" style="background-image: url('{{ asset('media/binajia/member-smiling.jpg') }}')"></div>
                 <div class="p-6">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-2xl mb-4 icon-wrapper transition-all">
-                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-2xl mb-4 icon-wrapper transition-all">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                         </svg>
                     </div>
@@ -357,9 +287,9 @@
                         Défense des droits publics et humains, lutte contre toutes formes de violence physique, morale et sociale.
                     </p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="tag bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Protection</span>
-                        <span class="tag bg-cyan-50 text-cyan-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Éducation</span>
-                        <span class="tag bg-sky-50 text-sky-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Soutien juridique</span>
+                        <span class="tag bg-green-50 text-green-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Protection</span>
+                        <span class="tag bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Éducation</span>
+                        <span class="tag bg-lime-50 text-lime-700 px-4 py-2 rounded-full text-sm font-medium transition-all">Soutien juridique</span>
                     </div>
                 </div>
             </div>
@@ -389,8 +319,8 @@
             <div class="project-card bg-white rounded-3xl overflow-hidden shadow-lg">
                 <div class="project-image h-60 bg-cover bg-center relative" style="background-image: url('{{ asset('media/binajia/pon.jpeg') }}')"></div>
                 <div class="p-6">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-amber-100 rounded-2xl mb-4 icon-wrapper transition-all">
-                        <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-yellow-100 rounded-2xl mb-4 icon-wrapper transition-all">
+                        <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                         </svg>
                     </div>
@@ -407,10 +337,10 @@
             </div>
 
             <!-- Card 6: CTA Card -->
-            <div class="project-card bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl overflow-hidden shadow-lg border-2 border-green-200 relative">
+            <div class="project-card bg-gradient-to-br from-yellow-50 to-amber-50 rounded-3xl overflow-hidden shadow-lg border-2 border-yellow-200 relative">
                 <div class="p-8 relative z-10">
                     <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl mb-6 mx-auto shadow-lg">
-                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                         </svg>
                     </div>
@@ -419,12 +349,18 @@
                         Votre soutien, qu'il soit financier, matériel ou humain, fait la différence pour bâtir l'Afrique de demain.
                     </p>
                     <div class="space-y-3">
-                        <a href="#" class="block text-center bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold py-3 px-6 rounded-xl hover:shadow-lg hover:scale-105 transition-all">
-                            ❤️ Faire un don
-                        </a>
-                        <a href="#" class="block text-center border-2 border-green-600 text-green-700 font-semibold py-3 px-6 rounded-xl hover:bg-green-600 hover:text-white hover:scale-105 transition-all">
-                            🤝 Devenir bénévole
-                        </a>
+                        <div class="relative">
+                            <a href="javascript:void(0)" onclick="alert('Fonctionnalité de don en cours de développement. Merci pour votre patience !')" class="block text-center bg-gray-400 text-white font-semibold py-3 px-6 rounded-full transition-all cursor-not-allowed">
+                                ❤️ Faire un don
+                            </a>
+                            <span class="absolute -top-2 -right-2 bg-yellow-500 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">Bientôt</span>
+                        </div>
+                        <div class="relative">
+                            <a href="javascript:void(0)" onclick="alert('Fonctionnalité de bénévolat en cours de développement. Merci pour votre patience !')" class="block text-center border-2 border-green-600 text-green-700 font-semibold py-3 px-6 rounded-full hover:bg-green-600 hover:text-white hover:scale-105 transition-all cursor-not-allowed">
+                                🤝 Devenir bénévole
+                            </a>
+                            <span class="absolute -top-2 -right-2 bg-yellow-500 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">Bientôt</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -432,67 +368,6 @@
     </div>
 </section>
 
-<!-- Timeline Section -->
-<section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-    <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-16">
-            <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6">
-                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-            </div>
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Notre Parcours</h2>
-            <p class="text-xl text-gray-600">Les étapes clés de notre engagement</p>
-        </div>
-
-        <div class="relative">
-            <!-- Timeline Line -->
-            <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full timeline-line rounded-full"></div>
-
-            <!-- Timeline Items -->
-            <div class="space-y-12">
-                <!-- Item 1 -->
-                <div class="relative flex items-center md:justify-start">
-                    <div class="md:w-1/2 md:pr-12 md:text-right">
-                        <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all border-l-4 border-green-500">
-                            <div class="text-green-600 font-bold text-lg mb-2">2023</div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-2">Lancement de Binajia</h3>
-                            <p class="text-gray-600">Création de l'association et définition de notre vision pour l'Afrique</p>
-                        </div>
-                    </div>
-                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-green-600 rounded-full border-4 border-white shadow-lg"></div>
-                    <div class="md:w-1/2"></div>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="relative flex items-center md:justify-end">
-                    <div class="md:w-1/2"></div>
-                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-green-600 rounded-full border-4 border-white shadow-lg"></div>
-                    <div class="md:w-1/2 md:pl-12">
-                        <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all border-r-4 border-green-500">
-                            <div class="text-green-600 font-bold text-lg mb-2">2024</div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-2">Premiers projets terrain</h3>
-                            <p class="text-gray-600">Lancement des actions de solidarité et distribution de vivres aux démunis</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="relative flex items-center md:justify-start">
-                    <div class="md:w-1/2 md:pr-12 md:text-right">
-                        <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all border-l-4 border-green-500">
-                            <div class="text-green-600 font-bold text-lg mb-2">2025</div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-2">Expansion régionale</h3>
-                            <p class="text-gray-600">Extension de nos activités au Nigeria et développement de nouveaux programmes d'entrepreneuriat</p>
-                        </div>
-                    </div>
-                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-green-600 rounded-full border-4 border-white shadow-lg"></div>
-                    <div class="md:w-1/2"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- Quote Section -->
 <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 text-white relative overflow-hidden">
@@ -543,30 +418,36 @@
         <div class="grid md:grid-cols-3 gap-6 mb-12">
             <!-- Donation Card -->
             <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all">
-                <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                    <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3">Faire un don</h3>
+                <div class="flex items-center justify-center mb-3">
+                    <h3 class="text-xl font-bold text-gray-900 mr-2">Faire un don</h3>
+                    <span class="bg-yellow-500 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">Bientôt</span>
+                </div>
                 <p class="text-gray-600 mb-4">Votre générosité transforme des vies</p>
-                <a href="#" class="inline-flex items-center justify-center w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-all">
-                    Donner maintenant
-                </a>
+                <button onclick="alert('Fonctionnalité de don en cours de développement. Merci pour votre patience !')" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-full transition-all cursor-not-allowed">
+                    En développement
+                </button>
             </div>
 
             <!-- Volunteer Card -->
             <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all">
-                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3">Devenir bénévole</h3>
+                <div class="flex items-center justify-center mb-3">
+                    <h3 class="text-xl font-bold text-gray-900 mr-2">Devenir bénévole</h3>
+                    <span class="bg-yellow-500 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">Bientôt</span>
+                </div>
                 <p class="text-gray-600 mb-4">Rejoignez notre équipe de volontaires</p>
-                <a href="#" class="inline-flex items-center justify-center w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all">
-                    S'engager
-                </a>
+                <button onclick="alert('Fonctionnalité de bénévolat en cours de développement. Merci pour votre patience !')" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-full transition-all cursor-not-allowed">
+                    En développement
+                </button>
             </div>
 
             <!-- Partner Card -->
@@ -576,11 +457,14 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3">Devenir partenaire</h3>
+                <div class="flex items-center justify-center mb-3">
+                    <h3 class="text-xl font-bold text-gray-900 mr-2">Devenir partenaire</h3>
+                    <span class="bg-yellow-500 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">Bientôt</span>
+                </div>
                 <p class="text-gray-600 mb-4">Collaborons pour un impact plus grand</p>
-                <a href="#" class="inline-flex items-center justify-center w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-all">
-                    Nous contacter
-                </a>
+                <button onclick="alert('Fonctionnalité de partenariat en cours de développement. Merci pour votre patience !')" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-full transition-all cursor-not-allowed">
+                    En développement
+                </button>
             </div>
         </div>
     </div>
@@ -663,15 +547,10 @@ document.addEventListener('DOMContentLoaded', function() {
         statObserver.observe(card);
     });
 
-    // Parallax effect for floating shapes
-    window.addEventListener('scroll', function() {
-        const scrollPosition = window.pageYOffset;
-        const shapes = document.querySelectorAll('.shape');
-
-        shapes.forEach((shape, index) => {
-            const speed = 0.5 + (index * 0.1);
-            shape.style.transform = `translateY(${scrollPosition * speed}px) rotate(${scrollPosition * 0.01}deg)`;
-        });
+    // Enhanced floating shapes animation with Tailwind classes
+    const floatingShapes = document.querySelectorAll('.absolute.animate-pulse');
+    floatingShapes.forEach((shape, index) => {
+        shape.style.animationDelay = `${index * 0.5}s`;
     });
 });
 </script>
