@@ -16,11 +16,13 @@ class FileUploader
      * - Crop ratio 3:4
      * - Redimensionne à 300x400
      * - Stocke dans var/uploads/membres/{userId}.jpg (hors du dossier public)
+     * - Utilise un nom temporaire jusqu'à ce que l'ID utilisateur soit connu
      *
-     * @return string Chemin absolu du fichier sauvegardé
-     * @throws \RuntimeException en cas d’erreur
+     * @param int|null $userId L'ID utilisateur (peut être null si pas encore persisté)
+     * @return array{tempPath: string, filename: string} Chemins temporaire et nom final attendu
+     * @throws \RuntimeException en cas d'erreur
      */
-    public function saveAvatarFromDataUrl(string $dataUrl, int $userId): string
+    public function saveAvatarFromDataUrl(string $dataUrl, ?int $userId = null): array
     {
         if ($dataUrl === '' || !str_starts_with($dataUrl, 'data:image')) {
             throw new \RuntimeException('Invalid image data URL');
@@ -84,20 +86,26 @@ class FileUploader
                 throw new \RuntimeException('Upload directory not writable: ' . $dir);
             }
 
+            // Générer un nom temporaire unique avec timestamp
+            $timestamp = date('YmdHis');
+            $randomId = uniqid();
+
             // Détection format (JPEG > PNG)
             $canJpeg = function_exists('imagejpeg');
             $canPng  = function_exists('imagepng');
 
             if ($canJpeg) {
-                $filename = sprintf('%d.jpg', $userId);
-                $fsPath = $dir . DIRECTORY_SEPARATOR . $filename;
-                if (!@imagejpeg($dst, $fsPath, 90)) {
+                $tempFilename = sprintf('temp_%s_%s.jpg', $timestamp, $randomId);
+                $finalFilename = $userId ? sprintf('%d.jpg', $userId) : sprintf('temp_%s_%s.jpg', $timestamp, $randomId);
+                $tempPath = $dir . '/' . $tempFilename;
+                if (!@imagejpeg($dst, $tempPath, 90)) {
                     $last = error_get_last();
                     $jpegErr = $last['message'] ?? 'unknown';
                     if ($canPng) {
-                        $filename = sprintf('%d.png', $userId);
-                        $fsPath = $dir . DIRECTORY_SEPARATOR . $filename;
-                        if (!@imagepng($dst, $fsPath, 6)) {
+                        $tempFilename = sprintf('temp_%s_%s.png', $timestamp, $randomId);
+                        $finalFilename = $userId ? sprintf('%d.png', $userId) : sprintf('temp_%s_%s.png', $timestamp, $randomId);
+                        $tempPath = $dir . '/' . $tempFilename;
+                        if (!@imagepng($dst, $tempPath, 6)) {
                             $last = error_get_last();
                             $pngErr = $last['message'] ?? 'unknown';
                             throw new \RuntimeException("Failed to save image (JPEG: $jpegErr, PNG: $pngErr)");
@@ -107,9 +115,10 @@ class FileUploader
                     }
                 }
             } elseif ($canPng) {
-                $filename = sprintf('%d.png', $userId);
-                $fsPath = $dir . DIRECTORY_SEPARATOR . $filename;
-                if (!@imagepng($dst, $fsPath, 6)) {
+                $tempFilename = sprintf('temp_%s_%s.png', $timestamp, $randomId);
+                $finalFilename = $userId ? sprintf('%d.png', $userId) : sprintf('temp_%s_%s.png', $timestamp, $randomId);
+                $tempPath = $dir . '/' . $tempFilename;
+                if (!@imagepng($dst, $tempPath, 6)) {
                     $last = error_get_last();
                     $pngErr = $last['message'] ?? 'unknown';
                     throw new \RuntimeException("Failed to save avatar (PNG error: $pngErr)");
@@ -119,16 +128,51 @@ class FileUploader
             }
 
             imagedestroy($dst);
-            imagedestroy($src);
 
-            // 🔒 Retourne le chemin complet (non public)
-            return $fsPath;
+            // 🔒 Retourne les chemins temporaire et final attendu
+            return [
+                'tempPath' => $tempPath,
+                'tempFilename' => $tempFilename,
+                'finalFilename' => $finalFilename,
+                'finalPath' => $dir . '/' . $finalFilename
+            ];
 
         } finally {
             if (is_resource($src) || $src instanceof \GdImage) {
                 @imagedestroy($src);
             }
         }
+    }
+
+    /**
+     * Renomme un fichier temporaire vers son nom final avec l'ID utilisateur
+     *
+     * @param string $tempPath Chemin temporaire du fichier
+     * @param int $userId ID de l'utilisateur
+     * @return string|null Chemin final du fichier ou null si erreur
+     */
+    public function renameTempAvatarToFinal(string $tempPath, int $userId): ?string
+    {
+        if (!file_exists($tempPath)) {
+            return null;
+        }
+
+        $dir = dirname($tempPath);
+        $extension = pathinfo($tempPath, PATHINFO_EXTENSION);
+        $finalFilename = sprintf('%d.%s', $userId, $extension);
+        $finalPath = $dir . '/' . $finalFilename;
+
+        // Vérifier si le fichier final existe déjà et le supprimer
+        if (file_exists($finalPath)) {
+            unlink($finalPath);
+        }
+
+        // Renommer le fichier temporaire vers le nom final
+        if (rename($tempPath, $finalPath)) {
+            return $finalPath;
+        }
+
+        return null;
     }
 
     /**

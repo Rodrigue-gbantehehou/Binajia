@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\CulturalContent;
 use App\Entity\Evenement;
 use App\Entity\Reservation;
+use App\Service\PdfGeneratorService;
+use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +15,11 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class ReservationController extends AbstractController
 {
+    public function __construct(
+        private PdfGeneratorService $pdfGenerator,
+        private EmailService $emailService
+    ) {}
+
     #[Route('/reservation/{id}', name: 'app_reservation_event')]
     public function reserveEvent(Request $request, EntityManagerInterface $entityManager, int $id): Response
     {
@@ -53,14 +60,58 @@ final class ReservationController extends AbstractController
                 $reservation->setTelephone($telephone);
                 $reservation->setCommentaire($commentaire);
                 $reservation->setEvenement($evenement);
-
-                // Déterminer automatiquement le type de réservation
                 $reservation->setTypereservation('evenement');
 
                 $entityManager->persist($reservation);
                 $entityManager->flush();
 
-                $this->addFlash('success', 'Votre réservation a été enregistrée avec succès !');
+                // Générer le PDF de confirmation
+                try {
+                    $timestamp = (new \DateTime())->format('YmdHis');
+                    $filename = 'confirmation_reservation_' . $reservation->getId() . '.pdf';
+                    $pdfPath = $this->pdfGenerator->generatePdf(
+                        'reservation/reservation_confirmation_pdf.html.twig',
+                        ['reservation' => $reservation],
+                        $filename,
+                        'A4',
+                        'portrait'
+                    );
+
+                    // Stocker le chemin du PDF dans la réservation
+                    $relativePath = strstr($pdfPath, '/pdf/');
+                    if ($relativePath === false) {
+                        $relativePath = '/pdf/' . $filename;
+                    }
+                    $reservation->setFacturepdf($relativePath);
+                    $entityManager->flush();
+
+                    // Préparer les données pour l'email
+                    $reservationData = [
+                        'id' => $reservation->getId(),
+                        'nom' => $reservation->getNom(),
+                        'email' => $reservation->getEmail(),
+                        'telephone' => $reservation->getTelephone(),
+                        'commentaire' => $reservation->getCommentaire(),
+                        'typereservation' => $reservation->getTypereservation(),
+                        'evenement' => $reservation->getEvenement(),
+                    ];
+
+                    // Envoyer l'email avec le PDF en pièce jointe
+                    $emailSent = $this->emailService->sendReservationConfirmationEmail(
+                        $email,
+                        $reservationData,
+                        $pdfPath
+                    );
+
+                    if ($emailSent) {
+                        $this->addFlash('success', 'Votre réservation a été confirmée ! Un email avec votre confirmation PDF vous a été envoyé.');
+                    } else {
+                        $this->addFlash('warning', 'Votre réservation a été enregistrée, mais l\'envoi de l\'email a échoué. Vous pouvez télécharger votre confirmation depuis votre espace membre.');
+                    }
+
+                } catch (\Exception $e) {
+                    $this->addFlash('warning', 'Votre réservation a été enregistrée, mais la génération du PDF a échoué. Vous pouvez contacter le support pour obtenir votre confirmation.');
+                }
 
                 return $this->redirectToRoute('app_home');
             }
@@ -111,14 +162,57 @@ final class ReservationController extends AbstractController
                 $reservation->setEmail($email);
                 $reservation->setTelephone($telephone);
                 $reservation->setCommentaire($commentaire);
-
-                // Déterminer automatiquement le type de réservation
                 $reservation->setTypereservation('visite touristique');
 
                 $entityManager->persist($reservation);
                 $entityManager->flush();
 
-                $this->addFlash('success', 'Votre réservation de visite a été enregistrée avec succès !');
+                // Générer le PDF de confirmation
+                try {
+                    $timestamp = (new \DateTime())->format('YmdHis');
+                    $filename = 'confirmation_reservation_' . $reservation->getId() . '.pdf';
+                    $pdfPath = $this->pdfGenerator->generatePdf(
+                        'reservation/reservation_confirmation_pdf.html.twig',
+                        ['reservation' => $reservation],
+                        $filename,
+                        'A4',
+                        'portrait'
+                    );
+
+                    // Stocker le chemin du PDF dans la réservation
+                    $relativePath = strstr($pdfPath, '/pdf/');
+                    if ($relativePath === false) {
+                        $relativePath = '/pdf/' . $filename;
+                    }
+                    $reservation->setFacturepdf($relativePath);
+                    $entityManager->flush();
+
+                    // Préparer les données pour l'email
+                    $reservationData = [
+                        'id' => $reservation->getId(),
+                        'nom' => $reservation->getNom(),
+                        'email' => $reservation->getEmail(),
+                        'telephone' => $reservation->getTelephone(),
+                        'commentaire' => $reservation->getCommentaire(),
+                        'typereservation' => $reservation->getTypereservation(),
+                    ];
+
+                    // Envoyer l'email avec le PDF en pièce jointe
+                    $emailSent = $this->emailService->sendReservationConfirmationEmail(
+                        $email,
+                        $reservationData,
+                        $pdfPath
+                    );
+
+                    if ($emailSent) {
+                        $this->addFlash('success', 'Votre réservation de visite a été confirmée ! Un email avec votre confirmation PDF vous a été envoyé.');
+                    } else {
+                        $this->addFlash('warning', 'Votre réservation a été enregistrée, mais l\'envoi de l\'email a échoué. Vous pouvez télécharger votre confirmation depuis votre espace membre.');
+                    }
+
+                } catch (\Exception $e) {
+                    $this->addFlash('warning', 'Votre réservation a été enregistrée, mais la génération du PDF a échoué. Vous pouvez contacter le support pour obtenir votre confirmation.');
+                }
 
                 return $this->redirectToRoute('app_home');
             }

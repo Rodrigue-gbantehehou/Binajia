@@ -3,7 +3,9 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class MembershipController extends AbstractController
 {
@@ -33,5 +35,18 @@ class MembershipController extends AbstractController
             'joinedAt' => new \DateTime('now')
         ];
         return $this->render('membership/card.html.twig', compact('user'));
+    }
+
+    #[Route('/cards/{filename}', name: 'app_card_pdf', requirements: ['filename' => '.+\.pdf'])]
+    public function serveCardPdf(string $filename): BinaryFileResponse
+    {
+        $projectDir = $this->getParameter('kernel.project_dir');
+        $filePath = $projectDir . '/var/uploads/cards/' . $filename;
+
+        if (!file_exists($filePath)) {
+            throw $this->createNotFoundException('Fichier PDF introuvable');
+        }
+
+        return new BinaryFileResponse($filePath);
     }
 }

@@ -19,9 +19,9 @@ class UploadController extends AbstractController
     }
 
     /**
-     * Sert un fichier depuis var/uploads/media/
-     * 
-     * @param string $filename Chemin relatif depuis 'media/' (ex: cultural/68f177590a7a0.jpg)
+     * Sert un fichier depuis var/uploads/media/ ou var/uploads/membres/
+     *
+     * @param string $filename Chemin relatif depuis 'media/' ou 'membres/' (ex: membres/123.jpg ou cultural/68f177590a7a0.jpg)
      */
     #[Route('/uploads/{filename}', name: 'secure_upload', requirements: ['filename' => '.+'])]
     public function serveFile(string $filename): Response
@@ -29,8 +29,13 @@ class UploadController extends AbstractController
         // Empêche les traversals de dossier
         $safeFilename = str_replace(['..', './', '.\\'], '', $filename);
 
-        // Chemin complet
-        $filePath = $this->uploadDir . '/media/' . $safeFilename;
+        // Vérifier si c'est un fichier membre (avatars)
+        if (str_starts_with($safeFilename, 'membres/')) {
+            $filePath = $this->uploadDir . '/' . $safeFilename;
+        } else {
+            // Fichier media traditionnel
+            $filePath = $this->uploadDir . '/media/' . $safeFilename;
+        }
 
         if (!file_exists($filePath) || !is_readable($filePath)) {
             throw $this->createNotFoundException('Fichier introuvable : ' . $safeFilename);

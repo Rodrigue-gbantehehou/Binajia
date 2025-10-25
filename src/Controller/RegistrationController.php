@@ -137,21 +137,49 @@ class RegistrationController extends AbstractController
         $memberId = sprintf('BjNg-%s-%03d', (new \DateTime())->format('Y'), $user->getId());
 
         // Photo is required: handled by FileUploader service (crop 3:4, resize 300x400)
+        $tempAvatarPath = null;
         try {
-            $avatarPath = $fileUploader->saveAvatarFromDataUrl($photoData, (int)$user->getId());
+            // Upload temporaire de l'avatar (sans ID utilisateur pour le nommage)
+            $avatarResult = $fileUploader->saveAvatarFromDataUrl($photoData, null);
+            $tempAvatarPath = $avatarResult['tempPath'];
         } catch (\RuntimeException $e) {
             // In dev, expose detailed reason for faster debugging
             $env = $_ENV['APP_ENV'] ?? $_SERVER['APP_ENV'] ?? 'prod';
             $msg = $env === 'dev' ? ('Erreur image: ' . $e->getMessage()) : 'La photo est obligatoire pour générer la carte.';
             return $this->json(['ok' => false, 'message' => $msg], 400);
         }
-        $user->setPhoto($avatarPath);   
-        $em->flush(); // to get an ID or save updates
+
+        // Sauvegarder l'utilisateur (définitif cette fois)
+        $user->setPhoto($this->getRelativePath($tempAvatarPath));
+        if ($isNewUser) {
+            $em->persist($user);
+        }
+        $em->flush(); // Flush final pour obtenir l'ID définitif
+
+        // Maintenant renommer l'avatar avec le bon ID utilisateur
+        try {
+            $finalAvatarPath = $fileUploader->renameTempAvatarToFinal($tempAvatarPath, (int)$user->getId());
+            if ($finalAvatarPath) {
+                $user->setPhoto($this->getRelativePath($finalAvatarPath));
+                $em->flush(); // Mettre à jour le chemin de l'avatar dans la BD
+                $avatarPath = $finalAvatarPath; // Pour les références suivantes
+            } else {
+                $avatarPath = $tempAvatarPath; // Fallback au temporaire
+            }
+        } catch (\Throwable $e) {
+            // Log error but don't block the flow - the temp avatar will still work
+            $logger->error('Failed to rename avatar to final name', [
+                'userId' => $user->getId(),
+                'tempPath' => $tempAvatarPath,
+                'error' => $e->getMessage(),
+            ]);
+            $avatarPath = $tempAvatarPath; // Fallback au temporaire
+        }
         // Redirect URL to view the card (include query for plan and avatar)
         $url = $this->generateUrl('app_membership_card_generated', [
             'id' => $user->getId(),
             'plan' => $plan,
-            'avatar' => $avatarPath,
+            'avatar' => $this->getRelativePath($avatarPath),
         ]);
 
         // If payment details were provided by the frontend, store them
@@ -254,20 +282,32 @@ class RegistrationController extends AbstractController
         if (!$cardGenerated) {
             try {
                 $membershipCardService->generateAndPersist($user, null, $avatarPath, $memberId);
+                $cardGenerated = true; // ✅ Mark as generated
             } catch (\Throwable $e) {
                 // Log errors but do not block the flow
                 $logger->error('Membership card PDF generation failed (pre-redirect)', [
                     'userId' => $user->getId(),
                     'error' => $e->getMessage(),
                 ]);
+                $cardGenerated = false;
             }
         }
 
+        // Check if card was generated successfully
+        if (!$cardGenerated) {
+            return $this->json([
+                'ok' => false,
+                'message' => 'Erreur lors de la génération de la carte membre.'
+            ], 500);
+        }
+
+        // Build the redirect URL with parameters
+        $redirectUrl = $this->generateUrl('app_membership_card_generated', ['id' => $user->getId()]);
+        $redirectUrl .= '?plan=' . urlencode($plan) . '&avatar=' . urlencode($this->getRelativePath($avatarPath));
+
         return $this->json([
             'ok' => true,
-            'cardUrl' => $url,
-            'avatar' => $avatarPath,
-            'redirect' => $this->generateUrl('app_user_dashboard'),
+            'redirect' => $this->generateUrl('app_membership_card_generated', ['id' => $user->getId()]) . '?plan=' . urlencode($plan) . '&avatar=' . urlencode($this->getRelativePath($avatarPath)),
         ]);
     }
 
@@ -305,5 +345,22 @@ class RegistrationController extends AbstractController
             'displayCountry' => $displayCountry,
             'memberCard' => $memberCard
         ]);
+    }
+
+    private function getRelativePath(string $absolutePath): string
+    {
+        // Use the parameter from services.yaml binding
+        $uploadDir = $this->getParameter('upload_directory');
+
+        // Trouver la partie du chemin qui vient après le dossier d'upload
+        $uploadPos = strpos($absolutePath, $uploadDir);
+        if ($uploadPos !== false) {
+            $relativePath = substr($absolutePath, $uploadPos + strlen($uploadDir));
+            // Remplacer les backslashes par des slashes pour la compatibilité web
+            return str_replace('\\', '/', $relativePath);
+        }
+
+        // Si on ne trouve pas le dossier d'upload, retourner le nom du fichier seulement
+        return '/' . basename($absolutePath);
     }
 }

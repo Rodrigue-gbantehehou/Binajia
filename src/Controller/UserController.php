@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Payments;
 use App\Entity\Receipts;
 use App\Entity\MembershipCards;
+use App\Entity\Reservation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -123,5 +124,22 @@ class UserController extends AbstractController
         ];
         $lastPayment = $payments[0] ?? null;
         return $this->render('user/dashboard_b.html.twig', compact('payments','tickets','lastPayment','user'));
+    }
+
+    #[Route('/mes-reservations', name: 'app_user_reservations')]
+    public function myReservations(EntityManagerInterface $em): Response
+    {
+        $authUser = $this->getUser();
+        if (!$authUser) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Récupérer les réservations de l'utilisateur par son email
+        $reservationRepo = $em->getRepository(Reservation::class);
+        $reservations = $reservationRepo->findBy(['email' => $authUser->getEmail()], ['id' => 'DESC']);
+
+        return $this->render('user/reservations.html.twig', [
+            'reservations' => $reservations,
+        ]);
     }
 }

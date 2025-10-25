@@ -258,34 +258,39 @@
 		</div>
 	</section>
 
-	<!-- Popular Tours Section -->
+	<!-- Destinations Section -->
 	<section class="py-20 px-4 bg-gradient-to-br from-gray-50 to-gray-100">
 		<div class="max-w-7xl mx-auto">
 			<div class="text-center mb-16">
 				<h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-					Circuits Populaires
+					Destinations Incontournables
 				</h2>
 				<div class="section-divider mb-6"></div>
-				<p class="text-xl text-gray-600">Nos voyages les plus demandés</p>
+				<p class="text-xl text-gray-600">Découvrez les lieux exceptionnels du Bénin et du Nigeria</p>
 			</div>
 
 			<div
 				class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-				<!-- Tour 1 -->
+				{% for place in places %}
+				<!-- Place Card -->
 				<div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
 					<div class="relative h-56 overflow-hidden">
-						<img src="https://images.unsplash.com/photo-1581434682228-9a3d2a1c3a5f" alt="Tour Benin" class="w-full h-full object-cover">
+						{% if place.image %}
+							<img src="{{ path('secure_upload', {'filename': place.image}) }}" alt="{{ place.title }}" class="w-full h-full object-cover">
+						{% else %}
+							<img src="https://images.unsplash.com/photo-1581434682228-9a3d2a1c3a5f" alt="{{ place.title }}" class="w-full h-full object-cover">
+						{% endif %}
 						<div class="absolute top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm">
-							5 jours
+							{{ place.type|default('Lieu') }}
 						</div>
 					</div>
 					<div class="p-6">
-						<h4 class="text-2xl font-bold text-gray-800 mb-3">Trésors du Bénin</h4>
+						<h4 class="text-2xl font-bold text-gray-800 mb-3">{{ place.title }}</h4>
 						<p class="text-gray-600 mb-6 leading-relaxed">
-							Explorez Cotonou, Ouidah, Abomey et Ganvié dans ce circuit complet
+							{{ place.description|slice(0, 100) ~ '...' }}
 						</p>
 						<div class="flex justify-between items-center pt-4 border-t border-gray-200">
-							<span class="text-2xl font-bold text-green-600">150,000 FCFA</span>
+							<span class="text-lg font-semibold text-green-600">{{ place.country|default('Bénin/Nigeria') }}</span>
 							<a href="#" class="text-green-600 hover:text-green-700 font-semibold flex items-center gap-2">
 								Voir détails
 								<i data-feather="arrow-right" class="w-4 h-4"></i>
@@ -293,58 +298,13 @@
 						</div>
 					</div>
 				</div>
-
-				<!-- Tour 2 -->
-				<div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
-					<div class="relative h-56 overflow-hidden">
-						<img src="https://images.unsplash.com/photo-1529107386315-e1a2ed508132" alt="Tour Nigeria" class="w-full h-full object-cover">
-						<div class="absolute top-4 right-4 bg-yellow-500 text-white px-4 py-2 rounded-full font-bold text-sm">
-							7 jours
-						</div>
-					</div>
-					<div class="p-6">
-						<h4 class="text-2xl font-bold text-gray-800 mb-3">Aventure Nigériane</h4>
-						<p class="text-gray-600 mb-6 leading-relaxed">
-							Découvrez Lagos, Abuja, les chutes d'Erin Ijesha et Yankari
-						</p>
-						<div class="flex justify-between items-center pt-4 border-t border-gray-200">
-							<span class="text-2xl font-bold text-green-600">75,000 NGN</span>
-							<a href="#" class="text-green-600 hover:text-green-700 font-semibold flex items-center gap-2">
-								Voir détails
-								<i data-feather="arrow-right" class="w-4 h-4"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-
-				<!-- Tour 3 -->
-				<div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
-					<div class="relative h-56 overflow-hidden">
-						<img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e" alt="Combiné" class="w-full h-full object-cover">
-						<div class="absolute top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm">
-							10 jours
-						</div>
-					</div>
-					<div class="p-6">
-						<h4 class="text-2xl font-bold text-gray-800 mb-3">Combiné Bénin-Nigeria</h4>
-						<p class="text-gray-600 mb-6 leading-relaxed">
-							Expérience complète avec guide francophone
-						</p>
-						<div class="flex justify-between items-center pt-4 border-t border-gray-200">
-							<span class="text-2xl font-bold text-green-600">300,000 FCFA</span>
-							<a href="#" class="text-green-600 hover:text-green-700 font-semibold flex items-center gap-2">
-								Voir détails
-								<i data-feather="arrow-right" class="w-4 h-4"></i>
-							</a>
-						</div>
-					</div>
-				</div>
+				{% endfor %}
 			</div>
 
 			<div class="text-center mt-12">
 				<button onclick="goToPlaces()" class="inline-flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full text-lg transition-all shadow-lg hover:shadow-xl">
 					<i data-feather="route" class="w-5 h-5"></i>
-					Voir tous les circuits
+					Voir toutes les destinations
 				</button>
 			</div>
 		</div>

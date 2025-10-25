@@ -94,6 +94,8 @@
 				vertical-align: top;
 				text-align: left;
 				padding-left: 12px;
+				max-width: 160px;
+				min-width: 140px;
 			}
 
 			/* Photo */
@@ -133,6 +135,10 @@
 				bottom: 20px;
 				position: relative;
 				object-fit: cover;
+				word-wrap: break-word;
+				overflow-wrap: break-word;
+				hyphens: auto;
+				max-width: 100%;
 			}
 
 			.detail-row {
@@ -242,6 +248,9 @@
 				width: 90px;
 				flex-shrink: 0; /* le QR code ne se réduit pas */
 				text-align: center;
+				display: table-cell;
+				vertical-align: top;
+				padding-left: 8px;
 			}
 		</style>
 	</head>
@@ -251,11 +260,11 @@
 			<div class="card-box card-recto">
 				<div class="card-header">
 					<div class="header-left" style="position:relative;bottom:10px;">
-						<img src="{{ asset('media/benin.png') }}" style="width: 30px; height: 20px; object-fit: cover;" alt="">
+						<img src="media/benin.png" style="width: 30px; height: 20px; object-fit: cover;" alt="">
 						<span class="header-title">BINAJIA</span>
-						<img src="{{ asset('media/nigeria.png') }}" style="width: 30px; height: 20px; object-fit: cover; " alt="">
+						<img src="media/nigeria.png" style="width: 30px; height: 20px; object-fit: cover; " alt="">
 					</div>
-					<img src="{{ asset('media/logo.jpeg') }}" style="width: 70px; height: 50px; object-fit: cover; margin-left: 140px; margin-top: 10px;" alt="">
+					<img src="media/logo.jpeg" style="width: 70px; height: 50px; object-fit: cover; margin-left: 140px; margin-top: 10px;" alt="">
 					<span style="object-fit: covr; font-size: 10px; text-transform: uppercase; position:relative;bottom:60px;">association benino-nigériane</span>
 				</div>
 				<div class="card-body">
@@ -270,7 +279,7 @@
 							</div>
 						</div>
 						<div class="card-info-cell">
-							<div class="role">'MEMBRE BINAJIA'</div>
+							<div class="role">MEMBRE BINAJIA</div>
 							<div class="tagline">United to grow together</div>
 							<div class="member-name">{{ name|default('Nom Complet') }}</div>
 							<div class="detail-row">
@@ -284,9 +293,9 @@
 						</div>
 						<div class="card-info-cell qr-wrapper">
 							{% if qrCode is defined and qrCode %}
-								<img src="{{ qrCode }}" style="width:90px;height:90px;object-fit:cover;border-radius:5px;left:80px;position:relative;" alt="QR Code">
+								<img src="{{ qrCode }}" style="width:90px;height:90px;object-fit:cover;border-radius:5px;display:block;margin:0 auto;" alt="QR Code">
 							{% else %}
-								<div style="width:90px;height:90px;border:1px solid #f59e0b;border-radius:5px;left:80px;position:relative;text-align:center;line-height:90px;font-size:8px;color:#f59e0b;">QR CODE</div>
+								<div style="width:90px;height:90px;border:1px solid #f59e0b;border-radius:5px;display:block;margin:0 auto;text-align:center;line-height:90px;font-size:8px;color:#f59e0b;">QR CODE</div>
 							{% endif %}
 						</div>
 					</div>

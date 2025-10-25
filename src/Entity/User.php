@@ -84,6 +84,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: PasswordResetToken::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $passwordResetTokens;
 
+    /**
+     * @var Collection<int, Reservation>
+     */
+    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'utilisateur')]
+    private Collection $reservations;
+
     public function __construct()
     {
         $this->membershipCards = new ArrayCollection();
@@ -92,6 +98,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->evenements = new ArrayCollection();
         $this->passwordResetTokens = new ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->reservations = new ArrayCollection();
     }
 
     public function getId(): ?int

@@ -13,7 +13,7 @@ class PhotoUploadService
         private SluggerInterface $slugger,
         string $projectDir
     ) {
-        $this->uploadDir = $projectDir . '/public/uploads/photos';
+        $this->uploadDir = $projectDir . '/var/uploads';
     }
 
     /**
@@ -27,6 +27,11 @@ class PhotoUploadService
                 mkdir($this->uploadDir, 0755, true);
             }
 
+            $photosDir = $this->uploadDir . '/photos';
+            if (!is_dir($photosDir)) {
+                mkdir($photosDir, 0755, true);
+            }
+
             // Générer un nom de fichier unique
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFilename = $this->slugger->slug($originalFilename);
@@ -38,12 +43,12 @@ class PhotoUploadService
             );
 
             // Déplacer le fichier
-            $file->move($this->uploadDir, $fileName);
+            $file->move($photosDir, $fileName);
 
             return [
                 'success' => true,
                 'fileName' => $fileName,
-                'filePath' => $this->uploadDir . '/' . $fileName,
+                'filePath' => $photosDir . '/' . $fileName,
                 'publicPath' => '/uploads/photos/' . $fileName
             ];
 
@@ -55,12 +60,9 @@ class PhotoUploadService
         }
     }
 
-    /**
-     * Supprime une photo existante
-     */
     public function deleteUserPhoto(string $fileName): bool
     {
-        $filePath = $this->uploadDir . '/' . $fileName;
+        $filePath = $this->uploadDir . '/photos/' . $fileName;
 
         if (file_exists($filePath)) {
             return unlink($filePath);
@@ -74,7 +76,7 @@ class PhotoUploadService
      */
     public function getPhotoPath(string $fileName): ?string
     {
-        $filePath = $this->uploadDir . '/' . $fileName;
+        $filePath = $this->uploadDir . '/photos/' . $fileName;
 
         if (file_exists($filePath)) {
             return $filePath;

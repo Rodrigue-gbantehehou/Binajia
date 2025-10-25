@@ -1,40 +1,214 @@
 {% extends 'base.html.twig' %}
 {% block title %}Carte Membre — Binajia{% endblock %}
 {% block content %}
-<section class="pt-24 pb-16 bg-white">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h1 class="font-serif text-3xl font-bold text-charcoal">Bienvenue, {{ user.firstname }} !</h1>
-    <p class="mt-2 text-gray-600">Votre adhésion est enregistrée. Voici votre carte membre.</p>
-
-    <div class="mt-8 grid md:grid-cols-2 gap-8 items-start">
-      <div class="rounded-2xl ring-1 ring-gray-200 p-4 bg-cream">
-        {% include 'components/membership_card.html.twig' with {
-          name: user.firstname ~ ' ' ~ user.lastname,
-          phone: user.phone ?? '—',
-          nationality: (user.country ?? '—')|title,
-          id: memberId,
-          expiry: ("now"|date_modify('+1 year'))|date('d/m/Y'),
-          join_date: (user.createdAt ? user.createdAt|date('d/m/Y') : "now"|date('d/m/Y')),
-          role: 'MEMBRE',
-          roleTitle: 'MEMBER\\nBINAJIA',
-          logoUrl: asset('media/logo.jpeg'),
-          photoUrl: memberCard.photo
-        } %}
+<section class="pt-20 pb-16 bg-gradient-to-br from-cream via-white to-cream min-h-screen">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-full mb-6 shadow-lg">
+        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+        </svg>
       </div>
-      <div>
-        <div class="rounded-2xl bg-neutral-50 ring-1 ring-gray-200 p-6">
-          <h2 class="font-semibold text-charcoal">Informations</h2>
-          <dl class="mt-4 grid sm:grid-cols-2 gap-3 text-sm text-gray-700">
-            <div><dt class="text-gray-500">Nom</dt><dd class="font-semibold">{{ user.firstname }} {{ user.lastname }}</dd></div>
-            <div><dt class="text-gray-500">Email</dt><dd class="font-semibold">{{ user.email }}</dd></div>
-            <div><dt class="text-gray-500">Téléphone</dt><dd class="font-semibold">{{ user.phone ?? '—' }}</dd></div>
-            <div><dt class="text-gray-500">Pays</dt><dd class="font-semibold">{{ (user.country ?? '—')|title }}</dd></div>
-            <div><dt class="text-gray-500">Ville</dt><dd class="font-semibold">{{ user.city ?? '—' }}</dd></div>
-            <div><dt class="text-gray-500">Identifiant</dt><dd class="font-semibold">{{ memberId }}</dd></div>
-          </dl>
-          <div class="mt-6 flex gap-3">
+      <h1 class="font-serif text-4xl md:text-5xl font-bold text-charcoal mb-3">Bienvenue dans la famille BINAJIA !</h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">{{ user.firstname }}, votre adhésion a été confirmée avec succès. Voici votre carte de membre officielle.</p>
+    </div>
 
-            <a href="{{ path('app_user_dashboard') }}" class="px-5 py-2 btn-primary">Accéder à mon espace</a>
+    <!-- Main Content Grid -->
+    <div class="grid lg:grid-cols-3 gap-8 items-start">
+      <!-- Membership Card Section -->
+      <div class="lg:col-span-2">
+        <!-- PDF Viewer Section -->
+        {% if memberCard.pdfurl %}
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden mb-6">
+          <div class="bg-gradient-to-r from-purple-500 to-indigo-600 px-6 py-4">
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              Carte Membre PDF
+            </h2>
+          </div>
+          <div class="p-4">
+            <div class="bg-gray-100 rounded-xl p-4 mb-4">
+              <div class="aspect-[3/2] bg-white rounded-lg shadow-inner overflow-hidden">
+                <iframe
+                  src="{{ memberCard.pdfurl }}"
+                  class="w-full h-full min-h-[400px] border-0 rounded-lg"
+                  title="Carte Membre PDF"
+                  loading="lazy">
+                  <p class="text-center text-gray-600 p-8">
+                    Votre navigateur ne supporte pas l'affichage des PDFs.
+                    <a href="{{ memberCard.pdfurl }}" target="_blank" class="text-primary hover:underline font-semibold">
+                      Cliquez ici pour télécharger le PDF
+                    </a>
+                  </p>
+                </iframe>
+              </div>
+            </div>
+            <div class="flex gap-3 justify-center">
+              <a href="{{ memberCard.pdfurl }}" target="_blank"
+                 class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200 font-semibold">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                Télécharger PDF
+              </a>
+              <button onclick="window.print()"
+                      class="inline-flex items-center gap-2 px-6 py-3 bg-white border-2 border-gray-200 text-charcoal rounded-xl hover:border-primary hover:bg-primary/5 transition-all duration-200 font-semibold">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                </svg>
+                Imprimer
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-6 transform hover:scale-[1.02] transition-all duration-300">
+          <h2 class="text-2xl font-bold text-charcoal mb-6 text-center">Votre Carte de Membre</h2>
+          {% include 'components/membership_card.html.twig' with {
+            name: user.firstname ~ ' ' ~ user.lastname,
+            phone: user.phone ?? '—',
+            nationality: (user.country ?? '—')|title,
+            id: memberId,
+            expiry: ("now"|date_modify('+1 year'))|date('d/m/Y'),
+            join_date: (user.createdAt ? user.createdAt|date('d/m/Y') : "now"|date('d/m/Y')),
+            role: 'MEMBRE',
+            roleTitle: 'MEMBER\\nBINAJIA',
+            logoUrl: asset('media/logo.jpeg'),
+            photoUrl: avatar ? path('secure_upload', {'filename': avatar}) : null
+          } %}
+        </div>
+
+        <!-- Success Message -->
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 rounded-2xl p-6 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-green-800">Adhésion Confirmée !</h3>
+              <p class="text-green-700">Votre carte est maintenant active et valide pour une année complète.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Information Panel -->
+      <div class="space-y-6">
+        <!-- Member Details Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div class="bg-gradient-to-r from-primary to-secondary px-6 py-4">
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Informations Membre
+            </h2>
+          </div>
+          <div class="p-6">
+            <dl class="space-y-4">
+              <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                <dt class="text-gray-500 font-medium">Nom complet</dt>
+                <dd class="font-semibold text-charcoal">{{ user.firstname }} {{ user.lastname }}</dd>
+              </div>
+              <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                <dt class="text-gray-500 font-medium">Email</dt>
+                <dd class="font-semibold text-charcoal text-sm">{{ user.email }}</dd>
+              </div>
+              <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                <dt class="text-gray-500 font-medium">Téléphone</dt>
+                <dd class="font-semibold text-charcoal">{{ user.phone ?? 'Non renseigné' }}</dd>
+              </div>
+              <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                <dt class="text-gray-500 font-medium">Pays</dt>
+                <dd class="font-semibold text-charcoal">{{ (user.country ?? 'Non renseigné')|title }}</dd>
+              </div>
+              <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                <dt class="text-gray-500 font-medium">Ville</dt>
+                <dd class="font-semibold text-charcoal">{{ user.city ?? 'Non renseignée' }}</dd>
+              </div>
+              <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                <dt class="text-gray-500 font-medium">ID Membre</dt>
+                <dd class="font-semibold text-primary font-mono">{{ memberId }}</dd>
+              </div>
+              <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                <dt class="text-gray-500 font-medium">Date d'adhésion</dt>
+                <dd class="font-semibold text-charcoal">{{ (user.createdAt ? user.createdAt|date('d/m/Y') : "now"|date('d/m/Y')) }}</dd>
+              </div>
+              <div class="flex items-center justify-between py-2">
+                <dt class="text-gray-500 font-medium">Date d'expiration</dt>
+                <dd class="font-semibold text-orange-600">{{ ("now"|date_modify('+1 year'))|date('d/m/Y') }}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <!-- Action Buttons Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div class="bg-gradient-to-r from-secondary to-primary px-6 py-4">
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Actions Rapides
+            </h2>
+          </div>
+          <div class="p-6 space-y-3">
+            <button onclick="window.print()"
+                    class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200 font-semibold">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+              </svg>
+              Imprimer la Carte
+            </button>
+            <a href="{{ path('app_user_dashboard') }}"
+               class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200 font-semibold">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
+              Mon Espace
+            </a>
+          </div>
+        </div>
+
+        <!-- Benefits Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div class="bg-gradient-to-r from-emerald-500 to-green-600 px-6 py-4">
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Avantages Membre
+            </h2>
+          </div>
+          <div class="p-6">
+            <ul class="space-y-3 text-sm">
+              <li class="flex items-center gap-3">
+                <div class="w-2 h-2 bg-emerald-500 rounded-full flex-shrink-0"></div>
+                <span class="text-gray-700">Accès aux événements exclusifs BINAJIA</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <div class="w-2 h-2 bg-emerald-500 rounded-full flex-shrink-0"></div>
+                <span class="text-gray-700">Réductions sur les services partenaires</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <div class="w-2 h-2 bg-emerald-500 rounded-full flex-shrink-0"></div>
+                <span class="text-gray-700">Support prioritaire</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <div class="w-2 h-2 bg-emerald-500 rounded-full flex-shrink-0"></div>
+                <span class="text-gray-700">Newsletter mensuelle exclusive</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <div class="w-2 h-2 bg-emerald-500 rounded-full flex-shrink-0"></div>
+                <span class="text-gray-700">Badge de membre digital</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
