@@ -50,18 +50,8 @@ class RegistrationController extends AbstractController
         $birthDate = trim((string)$request->request->get('birthDate')) ?: null;
         $plan      = trim((string)$request->request->get('plan')) ?: 'standard';
         $photoData = (string)$request->request->get('photoData'); // base64 data URL (required)
-        //verifier si l'utilisateur existe et qu'il à deja une carte
-        $userRepo = $em->getRepository(User::class);
-        $user = $userRepo->findOneBy(['email' => $email]);
-        if ($user) {
-            $cardRepo = $em->getRepository(MembershipCards::class);
-            $existingCard = $cardRepo->findOneBy(['user' => $user]);
-            if ($existingCard) {
-                return $this->json(['ok' => false, 'message' => 'Vous avez deja une carte']);
-                
-            }
-        }
-        
+
+
         // Normalize base64 data URL if sent via x-www-form-urlencoded ("+" may become spaces)
         if ($photoData !== '' && str_starts_with($photoData, 'data:image')) {
             $parts = explode(',', $photoData, 2);
@@ -131,7 +121,7 @@ class RegistrationController extends AbstractController
             $em->persist($user);
         }
 
-        
+
 
         // Build a member ID like BjNg-YYYY-000{id}
         $memberId = sprintf('BjNg-%s-%03d', (new \DateTime())->format('Y'), $user->getId());
@@ -305,9 +295,12 @@ class RegistrationController extends AbstractController
         $redirectUrl = $this->generateUrl('app_membership_card_generated', ['id' => $user->getId()]);
         $redirectUrl .= '?plan=' . urlencode($plan) . '&avatar=' . urlencode($this->getRelativePath($avatarPath));
 
+
+
         return $this->json([
             'ok' => true,
-            'redirect' => $this->generateUrl('app_membership_card_generated', ['id' => $user->getId()]) . '?plan=' . urlencode($plan) . '&avatar=' . urlencode($this->getRelativePath($avatarPath)),
+            'redirect' => $redirectUrl, // URL simple sans paramètres
+            'message' => 'Adhésion réussie'
         ]);
     }
 
@@ -318,6 +311,31 @@ class RegistrationController extends AbstractController
         if (!$user) {
             throw $this->createNotFoundException('Utilisateur introuvable');
         }
+        
+        // 🔧 NOUVELLE FONCTIONNALITÉ : Vérifier l'authentification automatique
+        $session = $request->getSession();
+        $sessionUserId = $session->get('user_id');
+        $sessionToken = $session->get('session_token');
+        
+        // Si l'utilisateur n'est pas authentifié via session normale, vérifier l'auto-auth
+        if (!$this->getUser() && $sessionUserId && $sessionToken) {
+            if ($sessionUserId == $user->getId()) {
+                // Auto-authentification valide, connecter l'utilisateur
+                try {
+                    $this->container->get('security.token_storage')->setToken(
+                        new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken(
+                            $user, 
+                            'main', 
+                            $user->getRoles()
+                        )
+                    );
+                    \error_log("✅ Auto-authentification appliquée pour l'utilisateur: " . $user->getId());
+                } catch (\Exception $e) {
+                    \error_log("⚠️ Erreur lors de l'auto-authentification: " . $e->getMessage());
+                }
+            }
+        }
+        
         $memberId = sprintf('BjNg-%s-%03d', (new \DateTime())->format('Y'), $user->getId());
 
         $memberCard = $em->getRepository(MembershipCards::class)->findOneBy(['user' => $user]);
@@ -343,7 +361,8 @@ class RegistrationController extends AbstractController
             'plan' => $plan,
             'avatar' => $avatar,
             'displayCountry' => $displayCountry,
-            'memberCard' => $memberCard
+            'memberCard' => $memberCard,
+            'autoAuthenticated' => $sessionUserId == $user->getId() && $sessionToken
         ]);
     }
 

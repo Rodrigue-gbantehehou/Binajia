@@ -1,6 +1,158 @@
 {% extends 'base.html.twig' %}
 {% block title %}Devenir Membre - BINAJIA{% endblock %}
 {% block content %}
+<!-- 🔧 CORRECTION : Intercepter la redirection FedaPay -->
+<script>
+// Vérifier si on arrive depuis une redirection FedaPay
+const urlParams = new URLSearchParams(window.location.search);
+const transactionId = urlParams.get('transaction-id');
+const transactionStatus = urlParams.get('transaction-status');
+
+// 🔧 NOUVELLE FONCTION : Gérer la redirection FedaPay
+async function handleFedaPayRedirect() {
+  console.log('🚀 Début handleFedaPayRedirect, transaction ID:', window.lastTransactionId);
+  
+  try {
+    // Vérifier le statut du paiement
+    console.log('📡 Vérification du statut du paiement...');
+    const verifyUrl = '{{ path('payment_verify') }}?tx=' + encodeURIComponent(window.lastTransactionId);
+    console.log('URL:', verifyUrl);
+    
+    const response = await fetch(verifyUrl);
+    const data = await response.json();
+    
+    console.log('✅ Réponse verification:', data);
+    
+    if (data && data.ok && ['approved','succeeded','success','paid'].includes(String(data.status||'').toLowerCase())) {
+      console.log('✅ Paiement confirmé via API FedaPay, récupération des informations utilisateur...');
+      
+        try {
+          // 🔧 NOUVELLE FONCTIONNALITÉ : Authentification automatique
+          const authUrl = '{{ path('payment_auto_auth', {'transactionId': 'TRANSACTION_ID'}) }}'.replace('TRANSACTION_ID', window.lastTransactionId);
+          console.log('🔐 Authentification automatique, URL:', authUrl);
+          
+          const authResponse = await fetch(authUrl);
+          const authData = await authResponse.json();
+          
+          console.log('✅ Données d\'authentification:', authData);
+          
+          if (authData.success && authData.redirectUrl) {
+            console.log('🎯 Utilisateur authentifié automatiquement:', authData.userName);
+            console.log('🎯 Redirection vers:', authData.redirectUrl);
+            
+            // Stocker les informations de session côté client
+            if (authData.sessionToken) {
+              localStorage.setItem('session_token', authData.sessionToken);
+              localStorage.setItem('user_id', authData.userId);
+              localStorage.setItem('user_name', authData.userName);
+            }
+            
+            window.location.replace(authData.redirectUrl);
+          } else {
+            console.warn('⚠️ Authentification échouée, fallback vers payment_success');
+            window.location.replace('{{ path('payment_success') }}?transaction_id=' + encodeURIComponent(window.lastTransactionId));
+          }
+        } catch (authError) {
+          console.error('❌ Erreur authentification automatique:', authError);
+          alert('Erreur lors de l\'authentification automatique: ' + authError.message);
+          // Fallback vers la page de succès
+          window.location.replace('{{ path('payment_success') }}?transaction_id=' + encodeURIComponent(window.lastTransactionId));
+        }
+      
+    } else {
+      console.warn('⚠️ API FedaPay échouée, mais statut frontend = approved. Tentative de récupération utilisateur...');
+      
+      // Fallback : même si l'API FedaPay échoue, si le statut frontend est "approved", 
+      // on peut quand même essayer de récupérer l'utilisateur
+      if (window.lastTransactionStatus && ['approved','succeeded','success','paid'].includes(String(window.lastTransactionStatus).toLowerCase())) {
+        console.log('🔄 Fallback: statut frontend approved, tentative de récupération utilisateur...');
+        
+        try {
+          // 🔧 FALLBACK : Authentification automatique même si API FedaPay échoue
+          const authUrl = '{{ path('payment_auto_auth', {'transactionId': 'TRANSACTION_ID'}) }}'.replace('TRANSACTION_ID', window.lastTransactionId);
+          console.log('🔐 Authentification automatique (fallback), URL:', authUrl);
+          
+          const authResponse = await fetch(authUrl);
+          const authData = await authResponse.json();
+          
+          console.log('✅ Données d\'authentification (fallback):', authData);
+          
+          if (authData.success && authData.redirectUrl) {
+            console.log('🎯 Utilisateur authentifié automatiquement (fallback):', authData.userName);
+            console.log('🎯 Redirection vers (fallback):', authData.redirectUrl);
+            
+            // Stocker les informations de session côté client
+            if (authData.sessionToken) {
+              localStorage.setItem('session_token', authData.sessionToken);
+              localStorage.setItem('user_id', authData.userId);
+              localStorage.setItem('user_name', authData.userName);
+            }
+            
+            window.location.replace(authData.redirectUrl);
+          } else {
+            console.warn('⚠️ Authentification échouée même en fallback, redirection vers payment_success');
+            window.location.replace('{{ path('payment_success') }}?transaction_id=' + encodeURIComponent(window.lastTransactionId));
+          }
+        } catch (authError) {
+          console.error('❌ Erreur authentification automatique (fallback):', authError);
+          window.location.replace('{{ path('payment_success') }}?transaction_id=' + encodeURIComponent(window.lastTransactionId));
+        }
+      } else {
+        console.warn('⚠️ Paiement non confirmé:', data);
+        alert('Paiement non confirmé: ' + (data.message || 'Statut invalide'));
+        window.location.replace('{{ path('app_membership') }}');
+      }
+    }
+    
+  } catch (error) {
+    console.error('❌ Erreur lors du traitement de la redirection:', error);
+    alert('Erreur lors de la finalisation du paiement: ' + error.message);
+    window.location.replace('{{ path('app_membership') }}');
+  }
+}
+
+if (transactionId && transactionStatus && ['approved', 'succeeded', 'success', 'paid'].includes(transactionStatus.toLowerCase())) {
+  // Redirection FedaPay détectée - traiter le paiement
+  console.log('Redirection FedaPay détectée:', { transactionId, transactionStatus });
+  
+  // Stocker les données de transaction
+  window.lastTransactionId = transactionId;
+  window.lastTransactionStatus = transactionStatus;
+  
+  // 🔧 CORRECTION : Empêcher l'affichage du contenu normal de la page
+  // Remplacer tout le contenu par le loader
+  document.body.innerHTML = `
+    <div class="fixed inset-0 bg-white flex items-center justify-center z-50">
+      <div class="text-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">Paiement confirmé !</h2>
+        <p class="text-gray-600">Finalisation de votre adhésion...</p>
+      </div>
+    </div>
+  `;
+  
+  // Empêcher l'exécution du reste du script
+  window.fedaPayRedirectMode = true;
+  
+  // Traiter le paiement et rediriger
+  setTimeout(() => {
+    console.log('⏰ Timeout déclenché, appel de handleFedaPayRedirect');
+    handleFedaPayRedirect();
+  }, 1000);
+  
+  // Timeout de sécurité pour éviter un blocage infini
+  setTimeout(() => {
+    console.log('⏰ Timeout de sécurité déclenché (30 secondes)');
+    alert('Le paiement prend plus de temps que prévu. Redirection vers la page d\'accueil.');
+    window.location.replace('{{ path('app_home') }}');
+  }, 30000); // 30 secondes
+} else {
+  // Mode normal - pas de redirection FedaPay
+  console.log('Mode normal - pas de redirection FedaPay détectée');
+}
+</script>
+
+<!-- Contenu de la page (affiché seulement en mode normal) -->
 <div class="min-h-screen pt-20 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-cream via-white to-cream">
   <div class="max-w-3xl mx-auto">
     <!-- Header -->
@@ -253,13 +405,14 @@
 {% block scripts %}
 {{ parent() }}
 <script>
-let selectedPlan='standard', formData={}, photoData=null;
+
+let currentStep=1,selectedPlan='',formData={},photoData=null;
 // Mapping indicatifs (extrait; peut être étendu ou remplacé par intl-tel-input)
 const countryDial = {
   'BJ': '+229','NG': '+234','FR': '+33','US': '+1','GB': '+44','CI': '+225','TG': '+228','SN': '+221','CM': '+237','GH': '+233','ZA': '+27','DE': '+49','ES': '+34','IT': '+39','CA': '+1'
 };
-// Montants par plan (XOF) - prix fixe à 5000 FCFA
-const planAmountXOF = { basic: 5000, standard: 5000, premium: 5000 };
+// Montants par plan (XOF)
+const planAmountXOF = { basic: 5000, standard: 15000, premium: 30000 };
 function amountForSelectedPlan(){ return planAmountXOF[selectedPlan] || 5000; }
 function updateDialFromCountry(){
   const sel = document.getElementById('country');
@@ -273,6 +426,45 @@ function updateDialFromCountry(){
     phoneEl.value = phoneEl.value.replace(/^0+/, '');
   }
 }
+document.getElementById('email').addEventListener('blur', async (e) => {
+  const email = e.target.value.trim();
+  if (!email) return;
+  const check = await checkEmailExists(email);
+  if (!check.ok) {
+    alert(check.message || 'Cet email est déjà utilisé.');
+    e.target.classList.add('border-red-500');
+  } else {
+    e.target.classList.remove('border-red-500');
+  }
+});
+
+document.addEventListener('change', (e)=>{ if(e.target && e.target.id==='country'){ updateDialFromCountry(); }});
+document.addEventListener('DOMContentLoaded', updateDialFromCountry);
+function selectPlan(p,e){
+  selectedPlan=p;
+  document.querySelectorAll('.plan-card').forEach(c=>{
+    c.classList.remove('plan-selected','border-primary','border-accent');
+    if(!c.classList.contains('border-gray-200')) c.classList.add('border-gray-200');
+  });
+  const el = e ? e.currentTarget : null;
+  if(el){
+    el.classList.remove('border-gray-200');
+    el.classList.add('plan-selected','border-primary');
+  }
+}
+function nextStep(s){if(!selectedPlan){alert('Veuillez sélectionner une formule');return;}goToStep(s);}
+function goToStep(s){
+  document.querySelectorAll('.step-content').forEach(c=>c.classList.add('hidden'));
+  document.getElementById('step'+s).classList.remove('hidden');
+  currentStep=s;updateProgress();window.scrollTo({top:0,behavior:'smooth'});
+  // Pre-initialize payment once when arriving on step 3 to avoid double-click
+  if (s===3) {
+    try { prepareFedaPay(); } catch(_){}
+  }
+}
+function previousStep(){if(currentStep>1)goToStep(currentStep-1)}
+function updateProgress(){for(let i=1;i<=3;i++){const el=document.getElementById('step'+i+'-indicator');el.className=i<currentStep?'w-10 h-10 rounded-full bg-secondary flex items-center justify-center font-bold text-white':i===currentStep?'w-10 h-10 rounded-full bg-primary flex items-center justify-center font-bold text-white':'w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-400';}
+ document.getElementById('progress1').style.width=currentStep>=2?'100%':'0%';document.getElementById('progress2').style.width=currentStep>=3?'100%':'0%';}
 function handlePhotoUpload(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{photoData=e.target.result;document.getElementById('photoPreview').innerHTML='<img src="'+photoData+'" class="w-full h-full object-cover">';};r.readAsDataURL(f);}
 function getDial(){const el=document.getElementById('dialPreview');return el?el.textContent.trim():''}
 function normalizeLocalPhone(num){return (num||'').replace(/\s+/g,'').replace(/[^0-9]/g,'').replace(/^0+/,'')}
@@ -280,14 +472,14 @@ async function validateAndContinue() {
   const email = val('email');
   if (!/^\S+@\S+\.\S+$/.test(email)) {
     alert('Veuillez entrer une adresse email valide.');
-    return;
+    return false;
   }
 
   // 🔍 Vérifie si l'email est déjà utilisé
   const check = await checkEmailExists(email);
   if (!check.ok) {
     alert(check.message || 'Cet email est déjà utilisé.');
-    return;
+    return false;
   }
 
   const fullPhone = `${getDial()}${normalizeLocalPhone(val('phone'))}`;
@@ -303,16 +495,15 @@ async function validateAndContinue() {
 
   if (!formData.firstName || !formData.lastName || !normalizeLocalPhone(val('phone')) || !formData.country || !formData.terms) {
     alert('Veuillez remplir tous les champs obligatoires et accepter les conditions.');
-    return;
+    return false;
   }
 
   if (!photoData) {
     alert('La photo de profil est obligatoire pour générer la carte.');
-    return;
+    return false;
   }
 
-  // All validation passed, proceed to payment
-  prepareFedaPay();
+  return true;
 }
 
 async function checkEmailExists(email) {
@@ -331,29 +522,42 @@ async function checkEmailExists(email) {
 }
 
 function val(id){return document.getElementById(id).value}
-function showLoader(title, sub){const o=document.getElementById('paymentOverlay');if(!o)return;document.getElementById('paymentOverlayTitle').textContent=title||'Traitement en cours…';document.getElementById('paymentOverlaySub').textContent=sub||'Merci de patienter.'}
-function hideLoader(){const o=document.getElementById('paymentOverlay');if(!o)return;o.classList.add('hidden')}
+function updateSummary(){byId('summaryName').textContent=formData.firstName+' '+formData.lastName;byId('summaryEmail').textContent=formData.email;byId('summaryPhone').textContent=formData.phone;byId('summaryCountry').textContent=(formData.country||'').replace(/^./,m=>m.toUpperCase());byId('summaryBirthDate').textContent=formData.birthDate||'Non renseignée'; if(photoData){byId('summaryPhoto').innerHTML='<img src="'+photoData+'" class="w-full h-full object-cover">'} const names={basic:'Découverte',standard:'Standard',premium:'Premium'}, prices={basic:'5 000 FCFA',standard:'15 000 FCFA',premium:'30 000 FCFA'};byId('summaryPlan').textContent='Formule '+(names[selectedPlan]||'');byId('summaryPrice').textContent=prices[selectedPlan]||'';}
+function byId(id){return document.getElementById(id)}
+function showLoader(title, sub){const o=byId('paymentOverlay');if(!o)return;o.classList.remove('hidden');byId('paymentOverlayTitle').textContent=title||'Traitement en cours…';byId('paymentOverlaySub').textContent=sub||'Merci de patienter.'}
+function hideLoader(){const o=byId('paymentOverlay');if(!o)return;o.classList.add('hidden')}
 async function confirmMembership(){
   try {
+    // 🔧 CORRECTION : Éviter les appels multiples
+    if (window.membershipConfirmed) {
+      console.log('Adhésion déjà en cours de finalisation...');
+      return;
+    }
+    window.membershipConfirmed = true;
+    
     showLoader('Finalisation de votre adhésion…','Nous générons votre carte.');
+    
     const payload = new URLSearchParams();
     payload.append('firstName', formData.firstName||'');
     payload.append('lastName', formData.lastName||'');
     payload.append('email', formData.email||'');
-    // recompute to be safe at submission time
+    
     const fullPhone = `${getDial()}${normalizeLocalPhone(document.getElementById('phone').value)}`;
     payload.append('phone', fullPhone||'');
     payload.append('country', formData.country||'');
     payload.append('birthDate', formData.birthDate||'');
     payload.append('plan', selectedPlan||'standard');
+    
     if (photoData) payload.append('photoData', photoData);
-    // Include payment details from FedaPay callback
-    if (typeof lastTransactionId !== 'undefined' && lastTransactionId) {
-      payload.append('transactionId', String(lastTransactionId));
+    
+    // Utiliser les variables globales
+    if (typeof window.lastTransactionId !== 'undefined' && window.lastTransactionId) {
+      payload.append('transactionId', String(window.lastTransactionId));
     }
-    if (typeof lastTransactionStatus !== 'undefined' && lastTransactionStatus) {
-      payload.append('transactionStatus', String(lastTransactionStatus));
+    if (typeof window.lastTransactionStatus !== 'undefined' && window.lastTransactionStatus) {
+      payload.append('transactionStatus', String(window.lastTransactionStatus));
     }
+    
     payload.append('amount', String(amountForSelectedPlan()));
 
     const res = await fetch('{{ path('app_membership_submit') }}', {
@@ -361,120 +565,249 @@ async function confirmMembership(){
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: payload.toString()
     });
+    
     const data = await res.json();
-    if (!res.ok || !data.ok) { throw new Error(data.message||'Erreur lors de l\'inscription'); }
-    // redirect to generated card page
-    window.location.href = data.cardUrl + '?plan=' + encodeURIComponent(selectedPlan||'standard') + (data.avatar?('&avatar='+encodeURIComponent(data.avatar)):'');
+    
+    if (!res.ok || !data.ok) { 
+      throw new Error(data.message||'Erreur lors de l\'inscription'); 
+    }
+    
+    // 🔧 CORRECTION : Redirection immédiate et définitive
+    if (data.redirect) {
+      console.log('Redirection vers:', data.redirect);
+      // Désactiver tous les autres événements pour éviter les conflits
+      window.membershipConfirmed = true;
+      window.callbackFired = true;
+      
+      // Redirection immédiate
+      window.location.replace(data.redirect);
+    } else {
+      throw new Error('URL de redirection manquante');
+    }
+    
   } catch(e) {
+    console.error('Erreur finalisation:', e);
     alert('Impossible de finaliser l\'adhésion: '+ e.message);
-  } finally { hideLoader(); }
+    hideLoader();
+    // Réinitialiser le flag en cas d'erreur
+    window.membershipConfirmed = false;
+  }
 }
 
 </script>
 
   <script>
+// 🔧 CORRECTION : Vérifier si on est en mode redirection FedaPay
+if (window.fedaPayRedirectMode) {
+  console.log('Mode redirection FedaPay détecté, arrêt de l\'exécution du script normal');
+  // Arrêter l'exécution de ce script
+} else {
+  console.log('Mode normal, initialisation FedaPay...');
+
 const FEDAPAY_PK = '{{ fedapay_public_key|e('js') }}';
 let lastTransactionId = null; let lastTransactionStatus = null; let callbackFired = false; let fedapayReady = false;
 
 function prepareFedaPay(){
-  // validations basiques déjà faites dans validateAndContinue()
-  const amount = amountForSelectedPlan(); // 5000 FCFA
+  // 🔧 CORRECTION : Éviter l'initialisation multiple
+  if (fedapayReady) {
+    console.log('FedaPay déjà initialisé, skip...');
+    return;
+  }
+  
+  const amount = amountForSelectedPlan();
   const desc = 'Adhésion Binajia - ' + (selectedPlan || 'standard');
   const email = formData.email;
   const firstname = formData.firstName;
   const lastname = formData.lastName;
+  const countryCode = (formData.country || '').toUpperCase();
+  const phone = formData.phone;
 
-  // extraire code pays ISO2 pour FedaPay (vous avez déjà "country" en ISO2 dans le select)
-  const countryCode = (formData.country || '').toUpperCase(); // ex: BJ / NG
-  // téléphone déjà normalisé en E.164 côté front
-  const phone = formData.phone; // ex: +22991234567
+  // Déclarer explicitement les variables globales
+  window.lastTransactionId = null;
+  window.lastTransactionStatus = null;
+  window.callbackFired = false;
 
-  // Nettoyez toute init précédente faite via un script statique
-  // Puis initialisez dynamiquement:
   function onResult(response){
-    callbackFired = true;
+    window.callbackFired = true;
     if (response && response.transaction) {
-      lastTransactionId = response.transaction.id || lastTransactionId;
-      lastTransactionStatus = response.transaction.status || lastTransactionStatus;
+      window.lastTransactionId = response.transaction.id || window.lastTransactionId;
+      window.lastTransactionStatus = response.transaction.status || window.lastTransactionStatus;
     }
-    // Tentative de vérification serveur avant inscription
-    if (lastTransactionId) {
-      fetch('{{ path('payment_verify') }}?tx=' + encodeURIComponent(lastTransactionId))
-        .then(r=>r.json()).then(v=>{
-          if (v && v.ok && (['approved','succeeded','success','paid'].includes(String(v.status||'').toLowerCase()))) {
-            confirmMembership();
-          } else {
-            // fallback: continuer si le front a déjà status positif
-            if (lastTransactionStatus && ['approved','succeeded','success','paid'].includes(String(lastTransactionStatus).toLowerCase())) {
-              confirmMembership();
-            } else {
-              alert('Paiement non confirmé. Veuillez réessayer.');
-            }
-          }
-        }).catch(()=>{
-          // En cas d'erreur de vérification, utiliser le statut front si positif
-          if (lastTransactionStatus && ['approved','succeeded','success','paid'].includes(String(lastTransactionStatus).toLowerCase())) {
-            confirmMembership();
-          } else {
-            alert('Vérification du paiement indisponible. Réessayez plus tard.');
-          }
-        });
+    
+    // Vérification serveur IMMÉDIATE après callback FedaPay
+    if (window.lastTransactionId) {
+      verifyPaymentAndComplete();
     } else {
       alert('Identifiant de transaction introuvable.');
+      hideLoader();
     }
   }
 
-  FedaPay.init('#pay-btn', {
-    public_key: FEDAPAY_PK,
-    transaction: {
-      amount: amount,
-      currency: 'XOF',
-      description: desc
-    },
-    customer: {
-      email: email,
-      lastname: lastname,
-      firstname: firstname,
-      // selon la spec FedaPay: phone_number peut être soit string, soit objet
-      phone_number: { number: phone.replace('+',''), country: countryCode }
-    },
-    // appelé après le paiement (certains SDK utilisent 'callback' ou 'onComplete')
-    callback: onResult,
-    onComplete: onResult,
-    onclose: function() {
-      // Si la modale se ferme sans callback, tenter une vérification serveur au cas où
-      if (!callbackFired && lastTransactionId) {
-        fetch('{{ path('payment_verify') }}?tx=' + encodeURIComponent(lastTransactionId))
-          .then(r=>r.json()).then(v=>{
-            if (v && v.ok && (['approved','succeeded','success','paid'].includes(String(v.status||'').toLowerCase()))) {
-              confirmMembership();
-            }
-          }).catch(()=>{});
-      }
+
+  function verifyPaymentAndComplete() {
+    // 🔧 CORRECTION : Éviter les vérifications multiples
+    if (window.paymentVerified) {
+      console.log('Paiement déjà vérifié...');
+      return;
     }
-  });
-  fedapayReady = true;
+    window.paymentVerified = true;
+    
+    fetch('{{ path('payment_verify') }}?tx=' + encodeURIComponent(window.lastTransactionId))
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.ok && ['approved','succeeded','success','paid'].includes(String(data.status||'').toLowerCase())) {
+          confirmMembership();
+        } else {
+          // Fallback sur le statut frontend
+          if (window.lastTransactionStatus && ['approved','succeeded','success','paid'].includes(String(window.lastTransactionStatus).toLowerCase())) {
+            confirmMembership();
+          } else {
+            alert('Paiement non confirmé: ' + (data.message || 'Statut invalide'));
+            hideLoader();
+            window.paymentVerified = false; // Réinitialiser en cas d'échec
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Erreur vérification:', error);
+        alert('Erreur de vérification du paiement. Veuillez contacter le support.');
+        hideLoader();
+        window.paymentVerified = false; // Réinitialiser en cas d'erreur
+      });
+  }
+
+  // Initialisation FedaPay avec gestion d'erreur
+  try {
+    console.log('Initialisation de FedaPay...');
+    
+    // Créer un bouton caché pour l'initialisation FedaPay
+    let hiddenPayBtn = document.getElementById('hidden-pay-btn');
+    if (!hiddenPayBtn) {
+      hiddenPayBtn = document.createElement('button');
+      hiddenPayBtn.id = 'hidden-pay-btn';
+      hiddenPayBtn.type = 'button';
+      hiddenPayBtn.style.display = 'none';
+      document.body.appendChild(hiddenPayBtn);
+    }
+    
+    FedaPay.init('#hidden-pay-btn', {
+      public_key: FEDAPAY_PK,
+      transaction: {
+        amount: amount,
+        currency: 'XOF',
+        description: desc
+      },
+      customer: {
+        email: email,
+        lastname: lastname,
+        firstname: firstname,
+        phone_number: { number: phone.replace('+',''), country: countryCode }
+      },
+      callback: onResult,
+      onComplete: onResult,
+      onclose: function() {
+        // Si fermeture sans callback, vérifier après un délai
+        setTimeout(() => {
+          if (!window.callbackFired && window.lastTransactionId) {
+            verifyPaymentAndComplete();
+          }
+        }, 2000);
+      }
+    });
+    
+    fedapayReady = true;
+    console.log('FedaPay initialisé avec succès');
+  } catch (error) {
+    console.error('Erreur lors de l\'initialisation de FedaPay:', error);
+    alert('Erreur lors de l\'initialisation de la passerelle de paiement: ' + error.message);
+    fedapayReady = false;
+    throw error;
+  }
+}
+function fedapayPayThenSubmit() {
+  console.log('fedapayPayThenSubmit appelé, fedapayReady:', fedapayReady);
+  
+  // Initialiser FedaPay si nécessaire
+  if (!fedapayReady) { 
+    console.log('Initialisation de FedaPay...');
+    try {
+      prepareFedaPay(); 
+      // L'initialisation est synchrone, on peut ouvrir immédiatement
+      openFedaPayModal();
+    } catch (error) {
+      console.error('Erreur lors de l\'initialisation:', error);
+      // fedapayReady reste false en cas d'erreur, on peut réessayer
+    }
+  } else {
+    // Si déjà initialisé, ouvrir directement
+    openFedaPayModal();
+  }
 }
 
-function fedapayPayThenSubmit() {
-  if (!fedapayReady) { prepareFedaPay(); }
-  // Ouvrir la modale (si nécessaire selon la version)
-  if (typeof FedaPay.open === 'function') { FedaPay.open(); }
+function openFedaPayModal() {
+  console.log('Tentative d\'ouverture de la modale FedaPay...');
+  
+  // Cliquer sur le bouton caché initialisé par FedaPay
+  const hiddenBtn = document.getElementById('hidden-pay-btn');
+  if (hiddenBtn) {
+    console.log('Clic sur le bouton caché FedaPay');
+    hiddenBtn.click();
+  } else {
+    console.error('Bouton caché FedaPay non trouvé');
+    
+    // Fallback: essayer FedaPay.open() si disponible
+    if (typeof FedaPay !== 'undefined' && FedaPay && typeof FedaPay.open === 'function') {
+      console.log('Fallback: utilisation de FedaPay.open()');
+      try {
+        FedaPay.open();
+      } catch (error) {
+        console.error('Erreur FedaPay.open():', error);
+        alert('Erreur lors de l\'ouverture de la passerelle de paiement.');
+        fedapayReady = false;
+      }
+    } else {
+      alert('Erreur: Impossible d\'ouvrir la passerelle de paiement. Veuillez rafraîchir la page.');
+      fedapayReady = false;
+    }
+  }
 }
 
 // Remplacez l'handler du bouton
 (function bindPayBtn(){
   const btn = document.getElementById('pay-btn');
-  if (!btn) return;
-  btn.onclick = async function() {
-    // Valider le formulaire avant de procéder au paiement
-    await validateAndContinue();
-    // Si la validation a réussi, formData sera remplie
-    if (formData && formData.firstName) {
-      fedapayPayThenSubmit();
+  if (!btn) {
+    console.log('Bouton pay-btn non trouvé');
+    return;
+  }
+  
+  // 🔧 CORRECTION : Éviter les event listeners multiples
+  if (btn.hasAttribute('data-listener-added')) {
+    console.log('Event listener déjà ajouté, skip...');
+    return;
+  }
+  
+  btn.setAttribute('data-listener-added', 'true');
+  console.log('Ajout de l\'event listener au bouton');
+  
+  btn.onclick = async function(e) {
+    e.preventDefault();
+    console.log('Clic sur le bouton de paiement');
+    
+    // Validation du formulaire
+    if (!formData || !formData.firstName) {
+      console.log('Validation du formulaire...');
+      const isValid = await validateAndContinue(); // remplit formData si ok
+      if (!isValid) {
+        console.log('Validation échouée');
+        return; // validation échouée
+      }
     }
+    
+    console.log('Lancement du paiement FedaPay...');
+    fedapayPayThenSubmit();
   };
 })();
 
+} // Fin de la condition else (mode normal)
 </script>
 {% endblock %}
