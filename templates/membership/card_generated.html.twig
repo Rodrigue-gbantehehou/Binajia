@@ -12,6 +12,15 @@
       </div>
       <h1 class="font-serif text-4xl md:text-5xl font-bold text-charcoal mb-3">Bienvenue dans la famille BINAJIA !</h1>
       <p class="text-lg text-gray-600 max-w-2xl mx-auto">{{ user.firstname }}, votre adhésion a été confirmée avec succès. Voici votre carte de membre officielle.</p>
+      
+      {% if autoAuthenticated %}
+      <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        Vous êtes automatiquement connecté à votre espace membre
+      </div>
+      {% endif %}
     </div>
 
     <!-- Main Content Grid -->
@@ -66,21 +75,7 @@
         </div>
         {% endif %}
 
-        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-6 transform hover:scale-[1.02] transition-all duration-300">
-          <h2 class="text-2xl font-bold text-charcoal mb-6 text-center">Votre Carte de Membre</h2>
-          {% include 'components/membership_card.html.twig' with {
-            name: user.firstname ~ ' ' ~ user.lastname,
-            phone: user.phone ?? '—',
-            nationality: (user.country ?? '—')|title,
-            id: memberId,
-            expiry: ("now"|date_modify('+1 year'))|date('d/m/Y'),
-            join_date: (user.createdAt ? user.createdAt|date('d/m/Y') : "now"|date('d/m/Y')),
-            role: 'MEMBRE',
-            roleTitle: 'MEMBER\\nBINAJIA',
-            logoUrl: asset('media/logo.jpeg'),
-            photoUrl: avatar ? path('secure_upload', {'filename': avatar}) : null
-          } %}
-        </div>
+        
 
         <!-- Success Message -->
         <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 rounded-2xl p-6 mb-6">

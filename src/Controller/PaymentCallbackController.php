@@ -33,24 +33,30 @@ class PaymentCallbackController extends AbstractController
                 $payment = $em->getRepository(Payments::class)->findOneBy(['reference' => $reference]);
                 $user = $payment ? $payment->getUser() : null;
 
-                // Rediriger vers le dashboard utilisateur
+                // 🔧 CORRECTION : Ne pas rediriger automatiquement, laisser le JavaScript gérer
+                // Le JavaScript va appeler confirmMembership() qui redirigera vers la page de carte
                 if ($user) {
                     // Authentifier automatiquement l'utilisateur en créant une session
                     $session = $request->getSession();
                     $session->set('user_authenticated', true);
                     $session->set('user_id', $user->getId());
 
-                    $this->addFlash('success', 'Paiement confirmé ! Votre carte de membre a été activée.');
-                    $this->addFlash('info', 'Vous pouvez maintenant voir votre carte dans votre espace personnel.');
-
-                    // Rediriger vers le dashboard avec l'utilisateur connecté
-                    return $this->redirectToRoute('app_user_dashboard', [], Response::HTTP_SEE_OTHER);
+                    // Retourner une réponse JSON pour le JavaScript au lieu de rediriger
+                    return $this->json([
+                        'success' => true,
+                        'status' => 'completed',
+                        'message' => 'Paiement confirmé ! Votre carte de membre a été activée.',
+                        'userId' => $user->getId(),
+                        'redirectUrl' => $this->generateUrl('app_membership_card_generated', ['id' => $user->getId()])
+                    ]);
                 } else {
                     // Fallback si utilisateur non trouvé
-                    $this->addFlash('success', 'Paiement confirmé ! Votre carte de membre a été activée.');
-                    $this->addFlash('info', 'Vous allez recevoir vos documents par email.');
-                    return $this->render('payment/success.html.twig', [
-                        'message' => $result['message']
+                    return $this->json([
+                        'success' => true,
+                        'status' => 'completed',
+                        'message' => 'Paiement confirmé ! Votre carte de membre a été activée.',
+                        'userId' => null,
+                        'redirectUrl' => $this->generateUrl('payment_success')
                     ]);
                 }
             } else {
@@ -75,8 +81,60 @@ class PaymentCallbackController extends AbstractController
     }
 
     #[Route('/payment/success', name: 'payment_success', methods: ['GET'])]
-    public function success(): Response
+    public function success(Request $request, EntityManagerInterface $em): Response
     {
+        $transactionId = $request->query->get('transaction_id');
+        
+        if ($transactionId) {
+            // Récupérer l'utilisateur depuis la transaction
+            $payment = $em->getRepository(Payments::class)->findOneBy(['reference' => $transactionId]);
+            if ($payment && $payment->getUser()) {
+                // Rediriger vers la page de confirmation de carte
+                return $this->redirectToRoute('app_membership_card_generated', [
+                    'id' => $payment->getUser()->getId()
+                ]);
+            }
+        }
+        
         return $this->render('payment/success.html.twig');
+    }
+
+    #[Route('/payment/auto-auth/{transactionId}', name: 'payment_auto_auth', methods: ['GET'])]
+    public function autoAuth(string $transactionId, EntityManagerInterface $em, Request $request): Response
+    {
+        // Récupérer le paiement et l'utilisateur
+        $payment = $em->getRepository(Payments::class)->findOneBy(['reference' => $transactionId]);
+        
+        if (!$payment || !$payment->getUser()) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Transaction ou utilisateur non trouvé'
+            ], 404);
+        }
+        
+        $user = $payment->getUser();
+        
+        // Créer une session d'authentification
+        $session = $request->getSession();
+        $session->set('user_authenticated', true);
+        $session->set('user_id', $user->getId());
+        $session->set('user_email', $user->getEmail());
+        $session->set('user_name', $user->getFirstname() . ' ' . $user->getLastname());
+        
+        // Générer un token de session sécurisé
+        $sessionToken = bin2hex(random_bytes(32));
+        $session->set('session_token', $sessionToken);
+        
+        \error_log("✅ Auto-authentification réussie pour l'utilisateur: " . $user->getId());
+        
+        return $this->json([
+            'success' => true,
+            'message' => 'Authentification automatique réussie',
+            'userId' => $user->getId(),
+            'userEmail' => $user->getEmail(),
+            'userName' => $user->getFirstname() . ' ' . $user->getLastname(),
+            'sessionToken' => $sessionToken,
+            'redirectUrl' => $this->generateUrl('app_membership_card_generated', ['id' => $user->getId()])
+        ]);
     }
 }

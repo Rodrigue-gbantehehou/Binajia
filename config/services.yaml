@@ -43,3 +43,5 @@ services:
     App\Command\SetupUploadDirsCommand: ~
     App\Command\CheckPdfPathsCommand: ~
     App\Command\TestPaymentRedirectCommand: ~
+    App\Command\TestPaymentRedirectFixCommand: ~
+    App\Command\TestFedaPayRedirectFixCommand: ~

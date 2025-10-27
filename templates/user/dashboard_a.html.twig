@@ -1,476 +1,507 @@
 {% extends 'base.html.twig' %}
-{% block title %}Mon espace — Binajia{% endblock %}
+{% block title %}Mon espace — Binajia
+{% endblock %}
 
 {% block stylesheets %}
-<style>
-.dashboard-card {
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-}
-.dashboard-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-.member-card-3d {
-    background: linear-gradient(135deg, #2D7A4F 0%, #1F5438 100%);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(45, 122, 79, 0.3);
-    position: relative;
-    overflow: hidden;
-}
-.member-card-3d::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
-    opacity: 0.1;
-}
-@media (max-width: 768px) {
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-    .mobile-nav {
-        display: flex;
-        overflow-x: auto;
-        gap: 1rem;
-        padding: 1rem;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .mobile-nav a {
-        white-space: nowrap;
-        padding: 8px 16px;
-        border-radius: 8px;
-        background: #f8f9fa;
-        text-decoration: none;
-        font-weight: 500;
-        color: #374151;
-        transition: all 0.2s;
-    }
-    .mobile-nav a:hover, .mobile-nav a.active {
-        background: #2D7A4F;
-        color: white;
-    }
-}
-</style>
+	<style>
+		.dashboard-card {
+			background: white;
+			border-radius: 20px;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+			border: 1px solid rgba(0, 0, 0, 0.05);
+			transition: all 0.3s ease;
+		}
+		.dashboard-card:hover {
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+			transform: translateY(-4px);
+		}
+		.profile-photo {
+			transition: all 0.3s ease;
+		}
+		.profile-photo:hover {
+			transform: scale(1.05);
+		}
+		.member-card-3d {
+			background: linear-gradient(135deg, #2D7A4F 0%, #1F5438 100%);
+			border-radius: 16px;
+			box-shadow: 0 8px 32px rgba(45, 122, 79, 0.3);
+			position: relative;
+			overflow: hidden;
+		}
+		.member-card-3d::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: url('data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+			opacity: 0.1;
+		}
+		@media(max-width: 768px) {
+			.dashboard-grid {
+				grid-template-columns: 1fr;
+			}
+			.mobile-nav {
+				display: flex;
+				overflow-x: auto;
+				gap: 1rem;
+				padding: 1rem;
+				background: white;
+				border-radius: 12px;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+			}
+			.mobile-nav a {
+				white-space: nowrap;
+				padding: 8px 16px;
+				border-radius: 8px;
+				background: #f8f9fa;
+				text-decoration: none;
+				font-weight: 500;
+				color: #374151;
+				transition: all 0.2s;
+			}
+			.mobile-nav a:hover,
+			.mobile-nav a.active {
+				background: #2D7A4F;
+				color: white;
+			}
+		}
+	</style>
 {% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gradient-to-br from-green-50 to-yellow-50 py-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Header -->
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Tableau de bord</h1>
-            <p class="text-gray-600">Bienvenue {{ user.firstName }}, gérez votre compte Binajia</p>
-        </div>
+	<div class="min-h-screen bg-gradient-to-br from-green-50 to-yellow-50 py-8">
+		<div
+			class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<!-- Header -->
+			<div class="mb-8">
+				<h1 class="text-3xl font-bold text-gray-900 mb-2">Tableau de bord</h1>
+				<p class="text-gray-600">Bienvenue
+					{{ user.firstName }}, gérez votre compte Binajia</p>
+			</div>
 
-        <!-- Mobile Navigation -->
-        <div class="lg:hidden mb-6 mobile-nav">
-            <a href="#profile" class="nav-link active">👤 Profil</a>
-            <a href="#card" class="nav-link">💳 Ma Carte</a>
-            <a href="#payments" class="nav-link">💰 Paiements</a>
-            <a href="#tickets" class="nav-link">🎫 Tickets</a>
-        </div>
+			<!-- Mobile Navigation -->
+			<div class="lg:hidden mb-6 mobile-nav">
+				<a href="#profile" class="nav-link active">👤 Profil</a>
+				<a href="#card" class="nav-link">💳 Ma Carte</a>
+				<a href="#payments" class="nav-link">💰 Paiements</a>
+				<a href="#tickets" class="nav-link">🎫 Tickets</a>
+			</div>
 
-        <div class="dashboard-grid grid lg:grid-cols-12 gap-6">
-            <!-- Sidebar -->
-            <aside class="lg:col-span-3 space-y-4 hidden  lg:block">
-                <!-- User Profile Card -->
-                <div class="dashboard-card shadow-lg bg-white p-6">
-                    <div class="flex items-center space-x-4">
-                        <div class="relative">
-                        
-                            <img src="{{ user.carteActuele.photo ?? '/media/avatar.png' }}" 
-                                 class="h-16 w-16 rounded-full object-cover border-4 border-green-100" alt="Avatar">
-                            <div class="absolute -bottom-1 -right-1 h-6 w-6 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
-                                <i class="fas fa-check text-white text-xs"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-900">{{ user.firstName }} {{ user.lastName }}</h3>
-                            <p class="text-sm text-gray-500">Membre #{{ user.memberId }}</p>
-                            <p class="text-xs text-green-600 font-medium">✓ Compte vérifié</p>
-                        </div>
-                    </div>
-                </div>
+			<div
+				class="dashboard-grid grid lg:grid-cols-12 gap-6">
+				<!-- Sidebar -->
+				<aside
+					class="lg:col-span-3 space-y-4 hidden  lg:block">
+					<!-- User Profile Card -->
+					<div class="dashboard-card shadow-lg bg-gradient-to-br from-green-50 to-amber-50 p-6">
+						<div class="flex flex-col items-center text-center space-y-4">
+							<div class="relative">
 
-                <!-- Navigation -->
-                <nav class="dashboard-card bg-white p-4">
-                    <ul class="space-y-2">
-                        <li><a href="#profile" class="flex items-center bg-amber-50 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 transition-colors">
-                            <i class="fas fa-user mr-3"></i>Mon Profil</a></li>
-                        <li><a href="#card" class="flex items-center bg-amber-50 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 transition-colors">
-                            <i class="fas fa-id-card mr-3"></i>Ma Carte Membre</a></li>
-                        <li><a href="#payments" class="flex items-center bg-amber-50 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 transition-colors">
-                            <i class="fas fa-credit-card mr-3"></i>Mes Paiements</a></li>
-                        <li><a href="#tickets" class="flex items-center bg-amber-50 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 transition-colors">
-                            <i class="fas fa-ticket-alt mr-3"></i>Mes Tickets</a></li>
-                    </ul>
-                </nav>
+								{% set userPhoto = user.carteActuele.photo ?? user.photo %}
+								<img src="{{ userPhoto ? path('secure_upload', {'filename': carteActuele.photo|trim('/')}) : '/media/avatar.png' }}" class="profile-photo h-28 w-28 rounded-full object-cover border-4 border-white shadow-xl" alt="{{ user.firstName }} {{ user.lastName }}">
+								<div class="absolute -bottom-2 -right-2 h-8 w-8 bg-green-500 rounded-full border-4 border-white flex items-center justify-center shadow-lg">
+									<i class="fas fa-check text-white text-sm"></i>
+								</div>
+							</div>
+							<div>
+								<h3 class="font-bold text-xl text-gray-900">{{ user.firstName }}
+									{{ user.lastName }}</h3>
+								<p class="text-sm text-gray-500 mt-1">Membre #{{ user.memberId }}</p>
+								<p class="text-xs text-green-600 font-medium mt-1 flex items-center justify-center">
+									<i class="fas fa-shield-check mr-1"></i>Compte vérifié
+								</p>
+							</div>
+						</div>
+					</div>
 
-                <!-- Quick Stats -->
-                <div class="dashboard-card  bg-white p-4">
-                    <h4 class="font-semibold text-gray-900 mb-3">Statistiques</h4>
-                    <div class="space-y-3">
-                        <div class="flex justify-between">
-                            <span class="text-sm text-gray-600">Paiements</span>
-                            <span class="font-semibold text-green-600">{{ payments|length }}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-sm text-gray-600">Tickets</span>
-                            <span class="font-semibold text-blue-600">{{ tickets|length }}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-sm text-gray-600">Membre depuis</span>
-                            <span class="font-semibold text-gray-900">{{ user.joinedAt|date('M Y') }}</span>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+					<!-- Navigation -->
+					<nav class="dashboard-card bg-white p-4">
+						<ul class="space-y-2">
+							<li>
+								<a href="#profile" class="flex items-center bg-amber-50 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 transition-colors">
+									<i class="fas fa-user mr-3"></i>Mon Profil</a>
+							</li>
+							<li>
+								<a href="#card" class="flex items-center bg-amber-50 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 transition-colors">
+									<i class="fas fa-id-card mr-3"></i>Ma Carte Membre</a>
+							</li>
+							<li>
+								<a href="#payments" class="flex items-center bg-amber-50 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 transition-colors">
+									<i class="fas fa-credit-card mr-3"></i>Mes Paiements</a>
+							</li>
+							<li>
+								<a href="#tickets" class="flex items-center bg-amber-50 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 transition-colors">
+									<i class="fas fa-ticket-alt mr-3"></i>Mes Tickets</a>
+							</li>
+						</ul>
+					</nav>
 
-            <!-- Main Content -->
-            <main class="lg:col-span-9 space-y-6 ">
-                <!-- Profile Section -->
-                <section id="profile" class="dashboard-card bg-white p-6">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                            <i class="fas fa-user-circle text-green-600 mr-3"></i>Mon Profil
-                        </h2>
-                        <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                            <i class="fas fa-edit mr-2"></i>Modifier
-                        </button>
-                    </div>
-                    
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-gray-50 rounded-lg">
-                                <label class="text-sm font-medium text-gray-600">Prénom</label>
-                                <p class="text-lg font-semibold text-gray-900 mt-1">{{ user.firstName }}</p>
-                            </div>
-                            <div class="p-4 bg-gray-50 rounded-lg">
-                                <label class="text-sm font-medium text-gray-600">Nom</label>
-                                <p class="text-lg font-semibold text-gray-900 mt-1">{{ user.lastName }}</p>
-                            </div>
-                            <div class="p-4 bg-gray-50 rounded-lg">
-                                <label class="text-sm font-medium text-gray-600">Pays</label>
-                                <p class="text-lg font-semibold text-gray-900 mt-1">{{ user.country ?? 'Non renseigné' }}</p>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <label class="text-sm font-medium text-green-700">Identifiant Membre</label>
-                                <p class="text-lg font-bold text-green-800 mt-1">{{ user.memberId }}</p>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <label class="text-sm font-medium text-blue-700">Membre depuis</label>
-                                <p class="text-lg font-semibold text-blue-800 mt-1">{{ user.joinedAt|date('d/m/Y') }}</p>
-                            </div>
-                            <div class="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                                <label class="text-sm font-medium text-yellow-700">Statut</label>
-                                <p class="text-lg font-semibold text-yellow-800 mt-1 flex items-center">
-                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>Actif
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+					<!-- Quick Stats -->
+					<div class="dashboard-card  bg-white p-4">
+						<h4 class="font-semibold text-gray-900 mb-3">Statistiques</h4>
+						<div class="space-y-3">
+							<div class="flex justify-between">
+								<span class="text-sm text-gray-600">Paiements</span>
+								<span class="font-semibold text-green-600">{{ payments|length }}</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="text-sm text-gray-600">Tickets</span>
+								<span class="font-semibold text-blue-600">{{ tickets|length }}</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="text-sm text-gray-600">Membre depuis</span>
+								<span class="font-semibold text-gray-900">{{ user.joinedAt|date('M Y') }}</span>
+							</div>
+						</div>
+					</div>
+				</aside>
 
-                <!-- Payments Section -->
-                <section id="payments" class="dashboard-card bg-white p-6">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                            <i class="fas fa-credit-card text-green-600 mr-3"></i>Mes Paiements
-                        </h2>
-                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                            {{ payments|length }} paiement(s)
-                        </span>
-                    </div>
-                    
-                    {% if payments|length > 0 %}
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reçu</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    {% for p in payments %}
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ p.date|date('d/m/Y') }}
-                                        </td>
-                                        <td class="px-4 py-4 whitespace-nowrap">
-                                            <div class="flex items-center">
-                                                <i class="fas fa-circle-check text-green-500 mr-2"></i>
-                                                <span class="text-sm font-medium text-gray-900">{{ p.label }}</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-4 whitespace-nowrap">
-                                            <span class="text-sm font-bold text-gray-900">{{ p.amount|number_format }} {{ p.currency }}</span>
-                                        </td>
-                                        <td class="px-4 py-4 whitespace-nowrap text-sm">
-                                            {% set receiptUrl = user.receipts[p.id]|default(null) %}
-                                            {% if receiptUrl %}
-                                                <a href="{{ receiptUrl }}" target="_blank" 
-                                                   class="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-800 rounded-full hover:bg-blue-200 transition-colors">
-                                                    <i class="fas fa-receipt mr-1"></i>Télécharger
-                                                </a>
-                                            {% else %}
-                                                <span class="text-gray-400">Non disponible</span>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    {% else %}
-                        <div class="text-center py-12">
-                            <i class="fas fa-credit-card text-gray-300 text-6xl mb-4"></i>
-                            <h3 class="text-lg font-medium text-gray-900 mb-2">Aucun paiement</h3>
-                            <p class="text-gray-500">Vos paiements apparaîtront ici une fois effectués.</p>
-                        </div>
-                    {% endif %}
-                </section>
+				<!-- Main Content -->
+				<main
+					class="lg:col-span-9 space-y-6 ">
+					<!-- Profile Section -->
+					<section id="profile" class="dashboard-card bg-white p-6">
+						<div class="flex items-center justify-between mb-6">
+							<h2 class="text-2xl font-bold text-gray-900 flex items-center">
+								<i class="fas fa-user-circle text-green-600 mr-3"></i>Mon Profil
+							</h2>
+							<button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+								<i class="fas fa-edit mr-2"></i>Modifier
+							</button>
+						</div>
 
-                <!-- Tickets Section -->
-                <section id="tickets" class="dashboard-card bg-white p-6">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                            <i class="fas fa-ticket-alt text-green-600 mr-3"></i>Mes Tickets
-                        </h2>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-                            {{ tickets|length }} ticket(s)
-                        </span>
-                    </div>
-                    
-                    {% if tickets|length > 0 %}
-                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {% for t in tickets %}
-                            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-lg border border-blue-200 hover:shadow-lg transition-all duration-300">
-                                <div class="flex items-center justify-between mb-4">
-                                    <i class="fas fa-calendar-alt text-blue-600 text-xl"></i>
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
-                                        {{ t.date|date('d M') }}
-                                    </span>
-                                </div>
-                                <h3 class="font-bold text-gray-900 mb-2">{{ t.eventTitle }}</h3>
-                                <p class="text-sm text-gray-600 mb-4">{{ t.date|date('d/m/Y à H:i') }}</p>
-                                <button onclick="showTicketQR('{{ t.id }}')" 
-                                        class="w-full flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                                    <i class="fas fa-qrcode mr-2"></i>Afficher QR
-                                </button>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        <div class="text-center py-12">
-                            <i class="fas fa-ticket-alt text-gray-300 text-6xl mb-4"></i>
-                            <h3 class="text-lg font-medium text-gray-900 mb-2">Aucun ticket</h3>
-                            <p class="text-gray-500">Vos tickets d'événements apparaîtront ici.</p>
-                            <a href="{{ path('app_events') }}" class="mt-4 inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                                <i class="fas fa-calendar-plus mr-2"></i>Découvrir les événements
-                            </a>
-                        </div>
-                    {% endif %}
-                </section>
+						<!-- Profile Photo Section -->
+						<div class="flex justify-center mb-8">
+							<div class="relative">
+								{% set userPhoto = user.carteActuele.photo ?? user.photo %}
+								<img src="{{ userPhoto ? path('secure_upload', {'filename': carteActuele.photo|trim('/')}) : '/media/avatar.png' }}" class="profile-photo h-32 w-32 rounded-full object-cover border-4 border-green-500 shadow-2xl" alt="{{ user.firstName }} {{ user.lastName }}">
+								<div class="absolute -bottom-2 -right-2 h-10 w-10 bg-green-500 rounded-full border-4 border-white flex items-center justify-center shadow-lg">
+									<i class="fas fa-check text-white"></i>
+								</div>
+							</div>
+						</div>
 
-                <!-- Member Card Section -->
-                <section id="card" class="dashboard-card bg-white p-6">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                            <i class="fas fa-id-card text-green-600 mr-3"></i>Ma Carte Membre
-                        </h2>
-                        {% if user.cardPdf %}
-                            <a href="{{ user.cardPdf }}" target="_blank" 
-                               class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                                <i class="fas fa-download mr-2"></i>Télécharger PDF
-                            </a>
-                        {% endif %}
-                    </div>
-                    
-                    <div class="grid lg:grid-cols-2 gap-8 items-center">
-                        <!-- Digital Card Display -->
-                        <div class="order-2 lg:order-1">
-                            <div class="member-card-3d aspect-[1.6/1] p-6 text-white relative">
-                                <div class="relative z-10 h-full flex flex-col justify-between">
-                                    {% if user.cardPdf %}
-                                        <!-- Aperçu de la carte avec lien vers PDF -->
-                                        <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 h-full flex flex-col justify-center items-center text-center">
-                                            <i class="fas fa-id-card text-4xl mb-4 opacity-80"></i>
-                                            <h4 class="font-semibold mb-2">Carte de membre BINAJIA</h4>
-                                            <p class="text-sm opacity-90 mb-4">ID: {{ user.memberId }}</p>
-                                            <a href="{{ user.cardPdf }}" target="_blank" 
-                                               class="inline-flex items-center px-4 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors">
-                                                <i class="fas fa-eye mr-2"></i>Voir la carte PDF
-                                            </a>
-                                        </div>
-                                    {% else %}
-                                        <!-- Carte en cours de génération -->
-                                        <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 h-full flex flex-col justify-center items-center text-center">
-                                            <i class="fas fa-clock text-4xl mb-4 opacity-80"></i>
-                                            <h4 class="font-semibold mb-2">Carte en cours de génération</h4>
-                                            <p class="text-sm opacity-90">Votre carte sera bientôt disponible</p>
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Card Actions -->
-                        <div class="order-1 lg:order-2 space-y-4">
-                            <div class="text-center lg:text-left">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Votre carte de membre</h3>
-                                <p class="text-gray-600 mb-4">Présentez cette carte pour bénéficier de vos avantages membres</p>
-                            </div>
-                            
-                            <div class="space-y-3">
-                                {% if user.cardPdf %}
-                                    <a href="{{ user.cardPdf }}" target="_blank" 
-                                       class="w-full flex items-center justify-center px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                                        <i class="fas fa-file-pdf mr-2"></i>Télécharger en PDF
-                                    </a>
-                                    <button onclick="printCard()" 
-                                            class="w-full flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                                        <i class="fas fa-print mr-2"></i>Imprimer la carte
-                                    </button>
-                                {% else %}
-                                    <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                                        <div class="flex items-center">
-                                            <i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>
-                                            <span class="text-yellow-800">Carte en cours de génération...</span>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                                
-                                <button onclick="showQRCode()" 
-                                        class="w-full flex items-center justify-center px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                                    <i class="fas fa-qrcode mr-2"></i>Afficher QR Code
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+						<div class="grid md:grid-cols-2 gap-6">
+							<div class="space-y-4">
+								<div class="p-4 bg-gray-50 rounded-lg">
+									<label class="text-sm font-medium text-gray-600">Prénom</label>
+									<p class="text-lg font-semibold text-gray-900 mt-1">{{ user.firstName }}</p>
+								</div>
+								<div class="p-4 bg-gray-50 rounded-lg">
+									<label class="text-sm font-medium text-gray-600">Nom</label>
+									<p class="text-lg font-semibold text-gray-900 mt-1">{{ user.lastName }}</p>
+								</div>
+								<div class="p-4 bg-gray-50 rounded-lg">
+									<label class="text-sm font-medium text-gray-600">Pays</label>
+									<p class="text-lg font-semibold text-gray-900 mt-1">{{ user.country ?? 'Non renseigné' }}</p>
+								</div>
+							</div>
+							<div class="space-y-4">
+								<div class="p-4 bg-green-50 rounded-lg border border-green-200">
+									<label class="text-sm font-medium text-green-700">Identifiant Membre</label>
+									<p class="text-lg font-bold text-green-800 mt-1">{{ user.memberId }}</p>
+								</div>
+								<div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+									<label class="text-sm font-medium text-blue-700">Membre depuis</label>
+									<p class="text-lg font-semibold text-blue-800 mt-1">{{ user.joinedAt|date('d/m/Y') }}</p>
+								</div>
+								<div class="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+									<label class="text-sm font-medium text-yellow-700">Statut</label>
+									<p class="text-lg font-semibold text-yellow-800 mt-1 flex items-center">
+										<i class="fas fa-check-circle text-green-500 mr-2"></i>Actif
+									</p>
+								</div>
+							</div>
+						</div>
+					</section>
 
-                    
-                    <!-- Card History -->
-                    {% if cards is defined and cards|length > 0 %}
-                        <div class="mt-8 pt-6 border-t border-gray-200">
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Historique des cartes</h3>
-                            <div class="overflow-x-auto">
-                                <table class="min-w-full">
-                                    <thead class="bg-gray-50">
-                                        <tr>
-                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date d'émission</th>
-                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expiration</th>
-                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-                                        {% for c in cards %}
-                                        <tr class="hover:bg-gray-50">
-                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ c.issuedate ? c.issuedate|date('d/m/Y H:i') : '—' }}
-                                            </td>
-                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ c.expiryDate ? c.expiryDate|date('d/m/Y') : '—' }}
-                                            </td>
-                                            <td class="px-4 py-4 whitespace-nowrap text-sm">
-                                                {% if c.pdfurl %}
-                                                    <a href="{{ c.pdfurl }}" target="_blank" 
-                                                       class="inline-flex items-center px-3 py-1 bg-green-100 text-green-800 rounded-full hover:bg-green-200 transition-colors">
-                                                        <i class="fas fa-download mr-1"></i>Télécharger
-                                                    </a>
-                                                {% else %}
-                                                    <span class="text-gray-400">Non disponible</span>
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    {% endif %}
-                </section>
-            </main>
-        </div>
-    </div>
-</div>
+					<!-- Payments Section -->
+					<section id="payments" class="dashboard-card bg-white p-6">
+						<div class="flex items-center justify-between mb-6">
+							<h2 class="text-2xl font-bold text-gray-900 flex items-center">
+								<i class="fas fa-credit-card text-green-600 mr-3"></i>Mes Paiements
+							</h2>
+							<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+								{{ payments|length }}
+								paiement(s)
+							</span>
+						</div>
 
-<script>
-// Mobile navigation
-document.addEventListener('DOMContentLoaded', function() {
-    const navLinks = document.querySelectorAll('.mobile-nav .nav-link, nav a[href^="#"]');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                // Update active state
-                navLinks.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Smooth scroll
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
+						{% if payments|length > 0 %}
+							<div class="overflow-x-auto">
+								<table class="min-w-full">
+									<thead class="bg-gray-50">
+										<tr>
+											<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+											<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+											<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
+											<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reçu</th>
+										</tr>
+									</thead>
+									<tbody class="bg-white divide-y divide-gray-200">
+										{% for p in payments %}
+											<tr class="hover:bg-gray-50">
+												<td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+													{{ p.date|date('d/m/Y') }}
+												</td>
+												<td class="px-4 py-4 whitespace-nowrap">
+													<div class="flex items-center">
+														<i class="fas fa-circle-check text-green-500 mr-2"></i>
+														<span class="text-sm font-medium text-gray-900">{{ p.label }}</span>
+													</div>
+												</td>
+												<td class="px-4 py-4 whitespace-nowrap">
+													<span class="text-sm font-bold text-gray-900">{{ p.amount|number_format }}
+														{{ p.currency }}</span>
+												</td>
+												<td class="px-4 py-4 whitespace-nowrap text-sm">
+													{% set receiptUrl = user.receipts[p.id]|default(null) %}
+													{% if receiptUrl %}
+														<a href="{{ receiptUrl }}" class="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-800 rounded-full hover:bg-blue-200 transition-colors">
+															<i class="fas fa-receipt mr-1"></i>Télécharger
+														</a>
+													{% else %}
+														<span class="text-gray-400">Non disponible</span>
+													{% endif %}
+												</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						{% else %}
+							<div class="text-center py-12">
+								<i class="fas fa-credit-card text-gray-300 text-6xl mb-4"></i>
+								<h3 class="text-lg font-medium text-gray-900 mb-2">Aucun paiement</h3>
+								<p class="text-gray-500">Vos paiements apparaîtront ici une fois effectués.</p>
+							</div>
+						{% endif %}
+					</section>
+
+					<!-- Tickets Section -->
+					<section id="tickets" class="dashboard-card bg-white p-6">
+						<div class="flex items-center justify-between mb-6">
+							<h2 class="text-2xl font-bold text-gray-900 flex items-center">
+								<i class="fas fa-ticket-alt text-green-600 mr-3"></i>Mes Tickets
+							</h2>
+							<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+								{{ tickets|length }}
+								ticket(s)
+							</span>
+						</div>
+
+						{% if tickets|length > 0 %}
+							<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+								{% for t in tickets %}
+									<div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-lg border border-blue-200 hover:shadow-lg transition-all duration-300">
+										<div class="flex items-center justify-between mb-4">
+											<i class="fas fa-calendar-alt text-blue-600 text-xl"></i>
+											<span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+												{{ t.date|date('d M') }}
+											</span>
+										</div>
+										<h3 class="font-bold text-gray-900 mb-2">{{ t.eventTitle }}</h3>
+										<p class="text-sm text-gray-600 mb-4">{{ t.date|date('d/m/Y à H:i') }}</p>
+										<button onclick="showTicketQR('{{ t.id }}')" class="w-full flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+											<i class="fas fa-qrcode mr-2"></i>Afficher QR
+										</button>
+									</div>
+								{% endfor %}
+							</div>
+						{% else %}
+							<div class="text-center py-12">
+								<i class="fas fa-ticket-alt text-gray-300 text-6xl mb-4"></i>
+								<h3 class="text-lg font-medium text-gray-900 mb-2">Aucun ticket</h3>
+								<p class="text-gray-500">Vos tickets d'événements apparaîtront ici.</p>
+								<a href="{{ path('app_events') }}" class="mt-4 inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+									<i class="fas fa-calendar-plus mr-2"></i>Découvrir les événements
+								</a>
+							</div>
+						{% endif %}
+					</section>
+
+					<!-- Member Card Section -->
+					<section id="card" class="dashboard-card bg-white p-6">
+						<div class="flex items-center justify-between mb-6">
+							<h2 class="text-2xl font-bold text-gray-900 flex items-center">
+								<i class="fas fa-id-card text-green-600 mr-3"></i>Ma Carte Membre
+							</h2>
+							{% if user.cardPdf %}
+								<a href="{{ user.cardPdf }}" download class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+									<i class="fas fa-download mr-2"></i>Télécharger PDF
+								</a>
+							{% endif %}
+						</div>
+
+						<div
+							class="grid lg:grid-cols-2 gap-8 items-center">
+							<!-- Digital Card Display -->
+							<div class="order-2 lg:order-1">
+								<div class="member-card-3d aspect-[1.6/1] p-6 text-white relative">
+									<div class="relative z-10 h-full flex flex-col justify-between">
+										{% if user.cardPdf %}
+											<!-- Aperçu de la carte avec lien vers PDF -->
+											<div class="bg-green-600 backdrop-blur-sm rounded-lg p-4 h-full flex flex-col justify-center items-center text-center">
+												<i class="fas fa-id-card text-4xl mb-4 opacity-80"></i>
+												<h4 class="font-semibold mb-2">Carte de membre BINAJIA</h4>
+												<p class="text-sm opacity-90 mb-4">ID:
+													{{ user.memberId }}</p>
+												<a href="{{ user.cardPdf }}" class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+													<i class="fas fa-eye mr-2"></i>Voir la carte PDF
+												</a>
+											</div>
+										{% else %}
+											<!-- Carte en cours de génération -->
+											<div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 h-full flex flex-col justify-center items-center text-center">
+												<i class="fas fa-clock text-4xl mb-4 opacity-80"></i>
+												<h4 class="font-semibold mb-2">Carte en cours de génération</h4>
+												<p class="text-sm opacity-90">Votre carte sera bientôt disponible</p>
+											</div>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+
+							<!-- Card Actions -->
+							<div class="order-1 lg:order-2 space-y-4">
+								<div class="text-center lg:text-left">
+									<h3 class="text-lg font-semibold text-gray-900 mb-2">Votre carte de membre</h3>
+									<p class="text-gray-600 mb-4">Présentez cette carte pour bénéficier de vos avantages membres</p>
+								</div>
+
+								<div class="space-y-3">
+									{% if user.cardPdf %}
+										<a href="{{ user.cardPdf }}" download class="w-full flex items-center justify-center px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+											<i class="fas fa-file-pdf mr-2"></i>
+											Télécharger en PDF
+										</a>
+
+									{% else %}
+										<div class="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+											<div class="flex items-center">
+												<i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>
+												<span class="text-yellow-800">Carte en cours de génération...</span>
+											</div>
+										</div>
+									{% endif %}
+
+									<button onclick="showQRCode()" class="w-full flex items-center justify-center px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+										<i class="fas fa-qrcode mr-2"></i>Afficher QR Code
+									</button>
+								</div>
+							</div>
+						</div>
+
+
+						<!-- Card History -->
+						{% if cards is defined and cards|length > 0 %}
+							<div class="mt-8 pt-6 border-t border-gray-200">
+								<h3 class="text-lg font-semibold text-gray-900 mb-4">Historique des cartes</h3>
+								<div class="overflow-x-auto">
+									<table class="min-w-full">
+										<thead class="bg-gray-50">
+											<tr>
+												<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date d'émission</th>
+												<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expiration</th>
+												<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+											</tr>
+										</thead>
+										<tbody class="bg-white divide-y divide-gray-200">
+											{% for c in cards %}
+												<tr class="hover:bg-gray-50">
+													<td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+														{{ c.issuedate ? c.issuedate|date('d/m/Y H:i') : '—' }}
+													</td>
+													<td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+														{{ c.expiryDate ? c.expiryDate|date('d/m/Y') : '—' }}
+													</td>
+													<td class="px-4 py-4 whitespace-nowrap text-sm">
+														{% if c.pdfurl %}
+															<a href="{{ c.pdfurl }}" target="_blank" class="inline-flex items-center px-3 py-1 bg-green-100 text-green-800 rounded-full hover:bg-green-200 transition-colors">
+																<i class="fas fa-download mr-1"></i>Télécharger
+															</a>
+														{% else %}
+															<span class="text-gray-400">Non disponible</span>
+														{% endif %}
+													</td>
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						{% endif %}
+					</section>
+				</main>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// Mobile navigation
+document.addEventListener('DOMContentLoaded', function () {
+const navLinks = document.querySelectorAll('.mobile-nav .nav-link, nav a[href^="#"]');
+
+navLinks.forEach(link => {
+link.addEventListener('click', function (e) {
+e.preventDefault();
+const targetId = this.getAttribute('href');
+const targetSection = document.querySelector(targetId);
+
+if (targetSection) { // Update active state
+navLinks.forEach(l => l.classList.remove('active'));
+this.classList.add('active');
+
+// Smooth scroll
+targetSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+});
+});
 });
 
 // Card functions
 function printCard() {
-    window.print();
+window.print();
 }
 
 function showQRCode() {
-    alert('Fonctionnalité QR Code en développement');
+alert('Fonctionnalité QR Code en développement');
 }
 
 function showTicketQR(ticketId) {
-    alert('QR Code pour le ticket #' + ticketId);
+alert('QR Code pour le ticket #' + ticketId);
 }
 
 // Intersection Observer for animations
 const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+threshold: 0.1,
+rootMargin: '0px 0px -50px 0px'
 };
 
 const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.style.opacity = '1';
+entry.target.style.transform = 'translateY(0)';
+}
+});
 }, observerOptions);
 
 // Observe dashboard cards
-document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.dashboard-card');
-    cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-        observer.observe(card);
-    });
+document.addEventListener('DOMContentLoaded', function () {
+const cards = document.querySelectorAll('.dashboard-card');
+cards.forEach((card, index) => {
+card.style.opacity = '0';
+card.style.transform = 'translateY(20px)';
+card.style.transition = `opacity 0.6s ease ${
+index * 0.1
+}s, transform 0.6s ease ${
+index * 0.1
+}s`;
+observer.observe(card);
 });
-</script>
+});
+	</script>
 {% endblock %}
