@@ -174,4 +174,57 @@ class PageController extends AbstractController
     {
         return $this->render('pages/social_impact.html.twig');
     }
+
+    #[Route('/explorer', name: 'app_explorer')]
+    public function explorer(EntityManagerInterface $em, Request $request, PdfGeneratorService $pdfGeneratorService, EmailService $emailService): Response
+    {
+        // Récupérer les lieux touristiques depuis la base de données
+        $places = $em->getRepository(CulturalContent::class)->findBy([], ['createdAt' => 'DESC'], 6);
+
+        $reservation = new Reservation();
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $em->persist($reservation);
+            //generer le pdf du facture proforma
+            $timestamp = (new \DateTime())->format('YmdHis');
+            $filename = 'facture_proforma_' . ($reservation->getId() ?: $timestamp) . '.pdf';
+          //empecher de generer la carte si la soumission est pas valid ou a ete deja soumise
+          if ($reservation->getFacturepdf() !== null) {
+            $this->addFlash('warning', 'Facture proforma deja generée.');
+            return $this->redirectToRoute('app_avantage');
+          }
+            $pdfPath = $pdfGeneratorService->generatePdf(
+                'reservation/facture_proforma.html.twig',
+                ['reservation' => $reservation],
+                $filename,
+                'A3',
+                'landscape'
+            );
+
+            // Extract relative path for database storage (from /pdf/ onwards)
+            $relativePath = strstr($pdfPath, '/pdf/');
+            if ($relativePath === false) {
+                $relativePath = '/pdf/' . $filename;
+            }
+
+            $reservation->setFacturepdf($relativePath);
+           
+
+            $em->flush();
+
+            // Envoyer le PDF par email
+            $emailService->sendReservationConfirmation($reservation, $pdfPath);
+
+            $this->addFlash('success', 'Facture proforma générée et envoyée par email avec succès.');
+
+        $this->redirectToRoute('app_home');
+        }
+        return $this->render('pages/explorer.html.twig', [
+            'form' => $form->createView(),
+            'places' => $places,
+        ]);
+    }
 }

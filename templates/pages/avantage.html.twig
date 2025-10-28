@@ -1,558 +1,212 @@
 {% extends 'base.html.twig' %}
-{% block title %}Avantages — Binajia
-{% endblock %}
+
+{% block title %}Avantages - Binajia{% endblock %}
 
 {% block content %}
-	<style>
-		body {
-			font-family: 'Open Sans', sans-serif;
-		}
-		h1,
-		h2,
-		h3,
-		h4 {
-			font-family: 'Montserrat', sans-serif;
-		}
+<div class="min-h-screen bg-gradient-to-br from-green-50 via-green-100 to-yellow-50">
+    <!-- Hero Section -->
+    <section class="relative py-20 text-white overflow-hidden" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9), rgb(255, 174, 0))">
+        <div class="absolute inset-0">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                    Les avantages à devenir membre de Binajia
+                </h1>
+                <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
+                    Rejoindre Binajia, c'est bien plus qu'adhérer à une association — c'est entrer dans un réseau vivant, engagé et tourné vers l'avenir.
+                </p>
+            </div>
+        </div>
+    </section>
 
-		@keyframes fadeInUp {
-			from {
-				opacity: 0;
-				transform: translateY(30px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
+    <!-- Introduction -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <p class="text-center text-lg md:text-xl text-gray-700 leading-relaxed">
+                En tant que membre, vous bénéficiez d'un ensemble d'avantages concrets, symboliques et relationnels qui renforcent votre lien avec l'Afrique, ses diasporas et ses territoires.
+            </p>
+        </div>
+    </section>
 
-		@keyframes float {
-			0,
-			100% {
-				transform: translateY(0);
-			}
-			50% {
-				transform: translateY(-10px);
-			}
-		}
+    <!-- Avantages Principaux -->
+    <!-- Avantages Principaux -->
+<section class="py-16 bg-gradient-to-br from-green-50 via-yellow-50 to-white">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-4">Vos privilèges</h2>
+            <div class="w-24 h-1.5 bg-yellow-400 mx-auto rounded-full"></div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Avantage 1 -->
+            <div class="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
+                <div class="p-6">
+                    <div class="w-16 h-16 bg-yellow-50 rounded-xl flex items-center justify-center mb-4 mx-auto transform group-hover:-translate-y-1 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Accès prioritaire</h3>
+                    <p class="text-gray-600 text-center text-sm leading-relaxed">Accès prioritaire aux événements Binajia : festivals, forums, voyages, célébrations, ateliers.</p>
+                </div>
+            </div>
 
-		.animate-fade-in-up {
-			animation: fadeInUp 0.8s ease-out forwards;
-		}
+            <!-- Avantage 2 -->
+            <div class="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
+                <div class="p-6">
+                    <div class="w-16 h-16 bg-green-50 rounded-xl flex items-center justify-center mb-4 mx-auto transform group-hover:-translate-y-1 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Carte de membre</h3>
+                    <p class="text-gray-600 text-center text-sm leading-relaxed">Carte de membre personnalisée avec reconnaissance officielle de votre statut.</p>
+                </div>
+            </div>
 
-		.animate-float {
-			animation: float 3s ease-in-out infinite;
-		}
+            <!-- Avantage 3 -->
+            <div class="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
+                <div class="p-6">
+                    <div class="w-16 h-16 bg-yellow-50 rounded-xl flex items-center justify-center mb-4 mx-auto transform group-hover:-translate-y-1 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Réseau international</h3>
+                    <p class="text-gray-600 text-center text-sm leading-relaxed">Participation à des projets transfrontaliers en Afrique et dans la diaspora.</p>
+                </div>
+            </div>
 
-		.hero-overlay {
-			background: linear-gradient(135deg, rgba(0, 135, 29, 0.85), rgba(0, 135, 81, 0.75), rgba(255, 174, 0, 0.85));
-		}
+            <!-- Avantage 4 -->
+            <div class="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
+                <div class="p-6">
+                    <div class="w-16 h-16 bg-green-50 rounded-xl flex items-center justify-center mb-4 mx-auto transform group-hover:-translate-y-1 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.478 3 6.252v13C4.168 18.497 5.754 18 7.5 18s3.332.497 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.497 18.247 18 16.5 18c-1.746 0-3.332.497-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Contenus exclusifs</h3>
+                    <p class="text-gray-600 text-center text-sm leading-relaxed">Accès à des ressources culturelles, historiques et éducatives uniques.</p>
+                </div>
+            </div>
 
-		.card-hover {
-			transition: all 0.3s ease;
-		}
+            <!-- Avantage 5 -->
+            <div class="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
+                <div class="p-6">
+                    <div class="w-16 h-16 bg-yellow-50 rounded-xl flex items-center justify-center mb-4 mx-auto transform group-hover:-translate-y-1 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Réseautage</h3>
+                    <p class="text-gray-600 text-center text-sm leading-relaxed">Rencontres avec des artistes, entrepreneurs et porteurs de projets inspirants.</p>
+                </div>
+            </div>
 
-		.card-hover:hover {
-			transform: translateY(-8px);
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-		}
+            <!-- Avantage 6 -->
+            <div class="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
+                <div class="p-6">
+                    <div class="w-16 h-16 bg-green-50 rounded-xl flex items-center justify-center mb-4 mx-auto transform group-hover:-translate-y-1 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Visibilité</h3>
+                    <p class="text-gray-600 text-center text-sm leading-relaxed">Mise en avant de vos initiatives et projets personnels.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-		.feature-icon {
-			transition: transform 0.3s ease;
-		}
+  <!-- Pourquoi nous rejoindre -->
+<section class="py-20" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9))">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-white">Pourquoi devenir membre ?</h2>
+        
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <!-- Carte 1 -->
+            <div class="text-center p-8 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 group">
+                <div class="w-24 h-24 bg-yellow-400/20 rounded-2xl flex items-center justify-center mb-6 mx-auto transform group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-12 h-12 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-white">Vivre l'Afrique autrement</h3>
+                <p class="text-yellow-100">Entre authenticité, engagement et rayonnement.</p>
+            </div>
+            
+            <!-- Carte 2 -->
+            <div class="text-center p-8 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 group">
+                <div class="w-24 h-24 bg-yellow-400/20 rounded-2xl flex items-center justify-center mb-6 mx-auto transform group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-12 h-12 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-white">Un mouvement porteur</h3>
+                <p class="text-yellow-100">Enraciné dans nos valeurs, ouvert sur le monde.</p>
+            </div>
+            
+            <!-- Carte 3 -->
+            <div class="text-center p-8 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 group">
+                <div class="w-24 h-24 bg-yellow-400/20 rounded-2xl flex items-center justify-center mb-6 mx-auto transform group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-12 h-12 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-white">Grandir ensemble</h3>
+                <p class="text-yellow-100">Dans le respect des cultures et des mémoires.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-		.feature-card:hover .feature-icon {
-			transform: scale(1.1) rotate(5deg);
-		}
+    <!-- CTA Final -->
+    <section id="rejoindre" class="py-20 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-6">Binajia – Unis pour grandir ensemble</h2>
+            <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">Rejoignez-nous. Portez la carte. Partagez la vision.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="{{ path('app_membership') }}" 
+                   class="group px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-400 hover:from-yellow-300 hover:to-yellow-400 text-green-900 font-bold rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <span class="flex items-center justify-center">
+                        Devenir membre
+                        <svg class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </span>
+                </a>
+                <a href="{{ path('app_contact') }}" 
+                   class="group px-8 py-4 border-2 border-green-600 text-green-700 hover:bg-green-50 font-bold rounded-full text-lg transition-all duration-300 transform hover:scale-105">
+                    <span class="flex items-center justify-center">
+                        Nous contacter
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
 
-		.section-divider {
-			width: 80px;
-			height: 4px;
-			background: linear-gradient(to right, #00871d, #ffae00);
-			margin: 0 auto;
-		}
-	</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('opacity-100', 'translate-y-0');
+                entry.target.classList.remove('opacity-0', 'translate-y-8');
+            }
+        });
+    }, { threshold: 0.1 });
 
-	<!-- Hero Section -->
-	<header class="relative overflow-hidden bg-cover bg-center min-h-screen flex items-center" style="background-image: url('{{ asset('media/binajia/amazone.jpg') }}');">
-		<div class="hero-overlay absolute inset-0"></div>
-
-		<div class="relative z-5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white py-1">
-			<div class="animate-fade-in-up" style="animation-delay: 0.1s;">
-				<div class="inline-flex items-center justify-center mb-8 animate-float">
-					<i data-feather="globe" class="w-16 h-16 text-yellow-400"></i>
-				</div>
-
-				<h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
-					<span class="block">BINAJIA</span>
-					<span class="block text-yellow-300">Explorez le Bénin & Nigeria</span>
-				</h1>
-
-				<p class="text-2xl md:text-3xl font-semibold mb-8 text-yellow-100">
-					Avec nos guides touristiques certifiés
-				</p>
-
-				<div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 max-w-3xl mx-auto mb-12 border border-white border-opacity-20">
-					<p class="text-xl md:text-2xl leading-relaxed">
-						Voyages personnalisés • Culture • Histoire • Nature • Spiritualité
-					</p>
-				</div>
-
-				<a href="#formulaire" class="inline-flex items-center gap-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-5 px-10 rounded-full text-xl transition-all duration-300 transform hover:scale-105 shadow-2xl">
-					<i data-feather="compass" class="w-6 h-6"></i>
-					COMMENCER MON AVENTURE
-				</a>
-			</div>
-		</div>
-
-		<!-- Scroll Indicator -->
-		<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-			<i data-feather="chevron-down" class="w-8 h-8 text-white"></i>
-		</div>
-	</header>
-
-	<!-- Why Choose Us Section -->
-	<section class="py-20 px-4 bg-gradient-to-br from-gray-50 to-white">
-		<div class="max-w-7xl mx-auto">
-			<div class="text-center mb-16">
-				<h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-					Pourquoi Choisir Binajia?
-				</h2>
-				<div class="section-divider mb-6"></div>
-				<p class="text-xl text-gray-600 max-w-3xl mx-auto">
-					Nous créons des expériences authentiques et inoubliables en Afrique de l'Ouest
-				</p>
-			</div>
-
-			<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-				<div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-green-500">
-					<div class="feature-icon text-green-500 mb-6">
-						<i data-feather="award" class="w-14 h-14"></i>
-					</div>
-					<h3 class="text-xl font-bold mb-4 text-gray-800">Expertise Locale</h3>
-					<p class="text-gray-600 leading-relaxed">Guides natifs certifiés avec une connaissance approfondie du terrain</p>
-				</div>
-
-				<div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-yellow-500">
-					<div class="feature-icon text-yellow-500 mb-6">
-						<i data-feather="shield" class="w-14 h-14"></i>
-					</div>
-					<h3 class="text-xl font-bold mb-4 text-gray-800">Sécurité Garantie</h3>
-					<p class="text-gray-600 leading-relaxed">Hébergements premium et transports privés sélectionnés</p>
-				</div>
-
-				<div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-green-500">
-					<div class="feature-icon text-green-500 mb-6">
-						<i data-feather="sliders" class="w-14 h-14"></i>
-					</div>
-					<h3 class="text-xl font-bold mb-4 text-gray-800">Sur Mesure</h3>
-					<p class="text-gray-600 leading-relaxed">Itinéraires personnalisés selon vos centres d'intérêt</p>
-				</div>
-
-				<div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-yellow-500">
-					<div class="feature-icon text-yellow-500 mb-6">
-						<i data-feather="compass" class="w-14 h-14"></i>
-					</div>
-					<h3 class="text-xl font-bold mb-4 text-gray-800">Immersion Totale</h3>
-					<p class="text-gray-600 leading-relaxed">Accès privilégié aux expériences culturelles authentiques</p>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Discover Countries Section -->
-	<section class="py-20 px-4 bg-white">
-		<div class="max-w-7xl mx-auto">
-			<div class="text-center mb-16">
-				<h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-					Découvrez Nos Destinations
-				</h2>
-				<div class="section-divider mb-6"></div>
-				<p class="text-xl text-gray-600 max-w-3xl mx-auto">
-					Explorez les merveilles du Bénin et du Nigeria
-				</p>
-			</div>
-
-			<!-- Benin Section -->
-			<div class="mb-16 rounded-3xl overflow-hidden shadow-2xl card-hover">
-				<div class="bg-gradient-to-br from-yellow-400 to-yellow-600 p-10 md:p-16 text-white">
-					<div class="max-w-4xl">
-						<div class="flex items-center gap-4 mb-6">
-							<i data-feather="map-pin" class="w-12 h-12"></i>
-							<h3 class="text-3xl md:text-4xl font-extrabold">Le Bénin</h3>
-						</div>
-
-						<p class="text-lg md:text-xl mb-8 leading-relaxed opacity-95">
-							Berceau du vodoun, le Bénin offre un mélange unique d'histoire, de culture et de nature. 
-							                        Des palais royaux d'Abomey aux villages sur pilotis de Ganvié.
-						</p>
-
-						<div class="grid md:grid-cols-3 gap-6 mb-8">
-							<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-								<i data-feather="landmark" class="w-8 h-8 mb-3"></i>
-								<h4 class="font-bold text-lg mb-2">Porte du Non-Retour</h4>
-								<p class="text-sm opacity-90">Mémorial historique à Ouidah</p>
-							</div>
-
-							<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-								<i data-feather="droplet" class="w-8 h-8 mb-3"></i>
-								<h4 class="font-bold text-lg mb-2">Ganvié</h4>
-								<p class="text-sm opacity-90">La Venise de l'Afrique</p>
-							</div>
-
-							<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-								<i data-feather="tree" class="w-8 h-8 mb-3"></i>
-								<h4 class="font-bold text-lg mb-2">Parc Pendjari</h4>
-								<p class="text-sm opacity-90">Faune sauvage préservée</p>
-							</div>
-						</div>
-
-						<a href="#" class="inline-flex items-center gap-2 bg-white text-yellow-600 hover:bg-gray-50 px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl">
-							Explorer le Bénin
-							<i data-feather="arrow-right" class="w-5 h-5"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-
-			<!-- Nigeria Section -->
-			<div class="rounded-3xl overflow-hidden shadow-2xl card-hover">
-				<div class="bg-gradient-to-br from-green-500 to-green-700 p-10 md:p-16 text-white">
-					<div class="max-w-4xl">
-						<div class="flex items-center gap-4 mb-6">
-							<i data-feather="map-pin" class="w-12 h-12"></i>
-							<h3 class="text-3xl md:text-4xl font-extrabold">Le Nigeria</h3>
-						</div>
-
-						<p class="text-lg md:text-xl mb-8 leading-relaxed opacity-95">
-							Géant de l'Afrique, le Nigeria émerveille par sa diversité. Des gratte-ciel de Lagos 
-							                        aux chutes d'Erin Ijesha, découvrez les cultures Yoruba, Igbo et Haoussa.
-						</p>
-
-						<div class="grid md:grid-cols-3 gap-6 mb-8">
-							<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-								<i data-feather="activity" class="w-8 h-8 mb-3"></i>
-								<h4 class="font-bold text-lg mb-2">Lagos</h4>
-								<p class="text-sm opacity-90">Métropole vibrante d'Afrique</p>
-							</div>
-
-							<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-								<i data-feather="star" class="w-8 h-8 mb-3"></i>
-								<h4 class="font-bold text-lg mb-2">Sukur</h4>
-								<p class="text-sm opacity-90">Patrimoine mondial UNESCO</p>
-							</div>
-
-							<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-								<i data-feather="mountain" class="w-8 h-8 mb-3"></i>
-								<h4 class="font-bold text-lg mb-2">Obudu</h4>
-								<p class="text-sm opacity-90">Station montagneuse unique</p>
-							</div>
-						</div>
-
-						<a href="#" class="inline-flex items-center gap-2 bg-white text-green-600 hover:bg-gray-50 px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl">
-							Explorer le Nigeria
-							<i data-feather="arrow-right" class="w-5 h-5"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Destinations Section -->
-	<section class="py-20 px-4 bg-gradient-to-br from-gray-50 to-gray-100">
-		<div class="max-w-7xl mx-auto">
-			<div class="text-center mb-16">
-				<h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-					Destinations Incontournables
-				</h2>
-				<div class="section-divider mb-6"></div>
-				<p class="text-xl text-gray-600">Découvrez les lieux exceptionnels du Bénin et du Nigeria</p>
-			</div>
-
-			<div
-				class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-				{% for place in places %}
-				<!-- Place Card -->
-				<div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
-					<div class="relative h-56 overflow-hidden">
-						{% if place.image %}
-							<img src="{{ path('secure_upload', {'filename': place.image}) }}" alt="{{ place.title }}" class="w-full h-full object-cover">
-						{% else %}
-							<img src="https://images.unsplash.com/photo-1581434682228-9a3d2a1c3a5f" alt="{{ place.title }}" class="w-full h-full object-cover">
-						{% endif %}
-						<div class="absolute top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm">
-							{{ place.type|default('Lieu') }}
-						</div>
-					</div>
-					<div class="p-6">
-						<h4 class="text-2xl font-bold text-gray-800 mb-3">{{ place.title }}</h4>
-						<p class="text-gray-600 mb-6 leading-relaxed">
-							{{ place.description|slice(0, 100) ~ '...' }}
-						</p>
-						<div class="flex justify-between items-center pt-4 border-t border-gray-200">
-							<span class="text-lg font-semibold text-green-600">{{ place.country|default('Bénin/Nigeria') }}</span>
-							<a href="#" class="text-green-600 hover:text-green-700 font-semibold flex items-center gap-2">
-								Voir détails
-								<i data-feather="arrow-right" class="w-4 h-4"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-				{% endfor %}
-			</div>
-
-			<div class="text-center mt-12">
-				<button onclick="goToPlaces()" class="inline-flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full text-lg transition-all shadow-lg hover:shadow-xl">
-					<i data-feather="route" class="w-5 h-5"></i>
-					Voir toutes les destinations
-				</button>
-			</div>
-		</div>
-	</section>
-
-	<!-- Hotels & Restaurants Section -->
-	<section class="py-20 px-4 bg-white">
-		<div class="max-w-7xl mx-auto">
-			<div class="text-center mb-16">
-				<h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-					Nos Partenaires
-				</h2>
-				<div class="section-divider mb-6"></div>
-				<p class="text-xl text-gray-600">Hôtels et restaurants sélectionnés avec soin</p>
-			</div>
-
-			<div
-				class="grid md:grid-cols-3 gap-8">
-				<!-- Hotel 1 -->
-				<div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover border border-gray-100">
-					<div class="relative h-48 overflow-hidden">
-						<img src="https://images.unsplash.com/photo-1566073771259-6a8506099945" alt="Hôtel" class="w-full h-full object-cover">
-					</div>
-					<div class="p-6">
-						<div class="flex justify-between items-start mb-3">
-							<h3 class="text-xl font-bold text-gray-800">Hôtel La Plage</h3>
-							<div class="flex text-yellow-400">
-								<i data-feather="star" class="w-4 h-4 fill-current"></i>
-								<i data-feather="star" class="w-4 h-4 fill-current"></i>
-								<i data-feather="star" class="w-4 h-4 fill-current"></i>
-								<i data-feather="star" class="w-4 h-4 fill-current"></i>
-							</div>
-						</div>
-						<p class="text-gray-500 mb-4 flex items-center gap-2">
-							<i data-feather="map-pin" class="w-4 h-4"></i>
-							Cotonou, Bénin
-						</p>
-						<div class="flex justify-between items-center pt-4 border-t border-gray-200">
-							<span class="font-bold text-gray-800">45,000 FCFA</span>
-							<a href="#" class="text-green-600 hover:text-green-700 font-semibold">Réserver</a>
-						</div>
-					</div>
-				</div>
-
-				<!-- Restaurant -->
-				<div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover border border-gray-100">
-					<div class="relative h-48 overflow-hidden">
-						<img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4" alt="Restaurant" class="w-full h-full object-cover">
-					</div>
-					<div class="p-6">
-						<h3 class="text-xl font-bold text-gray-800 mb-3">Maquis du Lac</h3>
-						<p class="text-gray-500 mb-4 flex items-center gap-2">
-							<i data-feather="map-pin" class="w-4 h-4"></i>
-							Lagos, Nigeria
-						</p>
-						<div class="flex flex-wrap gap-2 mb-4">
-							<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
-								Cuisine locale
-							</span>
-							<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
-								Vue lac
-							</span>
-						</div>
-						<a href="#" class="text-green-600 hover:text-green-700 font-semibold">Voir le menu</a>
-					</div>
-				</div>
-
-				<!-- Hotel 2 -->
-				<div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover border border-gray-100">
-					<div class="relative h-48 overflow-hidden">
-						<img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d" alt="Hôtel" class="w-full h-full object-cover">
-					</div>
-					<div class="p-6">
-						<div class="flex justify-between items-start mb-3">
-							<h3 class="text-xl font-bold text-gray-800">Eko Hotels</h3>
-							<div class="flex text-yellow-400">
-								<i data-feather="star" class="w-4 h-4 fill-current"></i>
-								<i data-feather="star" class="w-4 h-4 fill-current"></i>
-								<i data-feather="star" class="w-4 h-4 fill-current"></i>
-								<i data-feather="star" class="w-4 h-4 fill-current"></i>
-								<i data-feather="star" class="w-4 h-4 fill-current"></i>
-							</div>
-						</div>
-						<p class="text-gray-500 mb-4 flex items-center gap-2">
-							<i data-feather="map-pin" class="w-4 h-4"></i>
-							Lagos, Nigeria
-						</p>
-						<div class="flex justify-between items-center pt-4 border-t border-gray-200">
-							<span class="font-bold text-gray-800">25,000 NGN</span>
-							<a href="#" class="text-green-600 hover:text-green-700 font-semibold">Réserver</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Booking Form Section -->
-	<section id="formulaire" class="py-20 px-4 bg-gradient-to-br from-green-50 to-yellow-50">
-		<div class="max-w-4xl mx-auto">
-			<div
-				class="bg-white rounded-3xl shadow-2xl overflow-hidden">
-				<!-- Header -->
-				<div class="bg-gradient-to-r from-green-500 to-yellow-500 p-8 text-white text-center">
-					<i data-feather="send" class="w-12 h-12 mx-auto mb-4"></i>
-					<h2 class="text-3xl md:text-4xl font-extrabold mb-2">Réservez Votre Aventure</h2>
-					<p class="text-lg opacity-90">Remplissez le formulaire et nous vous contacterons sous 24h</p>
-				</div>
-
-				<!-- Formulaire -->
-				<div class="p-8 md:p-12">
-					{{ form_start(form, {'attr': {'class': 'space-y-8'}}) }}
-
-					<div class="grid md:grid-cols-2 gap-6">
-						<div>
-							{{ form_label(form.Nom, 'Nom complet *', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.Nom, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-							{{ form_errors(form.Nom) }}
-						</div>
-
-						<div>
-							{{ form_label(form.email, 'Email *', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.email, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-							{{ form_errors(form.email) }}
-						</div>
-					</div>
-
-					<div class="grid md:grid-cols-2 gap-6">
-						<div>
-							{{ form_label(form.telephone, 'Téléphone', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.telephone, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-						</div>
-
-						<div>
-							{{ form_label(form.paysresidence, 'Pays de résidence', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.paysresidence, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-						</div>
-					</div>
-
-					<div>
-						{{ form_label(form.destination, 'Destination souhaitée *', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-						{{ form_widget(form.destination, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-					</div>
-
-					<div class="grid md:grid-cols-2 gap-6">
-						<div>
-							{{ form_label(form.datedepart, 'Date de départ', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.datedepart, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-						</div>
-
-						<div>
-							{{ form_label(form.nbrvoyageurs, 'Nombre de voyageurs', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.nbrvoyageurs, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-						</div>
-					</div>
-
-					<div>
-						{{ form_label(form.typevoyage, 'Type de voyage', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-						{{ form_widget(form.typevoyage, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-					</div>
-					<div class="grid md:grid-cols-2 gap-6">
-						<div>
-							{{ form_label(form.centreinteret, 'Centres d’intérêt', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.centreinteret ,{'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-						</div>
-
-						<div>
-							{{ form_label(form.budgetestime, 'Budget estimé', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.budgetestime, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-						</div>
-					</div>
-					<div>
-						{{ form_label(form.commentaire, 'Commentaires ou demandes spécifiques', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-						{{ form_widget(form.commentaire, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition resize-none h-32'}}) }}
-					</div>
-
-					<div class="text-center pt-6">
-						<button type="submit" class="inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-yellow-500 hover:from-green-600 hover:to-yellow-600 text-white font-bold py-4 px-12 rounded-full text-lg transition-all shadow-xl hover:shadow-2xl transform hover:scale-105">
-							<i data-feather="send" class="w-5 h-5"></i>
-							Envoyer ma demande
-						</button>
-					</div>
-
-					{{ form_end(form) }}
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- CTA Section -->
-	<section class="py-20 px-4 bg-gradient-to-br from-green-600 to-green-800 text-white relative overflow-hidden">
-		<div class="absolute inset-0 opacity-10">
-			<div class="absolute top-10 left-10 w-64 h-64 bg-yellow-400 rounded-full blur-3xl"></div>
-			<div class="absolute bottom-10 right-10 w-96 h-96 bg-green-400 rounded-full blur-3xl"></div>
-		</div>
-
-		<div class="max-w-4xl mx-auto text-center relative z-10">
-			<h2 class="text-4xl md:text-5xl font-extrabold mb-6">
-				Prêt pour l'Aventure?
-			</h2>
-			<p class="text-xl md:text-2xl mb-10 opacity-90">
-				Contactez-nous dès maintenant et commencez à planifier votre voyage de rêve
-			</p>
-			<div class="flex flex-wrap gap-4 justify-center">
-				<a href="#formulaire" class="inline-flex items-center gap-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-4 px-10 rounded-full text-lg transition-all shadow-xl hover:shadow-2xl">
-					<i data-feather="calendar" class="w-5 h-5"></i>
-					Réserver maintenant
-				</a>
-				<a href="tel:+229XXXXXXXX" class="inline-flex items-center gap-3 bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm text-white font-bold py-4 px-10 rounded-full text-lg transition-all border-2 border-white">
-					<i data-feather="phone" class="w-5 h-5"></i>
-					Nous appeler
-				</a>
-			</div>
-		</div>
-	</section>
-
-	<script>
-		// Initialize Feather icons
-feather.replace();
-
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-anchor.addEventListener('click', function (e) {
-e.preventDefault();
-const target = document.querySelector(this.getAttribute('href'));
-if (target) {
-target.scrollIntoView({behavior: 'smooth', block: 'start'});
-}
+    // Observer chaque section
+    document.querySelectorAll('section > div').forEach(section => {
+        section.classList.add('opacity-0', 'translate-y-8', 'transition-all', 'duration-700', 'ease-out');
+        observer.observe(section);
+    });
 });
-});
-
-// Intersection Observer for animations
-const observerOptions = {
-threshold: 0.1,
-rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-entries.forEach(entry => {
-if (entry.isIntersecting) {
-entry.target.classList.add('animate-fade-in-up');
-}
-});
-}, observerOptions);
-
-document.querySelectorAll('section').forEach(section => {
-observer.observe(section);
-});
-	</script>
-
+</script>
 {% endblock %}
