@@ -7,8 +7,8 @@
 	{# Hero Section - Style identique à CTA communauté #}
 	<section
 		id="accueil" class="relative overflow-hidden min-h-screen -mt-20 pt-20 bg-gradient-to-br from-green-100 via-green-200 to-yellow-400 shadow-lg  flex items-center" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9), rgb(255, 174, 0)), url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80');
-																																													            background-size: cover;
-																																													            background-position: center;">
+																																																												            background-size: cover;
+																																																												            background-position: center;">
 		{# Animated Background Elements #}
 		<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
 		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
@@ -32,7 +32,7 @@
 							Réseau des Ambassadeurs Pour l’intégration et la coopération entre le
 							<span class="text-yellow-400">Bénin</span>, le
 							<span class="text-green-400">Nigéria</span>,
-															les diasporas africaines et les communautés connectées à l’Afrique dans le monde.
+																																																							les diasporas africaines et les communautés connectées à l’Afrique dans le monde.
 						</p>
 					</div>
 
@@ -135,7 +135,7 @@
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 			<h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-400 via-green-300 to-yellow-400 bg-clip-text text-transparent leading-tight text-center">Rejoignez Binajia-Devenez membre</h2>
 			<h2 class="font-serif text-6xl md:text-6xl lg:text-2xl text-center font-bold text-gray-900 text-base md:text-lg text-center mt-3">
-				
+
 				Pour une Afrique plus unie, plus connectée, plus rayonnante.
 			</h2>
 			<div
@@ -275,32 +275,96 @@
 			</div>
 		</div>
 	</section>
+	{# Nos 6 Projets Phares - Couleurs logo #}
+	<section id="projets" class="py-16 bg-gradient-to-br from-green-600 via-yellow-300 to-green-600 relative overflow-hidden">
+		{# Animated Background #}
+		{# Animated Background Elements #}<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"> </div>
+		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+			<div class="text-center mb-12 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+				<div class="inline-flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-yellow-400 to-green-400 rounded-full border-2 border-green-800 shadow-xl mb-6">
+					<div class="w-3 h-3 bg-green-900 rounded-full"></div>
+					<span class="font-black text-green-900 text-lg  text-3xl md:text-4xl lg:text-5xl">NOS 6 PROJETS PHARES</span>
+					<div class="w-3 h-3 bg-green-900 rounded-full"></div>
+				</div>
+				<h2 class="font-serif text-3xl md:text-4xl font-bold text-green-900 mb-3">
+					<span class="bg-white bg-clip-text text-transparent">
+						Construire des ponts par l'action
+					</span>
+				</h2>
+				<p class="text-base md:text-lg text-green-700 max-w-3xl mx-auto leading-relaxed">
+					Des
+					<span class="font-bold text-yellow-400">initiatives concrètes</span>
+					pour connecter
+					<span class="font-bold text-green-600">cultures, économies et jeunesses</span>
+					du Bénin et du Nigéria.
+				</p>
+			</div>
+
+			{% set projects = [
+      { title: 'Binajia Travel Week', desc: "Semaine de découvertes croisées dans les deux pays — Jeunes, touristes, voyageurs", img: asset('/media/travel.jfif'), color: 'yellow', impact: '500+ voyageurs/an' },
+      { title: 'Binajia Lab', desc: "Laboratoire d'innovation (écologie, tech, design) — Jeunes créatifs, étudiants, startups", img: asset('/media/lab.jfif'), color: 'green', impact: '100+ projets innovants' },
+      { title: 'Exchange Programme', desc: "Programme d'échange pour jeunes leaders et artistes — Étudiants, leaders communautaires", img: asset('/media/exchange.jfif'), color: 'emerald', impact: '200+ leaders formés' },
+      { title: 'Market Connect', desc: "Plateforme de collaboration économique locale — Artisans, commerçants, femmes", img: asset('/media/market.jfif'), color: 'yellow', impact: '1000+ entrepreneurs' },
+      { title: 'Culture Fest', desc: "Festival culturel : musique, masques, gastronomie — Grand public, artistes", img: asset('/media/culture.jfif'), color: 'green', impact: '50+ événements/an' },
+      { title: 'Transit', desc: "Promotion de la libre circulation et des savoirs — Institutions, société civile", img: asset('/media/transit.jfif'), color: 'emerald', impact: 'Libre circulation' }
+    	] %}
+
+			<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+				{% for p in projects %}
+					<div class="group relative rounded-3xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 150 }}ms">
+						<div class="absolute inset-0 bg-gradient-to-br from-{{ p.color }}-400/20 to-{{ p.color }}-600/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+						<div class="relative p-6">
+							<div class="mb-5">
+								<div class="w-20 h-20 bg-gradient-to-br from-{{ p.color }}-400 to-{{ p.color }}-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300">
+									<img src="{{ p.img }}" alt="Logo {{ p.title }}" class="w-12 h-12 object-contain rounded-lg">
+								</div>
+							</div>
+							<h3 class="font-bold text-xl text-green-900 mb-2 group-hover:text-{{ p.color }}-600 transition-colors">{{ p.title }}</h3>
+							<p class="text-green-700 mb-3 leading-relaxed">{{ p.desc }}</p>
+							<div class="flex items-center justify-between">
+								<span class="px-3 py-1 bg-{{ p.color }}-100 text-{{ p.color }}-800 text-xs font-bold rounded-full">{{ p.impact }}</span>
+								<a href="#" class="group/btn px-5 py-3 bg-gradient-to-r from-{{ p.color }}-400 to-{{ p.color }}-600 text-white rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-lg">
+									Découvrir
+									<span class="inline-block transition-transform group-hover/btn:translate-x-1 ml-1">→</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
 	{# Mission - Design stable et moderne #}
 	<section
-		id="mission" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9), rgb(255, 174, 0))" class="py-10 bg-gradient-to-br from-green-50 via-yellow-50 to-green-50 relative overflow-hidden">
+		id="mission"  class="py-14 bg-gradient-to-br from-green-50 via-yellow-50 to-green-50 relative overflow-hidden">
 		{# Background decorative elements #}
 		<div class="absolute top-0 right-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
 		<div class="absolute bottom-0 left-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
 
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+			<div class="flex justify-center mb-10">
+				<div class="inline-flex items-center space-x-3 px-8 py-3 bg-gradient-to-r from-green-100 to-yellow-100 rounded-full shadow-lg">
+					<div class="w-3 h-3 bg-gradient-to-r from-green-600 to-yellow-500 rounded-full"></div>
+					<span class="font-bold text-2xl md:text-3xl text-green-900">Notre Mission</span>
+					<div class="w-3 h-3 bg-gradient-to-r from-green-600 to-yellow-500 rounded-full"></div>
+				</div>
+			</div>
 			<div class="grid md:grid-cols-12 gap-12 items-center">
-				<div
-					class="md:col-span-7 space-y-8 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+
+				<div class="md:col-span-7 space-y-8 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
 					{# Badge #}
-					<div class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-100 to-yellow-100 rounded-full mb-5">
-						<div class="w-2 h-2 bg-gradient-to-r from-green-600 to-yellow-500 rounded-full"></div>
-						<span class="font-semibold text-green-700">Notre Mission</span>
-					</div>
+
 
 					{# Title #}
-					<h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-400 via-green-300 to-yellow-400 bg-clip-text text-transparent leading-tight">
-						Connecter. Valoriser. Transformer.
+						<h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-400 via-green-300 to-yellow-400 bg-clip-text text-transparent leading-tight"> Connecter. Valoriser. Transformer.
 
 					</h2>
 
 					{# Description #}
-					<div class="space-y-4 text-lg text-white leading-relaxed">
-						<p class="transform hover:translate-x-2 transition-transform duration-300">
+					<div class="space-y-4 text-lg text-gray leading-relaxed">
+						<p class="  transform hover:translate-x-2 transition-transform duration-300">
 							Nous créons des
 							<span class="font-bold text-yellow-400">ponts durables</span>
 							entre le Bénin et le Nigéria à travers la culture, l'innovation et la collaboration active.
@@ -417,151 +481,155 @@
 		</div>
 	</section>
 
-	<section id="lieux" class="py-16 relative overflow-hidden bg-cream">
-		<div class="absolute inset-0 -z-10 bg-cover bg-center opacity-20" style="background-image:url('https://images.unsplash.com/photo-1547036967-23d11aacaee0?q=80&w=1200&auto=format&fit=crop')"></div>
-		<div class="absolute inset-0 -z-10 pattern-african opacity-10"></div>
-
-		<div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="flex items-end justify-between mb-6">
-				<div>
-					<h2 class="font-serif text-3xl font-bold text-yellow-400">Lieux emblématiques</h2>
-					<p class="mt-2 text-gray-600">Explorez les sites historiques et culturels du Bénin et du Nigéria</p>
-				</div>
-				<a href="{{ path('app_places') }}" class="text-primary font-semibold hover:underline">Voir tous →</a>
-			</div>
-
-			<div
-				class="relative">
-				<!-- Flèches de navigation -->
-				<button id="prevBtn" type="button" class="absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white ring-1 ring-gray-200 shadow hover:bg-yellow-50 hover:ring-yellow-300 flex items-center justify-center transition-all duration-300 text-2xl text-gray-700 hover:text-yellow-600">
-					‹
-				</button>
-				<button id="nextBtn" type="button" class="absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white ring-1 ring-gray-200 shadow hover:bg-yellow-50 hover:ring-yellow-300 flex items-center justify-center transition-all duration-300 text-2xl text-gray-700 hover:text-yellow-600">
-					›
-				</button>
-
-				<!-- Container du carousel -->
-				<div class="overflow-hidden">
-					<div id="carouselTrack" class="flex gap-6 transition-transform duration-500 ease-out">
-						{% set places = places|default([]) %}
-						{% for place in places %}
-							<article class="shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden bg-white ring-1 ring-gray-200 hover:ring-2 hover:ring-yellow-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-								<div class="h-44 overflow-hidden">
-									<img src="{{ path('secure_upload', {'filename': place.image}) }}" alt="{{ place.title }}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
-								</div>
-								<div class="p-4">
-									<div class="text-xs text-gray-500 uppercase tracking-wide">{{ place.country }}</div>
-									<h3 class="mt-1 font-semibold text-charcoal text-lg">{{ place.title }}</h3>
-									<p class="mt-2 text-sm text-gray-600 line-clamp-3">
-										{{ place.description|slice(0,100) ~ (place.description|length > 100 ? '...' : '') }}
-									</p>
-									<div class="mt-4">
-										<a href="{{ path('app_places') }}" class="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 inline-block rounded-xl text-white font-medium transition-colors duration-300">
-											Découvrir
-										</a>
-									</div>
-								</div>
-							</article>
-						{% endfor %}
-					</div>
-				</div>
-				<!-- Indicateurs (points) -->
-				<div
-					id="indicators" class="flex justify-center gap-2 mt-6"><!-- Les points seront générés par JavaScript -->
-				</div>
-			</div>
-		</div>
-	</section>
 
 	{# Donations - Design intégré avec logo #}
-	<section
-		id="dons" class="py-20 bg-gradient-to-br from-green-400 via-yellow-400 to-yellow-400 relative overflow-hidden">
-		{# Background decorative elements #}
+	{# Donations - Design amélioré avec mise en page moderne #}
+<section id="dons" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9), rgb(255, 174, 0))" class="py-10 bg-gradient-to-br from-green-50 via-yellow-50 to-green-50 relative overflow-hidden">
+    {# Background elements #}
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIwOS0xLjc5MS00LTQtNHMtNCAxLjc5MS00IDQgMS43OTEgNCA0IDQgNC0xLjc5MSA0LTR6Ii8+PC9nPjwvZz48L3N2Zz4=')]"></div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center justify-center mb-6">
+                <div class="inline-flex items-center space-x-3 px-6 py-2 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 shadow-lg">
+                    <div class="w-3 h-3 bg-white rounded-full"></div>
+                    <span class="font-bold text-lg text-white">Soutenez notre mission</span>
+                    <div class="w-3 h-3 bg-white rounded-full"></div>
+                </div>
+            </div>
+            <h2 class="font-serif text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+                Ensemble, construisons<br>l'avenir de la coopération
+            </h2>
+            <p class="text-lg text-white/90 max-w-2xl mx-auto">
+                Votre soutien est essentiel pour pérenniser nos actions et développer de nouveaux projets.
+            </p>
+        </div>
 
-		<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
-		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+        <div class="grid md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-7 space-y-8">
+                <div class="space-y-6 text-white/90 text-lg leading-relaxed">
+                    <div class="flex items-start space-x-4 group">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p>
+                            <span class="font-semibold text-white">Soutenez des projets concrets</span> qui renforcent les échanges culturels et économiques entre le Bénin et le Nigéria.
+                        </p>
+                    </div>
 
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-			<div class="grid md:grid-cols-12 gap-12 items-center">
-				<div class="md:col-span-6 space-y-6">
-					<div class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-100 to-yellow-100 rounded-full mb-6 border border-green-200">
-						<div class="w-2 h-2 bg-gradient-to-r from-green-600 to-yellow-500 rounded-full"></div>
-						<span class="font-semibold text-green-700">Soutenez notre mission</span>
-					</div>
+                    <div class="flex items-start space-x-4 group">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p>
+                            <span class="font-semibold text-white">Contribuez à l'éducation</span> et à la formation des jeunes talents des deux pays.
+                        </p>
+                    </div>
 
-					<h2 class="font-serif text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-yellow-400 bg-clip-text text-transparent leading-tight">
-						Construisons ensemble l'avenir
-					</h2>
+                    <div class="flex items-start space-x-4 group">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p>
+                            <span class="font-semibold text-white">Bénéficiez d'avantages exclusifs</span> en fonction de votre niveau de don.
+                        </p>
+                    </div>
+                </div>
 
-					<div class="space-y-4 text-lg text-white leading-relaxed">
-						<p class="transform hover:translate-x-2 transition-transform duration-300">
-							Chaque contribution aide à
-							<span class="font-bold text-green-600">faire vivre des projets culturels</span>
-							et des échanges authentiques entre le Bénin et le Nigéria.
-						</p>
-						<p class="transform hover:translate-x-2 transition-transform duration-300">
-							Votre soutien permet de
-							<span class="font-bold text-green-600">créer des opportunités</span>
-							pour les jeunes, artistes et entrepreneurs des deux pays.
-						</p>
-					</div>
+                <div class="flex flex-wrap gap-4 mt-8">
+                    <a href="#" class="group relative px-8 py-4 bg-white text-green-700 font-bold rounded-full hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl flex items-center">
+                        Faire un don
+                        <svg class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                        <span class="absolute -bottom-1 left-1/2 w-4/5 h-1 bg-yellow-400 transform -translate-x-1/2 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="{{ path('app_contact') }}" class="group px-8 py-4 bg-transparent text-white font-semibold rounded-full border-2 border-white/30 hover:border-white/60 transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center">
+                        Nous contacter
+                        <svg class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                    </a>
+                </div>
 
-					<div class="flex flex-wrap gap-4">
-						<a href="#" class="group relative px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-full hover:from-green-700 hover:to-emerald-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
-							<span class="flex items-center">
-								Faire un don
-								<svg class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-								</svg>
-							</span>
-						</a>
-						<a href="#" class="group px-8 py-4 bg-white text-gray-900 rounded-full font-semibold ring-2 ring-gray-300 hover:ring-green-500 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-							En savoir plus
-							<span class="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
-						</a>
-					</div>
-				</div>
+                <div class="mt-6 text-sm text-white/70">
+                    <p>Vos dons sont éligibles à une réduction d'impôt de 66% dans la limite de 20% de votre revenu imposable.</p>
+                </div>
+            </div>
 
-				<div class="md:col-span-6">
-					<div
-						class="relative flex justify-center md:justify-start">
-						{# Animated Glow Effects #}
-						<div class="absolute -top-8 -left-8 w-32 h-32 md:w-48 md:h-48 bg-green-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-						<div class="absolute -bottom-8 -right-4 w-40 h-40 md:w-64 md:h-64 bg-yellow-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+            <div class="md:col-span-5 relative">
+                <div class="relative bg-white/10 backdrop-blur-md rounded-3xl p-1 shadow-2xl overflow-hidden border border-white/20 transform hover:scale-[1.02] transition-all duration-500">
+                    <div class="p-6">
+                        <div class="text-center mb-6">
+                            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/10 mb-4">
+                                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white">Faire un don en ligne</h3>
+                            <p class="text-white/80">Sécurisé et rapide</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <button class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl py-3 px-2 text-white font-medium transition-colors">
+                                10€
+                            </button>
+                            <button class="bg-yellow-400 hover:bg-yellow-300 border border-yellow-500 rounded-xl py-3 px-2 text-gray-900 font-bold transition-colors transform -translate-y-1 shadow-lg">
+                                30€
+                                <span class="block text-xs font-normal mt-1">Le plus choisi</span>
+                            </button>
+                            <button class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl py-3 px-2 text-white font-medium transition-colors">
+                                50€
+                            </button>
+                        </div>
 
-						{# Logo Design Integration #}
-						<div class="relative inline-block bg-gradient-to-br from-green-400 via-emerald-500 to-yellow-500 rounded-3xl p-1 shadow-2xl mx-auto max-w-[400px] transform hover:scale-105 transition-all duration-500">
-							<div class="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-8 overflow-hidden">
-								<img
-								src="{{ asset('/media/binajia/logo-design.jpg') }}" alt="Logo Design Binajia" class="w-full h-auto object-contain">
+                        <div class="mb-6">
+                            <label class="block text-white/80 text-sm mb-2" for="custom-amount">
+                                Ou montant personnalisé
+                            </label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70">€</span>
+                                <input type="number" id="custom-amount" class="w-full bg-white/10 border border-white/20 rounded-xl py-3 pl-8 pr-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" placeholder="Montant">
+                            </div>
+                        </div>
 
-								{# Overlay branding #}
-								<div class="mt-6 text-center">
-									<h3 class="font-bold text-2xl bg-gradient-to-r from-green-600 to-yellow-400 bg-clip-text text-transparent mb-2">
-										BINAJIA
-									</h3>
-									<p class="text-gray-600 text-sm font-medium">United to grow together</p>
-									<p class="text-gray-500 text-xs mt-1">Unis pour grandir ensemble</p>
+                        <button class="w-full bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold py-3 px-6 rounded-xl transition-colors flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                            </svg>
+                            Faire un don
+                        </button>
 
-									<div class="mt-4 flex justify-center space-x-3">
-										<div class="w-4 h-4 bg-green-500 rounded-full shadow-md"></div>
-										<div class="w-4 h-4 bg-yellow-500 rounded-full shadow-md"></div>
-										<div class="w-4 h-4 bg-emerald-500 rounded-full shadow-md"></div>
-									</div>
-								</div>
-							</div>
+                        <div class="mt-4 flex items-center justify-center space-x-2 text-white/60 text-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            <span>Paiement sécurisé</span>
+                        </div>
+                    </div>
+                </div>
 
-							{# Sparkle Effects #}
-							<div class="absolute -top-3 -right-3 w-8 h-8 bg-yellow-300 rounded-full animate-ping opacity-75"></div>
-							<div class="absolute -bottom-3 -left-3 w-6 h-6 bg-green-300 rounded-full animate-ping opacity-75"></div>
-							<div class="absolute top-1/4 -right-2 w-4 h-4 bg-emerald-300 rounded-full animate-ping opacity-60"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
+                {# Décoration flottante #}
+                <div class="absolute -top-4 -right-4 w-8 h-8 bg-yellow-400 rounded-full animate-ping opacity-75"></div>
+                <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-green-400 rounded-full animate-ping opacity-75 animation-delay-1000"></div>
+            </div>
+        </div>
+    </div>
+</section>
 
 	{# Events highlight - Enhanced #}
 	<section id="evenements" class="py-14 bg-gradient-to-br from-green-50 via-yellow-50 to-green-50 relative overflow-hidden">
@@ -570,6 +638,7 @@
 		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
 
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
 			<div class="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
 				<div class="opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
 					<div class="inline-flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-400/20 to-yellow-400/20 backdrop-blur-sm rounded-full mb-4 border border-green-400/30">
@@ -625,67 +694,6 @@
 		</div>
 	</section>
 
-	{# Nos 6 Projets Phares - Couleurs logo #}
-	<section id="projets" class="py-16 bg-gradient-to-br from-green-50 via-yellow-50 to-green-50 relative overflow-hidden">
-		{# Animated Background #}
-		{# Animated Background Elements #}<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"> </div>
-		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
-
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-			<div class="text-center mb-12 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
-				<div class="inline-flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-yellow-400 to-green-400 rounded-full border-2 border-green-800 shadow-xl mb-6">
-					<div class="w-3 h-3 bg-green-900 rounded-full"></div>
-					<span class="font-black text-green-900 text-lg">NOS 6 PROJETS PHARES</span>
-					<div class="w-3 h-3 bg-green-900 rounded-full"></div>
-				</div>
-				<h2 class="font-serif text-3xl md:text-4xl font-bold text-green-900 mb-3">
-					<span class="bg-gradient-to-r from-green-600 via-emerald-600 to-yellow-400 bg-clip-text text-transparent">
-						Construire des ponts par l'action
-					</span>
-				</h2>
-				<p class="text-base md:text-lg text-green-700 max-w-3xl mx-auto leading-relaxed">
-					Des
-					<span class="font-bold text-yellow-400">initiatives concrètes</span>
-					pour connecter
-					<span class="font-bold text-green-600">cultures, économies et jeunesses</span>
-					du Bénin et du Nigéria.
-				</p>
-			</div>
-
-			{% set projects = [
-      { title: 'Binajia Travel Week', desc: "Semaine de découvertes croisées dans les deux pays — Jeunes, touristes, voyageurs", img: asset('/media/travel.jfif'), color: 'yellow', impact: '500+ voyageurs/an' },
-      { title: 'Binajia Lab', desc: "Laboratoire d'innovation (écologie, tech, design) — Jeunes créatifs, étudiants, startups", img: asset('/media/lab.jfif'), color: 'green', impact: '100+ projets innovants' },
-      { title: 'Exchange Programme', desc: "Programme d'échange pour jeunes leaders et artistes — Étudiants, leaders communautaires", img: asset('/media/exchange.jfif'), color: 'emerald', impact: '200+ leaders formés' },
-      { title: 'Market Connect', desc: "Plateforme de collaboration économique locale — Artisans, commerçants, femmes", img: asset('/media/market.jfif'), color: 'yellow', impact: '1000+ entrepreneurs' },
-      { title: 'Culture Fest', desc: "Festival culturel : musique, masques, gastronomie — Grand public, artistes", img: asset('/media/culture.jfif'), color: 'green', impact: '50+ événements/an' },
-      { title: 'Transit', desc: "Promotion de la libre circulation et des savoirs — Institutions, société civile", img: asset('/media/transit.jfif'), color: 'emerald', impact: 'Libre circulation' }
-    ] %}
-
-			<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-				{% for p in projects %}
-					<div class="group relative rounded-3xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 150 }}ms">
-						<div class="absolute inset-0 bg-gradient-to-br from-{{ p.color }}-400/20 to-{{ p.color }}-600/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-						<div class="relative p-6">
-							<div class="mb-5">
-								<div class="w-20 h-20 bg-gradient-to-br from-{{ p.color }}-400 to-{{ p.color }}-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300">
-									<img src="{{ p.img }}" alt="Logo {{ p.title }}" class="w-12 h-12 object-contain rounded-lg">
-								</div>
-							</div>
-							<h3 class="font-bold text-xl text-green-900 mb-2 group-hover:text-{{ p.color }}-600 transition-colors">{{ p.title }}</h3>
-							<p class="text-green-700 mb-3 leading-relaxed">{{ p.desc }}</p>
-							<div class="flex items-center justify-between">
-								<span class="px-3 py-1 bg-{{ p.color }}-100 text-{{ p.color }}-800 text-xs font-bold rounded-full">{{ p.impact }}</span>
-								<a href="#" class="group/btn px-5 py-3 bg-gradient-to-r from-{{ p.color }}-400 to-{{ p.color }}-600 text-white rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-lg">
-									Découvrir
-									<span class="inline-block transition-transform group-hover/btn:translate-x-1 ml-1">→</span>
-								</a>
-							</div>
-						</div>
-					</div>
-				{% endfor %}
-			</div>
-		</div>
-	</section>
 
 	{# Testimonials - Couleurs logo #}
 	<section
@@ -755,6 +763,9 @@
 
 
 	{# CTA - Rejoignez la communauté avec image #}
+	{# Section Partenaires #}
+
+
 	<section
 		id="adhesion" class="py-20 bg-gradient-to-br from-green-800 via-emerald-700 to-yellow-400 relative overflow-hidden">
 		{# Animated Background Elements #}
@@ -855,7 +866,71 @@
 			</div>
 		</div>
 	</section>
+	<section
+		id="partenaires" class="py-16 bg-gradient-to-br from-green-50 via-yellow-50 to-green-50 relative overflow-hidden">
+		{# Animated Background Elements #}
+		<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
 
+		<div
+			class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+			{# En-tête de section #}
+			<div class="text-center mb-12 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+				<div class="inline-flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-green-100 to-yellow-100 rounded-full shadow-lg mb-6">
+					<div class="w-3 h-3 bg-gradient-to-r from-green-600 to-yellow-500 rounded-full"></div>
+					<span class="font-bold text-green-700">NOS PARTENAIRES</span>
+					<div class="w-3 h-3 bg-gradient-to-r from-green-600 to-yellow-500 rounded-full"></div>
+				</div>
+				<h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+					<span class="bg-gradient-to-r from-green-600 to-yellow-400 bg-clip-text text-transparent">
+						Ils nous font confiance
+					</span>
+				</h2>
+				<p class="text-gray-600 max-w-2xl mx-auto">
+					Découvrez les entreprises et organisations qui soutiennent notre mission et partagent nos valeurs.
+				</p>
+			</div>
+
+			{# Grille des partenaires #}
+			<div
+				class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center">
+				{# Partenaire 1 #}
+				<div class="p-4 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 w-full h-40 flex items-center justify-center">
+					<img src="{{ asset('media/partners/partner1.png') }}" alt="Partenaire 1" class="h-16 object-contain opacity-70 hover:opacity-100 transition-opacity">
+				</div>
+
+				{# Partenaire 2 #}
+				<div class="p-4 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 w-full h-40 flex items-center justify-center">
+					<img src="{{ asset('media/partners/partner2.png') }}" alt="Partenaire 2" class="h-16 object-contain opacity-70 hover:opacity-100 transition-opacity">
+				</div>
+
+				{# Partenaire 3 #}
+				<div class="p-4 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 w-full h-40 flex items-center justify-center">
+					<img src="{{ asset('media/partners/partner3.png') }}" alt="Partenaire 3" class="h-16 object-contain opacity-70 hover:opacity-100 transition-opacity">
+				</div>
+
+				{# Partenaire 4 #}
+				<div class="p-4 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 w-full h-40 flex items-center justify-center">
+					<img src="{{ asset('media/partners/partner4.png') }}" alt="Partenaire 4" class="h-16 object-contain opacity-70 hover:opacity-100 transition-opacity">
+				</div>
+
+				{# Partenaire 5 #}
+				<div class="p-4 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 w-full h-40 flex items-center justify-center">
+					<img src="{{ asset('media/partners/partner5.png') }}" alt="Partenaire 5" class="h-16 object-contain opacity-70 hover:opacity-100 transition-opacity">
+				</div>
+			</div>
+
+			{# Bouton d'action #}
+			<div class="mt-12 text-center">
+				<a href="{{ path('app_contact') }}" class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-gradient-to-r from-green-600 to-yellow-500 hover:from-green-700 hover:to-yellow-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+					Devenir partenaire
+					<svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+					</svg>
+				</a>
+			</div>
+		</div>
+	</section>
 
 	<script>
 
@@ -940,11 +1015,13 @@ if (! track)
 return;
 
 
+
 const cards = track.children;
 const totalCards = cards.length;
 
 if (totalCards === 0) 
 return;
+
 
 
 let currentIndex = 0;
