@@ -227,4 +227,41 @@ class PageController extends AbstractController
             'places' => $places,
         ]);
     }
+
+    // Project Pages
+    #[Route('/projets/binajia-travel-week', name: 'app_project_travel_week')]
+    public function projectTravelWeek(): Response
+    {
+        return $this->render('projects/travel_week.html.twig');
+    }
+
+    #[Route('/projets/binajia-lab', name: 'app_project_lab')]
+    public function projectLab(): Response
+    {
+        return $this->render('projects/lab.html.twig');
+    }
+
+    #[Route('/projets/exchange-programme', name: 'app_project_exchange')]
+    public function projectExchange(): Response
+    {
+        return $this->render('projects/exchange.html.twig');
+    }
+
+    #[Route('/projets/market-connect', name: 'app_project_market')]
+    public function projectMarket(): Response
+    {
+        return $this->render('projects/market.html.twig');
+    }
+
+    #[Route('/projets/culture-fest', name: 'app_project_culture')]
+    public function projectCulture(): Response
+    {
+        return $this->render('projects/culture.html.twig');
+    }
+
+    #[Route('/projets/transit', name: 'app_project_transit')]
+    public function projectTransit(): Response
+    {
+        return $this->render('projects/transit.html.twig');
+    }
 }

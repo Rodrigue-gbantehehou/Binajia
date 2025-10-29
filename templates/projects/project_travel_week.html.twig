@@ -1,0 +1,234 @@
+{% extends 'base.html.twig' %}
+{% block title %}Binajia Travel Week — Semaine de découvertes croisées{% endblock %}
+
+{% block content %}
+
+{# Hero Section #}
+<section class="relative overflow-hidden min-h-screen -mt-20 pt-20 bg-gradient-to-br from-yellow-400 via-yellow-500 to-green-600 flex items-center" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.95), rgba(251, 191, 36, 0.9), rgba(16, 185, 129, 0.9)), url('{{ asset('/media/travel.jfif') }}'); background-size: cover; background-position: center;">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse animation-delay-2000"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 w-full">
+        <div class="text-center text-white space-y-8">
+            <div class="inline-block px-6 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold mb-4">
+                🌍 Programme phare Binajia
+            </div>
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-black leading-tight">
+                <span class="block bg-gradient-to-r from-white via-yellow-100 to-white bg-clip-text text-transparent drop-shadow-2xl">
+                    Binajia Travel Week
+                </span>
+            </h1>
+            <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+                Une semaine de découvertes croisées entre le Bénin et le Nigéria pour les jeunes, touristes et voyageurs passionnés
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center mt-8">
+                <a href="#programme" class="group px-8 py-4 bg-white text-yellow-600 rounded-full font-bold transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <span class="flex items-center">
+                        Découvrir le programme
+                        <svg class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </span>
+                </a>
+                <a href="#inscription" class="group px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white text-white rounded-full font-bold transition-all duration-300 hover:bg-white/20 hover:scale-105">
+                    S'inscrire maintenant
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# Stats Section #}
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-yellow-500 mb-2">500+</div>
+                <div class="text-gray-600 font-semibold">Voyageurs par an</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-green-600 mb-2">7</div>
+                <div class="text-gray-600 font-semibold">Jours d'aventure</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-yellow-500 mb-2">15+</div>
+                <div class="text-gray-600 font-semibold">Sites visités</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-green-600 mb-2">2</div>
+                <div class="text-gray-600 font-semibold">Pays explorés</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# About Section #}
+<section class="py-20 bg-gradient-to-br from-green-50 via-yellow-50 to-green-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-500 via-green-600 to-yellow-500 bg-clip-text text-transparent">
+                    Une expérience unique de découverte culturelle
+                </h2>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    La <strong>Binajia Travel Week</strong> est bien plus qu'un simple voyage touristique. C'est une immersion totale dans les cultures béninoise et nigériane, une opportunité de tisser des liens authentiques et de découvrir les trésors cachés de ces deux nations sœurs.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    Chaque année, nous accueillons des centaines de voyageurs — jeunes professionnels, étudiants, artistes, entrepreneurs — qui souhaitent explorer l'Afrique de l'Ouest d'une manière différente, responsable et enrichissante.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <span class="px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full text-sm font-semibold">🎭 Culture</span>
+                    <span class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold">🏛️ Histoire</span>
+                    <span class="px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full text-sm font-semibold">🍲 Gastronomie</span>
+                    <span class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold">🎨 Art</span>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="absolute -top-8 -right-8 w-64 h-64 bg-yellow-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+                <img src="{{ asset('/media/travel.jfif') }}" alt="Binajia Travel Week" class="relative rounded-3xl shadow-2xl w-full h-auto">
+            </div>
+        </div>
+    </div>
+</section>
+
+{# Programme Section #}
+<section id="programme" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="font-serif text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-500 via-green-600 to-yellow-500 bg-clip-text text-transparent mb-4">
+                Programme de la semaine
+            </h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                7 jours d'aventures, de rencontres et de découvertes inoubliables
+            </p>
+        </div>
+
+        <div class="space-y-6">
+            {% set days = [
+                { day: 'Jour 1', title: 'Arrivée à Cotonou', desc: 'Accueil à l\'aéroport, installation à l\'hôtel, dîner de bienvenue et présentation du programme', icon: '✈️', color: 'yellow' },
+                { day: 'Jour 2', title: 'Découverte de Cotonou & Porto-Novo', desc: 'Visite du marché Dantokpa, musée da Silva, palais royal de Porto-Novo', icon: '🏛️', color: 'green' },
+                { day: 'Jour 3', title: 'Route vers Ouidah', desc: 'Porte du Non-Retour, Temple des Pythons, musée d\'Histoire, plage', icon: '🌊', color: 'yellow' },
+                { day: 'Jour 4', title: 'Passage au Nigéria - Lagos', desc: 'Traversée de la frontière, découverte de Lagos, quartier de Lekki, marché artisanal', icon: '🇳🇬', color: 'green' },
+                { day: 'Jour 5', title: 'Immersion culturelle à Lagos', desc: 'Visite du Nike Art Gallery, spectacle de danse Afrobeat, rencontre avec des artistes locaux', icon: '🎭', color: 'yellow' },
+                { day: 'Jour 6', title: 'Badagry & retour au Bénin', desc: 'Visite de Badagry (histoire de l\'esclavage), retour à Cotonou', icon: '📜', color: 'green' },
+                { day: 'Jour 7', title: 'Journée libre & départ', desc: 'Shopping, détente, soirée de clôture, transfert aéroport', icon: '🎉', color: 'yellow' }
+            ] %}
+
+            {% for d in days %}
+                <div class="group relative bg-gradient-to-r from-{{ d.color }}-50 to-white rounded-2xl p-6 hover:shadow-xl transition-all duration-300 border-l-4 border-{{ d.color }}-500">
+                    <div class="flex items-start gap-6">
+                        <div class="flex-shrink-0">
+                            <div class="w-16 h-16 bg-gradient-to-br from-{{ d.color }}-400 to-{{ d.color }}-600 rounded-2xl flex items-center justify-center text-3xl shadow-lg">
+                                {{ d.icon }}
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="px-3 py-1 bg-{{ d.color }}-100 text-{{ d.color }}-800 rounded-full text-sm font-bold">{{ d.day }}</span>
+                                <h3 class="text-2xl font-bold text-gray-900">{{ d.title }}</h3>
+                            </div>
+                            <p class="text-gray-600 leading-relaxed">{{ d.desc }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# What's Included Section #}
+<section class="py-20 bg-gradient-to-br from-green-600 via-yellow-400 to-green-600" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9), rgb(255, 174, 0))">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
+                Ce qui est inclus
+            </h2>
+            <p class="text-lg text-white/90 max-w-2xl mx-auto">
+                Un package complet pour une expérience sans soucis
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% set includes = [
+                { title: 'Hébergement', desc: 'Hôtels 3-4 étoiles, petit-déjeuner inclus', icon: '🏨' },
+                { title: 'Transport', desc: 'Bus climatisé, transferts aéroport', icon: '🚌' },
+                { title: 'Repas', desc: 'Déjeuners et dîners typiques', icon: '🍽️' },
+                { title: 'Guides', desc: 'Guides locaux francophones/anglophones', icon: '👨‍🏫' },
+                { title: 'Visites', desc: 'Entrées dans tous les sites touristiques', icon: '🎫' },
+                { title: 'Assurance', desc: 'Assurance voyage et assistance 24/7', icon: '🛡️' }
+            ] %}
+
+            {% for item in includes %}
+                <div class="bg-white rounded-2xl p-6 shadow-xl hover:scale-105 transition-transform duration-300">
+                    <div class="text-5xl mb-4">{{ item.icon }}</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{{ item.title }}</h3>
+                    <p class="text-gray-600">{{ item.desc }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# Pricing & CTA Section #}
+<section id="inscription" class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="font-serif text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-500 via-green-600 to-yellow-500 bg-clip-text text-transparent mb-8">
+            Prêt pour l'aventure ?
+        </h2>
+        
+        <div class="bg-gradient-to-br from-yellow-50 to-green-50 rounded-3xl p-8 md:p-12 shadow-2xl mb-8">
+            <div class="mb-6">
+                <div class="text-5xl md:text-6xl font-black text-green-600 mb-2">
+                    450€
+                    <span class="text-2xl text-gray-600 font-normal">/ personne</span>
+                </div>
+                <p class="text-gray-600">Tout inclus • 7 jours / 6 nuits</p>
+            </div>
+            
+            <div class="space-y-3 mb-8 text-left max-w-md mx-auto">
+                <div class="flex items-center gap-3">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span class="text-gray-700">Réduction de 10% pour les membres Binajia</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span class="text-gray-700">Tarif de groupe disponible (5+ personnes)</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span class="text-gray-700">Facilités de paiement disponibles</span>
+                </div>
+            </div>
+
+            <a href="{{ path('app_contact') }}" class="inline-block px-10 py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-full font-bold text-lg hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl">
+                Réserver ma place
+            </a>
+        </div>
+
+        <p class="text-gray-600">
+            Des questions ? 
+            <a href="{{ path('app_contact') }}" class="text-green-600 font-semibold hover:underline">Contactez-nous</a>
+        </p>
+    </div>
+</section>
+
+{# Back to Projects #}
+<section class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <a href="{{ path('app_home') }}#projets" class="inline-flex items-center gap-2 text-green-600 font-semibold hover:text-green-700 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Retour aux projets
+        </a>
+    </div>
+</section>
+
+{% endblock %}
