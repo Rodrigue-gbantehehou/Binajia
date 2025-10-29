@@ -14,51 +14,57 @@
 			<script src="https://cdn.tailwindcss.com"></script>
 			<script>
 				tailwind.config = {
-					theme: {
-						extend: {
-							colors: {
-								'primary': '#0a4b1e',
-								'primary-dark': '#08381a',
-								'primary-light': '#062e15',
-								'secondary': '#2D7A4F',
-								'secondary-dark': '#1F5438',
-								'secondary-light': '#3A8C63',
-								'accent': '#f5880b',
-								'accent-dark': '#F59E0B',
-								'accent-light': '#d97706',
-								'cream': '#FAF8F5',
-								'charcoal': '#2B2520'
-							},
-							fontFamily: {
-								'sans': ['Roboto', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-								'serif': ['Roboto']
-							}
-						}
-					}
-				}
+theme: {
+extend: {
+colors: {
+'primary': '#0a4b1e',
+'primary-dark': '#08381a',
+'primary-light': '#062e15',
+'secondary': '#2D7A4F',
+'secondary-dark': '#1F5438',
+'secondary-light': '#3A8C63',
+'accent': '#f5880b',
+'accent-dark': '#F59E0B',
+'accent-light': '#d97706',
+'cream': '#FAF8F5',
+'charcoal': '#2B2520'
+},
+fontFamily: {
+'sans': [
+'Roboto',
+'Inter',
+'ui-sans-serif',
+'system-ui',
+'sans-serif'
+],
+'serif': ['Roboto']
+}
+}
+}
+}
 			</script>
 			<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 			<style>
-			@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
+				@keyframes scroll {
+					0% {
+						transform: translateX(0);
+					}
+					100% {
+						transform: translateX(-50%);
+					}
+				}
 
-#carousel {
-    animation: scroll 40s linear infinite;
-}
+				#carousel {
+					animation: scroll 40s linear infinite;
+				}
 
-#carousel:hover {
-    animation-play-state: paused;
-}
+				#carousel:hover {
+					animation-play-state: paused;
+				}
 
-#carousel article:hover {
-    animation-play-state: paused;
-}
+				#carousel article:hover {
+					animation-play-state: paused;
+				}
 				/* Fallback to support legacy JS that toggles `active` */
 				.mobile-menu.active {
 					transform: translateX(0) !important;
@@ -167,252 +173,312 @@
 		{% endblock %}
 	</head>
 	<body class="min-h-full bg-cream text-charcoal font-sans">
-			{% block header %}
-				<nav class="bg-gradient-to-r from-yellow-500 via-yellow-400 to-green-600 shadow-lg fixed w-full z-50  transition-all duration-300" role="navigation" aria-label="Navigation principale" >
-					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+		{% block header %}
+			<nav class="bg-gradient-to-r from-yellow-500 via-yellow-400 to-green-600 shadow-lg fixed w-full z-50  transition-all duration-300" role="navigation" aria-label="Navigation principale">
+				<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
 
-						<div class="flex items-center">
-                    <a href="#" class="flex items-center">
-                        <img src="https://huggingface.co/spaces/Babangida77/binajia/resolve/main/images/binajia%20logo.jpg"
-                            alt="Binajia Logo" class="h-10 w-10 ">
-                        <span
-                            class="ml-2 text-xl font-bold text-white bg-gradient-to-r from-green-500 to-green-700 px-4 py-1 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-pulse">
-                            B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
+					<div class="flex items-center">
+						<a href="#" class="flex items-center">
+							<img src="https://huggingface.co/spaces/Babangida77/binajia/resolve/main/images/binajia%20logo.jpg" alt="Binajia Logo" class="h-10 w-10 ">
+							<span class="ml-2 text-xl font-bold text-white bg-gradient-to-r from-green-500 to-green-700 px-4 py-1 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-pulse">
+								B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
 
-                        </span>
-                    </a>
-                </div>
-						<div class="hidden lg:flex items-center space-x-8">
-							
-							<a href="{{ path('app_home') }}" class="nav-link text-white hover:text-primary font-medium">Accueil</a>
-							<a href="{{ path('app_explorer') }}" class="nav-link text-white hover:text-primary font-medium">Explorer</a>
-							<a href="{{ path('app_social_impact') }}" class="nav-link text-white hover:text-primary font-medium">Impact Social</a>
-							<a href="{{ path('app_events') }}" class="nav-link text-white hover:text-primary font-medium">Événements</a>
-							<a href="{{ path('app_about') }}" class="nav-link text-white hover:text-primary font-medium">A propos</a>
-							<a href="{{ path('app_contact') }}" class="nav-link text-white hover:text-primary font-medium">Contact</a>
-							{% if is_granted('ROLE_ADMIN') %}
-								<a href="{{ path('admin_dashboard') }}" class="nav-link text-charcoal hover:text-primary font-medium">Admin</a>
-							{% endif %}
-						</div>
-						<div class="flex items-center space-x-3">
-							{% if not app.user %}
-
-								<a href="{{ path('app_login', {}, false) ?? '#' }}" class="hidden lg:block px-6 py-3 rounded-full bg-white border-2 border-primary text-primary  font-semibold">Connexion</a>
-							{% endif %}
-							{% if app.user %}
-								<a href="{{ path('app_user_dashboard') }}" class="hidden lg:block  px-6 py-3 text-white  bg-primary text-center rounded-full font-medium transition duration-300 bg-yellow-400 hover:bg-yellow-500 ">Espace membre</a>
-								<a href="{{ path('app_logout') }}" class="hidden lg:block p-2.5 rounded-full ring-1 ring-white hover:bg-yellow-400" title="Se déconnecter" aria-label="Se déconnecter">
-									<svg class="w-5 h-5 text-white" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-										<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-										<polyline points="16 17 21 12 16 7"/>
-										<line x1="21" y1="12" x2="9" y2="12"/>
-									</svg>
-								</a>
-								<button id="mobile-menu-btn" class="lg:hidden p-2 hover:bg-green-600 rounded-full transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
-									<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-								</button>
-								<a href="{{ path('app_logout') }}" class="lg:hidden p-2 rounded-full hover:bg-secondary transition-colors" title="Se déconnecter" aria-label="Se déconnecter">
-									<svg class="w-6 h-6 text-white" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-										<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-										<polyline points="16 17 21 12 16 7"/>
-										<line x1="21" y1="12" x2="9" y2="12"/>
-									</svg>
-								</a>
-							{% else %}
-							<button id="mobile-menu-btn" class="lg:hidden p-2 hover:bg-cream rounded-full transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
-									<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-								</button>
-								<a href="{{ path('app_membership') }}" class="hidden lg:block px-6 py-3  text-white rounded-full bg-yellow-400 outline outline-2 outline-white font-semibold"> Devenir membre</a>
-								
-							{% endif %}
-						</div>
+							</span>
+						</a>
 					</div>
-				</nav>
-				<div id="mobile-menu" class="mobile-menu fixed top-0 bg-gradient-to-br from-yellow-400 to-green-500  right-0 h-full w-80 bg-white shadow-2xl z-50 p-6 hidden" aria-hidden="true">
-					<div class="flex justify-between items-center mb-8">
-						<div class="flex items-center space-x-3">
-							<img src="/media/logo.jpeg" alt="Logo Binajia" class="h-10 w-10 rounded-md object-cover">
-							<span class="font-serif text-2xl font-bold text-white">BINAJIA</span>
-						</div>
-						<button id="close-menu" class="p-2 hover:bg-cream rounded-lg transition-colors" aria-label="Fermer le menu">
-							<svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-						</button>
-					</div>
-					<div class="space-y-4 ">
-						<!-- Section Accueil -->
-						<a href="{{ path('app_home') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Accueil</a>
-						<a href="{{ path('app_explorer') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Explorer</a>
-						<a href="{{ path('app_social_impact') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Impact Social</a>
-						<a href="{{ path('app_events') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Événements</a>
-						<a href="{{ path('app_about') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">A propos</a>
-						<a href="{{ path('app_contact') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Contact</a>
+					<div class="hidden lg:flex items-center space-x-8">
+
+						<a href="{{ path('app_home') }}" class="nav-link text-white hover:text-primary font-medium">Accueil</a>
+						<a href="{{ path('app_explorer') }}" class="nav-link text-white hover:text-primary font-medium">Explorer</a>
+						<a href="{{ path('app_social_impact') }}" class="nav-link text-white hover:text-primary font-medium">Impact Social</a>
+						<a href="{{ path('app_events') }}" class="nav-link text-white hover:text-primary font-medium">Événements</a>
+						<a href="{{ path('app_about') }}" class="nav-link text-white hover:text-primary font-medium">A propos</a>
+						<a href="{{ path('app_contact') }}" class="nav-link text-white hover:text-primary font-medium">Contact</a>
 						{% if is_granted('ROLE_ADMIN') %}
-							<a href="{{ path('admin_dashboard') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Admin</a>
+							<a href="{{ path('admin_dashboard') }}" class="nav-link text-charcoal hover:text-primary font-medium">Admin</a>
 						{% endif %}
-						<div class="pt-4 space-y-3">
-							{% if not app.user %}
-							<a href="{{ path('app_membership') }}" class="block w-full px-6 py-3 text-center bg-primary  hover:bg-secondary text-white px-6 py-3 rounded-full text-center font-medium transition duration-300">Devenir membre</a>
-								<a href="{{ path('app_login') }}" class="block w-full px-6 py-3 text-center bg-white border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all">Connexion</a>
-								
-							{% else %}
-								<a href="{{ path('app_user_dashboard') }}" class="block w-full rounded-full px-6 py-3 text-center btn-primary">Espace membre</a>
-								<a href="{{ path('app_logout') }}" class="block w-full px-6 py-3 text-center bg-primary border-2 border-gray-300 text-white rounded-full font-semibold hover:bg-cream transition-all">Se déconnecter</a>
-							{% endif %}
-						</div>
+					</div>
+					<div class="flex items-center space-x-3">
+						{% if not app.user %}
+
+							<a href="{{ path('app_login', {}, false) ?? '#' }}" class="hidden lg:block px-6 py-3 rounded-full bg-white border-2 border-primary text-primary  font-semibold">Connexion</a>
+						{% endif %}
+						{% if app.user %}
+							<a href="{{ path('app_user_dashboard') }}" class="hidden lg:block  px-6 py-3 text-white  bg-primary text-center rounded-full font-medium transition duration-300 bg-yellow-400 hover:bg-yellow-500 ">Espace membre</a>
+							<a href="{{ path('app_logout') }}" class="hidden lg:block p-2.5 rounded-full ring-1 ring-white hover:bg-yellow-400" title="Se déconnecter" aria-label="Se déconnecter">
+								<svg class="w-5 h-5 text-white" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+									<polyline points="16 17 21 12 16 7"/>
+									<line x1="21" y1="12" x2="9" y2="12"/>
+								</svg>
+							</a>
+							<button id="mobile-menu-btn" class="lg:hidden p-2 hover:bg-green-600 rounded-full transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
+								<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+							</button>
+							<a href="{{ path('app_logout') }}" class="lg:hidden p-2 rounded-full hover:bg-secondary transition-colors" title="Se déconnecter" aria-label="Se déconnecter">
+								<svg class="w-6 h-6 text-white" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+									<polyline points="16 17 21 12 16 7"/>
+									<line x1="21" y1="12" x2="9" y2="12"/>
+								</svg>
+							</a>
+						{% else %}
+							<button id="mobile-menu-btn" class="lg:hidden p-2 hover:bg-cream rounded-full transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
+								<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+							</button>
+							<a href="{{ path('app_membership') }}" class="hidden lg:block px-6 py-3  text-white rounded-full bg-yellow-400 outline outline-2 outline-white font-semibold">
+								Devenir membre</a>
+
+						{% endif %}
 					</div>
 				</div>
-				<div id="menu-overlay" class="hidden fixed inset-0 bg-black/50 z-40"></div>
-			{% endblock %}
-
-			<!-- Flash Messages Section -->
-			<div id="flash-messages" class="fixed top-24 left-4 right-4 z-50 space-y-2">
-				{% for message in app.flashes('success') %}
-					<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
-						<div class="flex items-center">
-							<svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-								<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-							</svg>
-							<span>{{ message }}</span>
-						</div>
-						<button onclick="this.parentElement.remove()" class="text-green-500 hover:text-green-700 ml-4">
-							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-							</svg>
-						</button>
+			</nav>
+			<div id="mobile-menu" class="mobile-menu fixed top-0 bg-gradient-to-br from-yellow-400 to-green-500  right-0 h-full w-80 bg-white shadow-2xl z-50 p-6 hidden" aria-hidden="true">
+				<div class="flex justify-between items-center mb-8">
+					<div class="flex items-center space-x-3">
+						<img src="/media/logo.jpeg" alt="Logo Binajia" class="h-10 w-10 rounded-md object-cover">
+						<span class="font-serif text-2xl font-bold text-white">BINAJIA</span>
 					</div>
-				{% endfor %}
+					<button id="close-menu" class="p-2 hover:bg-cream rounded-lg transition-colors" aria-label="Fermer le menu">
+						<svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+					</button>
+				</div>
+				<div
+					class="space-y-4 ">
+					<!-- Section Accueil -->
+					<a href="{{ path('app_home') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Accueil</a>
+					<a href="{{ path('app_explorer') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Explorer</a>
+					<a href="{{ path('app_social_impact') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Impact Social</a>
+					<a href="{{ path('app_events') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Événements</a>
+					<a href="{{ path('app_about') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">A propos</a>
+					<a href="{{ path('app_contact') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Contact</a>
+					{% if is_granted('ROLE_ADMIN') %}
+						<a href="{{ path('admin_dashboard') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all">Admin</a>
+					{% endif %}
+					<div class="pt-4 space-y-3">
+						{% if not app.user %}
+							<a href="{{ path('app_membership') }}" class="block w-full px-6 py-3 text-center bg-primary  hover:bg-secondary text-white px-6 py-3 rounded-full text-center font-medium transition duration-300">Devenir membre</a>
+							<a href="{{ path('app_login') }}" class="block w-full px-6 py-3 text-center bg-white border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all">Connexion</a>
 
-				{% for message in app.flashes('error') %}
-					<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
-						<div class="flex items-center">
-							<svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-								<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-							</svg>
-							<span>{{ message }}</span>
-						</div>
-						<button onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-700 ml-4">
-							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-							</svg>
-						</button>
+						{% else %}
+							<a href="{{ path('app_user_dashboard') }}" class="block w-full rounded-full px-6 py-3 text-center btn-primary">Espace membre</a>
+							<a href="{{ path('app_logout') }}" class="block w-full px-6 py-3 text-center bg-primary border-2 border-gray-300 text-white rounded-full font-semibold hover:bg-cream transition-all">Se déconnecter</a>
+						{% endif %}
 					</div>
-				{% endfor %}
-
-				{% for message in app.flashes('warning') %}
-					<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
-						<div class="flex items-center">
-							<svg class="w-5 h-5 mr-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-								<path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-							</svg>
-							<span>{{ message }}</span>
-						</div>
-						<button onclick="this.parentElement.remove()" class="text-yellow-500 hover:text-yellow-700 ml-4">
-							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-							</svg>
-						</button>
-					</div>
-				{% endfor %}
-
-				{% for message in app.flashes('info') %}
-					<div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
-						<div class="flex items-center">
-							<svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-								<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
-							</svg>
-							<span>{{ message }}</span>
-						</div>
-						<button onclick="this.parentElement.remove()" class="text-blue-500 hover:text-blue-700 ml-4">
-							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-							</svg>
-						</button>
-					</div>
-				{% endfor %}
+				</div>
 			</div>
+			<div id="menu-overlay" class="hidden fixed inset-0 bg-black/50 z-40"></div>
+		{% endblock %}
 
-			<main class="pt-20"> {% block content %}{% endblock %}
-				</main>
+		<!-- Flash Messages Section -->
+		<div id="flash-messages" class="fixed top-24 left-4 right-4 z-50 space-y-2">
+			{% for message in app.flashes('success') %}
+				<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
+					<div class="flex items-center">
+						<svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewbox="0 0 20 20">
+							<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+						</svg>
+						<span>{{ message }}</span>
+					</div>
+					<button onclick="this.parentElement.remove()" class="text-green-500 hover:text-green-700 ml-4">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+						</svg>
+					</button>
+				</div>
+			{% endfor %}
 
-				{% block footer %}
-					<footer
-        class="bg-gradient-to-br from-secondary-dark to-gray-900 text-white py-12 px-4 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"
-        style="background: linear-gradient(135deg, #005731, #0d5c26);">
-						<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-							<div class="grid md:grid-cols-5 gap-12 mb-12">
-								<div>
-                    <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <img src="https://huggingface.co/spaces/Babangida77/binajia/resolve/main/images/binajia%20logo.jpg"
-                            alt="Binajia Logo" class="h-8 w-8 mr-2 ">
-                        <span
-                            class="text-white bg-gradient-to-r from-green-500 to-green-700 px-3 py-1 rounded-full shadow-md">
-                            B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
-                        </span>
-                    </h3>
-                    <p class="text-gray-400">Promouvoir les échanges culturels et économiques entre le Bénin et le
-                        Nigeria.</p>
-                </div>
-								<div>
-									<h4 class="font-semibold text-lg mb-4">Navigation</h4>
-									<ul class="space-y-2">
-										<li>
-											<a href="{{ path('app_home') }}" class="text-gray-400 hover:text-white transition-colors">Accueil </a>
-										</li>
-										<li>
-											<a href="{{ path('app_avantage') }}" class="text-gray-400 hover:text-white transition-colors">Explorer</a>
-										</li>
-										<li>
-											<a href="{{ path('app_social_impact') }}" class="text-gray-400 hover:text-white transition-colors">Impact Social</a>
-										</li>
-										<li>
-											<a href="{{ path('app_events') }}" class="text-gray-400 hover:text-white transition-colors">Événements</a>
-										</li>
-										<li>
-											<a href="{{ path('app_about') }}" class="text-gray-400 hover:text-white transition-colors">À propos</a>
-										</li>
-										<li>
-											<a href="{{ path('app_places') }}" class="text-gray-400 hover:text-white transition-colors">Lieux</a>
-										</li>
-										<li>
-											<a href="{{ path('app_contact') }}" class="text-gray-400 hover:text-white transition-colors">Contact</a>
-										</li>
-									</ul>
-								</div>
-								<div>
-									<h4 class="font-semibold text-lg mb-4">Services</h4>
-									<ul class="space-y-2">
-										<li>
-											<a href="#" class="text-gray-400 hover:text-white transition-colors">Réservations</a>
-										</li>
-										<li>
-											<a href="{{ path('app_membership') }}" class="text-gray-400 hover:text-white transition-colors">Devenir membre</a>
-										</li>
-										
-										<li>
-											<a href="{{ path('app_partenaire') }}" class="text-gray-400 hover:text-white transition-colors">Partenariats</a>
-										</li>
-									</ul>
-								</div>
-								<div>
-									<h4 class="font-semibold text-lg mb-4">Newsletter</h4>
-									<p class="text-gray-400 mb-4">Restez informé de nos actualités</p>
-									<div class="flex">
-										<input type="email" placeholder="Votre email" class="flex-1 px-4 py-2 rounded-l-full bg-white/10 border border-white/20 focus:outline-none focus:border-primary">
-										<button class="px-6 py-2 bg-primary rounded-r-full hover:bg-primary-dark transition-colors">→</button>
+			{% for message in app.flashes('error') %}
+				<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
+					<div class="flex items-center">
+						<svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewbox="0 0 20 20">
+							<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+						</svg>
+						<span>{{ message }}</span>
+					</div>
+					<button onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-700 ml-4">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+						</svg>
+					</button>
+				</div>
+			{% endfor %}
+
+			{% for message in app.flashes('warning') %}
+				<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
+					<div class="flex items-center">
+						<svg class="w-5 h-5 mr-2 text-yellow-500" fill="currentColor" viewbox="0 0 20 20">
+							<path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+						</svg>
+						<span>{{ message }}</span>
+					</div>
+					<button onclick="this.parentElement.remove()" class="text-yellow-500 hover:text-yellow-700 ml-4">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+						</svg>
+					</button>
+				</div>
+			{% endfor %}
+
+			{% for message in app.flashes('info') %}
+				<div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
+					<div class="flex items-center">
+						<svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewbox="0 0 20 20">
+							<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+						</svg>
+						<span>{{ message }}</span>
+					</div>
+					<button onclick="this.parentElement.remove()" class="text-blue-500 hover:text-blue-700 ml-4">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+						</svg>
+					</button>
+				</div>
+			{% endfor %}
+		</div>
+
+		<main class="pt-20"> {% block content %}{% endblock %}
+			</main>
+
+			{% block footer %}
+				<footer
+					class="bg-gradient-to-r from-green-500 via-yellow-400 to-green-600 shadow-lg  text-white py-12 px-4 relative overflow-hidden">
+					<!-- Effet de fond décoratif -->
+					<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10"></div>
+
+					<div
+						class="max-w-7xl mx-auto relative z-10">
+						<!-- Contenu principal du footer -->
+						<div
+							class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+							<!-- Logo et description -->
+							<div>
+								<h3 class="text-xl font-bold mb-4 flex items-center">
+									<img src="https://huggingface.co/spaces/Babangida77/binajia/resolve/main/images/binajia%20logo.jpg" alt="Binajia Logo" class="h-8 w-8 mr-2 ">
+									<span class="text-white bg-gradient-to-r from-green-500 to-green-700 px-3 py-1 rounded-full shadow-md">
+										B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
+									</span>
+								</h3>
+								<p class="text-white">Promouvoir les échanges culturels et économiques entre le Bénin et le Nigeria, l'afrique et le monde.</p>
+							</div>
+
+							<!-- Liens rapides -->
+							<div>
+								<h3 class="text-lg font-bold text-white mb-4 flex items-center">
+
+									Navigation
+								</h3>
+								<ul class="space-y-2">
+									<li>
+										<a href="{{ path('app_home') }}" class="text-white hover:text-yellow-400 transition-colors flex items-center">
+
+											Accueil
+										</a>
+									</li>
+									<li>
+										<a href="{{ path('app_explorer') }}" class="text-white hover:text-yellow-400 transition-colors flex items-center">
+
+											Explorer
+										</a>
+									</li>
+									<li>
+										<a href="{{ path('app_events') }}" class="text-white hover:text-yellow-400 transition-colors flex items-center">
+
+											Événements
+										</a>
+									</li>
+									<li>
+										<a href="{{ path('app_about') }}" class="text-white hover:text-yellow-400 transition-colors flex items-center">
+
+											À propos
+										</a>
+									</li>
+								</ul>
+							</div>
+
+							<!-- Services -->
+							<div>
+								<h3 class="text-lg font-bold text-white mb-4 flex items-center">
+
+									Services
+								</h3>
+								<ul class="space-y-2">
+									<li>
+										<a href="{{ path('app_membership') }}" class="text-white hover:text-green-400 transition-colors flex items-center">
+
+											Devenir membre
+										</a>
+									</li>
+									<li>
+										<a href="{{ path('app_partenaire') }}" class="text-white hover:text-green-400 transition-colors flex items-center">
+
+											Partenariats
+										</a>
+									</li>
+									<li>
+										<a href="{{ path('app_contact') }}" class="text-white hover:text-green-400 transition-colors flex items-center">
+
+											Contactez-nous
+										</a>
+									</li>
+								</ul>
+							</div>
+
+							<!-- Newsletter -->
+							<div>
+								<h3 class="text-lg font-bold text-white mb-4 flex items-center">
+									Restez informé
+								</h3>
+								<p class="text-white text-sm mb-4">
+									Abonnez-vous à notre newsletter pour recevoir les dernières actualités et événements.
+								</p>
+								<form class="space-y-3">
+									<div>
+										<label for="email" class="sr-only">Email</label>
+										<div class="relative rounded-md shadow-sm">
+											<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+												<svg class="h-5 w-5 text-gray-400" fill="currentColor" viewbox="0 0 20 20">
+													<path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+													<path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+												</svg>
+											</div>
+											<input type="email" id="email" name="email" required class="block w-full pl-10 pr-3 py-3 border border-transparent rounded-full bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent" placeholder="Votre adresse email">
+										</div>
+									</div>
+
+								</form>
+							</div>
+							<div class="mt-4 md:mt-0">
+								<img src="{{ asset('media/logo.jpeg') }}" alt="Logo Binajia" class="h-50 w-60 opacity-80 hover:opacity-100 transition-opacity">
+							</div>
+						</div>
+
+						<!-- Copyright et mentions légales -->
+						<div class="pt-8 border-t border-white/10">
+							<div class="flex flex-col md:flex-row justify-between items-center">
+								<div class="flex items-center space-x-6">
+									<p class="text-sm text-white">
+										&copy;
+										{{ "now"|date('Y') }}
+										BINAJIA. Tous droits réservés.
+									</p>
+									<div class="hidden md:flex space-x-4">
+										<a href="#" class="text-sm text-white hover:text-white transition-colors">Confidentialité</a>
+										<span class="text-gray-600">•</span>
+										<a href="#" class="text-sm text-white hover:text-white transition-colors">Conditions d'utilisation</a>
+										<span class="text-gray-600">•</span>
+										<a href="#" class="text-sm text-white hover:text-white transition-colors">Mentions légales</a>
 									</div>
 								</div>
-							</div>
-							<div class="pt-8 border-t border-white/10 text-center text-gray-400">
-								<p>&copy;
-									{{ "now"|date('Y') }}
-									BINAJIA. Tous droits réservés.</p>
+
 							</div>
 						</div>
-					</footer>
-				{% endblock %}
+					</div>
+				</footer>
+			{% endblock %}
 
-				{% block scripts %}
-					<script src="{{ asset('js/app.js') }}" defer></script>
-				{% endblock %}
-			</body>
+			{% block scripts %}
+				<script src="{{ asset('js/app.js') }}" defer></script>
+			{% endblock %}
+		</body>
 	</html>
