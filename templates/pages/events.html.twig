@@ -1,52 +1,334 @@
 {% extends 'base.html.twig' %}
 {% block title %}Événements — Binajia{% endblock %}
-{% block content %}
-<section class="py-16 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h1 class="font-serif text-4xl font-bold text-charcoal">Événements à Venir</h1>
-    <p class="mt-2 text-gray-600">Participez à nos événements culturels et vivez des expériences authentiques</p>
 
-    <div class="mt-8 grid md:grid-cols-3 gap-6">
+{% block stylesheets %}
+{{ parent() }}
+<style>
+  .hero-events {
+    background: linear-gradient(135deg, rgba(0, 120, 50, 0.9), rgba(0, 100, 50, 0.9), rgba(200, 160, 0, 0.9)), 
+                url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
+    min-height: 80vh;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .event-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 1rem;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .event-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .event-image-container {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .event-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .event-card:hover .event-image {
+    transform: scale(1.1);
+  }
+  
+  .event-date {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    backdrop-filter: blur(4px);
+  }
+  
+  .event-category {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .event-content {
+    padding: 1.5rem;
+  }
+  
+  .event-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 0.75rem;
+    line-height: 1.375;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .event-meta {
+    display: flex;
+    align-items: center;
+    color: #4a5568;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .event-meta svg {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    color: #f59e0b;
+  }
+  
+  .event-description {
+    color: #4a5568;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .event-cta {
+    display: inline-flex;
+    align-items: center;
+    color: #f59e0b;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: all 0.2s ease;
+  }
+  
+  .event-cta:hover {
+    color: #d97706;
+    transform: translateX(4px);
+  }
+  
+  .event-cta svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: 0.5rem;
+    transition: transform 0.2s ease;
+  }
+  
+  .event-cta:hover svg {
+    transform: translateX(4px);
+  }
+  
+  .section-title {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2.5rem;
+  }
+  
+  .section-title:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.75rem;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #f59e0b, #10b981);
+    border-radius: 2px;
+  }
+  
+  .filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .filter-tab {
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid #e2e8f0;
+    background: white;
+    color: #4a5568;
+  }
+  
+  .filter-tab:hover, .filter-tab.active {
+    background: #f59e0b;
+    border-color: #f59e0b;
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 768px) {
+    .hero-events {
+      min-height: 60vh;
+      padding-top: 6rem;
+    }
+    
+    .event-card {
+      margin-bottom: 1.5rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-events flex items-center relative">
+  <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full py-20 relative z-10">
+    <div class="inline-block px-4 py-2 mb-4 text-sm font-semibold text-white bg-white/20 backdrop-blur-sm rounded-full">
+      Découvrez nos événements
+    </div>
+    <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+      Événements à venir
+    </h1>
+    <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-8 leading-relaxed">
+      Plongez dans l'univers captivant de la culture africaine à travers nos événements uniques et enrichissants
+    </p>
+    <div class="flex flex-wrap justify-center gap-4 mt-8">
+      <a href="#events" class="group relative px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 rounded-full font-bold overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-yellow-400/30 transform hover:-translate-y-1">
+        <span class="relative z-10 flex items-center">
+          Découvrir les événements
+          <svg class="ml-3 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </span>
+      </a>
+      <a href="{{ path('app_contact') }}" class="group relative px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold overflow-hidden transition-all duration-300 hover:bg-white/10 hover:backdrop-blur-sm">
+        <span class="relative z-10 flex items-center">
+          Nous contacter
+          <svg class="ml-3 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+  
+  <!-- Animated scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+    <a href="#events" class="animate-bounce flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section id="events" class="py-16 md:py-20 bg-gradient-to-b from-white to-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="section-title font-serif text-4xl md:text-5xl font-bold text-gray-900 inline-block">
+        Nos prochains événements
+      </h2>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-6">
+        Découvrez notre sélection d'événements culturels, spirituels et éducatifs qui célèbrent la richesse et la diversité du continent africain.
+      </p>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs justify-center mb-12">
+      <button class="filter-tab active" data-filter="all">Tous les événements</button>
+      <button class="filter-tab" data-filter="culturel">Culturel</button>
+      <button class="filter-tab" data-filter="spirituel">Spirituel</button>
+      <button class="filter-tab" data-filter="educatif">Éducatif</button>
+      <button class="filter-tab" data-filter="festif">Festif</button>
+    </div>
+
+    <!-- Events Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       {% for evenement in evenements %}
-      {% set slug = evenement.title|lower|replace({" ": "-", "'": ""}) %}
-      {% set isFull = false %} {# Pour l'instant, on considère qu'il n'y a pas de limite de places #}
-      <article class="rounded-2xl overflow-hidden bg-white ring-1 ring-gray-200 card-hover">
-        <div class="h-48 overflow-hidden">
-          <a href="{{ path('app_event_show', {slug: slug}) }}">
-            {% if evenement.image %}
-              <img src="{{ path('secure_upload', {'filename': evenement.image}) }}" alt="" class="w-full h-full object-cover transition-transform duration-200 will-change-transform hover:scale-[1.01]">
-            {% else %}
-              <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1400&auto=format&fit=crop" alt="" class="w-full h-full object-cover transition-transform duration-200 will-change-transform hover:scale-[1.01]">
-            {% endif %}
-          </a>
-        </div>
-        <div class="p-4">
-          <div class="flex items-center gap-2 text-xs text-gray-500">
-            <span class="px-2 py-0.5 rounded-full bg-neutral-100 ring-1 ring-gray-200">À venir</span>
-            <span class="px-2 py-0.5 rounded-full bg-neutral-100 ring-1 ring-gray-200">{{ evenement.country ?: 'Bénin' }}</span>
-          </div>
-          <h3 class="mt-2 font-semibold text-charcoal"><a href="{{ path('app_event_show', {slug: slug}) }}" class="hover:text-primary">{{ evenement.title }}</a></h3>
-          {% if evenement.description %}
-            <p class="mt-1 text-sm text-gray-600">{{ evenement.description|slice(0, 100) }}{% if evenement.description|length > 100 %}...{% endif %}</p>
-          {% endif %}
-          <div class="mt-3 grid gap-1 text-sm text-gray-600">
-            <div>{{ evenement.startDate ? evenement.startDate|date('d F Y à H:i') : 'Date non définie' }}</div>
-            <div>{{ evenement.location ?: 'Lieu non spécifié' }}</div>
-            <div>
-              {% if isFull %}
-                <span class="text-red-600 font-medium">0 places disponibles</span>
+        {% set slug = evenement.title|lower|replace({" ": "-", "'": "", "é": "e", "è": "e", "ê": "e", "à": "a", "â": "a", "ô": "o", "û": "u", "î": "i"}) %}
+        {% set isFull = false %}
+        
+        <article class="event-card" data-category="{{ evenement.category|default('culturel') }}">
+          <div class="event-image-container">
+            <a href="{{ path('app_event_show', {slug: slug}) }}" class="block h-full">
+              {% if evenement.image %}
+                <img src="{{ path('secure_upload', {'filename': evenement.image}) }}" 
+                     alt="{{ evenement.title }}" 
+                     class="event-image">
               {% else %}
-                <span class="text-green-700 font-medium">Places disponibles</span>
+                <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1400&auto=format&fit=crop" 
+                     alt="{{ evenement.title }}" 
+                     class="event-image">
               {% endif %}
-            </div>
+              
+              <div class="event-date">
+                {{ evenement.startDate ? evenement.startDate|date('d M Y') : 'Bientôt' }}
+              </div>
+              
+              <div class="event-category">
+                {{ evenement.category|default('Culturel') }}
+              </div>
+            </a>
           </div>
-          <div class="mt-4 flex items-center justify-between">
-            <div class="font-semibold text-charcoal">Gratuit</div>
-            {% if isFull %}
-              <button class="px-5 py-2 rounded-full ring-1 ring-gray-300 text-gray-400 bg-neutral-50 cursor-not-allowed" aria-disabled="true">Complet</button>
+          
+          <div class="event-content">
+            <h3 class="event-title">
+              <a href="{{ path('app_event_show', {slug: slug}) }}" class="hover:text-yellow-600 transition-colors">
+                {{ evenement.title }}
+              </a>
+            </h3>
+            {% if not isFull %}
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                Places disponibles
+              </span>
             {% else %}
-              <a href="{{ path('app_reservation_event', {'id': evenement.id}) }}" class="px-5 py-2 btn-primary">Réserver</a>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                Complet
+              </span>
             {% endif %}
+          </div>
+          
+          {% if evenement.description %}
+            <p class="text-gray-600 mb-4 line-clamp-2">
+              {{ evenement.description }}
+            </p>
+          {% endif %}
+          
+          <div class="mt-4 flex items-center justify-between">
+            <div class="flex items-center text-sm text-gray-500">
+              <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+              </svg>
+              {{ evenement.location ?: 'Lieu à préciser' }}
+            </div>
+            <a href="{{ path('app_event_show', {slug: slug}) }}" class="text-amber-600 hover:text-amber-700 font-medium text-sm flex items-center">
+              En savoir plus
+              <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+          
+          <div class="mt-4 pt-4 border-t border-gray-100">
+            <a href="{{ path('app_reservation_event', {'id': evenement.id}) }}" 
+               class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors">
+              Réserver maintenant
+            </a>
           </div>
         </div>
       </article>
@@ -54,23 +336,277 @@
     </div>
 
     {% if evenements is empty %}
-    <div class="mt-8 text-center py-12">
-      <div class="text-gray-500 text-lg">Aucun événement prévu pour le moment.</div>
-      <p class="text-gray-400 mt-2">Revenez bientôt pour découvrir nos prochains événements culturels !</p>
+    <div class="text-center py-16 bg-white rounded-xl shadow-sm">
+      <div class="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-amber-50">
+        <svg class="h-12 w-12 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      </div>
+      <h3 class="mt-4 text-lg font-medium text-gray-900">Aucun événement prévu pour le moment</h3>
+      <p class="mt-1 text-gray-500">Revenez bientôt pour découvrir nos prochains événements culturels !</p>
+      <div class="mt-6">
+        <a href="{{ path('app_contact') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+          <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          Nous contacter
+        </a>
+      </div>
     </div>
     {% endif %}
 
-    <div class="mt-12 rounded-2xl bg-neutral-50 ring-1 ring-gray-200 p-6">
-      <h2 class="font-serif text-2xl font-bold text-charcoal">Avantages Membres</h2>
-      <ul class="mt-3 grid sm:grid-cols-2 gap-3 text-gray-600">
-        <li>• Tarifs réduits sur une sélection d'événements</li>
-        <li>• Accès prioritaire aux réservations</li>
-        <li>• Invitations à des événements privés</li>
-        <li>• Réductions partenaires (hôtels, visites)</li>
-      </ul>
-      <div class="mt-4">
-        <a href="{{ path('app_user_dashboard') }}" class="btn-primary px-6 py-3 inline-block">Devenir membre</a>
+    <!-- Features Section -->
+    <div class="mt-16">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900">Notre engagement</h2>
+        <div class="w-24 h-1 bg-amber-500 mx-auto mt-4 mb-6"></div>
+        <p class="text-lg text-gray-600 max-w-3xl mx-auto">Découvrez une expérience culturelle africaine authentique et enrichissante</p>
       </div>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="feature-card bg-white p-8 rounded-xl shadow-sm hover:shadow-md border border-gray-100">
+          <div class="flex items-center mb-6">
+            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-amber-100 text-amber-600">
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+              </svg>
+            </div>
+            <h3 class="ml-4 text-xl font-bold text-gray-900">Ce que vous pouvez vivre</h3>
+          </div>
+          <ul class="space-y-4">
+            <li class="flex">
+              <div class="flex-shrink-0 h-6 w-6 text-amber-500">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-gray-700 font-medium">Festivals culturels</p>
+                <p class="mt-1 text-gray-600 text-sm">Musique, danse, artisanat, gastronomie, spiritualité — des célébrations vibrantes qui mettent en lumière les traditions et les expressions contemporaines.</p>
+              </div>
+            </li>
+            <li class="flex">
+              <div class="flex-shrink-0 h-6 w-6 text-amber-500">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-gray-700 font-medium">Rencontres artistiques</p>
+                <p class="mt-1 text-gray-600 text-sm">Expositions, résidences, performances et ateliers créatifs avec des artistes africains et diasporiques.</p>
+              </div>
+            </li>
+            <li class="flex">
+              <div class="flex-shrink-0 h-6 w-6 text-amber-500">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-gray-700 font-medium">Voyages guidés</p>
+                <p class="mt-1 text-gray-600 text-sm">Circuits personnalisés au Bénin, au Nigéria et dans d'autres pays africains, accompagnés par des guides certifiés.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="feature-card bg-white p-8 rounded-xl shadow-sm hover:shadow-md border border-gray-100">
+          <div class="flex items-center mb-6">
+            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 text-green-600">
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
+            </div>
+            <h3 class="ml-4 text-xl font-bold text-gray-900">Notre valeur ajoutée</h3>
+          </div>
+          <ul class="space-y-4">
+            <li class="flex">
+              <div class="flex-shrink-0 h-6 w-6 text-green-500">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-gray-700 font-medium">Immersion authentique</p>
+                <p class="mt-1 text-gray-600 text-sm">Découvrez les cultures africaines au-delà des clichés, à travers des expériences réelles et significatives.</p>
+              </div>
+            </li>
+            <li class="flex">
+              <div class="flex-shrink-0 h-6 w-6 text-green-500">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-gray-700 font-medium">Expériences personnalisées</p>
+                <p class="mt-1 text-gray-600 text-sm">Des parcours adaptés à vos centres d'intérêt : histoire, nature, spiritualité, entrepreneuriat ou art.</p>
+              </div>
+            </li>
+            <li class="flex">
+              <div class="flex-shrink-0 h-6 w-6 text-green-500">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-gray-700 font-medium">Tourisme responsable</p>
+                <p class="mt-1 text-gray-600 text-sm">Un engagement fort envers les communautés locales et un impact positif sur les territoires.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Highlights Section -->
+    <div class="mt-16">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900">Événements phares à venir</h2>
+        <div class="w-24 h-1 bg-amber-500 mx-auto mt-4 mb-6"></div>
+        <p class="text-lg text-gray-600 max-w-3xl mx-auto">Découvrez nos événements incontournables à travers l'Afrique</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+          <div class="flex items-center mb-6">
+            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-amber-50 flex items-center justify-center">
+              <span class="text-amber-600 text-xl">🇧🇯</span>
+            </div>
+            <h3 class="ml-3 text-xl font-bold text-gray-900">Au Bénin</h3>
+          </div>
+          <ul class="space-y-6">
+            <li class="relative pl-6 pb-6 border-l-2 border-amber-100">
+              <div class="absolute -left-2.5 mt-1.5 h-4 w-4 rounded-full bg-amber-500"></div>
+              <div class="flex flex-col sm:flex-row sm:items-baseline">
+                <h4 class="text-lg font-semibold text-gray-900">Vodoun Days</h4>
+                <span class="sm:ml-2 text-sm font-medium text-amber-600">Janvier • Ouidah</span>
+              </div>
+              <p class="mt-1 text-gray-600">Célébration spirituelle et artistique autour du Vodoun, avec cérémonies, performances et expositions</p>
+            </li>
+            <li class="relative pl-6 pb-6 border-l-2 border-amber-100">
+              <div class="absolute -left-2.5 mt-1.5 h-4 w-4 rounded-full bg-amber-500"></div>
+              <div class="flex flex-col sm:flex-row sm:items-baseline">
+                <h4 class="text-lg font-semibold text-gray-900">Festival des Masques</h4>
+                <span class="sm:ml-2 text-sm font-medium text-amber-600">Février • Dassa-Zoumè</span>
+              </div>
+              <p class="mt-1 text-gray-600">Traditions masquées, danses rituelles et transmission culturelle entre générations</p>
+            </li>
+            <li class="relative pl-6">
+              <div class="absolute -left-2.5 mt-1.5 h-4 w-4 rounded-full bg-amber-500"></div>
+              <div class="flex flex-col sm:flex-row sm:items-baseline">
+                <h4 class="text-lg font-semibold text-gray-900">WeLovEya Festival</h4>
+                <span class="sm:ml-2 text-sm font-medium text-amber-600">27-28 Décembre • Cotonou</span>
+              </div>
+              <p class="mt-1 text-gray-600">Festival afro-urbain majeur, concerts, mode, art et jeunesse africaine en mouvement</p>
+              <a href="https://weloveyafestival.com" target="_blank" class="mt-2 inline-flex items-center text-sm font-medium text-amber-600 hover:text-amber-700">
+                En savoir plus
+                <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+          <div class="flex items-center mb-6">
+            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-green-50 flex items-center justify-center">
+              <span class="text-green-600 text-xl">🌍</span>
+            </div>
+            <h3 class="ml-3 text-xl font-bold text-gray-900">À travers l'Afrique</h3>
+          </div>
+          <ul class="space-y-6">
+            <li class="relative pl-6 pb-6 border-l-2 border-green-100">
+              <div class="absolute -left-2.5 mt-1.5 h-4 w-4 rounded-full bg-green-500"></div>
+              <div class="flex flex-col sm:flex-row sm:items-baseline">
+                <h4 class="text-lg font-semibold text-gray-900">MASA</h4>
+                <span class="sm:ml-2 text-sm font-medium text-green-600">Avril • Abidjan, Côte d'Ivoire</span>
+              </div>
+              <p class="mt-1 text-gray-600">Marché des arts du spectacle africain, théâtre, danse, conte et musique</p>
+            </li>
+            <li class="relative pl-6 pb-6 border-l-2 border-green-100">
+              <div class="absolute -left-2.5 mt-1.5 h-4 w-4 rounded-full bg-green-500"></div>
+              <div class="flex flex-col sm:flex-row sm:items-baseline">
+                <h4 class="text-lg font-semibold text-gray-900">Dak'Art</h4>
+                <span class="sm:ml-2 text-sm font-medium text-green-600">Mai • Dakar, Sénégal</span>
+              </div>
+              <p class="mt-1 text-gray-600">Biennale de l'art africain contemporain, rencontres et expositions internationales</p>
+            </li>
+            <li class="relative pl-6">
+              <div class="absolute -left-2.5 mt-1.5 h-4 w-4 rounded-full bg-green-500"></div>
+              <div class="flex flex-col sm:flex-row sm:items-baseline">
+                <h4 class="text-lg font-semibold text-gray-900">Afrikibar</h4>
+                <span class="sm:ml-2 text-sm font-medium text-green-600">Dates variables • Ouagadougou, Burkina Faso</span>
+              </div>
+              <p class="mt-1 text-gray-600">Festival pluridisciplinaire mêlant musique, théâtre, cinéma et engagement social</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="mt-16 bg-gradient-to-r from-green-600 to-yellow-600 rounded-2xl shadow-xl overflow-hidden">
+      <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 lg:py-16">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
+          <div class="lg:col-span-1">
+            <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+              <span class="block">Prêt à vivre l'expérience Binajia ?</span>
+            </h2>
+            <p class="mt-3 text-lg text-amber-100">
+              Rejoignez-nous pour explorer, célébrer et vous connecter à travers des expériences culturelles uniques en Afrique.
+            </p>
+            <div class="mt-8">
+              <div class="inline-flex rounded-md shadow">
+                <a href="{{ path('app_contact') }}" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-green-800 bg-white hover:bg-gray-50">
+                  Nous contacter
+                </a>
+              </div>
+              <div class="ml-3 inline-flex">
+                <a href="{{ path('app_about') }}" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-yellow-500 bg-opacity-90 hover:bg-opacity-100">
+                  En savoir plus
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mt-8 lg:mt-0 lg:col-span-1">
+            <div class="bg-white bg-opacity-10 backdrop-blur-sm p-6 rounded-lg border border-white border-opacity-20">
+              <h3 class="text-lg font-medium text-white">Pourquoi nous rejoindre ?</h3>
+              <ul class="mt-4 space-y-3">
+                <li class="flex items-start">
+                  <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <p class="ml-3 text-sm text-white">Explorez l'Afrique en profondeur, entre mémoire et modernité</p>
+                </li>
+                <li class="flex items-start">
+                  <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <p class="ml-3 text-sm text-white">Vivez des moments authentiques, porteurs de sens et de lien</p>
+                </li>
+                <li class="flex items-start">
+                  <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <p class="ml-3 text-sm text-white">Contribuez à une dynamique collective et inclusive</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-12 text-center">
+      <p class="font-serif text-xl text-gray-900 italic">Binajia – Unis pour grandir ensemble.</p>
+      <p class="text-gray-600 mt-2">Explorez, célébrez, connectez-vous.</p>
     </div>
 
   </div>
