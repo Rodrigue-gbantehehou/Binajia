@@ -1,411 +1,162 @@
 {% extends 'base.html.twig' %}
 {% block title %}Devenir Membre - BINAJIA{% endblock %}
 {% block content %}
-<!-- 🔧 CORRECTION : Intercepter la redirection FedaPay -->
-<script>
-// Vérifier si on arrive depuis une redirection FedaPay
-const urlParams = new URLSearchParams(window.location.search);
-const transactionId = urlParams.get('transaction-id');
-const transactionStatus = urlParams.get('transaction-status');
-
-// 🔧 NOUVELLE FONCTION : Gérer la redirection FedaPay
-async function handleFedaPayRedirect() {
-  console.log('🚀 Début handleFedaPayRedirect, transaction ID:', window.lastTransactionId);
-  
-  try {
-    // Vérifier le statut du paiement
-    console.log('📡 Vérification du statut du paiement...');
-    const verifyUrl = '{{ path('payment_verify') }}?tx=' + encodeURIComponent(window.lastTransactionId);
-    console.log('URL:', verifyUrl);
-    
-    const response = await fetch(verifyUrl);
-    const data = await response.json();
-    
-    console.log('✅ Réponse verification:', data);
-    
-    if (data && data.ok && ['approved','succeeded','success','paid'].includes(String(data.status||'').toLowerCase())) {
-      console.log('✅ Paiement confirmé via API FedaPay, récupération des informations utilisateur...');
-      
-        try {
-          // 🔧 NOUVELLE FONCTIONNALITÉ : Authentification automatique
-          const authUrl = '{{ path('payment_auto_auth', {'transactionId': 'TRANSACTION_ID'}) }}'.replace('TRANSACTION_ID', window.lastTransactionId);
-          console.log('🔐 Authentification automatique, URL:', authUrl);
-          
-          const authResponse = await fetch(authUrl);
-          const authData = await authResponse.json();
-          
-          console.log('✅ Données d\'authentification:', authData);
-          
-          if (authData.success && authData.redirectUrl) {
-            console.log('🎯 Utilisateur authentifié automatiquement:', authData.userName);
-            console.log('🎯 Redirection vers:', authData.redirectUrl);
-            
-            // Stocker les informations de session côté client
-            if (authData.sessionToken) {
-              localStorage.setItem('session_token', authData.sessionToken);
-              localStorage.setItem('user_id', authData.userId);
-              localStorage.setItem('user_name', authData.userName);
-            }
-            
-            window.location.replace(authData.redirectUrl);
-          } else {
-            console.warn('⚠️ Authentification échouée, fallback vers payment_success');
-            window.location.replace('{{ path('payment_success') }}?transaction_id=' + encodeURIComponent(window.lastTransactionId));
-          }
-        } catch (authError) {
-          console.error('❌ Erreur authentification automatique:', authError);
-          alert('Erreur lors de l\'authentification automatique: ' + authError.message);
-          // Fallback vers la page de succès
-          window.location.replace('{{ path('payment_success') }}?transaction_id=' + encodeURIComponent(window.lastTransactionId));
-        }
-      
-    } else {
-      console.warn('⚠️ API FedaPay échouée, mais statut frontend = approved. Tentative de récupération utilisateur...');
-      
-      // Fallback : même si l'API FedaPay échoue, si le statut frontend est "approved", 
-      // on peut quand même essayer de récupérer l'utilisateur
-      if (window.lastTransactionStatus && ['approved','succeeded','success','paid'].includes(String(window.lastTransactionStatus).toLowerCase())) {
-        console.log('🔄 Fallback: statut frontend approved, tentative de récupération utilisateur...');
-        
-        try {
-          // 🔧 FALLBACK : Authentification automatique même si API FedaPay échoue
-          const authUrl = '{{ path('payment_auto_auth', {'transactionId': 'TRANSACTION_ID'}) }}'.replace('TRANSACTION_ID', window.lastTransactionId);
-          console.log('🔐 Authentification automatique (fallback), URL:', authUrl);
-          
-          const authResponse = await fetch(authUrl);
-          const authData = await authResponse.json();
-          
-          console.log('✅ Données d\'authentification (fallback):', authData);
-          
-          if (authData.success && authData.redirectUrl) {
-            console.log('🎯 Utilisateur authentifié automatiquement (fallback):', authData.userName);
-            console.log('🎯 Redirection vers (fallback):', authData.redirectUrl);
-            
-            // Stocker les informations de session côté client
-            if (authData.sessionToken) {
-              localStorage.setItem('session_token', authData.sessionToken);
-              localStorage.setItem('user_id', authData.userId);
-              localStorage.setItem('user_name', authData.userName);
-            }
-            
-            window.location.replace(authData.redirectUrl);
-          } else {
-            console.warn('⚠️ Authentification échouée même en fallback, redirection vers payment_success');
-            window.location.replace('{{ path('payment_success') }}?transaction_id=' + encodeURIComponent(window.lastTransactionId));
-          }
-        } catch (authError) {
-          console.error('❌ Erreur authentification automatique (fallback):', authError);
-          window.location.replace('{{ path('payment_success') }}?transaction_id=' + encodeURIComponent(window.lastTransactionId));
-        }
-      } else {
-        console.warn('⚠️ Paiement non confirmé:', data);
-        alert('Paiement non confirmé: ' + (data.message || 'Statut invalide'));
-        window.location.replace('{{ path('app_membership') }}');
-      }
-    }
-    
-  } catch (error) {
-    console.error('❌ Erreur lors du traitement de la redirection:', error);
-    alert('Erreur lors de la finalisation du paiement: ' + error.message);
-    window.location.replace('{{ path('app_membership') }}');
-  }
-}
-
-if (transactionId && transactionStatus && ['approved', 'succeeded', 'success', 'paid'].includes(transactionStatus.toLowerCase())) {
-  // Redirection FedaPay détectée - traiter le paiement
-  console.log('Redirection FedaPay détectée:', { transactionId, transactionStatus });
-  
-  // Stocker les données de transaction
-  window.lastTransactionId = transactionId;
-  window.lastTransactionStatus = transactionStatus;
-  
-  // 🔧 CORRECTION : Empêcher l'affichage du contenu normal de la page
-  // Remplacer tout le contenu par le loader
-  document.body.innerHTML = `
-    <div class="fixed inset-0 bg-white flex items-center justify-center z-50">
-      <div class="text-center">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-        <h2 class="text-xl font-semibold text-gray-800 mb-2">Paiement confirmé !</h2>
-        <p class="text-gray-600">Finalisation de votre adhésion...</p>
-      </div>
-    </div>
-  `;
-  
-  // Empêcher l'exécution du reste du script
-  window.fedaPayRedirectMode = true;
-  
-  // Traiter le paiement et rediriger
-  setTimeout(() => {
-    console.log('⏰ Timeout déclenché, appel de handleFedaPayRedirect');
-    handleFedaPayRedirect();
-  }, 1000);
-  
-  // Timeout de sécurité pour éviter un blocage infini
-  setTimeout(() => {
-    console.log('⏰ Timeout de sécurité déclenché (30 secondes)');
-    alert('Le paiement prend plus de temps que prévu. Redirection vers la page d\'accueil.');
-    window.location.replace('{{ path('app_home') }}');
-  }, 30000); // 30 secondes
-} else {
-  // Mode normal - pas de redirection FedaPay
-  console.log('Mode normal - pas de redirection FedaPay détectée');
-}
-</script>
-
-<!-- Contenu de la page (affiché seulement en mode normal) -->
-<div class="min-h-screen pt-20 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-cream via-white to-cream">
-  <div class="max-w-3xl mx-auto">
-    <!-- Header -->
-    <div class="text-center mb-10">
-      <div class="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-6">
-        <svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-        </svg>
-      </div>
-      <h1 class="font-serif text-4xl md:text-5xl font-bold text-charcoal mb-3">Rejoignez Binajia</h1>
-      <p class="text-lg text-gray-600">Devenez membre de notre communauté en quelques minutes</p>
+<div class="min-h-screen pt-28 pb-12 px-4 sm:px-6 lg:px-8 bg-cream text-charcoal">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-12">
+      <h1 class="font-serif text-4xl md:text-5xl font-bold text-charcoal mb-4">Devenez Membre Binajia</h1>
+      <p class="text-xl text-gray-600">Suivez ces 3 étapes simples pour rejoindre notre communauté</p>
     </div>
 
-    <!-- Price Card -->
-    <div class="bg-gradient-to-br from-primary to-secondary rounded-2xl p-6 mb-8 text-white shadow-xl">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-white/90 text-sm font-medium mb-1">Adhésion annuelle</p>
-          <div class="flex items-baseline gap-2">
-            <span class="text-5xl font-bold">5 000</span>
-            <span class="text-xl font-semibold">FCFA</span>
+    <div class="flex justify-center items-center mb-12 max-w-2xl mx-auto">
+      <div class="flex items-center">
+        <div id="step1-indicator" class="w-10 h-10 rounded-full bg-primary flex items-center justify-center font-bold text-white">1</div>
+        <div class="w-20 h-1 bg-gray-200 mx-2"><div id="progress1" class="h-full bg-primary transition-all duration-300" style="width:0%"></div></div>
+      </div>
+      <div class="flex items-center">
+        <div id="step2-indicator" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-400">2</div>
+        <div class="w-20 h-1 bg-gray-200 mx-2"><div id="progress2" class="h-full bg-primary transition-all duration-300" style="width:0%"></div></div>
+      </div>
+      <div id="step3-indicator" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-400">3</div>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
+      <div id="step1" class="step-content">
+        <h2 class="font-serif text-3xl font-bold text-charcoal mb-6">Choisissez votre formule</h2>
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+          <div class="plan-card border-2 border-gray-200 rounded-2xl p-6 cursor-pointer hover:border-primary transition-all" onclick="selectPlan('basic', event)">
+            <div class="text-center mb-4">
+              <div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+              </div>
+              <h3 class="font-bold text-xl text-charcoal mb-2">Découverte</h3>
+              <div class="text-3xl font-bold text-secondary mb-1">5 000 FCFA</div>
+              <p class="text-sm text-gray-500">Pour commencer</p>
+            </div>
+            <ul class="space-y-3 text-sm">
+              <li class="flex items-start"><svg class="w-5 h-5 text-secondary mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg><span>Accès aux événements publics</span></li>
+              <li class="flex items-start"><svg class="w-5 h-5 text-secondary mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg><span>Newsletter mensuelle</span></li>
+              <li class="flex items-start"><svg class="w-5 h-5 text-secondary mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg><span>Profil communautaire</span></li>
+            </ul>
+          </div>
+          <div class="plan-card border-2 border-primary rounded-2xl p-6 cursor-pointer relative" onclick="selectPlan('standard', event)">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1 rounded-full text-xs font-semibold">POPULAIRE</div>
+            <div class="text-center mb-4">
+              <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3"><svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg></div>
+              <h3 class="font-bold text-xl text-charcoal mb-2">Standard</h3>
+              <div class="text-3xl font-bold text-primary mb-1">15 000 FCFA</div>
+              <p class="text-sm text-gray-500">Par an</p>
+            </div>
+            <ul class="space-y-3 text-sm">
+              <li class="flex items-start"><svg class="w-5 h-5 text-secondary mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg><span>Tout de Découverte +</span></li>
+              <li class="flex items-start"><svg class="w-5 h-5 text-secondary mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg><span>Événements exclusifs membres</span></li>
+              <li class="flex items-start"><svg class="w-5 h-5 text-secondary mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg><span>-15% sur hôtels partenaires</span></li>
+              <li class="flex items-start"><svg class="w-5 h-5 text-secondary mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg><span>Carte membre digitale</span></li>
+            </ul>
+          </div>
+          <div class="plan-card border-2 border-gray-200 rounded-2xl p-6 cursor-pointer hover:border-accent transition-all" onclick="selectPlan('premium', event)">
+            <div class="text-center mb-4">
+              <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-3"><svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg></div>
+              <h3 class="font-bold text-xl text-charcoal mb-2">Premium</h3>
+              <div class="text-3xl font-bold text-accent mb-1">30 000 FCFA</div>
+              <p class="text-sm text-gray-500">Par an</p>
+            </div>
+            <ul class="space-y-3 text-sm">
+              <li class="flex items-start"><svg class="w-5 h-5 text-secondary mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg><span>Tout de Standard +</span></li>
+              <li class="flex items-start"><svg class="w-5 h-5 text-secondary mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg><span>Accès VIP aux festivals</span></li>
+              <li class="flex items-start"><svg class="w-5 h-5 text-secondary mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg><span>-25% toutes réservations</span></li>
+              <li class="flex items-start"><svg class="w-5 h-5 text-secondary mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg><span>Carte membre physique</span></li>
+              <li class="flex items-start"><svg class="w-5 h-5 text-secondary mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg><span>Concierge dédié</span></li>
+            </ul>
           </div>
         </div>
-        <div class="text-right">
-          <div class="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
-            <p class="text-xs text-white/90 mb-1">Vous recevrez</p>
-            <p class="font-semibold">Carte membre digitale</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Form Card -->
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-      <!-- Progress Bar -->
-      <div class="bg-gradient-to-r from-primary/5 to-secondary/5 px-6 py-4">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-sm font-semibold text-charcoal">Informations personnelles</span>
-          <span class="text-xs text-gray-500">Étape 1/1</span>
-        </div>
-        <div class="w-full bg-gray-200 rounded-full h-1.5">
-          <div class="bg-gradient-to-r from-primary to-secondary h-1.5 rounded-full transition-all duration-500" style="width: 100%"></div>
-        </div>
+        <button onclick="nextStep(2)" class="w-full px-6 py-4 btn-primary text-white rounded-full font-semibold text-lg" id="continueStep1">Continuer</button>
       </div>
 
-      <!-- Form Content -->
-      <div class="p-6 md:p-8">
+      <div id="step2" class="step-content hidden">
+        <h2 class="font-serif text-3xl font-bold text-charcoal mb-3">Vos informations personnelles</h2>
+        <p class="text-gray-600 mb-8">Ces informations apparaîtront sur votre carte membre</p>
         <form id="memberForm" class="space-y-6">
-          <!-- Nom & Prénom -->
-          <div class="grid md:grid-cols-2 gap-4">
-            <div class="form-group">
-              <label class="block text-sm font-semibold text-charcoal mb-2 flex items-center gap-1">
-                Nom <span class="text-red-500">*</span>
-              </label>
-              <input 
-                type="text" 
-                id="lastName" 
-                required 
-                placeholder="Doe" 
-                class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-              />
-            </div>
-            <div class="form-group">
-              <label class="block text-sm font-semibold text-charcoal mb-2 flex items-center gap-1">
-                Prénom <span class="text-red-500">*</span>
-              </label>
-              <input 
-                type="text" 
-                id="firstName" 
-                required 
-                placeholder="John" 
-                class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-              />
+          <div class="grid md:grid-cols-2 gap-6">
+            <div><label class="block text-sm font-semibold text-charcoal mb-2">Nom *</label><input type="text" id="lastName" required placeholder="Votre nom de famille" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none transition-colors" /></div>
+            <div><label class="block text-sm font-semibold text-charcoal mb-2">Prénom *</label><input type="text" id="firstName" required placeholder="Votre prénom" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none transition-colors" /></div>
+          </div>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div><label class="block text-sm font-semibold text-charcoal mb-2">Email *</label><input type="email" id="email" required placeholder="votre@email.com" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none transition-colors" /></div>
+            <div>
+              <label class="block text-sm font-semibold text-charcoal mb-2">Téléphone *</label>
+              <div class="flex gap-2 items-center">
+                <span id="dialPreview" class="shrink-0 px-3 py-3 rounded-xl bg-gray-100 text-charcoal border-2 border-gray-200">+229</span>
+                <input type="tel" id="phone" required placeholder="XX XX XX XX" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none transition-colors" />
+              </div>
+              <p class="text-xs text-gray-500 mt-1">Le préfixe s’ajuste automatiquement selon le pays.</p>
             </div>
           </div>
-
-          <!-- Email & Téléphone -->
-          <div class="grid md:grid-cols-2 gap-4">
-            <div class="form-group">
-              <label class="block text-sm font-semibold text-charcoal mb-2 flex items-center gap-1">
-                Email <span class="text-red-500">*</span>
-              </label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
-                  </svg>
-                </div>
-                <input 
-                  type="email" 
-                  id="email" 
-                  required 
-                  placeholder="john@exemple.com" 
-                  class="w-full pl-10 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="block text-sm font-semibold text-charcoal mb-2 flex items-center gap-1">
-                Téléphone <span class="text-red-500">*</span>
-              </label>
-              <div class="flex gap-2">
-                <span id="dialPreview" class="flex items-center justify-center px-3 rounded-lg bg-gray-50 border-2 border-gray-200 text-charcoal font-medium text-sm">
-                  +229
-                </span>
-                <input 
-                  type="tel" 
-                  id="phone" 
-                  required 
-                  placeholder="91 23 45 67" 
-                  class="flex-1 px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                />
-              </div>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div><label class="block text-sm font-semibold text-charcoal mb-2">Date de naissance</label><input type="date" id="birthDate" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none transition-colors" /></div>
+            <div>
+              <label class="block text-sm font-semibold text-charcoal mb-2">Pays *</label>
+              <select id="country" required class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none transition-colors">
+                <option value="">Sélectionnez votre pays</option>
+                {% for c in countries %}
+                  <option value="{{ c.code }}">{{ c.name }}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
-
-          <!-- Pays & Date de naissance -->
-          <div class="grid md:grid-cols-2 gap-4">
-            <div class="form-group">
-              <label class="block text-sm font-semibold text-charcoal mb-2 flex items-center gap-1">
-                Pays <span class="text-red-500">*</span>
-              </label>
-              <div class="relative">
-                <select 
-                  id="country" 
-                  required 
-                  class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none bg-white cursor-pointer"
-                >
-                  <option value="">Sélectionnez votre pays</option>
-                  {% for c in countries %}
-                    <option value="{{ c.code }}">{{ c.name }}</option>
-                  {% endfor %}
-                </select>
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="block text-sm font-semibold text-charcoal mb-2">
-                Date de naissance
-              </label>
-              <input 
-                type="date" 
-                id="birthDate" 
-                class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-              />
+          <div>
+            <label class="block text-sm font-semibold text-charcoal mb-2">Photo de profil *</label>
+            <div class="flex items-center space-x-4">
+              <div id="photoPreview" class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden"><svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div>
+              <div class="flex-1"><input type="file" id="photoInput" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)" /><button type="button" onclick="document.getElementById('photoInput').click()" class="px-4 py-2 bg-cream border-2 border-gray-200 rounded-xl hover:border-primary transition-colors">Choisir une photo</button><p class="text-xs text-gray-500 mt-1">Format JPG ou PNG, max 5MB</p></div>
             </div>
           </div>
-
-          <!-- Photo de profil -->
-          <div class="form-group">
-            <label class="block text-sm font-semibold text-charcoal mb-3 flex items-center gap-1">
-              Photo de profil <span class="text-red-500">*</span>
-            </label>
-            <div class="flex items-center gap-4">
-              <div id="photoPreview" class="w-24 h-24 rounded-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center overflow-hidden border-2 border-gray-200 flex-shrink-0">
-                <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                </svg>
-              </div>
-              <div class="flex-1">
-                <input 
-                  type="file" 
-                  id="photoInput" 
-                  accept="image/*" 
-                  class="hidden" 
-                  onchange="handlePhotoUpload(event)"
-                />
-                <button 
-                  type="button" 
-                  onclick="document.getElementById('photoInput').click()" 
-                  class="px-6 py-2.5 bg-white border-2 border-gray-300 rounded-lg hover:border-primary hover:bg-primary/5 transition-all font-medium text-charcoal"
-                >
-                  <span class="flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                    Choisir une photo
-                  </span>
-                </button>
-                <p class="text-xs text-gray-500 mt-2">JPG ou PNG, max 5MB</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Terms -->
-          <div class="bg-gray-50 rounded-lg p-4">
-            <div class="flex items-start gap-3">
-              <input 
-                type="checkbox" 
-                id="terms" 
-                required 
-                class="w-5 h-5 mt-0.5 text-primary border-gray-300 rounded focus:ring-2 focus:ring-primary/20 cursor-pointer"
-              />
-              <label for="terms" class="text-sm text-gray-700 cursor-pointer">
-                J'accepte les <a href="#" class="text-primary font-semibold hover:underline">conditions d'utilisation</a> et la <a href="#" class="text-primary font-semibold hover:underline">politique de confidentialité</a> de Binajia
-              </label>
-            </div>
-          </div>
-
-          <!-- Submit Button -->
-          <button 
-            type="button" 
-            id="pay-btn" 
-            class="w-full bg-gradient-to-r rounded-full from-primary to-secondary text-white font-bold py-4  hover:shadow-lg hover:scale-[1.02] transition-all duration-200 flex items-center justify-center gap-2"
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-            </svg>
-            Payer et Finaliser l'adhésion
-          </button>
+          <div class="flex items-start"><input type="checkbox" id="terms" required class="w-4 h-4 mt-1 text-primary border-gray-300 rounded focus:ring-primary" /><label for="terms" class="ml-2 text-sm text-gray-600">J'accepte les <a href="#" class="text-primary font-semibold hover:underline">conditions d'utilisation</a> et la <a href="#" class="text-primary font-semibold hover:underline">politique de confidentialité</a></label></div>
+          <div class="flex gap-4"><button type="button" onclick="previousStep()" class="flex-1 px-6 py-4 bg-gray-100 hover:bg-gray-200 text-charcoal font-semibold rounded-full transition-colors">Retour</button><button type="button" onclick="validateAndContinue()" class="flex-1 px-6 py-4 btn-primary text-white rounded-full font-semibold text-lg">Continuer</button></div>
         </form>
       </div>
-    </div>
 
-    <!-- Security Notice -->
-    <div class="mt-6 flex items-center justify-center gap-2 text-sm text-gray-500">
-      <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-      </svg>
-      Paiement sécurisé via FedaPay
-    </div>
-  </div>
-</div>
-
-<!-- Loading Overlay -->
-<div id="paymentOverlay" class="fixed inset-0 z-[100] hidden">
-  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-  <div class="absolute inset-0 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full">
-      <div class="flex flex-col items-center text-center">
-        <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-          <svg class="animate-spin h-8 w-8 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-          </svg>
+      <div id="step3" class="step-content hidden">
+        <h2 class="font-serif text-3xl font-bold text-charcoal mb-3">Récapitulatif de votre adhésion</h2>
+        <p class="text-gray-600 mb-8">Vérifiez vos informations avant de confirmer</p>
+        <div class="bg-cream rounded-2xl p-6 mb-6">
+          <div class="flex items-center mb-6 pb-6 border-b border-gray-200">
+            <div id="summaryPhoto" class="w-16 h-16 rounded-full bg-gray-200 flex-shrink-0 overflow-hidden"><svg class="w-full h-full text-gray-400 p-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg></div>
+            <div class="ml-4"><h3 id="summaryName" class="text-xl font-bold text-charcoal mb-1">Nom Prénom</h3><p id="summaryPlan" class="text-primary font-semibold">Formule Standard</p></div>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4 mb-6">
+            <div><p class="text-sm text-gray-500 mb-1">Email</p><p id="summaryEmail" class="font-semibold text-charcoal">email@example.com</p></div>
+            <div><p class="text-sm text-gray-500 mb-1">Téléphone</p><p id="summaryPhone" class="font-semibold text-charcoal">+229 XX XX XX XX</p></div>
+            <div><p class="text-sm text-gray-500 mb-1">Pays</p><p id="summaryCountry" class="font-semibold text-charcoal">Pays</p></div>
+            <div><p class="text-sm text-gray-500 mb-1">Date de naissance</p><p id="summaryBirthDate" class="font-semibold text-charcoal">Non renseignée</p></div>
+          </div>
+          <div class="bg-white rounded-xl p-4"><div class="flex justify-between items-center"><span class="font-semibold text-charcoal">Total</span><span id="summaryPrice" class="text-2xl font-bold text-primary">15 000 FCFA</span></div><p class="text-sm text-gray-500 mt-1">Paiement annuel</p></div>
         </div>
-        <h3 id="paymentOverlayTitle" class="text-xl font-bold text-charcoal mb-2">Traitement en cours…</h3>
-        <p id="paymentOverlaySub" class="text-gray-600 mb-4">Merci de patienter.</p>
-        <p class="text-xs text-gray-500">Ne fermez pas cette fenêtre</p>
+        <div class="flex gap-4"><button type="button" onclick="goToStep(2)" class="flex-1 px-6 py-4 bg-gray-100 hover:bg-gray-200 text-charcoal font-semibold rounded-full transition-colors">Modifier</button><button type="button" onclick="confirmMembership()" class="flex-1 px-6 py-4 btn-primary text-white rounded-full font-semibold text-lg" id="pay-btn">Confirmer et Payer</button></div>
       </div>
     </div>
   </div>
 </div>
-{% endblock %}
 
+
+{# Global overlay for loading states #}
+<div id="paymentOverlay" class="fixed inset-0 z-[100] hidden">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+  <div class="absolute inset-0 flex items-center justify-center">
+    <div class="bg-white rounded-2xl shadow-xl p-6 flex items-center gap-4">
+      <svg class="animate-spin h-6 w-6 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path></svg>
+      <div>
+        <div id="paymentOverlayTitle" class="font-semibold text-charcoal">Traitement en cours…</div>
+        <div id="paymentOverlaySub" class="text-sm text-gray-600">Merci de patienter.</div>
+      </div>
+    </div>
+  </div>
+  <div class="absolute bottom-4 w-full text-center text-xs text-white/80">Ne fermez pas cette fenêtre.</div>
+  </div>
+{% endblock %}
 {% block scripts %}
 {{ parent() }}
 <script>
-
 let currentStep=1,selectedPlan='',formData={},photoData=null;
 // Mapping indicatifs (extrait; peut être étendu ou remplacé par intl-tel-input)
 const countryDial = {
@@ -413,7 +164,7 @@ const countryDial = {
 };
 // Montants par plan (XOF)
 const planAmountXOF = { basic: 5000, standard: 15000, premium: 30000 };
-function amountForSelectedPlan(){ return planAmountXOF[selectedPlan] || 5000; }
+function amountForSelectedPlan(){ return planAmountXOF[selectedPlan] || 15000; }
 function updateDialFromCountry(){
   const sel = document.getElementById('country');
   const code = (sel && sel.value || '').toUpperCase();
@@ -472,14 +223,14 @@ async function validateAndContinue() {
   const email = val('email');
   if (!/^\S+@\S+\.\S+$/.test(email)) {
     alert('Veuillez entrer une adresse email valide.');
-    return false;
+    return;
   }
 
   // 🔍 Vérifie si l'email est déjà utilisé
   const check = await checkEmailExists(email);
   if (!check.ok) {
     alert(check.message || 'Cet email est déjà utilisé.');
-    return false;
+    return;
   }
 
   const fullPhone = `${getDial()}${normalizeLocalPhone(val('phone'))}`;
@@ -495,15 +246,16 @@ async function validateAndContinue() {
 
   if (!formData.firstName || !formData.lastName || !normalizeLocalPhone(val('phone')) || !formData.country || !formData.terms) {
     alert('Veuillez remplir tous les champs obligatoires et accepter les conditions.');
-    return false;
+    return;
   }
 
   if (!photoData) {
     alert('La photo de profil est obligatoire pour générer la carte.');
-    return false;
+    return;
   }
 
-  return true;
+  updateSummary();
+  goToStep(3);
 }
 
 async function checkEmailExists(email) {
@@ -528,36 +280,25 @@ function showLoader(title, sub){const o=byId('paymentOverlay');if(!o)return;o.cl
 function hideLoader(){const o=byId('paymentOverlay');if(!o)return;o.classList.add('hidden')}
 async function confirmMembership(){
   try {
-    // 🔧 CORRECTION : Éviter les appels multiples
-    if (window.membershipConfirmed) {
-      console.log('Adhésion déjà en cours de finalisation...');
-      return;
-    }
-    window.membershipConfirmed = true;
-    
     showLoader('Finalisation de votre adhésion…','Nous générons votre carte.');
-    
     const payload = new URLSearchParams();
     payload.append('firstName', formData.firstName||'');
     payload.append('lastName', formData.lastName||'');
     payload.append('email', formData.email||'');
-    
+    // recompute to be safe at submission time
     const fullPhone = `${getDial()}${normalizeLocalPhone(document.getElementById('phone').value)}`;
     payload.append('phone', fullPhone||'');
     payload.append('country', formData.country||'');
     payload.append('birthDate', formData.birthDate||'');
     payload.append('plan', selectedPlan||'standard');
-    
     if (photoData) payload.append('photoData', photoData);
-    
-    // Utiliser les variables globales
-    if (typeof window.lastTransactionId !== 'undefined' && window.lastTransactionId) {
-      payload.append('transactionId', String(window.lastTransactionId));
+    // Include payment details from FedaPay callback
+    if (typeof lastTransactionId !== 'undefined' && lastTransactionId) {
+      payload.append('transactionId', String(lastTransactionId));
     }
-    if (typeof window.lastTransactionStatus !== 'undefined' && window.lastTransactionStatus) {
-      payload.append('transactionStatus', String(window.lastTransactionStatus));
+    if (typeof lastTransactionStatus !== 'undefined' && lastTransactionStatus) {
+      payload.append('transactionStatus', String(lastTransactionStatus));
     }
-    
     payload.append('amount', String(amountForSelectedPlan()));
 
     const res = await fetch('{{ path('app_membership_submit') }}', {
@@ -565,249 +306,120 @@ async function confirmMembership(){
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: payload.toString()
     });
-    
     const data = await res.json();
-    
-    if (!res.ok || !data.ok) { 
-      throw new Error(data.message||'Erreur lors de l\'inscription'); 
-    }
-    
-    // 🔧 CORRECTION : Redirection immédiate et définitive
-    if (data.redirect) {
-      console.log('Redirection vers:', data.redirect);
-      // Désactiver tous les autres événements pour éviter les conflits
-      window.membershipConfirmed = true;
-      window.callbackFired = true;
-      
-      // Redirection immédiate
-      window.location.replace(data.redirect);
-    } else {
-      throw new Error('URL de redirection manquante');
-    }
-    
+    if (!res.ok || !data.ok) { throw new Error(data.message||'Erreur lors de l\'inscription'); }
+    // redirect to generated card page
+    window.location.href = data.cardUrl + '?plan=' + encodeURIComponent(selectedPlan||'standard') + (data.avatar?('&avatar='+encodeURIComponent(data.avatar)):'');
   } catch(e) {
-    console.error('Erreur finalisation:', e);
     alert('Impossible de finaliser l\'adhésion: '+ e.message);
-    hideLoader();
-    // Réinitialiser le flag en cas d'erreur
-    window.membershipConfirmed = false;
-  }
+  } finally { hideLoader(); }
 }
+updateProgress();
 
 </script>
 
   <script>
-// 🔧 CORRECTION : Vérifier si on est en mode redirection FedaPay
-if (window.fedaPayRedirectMode) {
-  console.log('Mode redirection FedaPay détecté, arrêt de l\'exécution du script normal');
-  // Arrêter l'exécution de ce script
-} else {
-  console.log('Mode normal, initialisation FedaPay...');
-
 const FEDAPAY_PK = '{{ fedapay_public_key|e('js') }}';
 let lastTransactionId = null; let lastTransactionStatus = null; let callbackFired = false; let fedapayReady = false;
 
 function prepareFedaPay(){
-  // 🔧 CORRECTION : Éviter l'initialisation multiple
-  if (fedapayReady) {
-    console.log('FedaPay déjà initialisé, skip...');
-    return;
-  }
-  
-  const amount = amountForSelectedPlan();
+  // validations basiques déjà faites dans validateAndContinue()
+  const amount = amountForSelectedPlan(); // 5000 / 15000 / 30000
   const desc = 'Adhésion Binajia - ' + (selectedPlan || 'standard');
   const email = formData.email;
   const firstname = formData.firstName;
   const lastname = formData.lastName;
-  const countryCode = (formData.country || '').toUpperCase();
-  const phone = formData.phone;
 
-  // Déclarer explicitement les variables globales
-  window.lastTransactionId = null;
-  window.lastTransactionStatus = null;
-  window.callbackFired = false;
+  // extraire code pays ISO2 pour FedaPay (vous avez déjà "country" en ISO2 dans le select)
+  const countryCode = (formData.country || '').toUpperCase(); // ex: BJ / NG
+  // téléphone déjà normalisé en E.164 côté front
+  const phone = formData.phone; // ex: +22991234567
 
+  // Nettoyez toute init précédente faite via un script statique
+  // Puis initialisez dynamiquement:
   function onResult(response){
-    window.callbackFired = true;
+    callbackFired = true;
     if (response && response.transaction) {
-      window.lastTransactionId = response.transaction.id || window.lastTransactionId;
-      window.lastTransactionStatus = response.transaction.status || window.lastTransactionStatus;
+      lastTransactionId = response.transaction.id || lastTransactionId;
+      lastTransactionStatus = response.transaction.status || lastTransactionStatus;
     }
-    
-    // Vérification serveur IMMÉDIATE après callback FedaPay
-    if (window.lastTransactionId) {
-      verifyPaymentAndComplete();
-    } else {
-      alert('Identifiant de transaction introuvable.');
-      hideLoader();
-    }
-  }
-
-
-  function verifyPaymentAndComplete() {
-    // 🔧 CORRECTION : Éviter les vérifications multiples
-    if (window.paymentVerified) {
-      console.log('Paiement déjà vérifié...');
-      return;
-    }
-    window.paymentVerified = true;
-    
-    fetch('{{ path('payment_verify') }}?tx=' + encodeURIComponent(window.lastTransactionId))
-      .then(r => r.json())
-      .then(data => {
-        if (data && data.ok && ['approved','succeeded','success','paid'].includes(String(data.status||'').toLowerCase())) {
-          confirmMembership();
-        } else {
-          // Fallback sur le statut frontend
-          if (window.lastTransactionStatus && ['approved','succeeded','success','paid'].includes(String(window.lastTransactionStatus).toLowerCase())) {
+    // Tentative de vérification serveur avant inscription
+    if (lastTransactionId) {
+      fetch('{{ path('payment_verify') }}?tx=' + encodeURIComponent(lastTransactionId))
+        .then(r=>r.json()).then(v=>{
+          if (v && v.ok && (['approved','succeeded','success','paid'].includes(String(v.status||'').toLowerCase()))) {
             confirmMembership();
           } else {
-            alert('Paiement non confirmé: ' + (data.message || 'Statut invalide'));
-            hideLoader();
-            window.paymentVerified = false; // Réinitialiser en cas d'échec
+            // fallback: continuer si le front a déjà status positif
+            if (lastTransactionStatus && ['approved','succeeded','success','paid'].includes(String(lastTransactionStatus).toLowerCase())) {
+              confirmMembership();
+            } else {
+              alert('Paiement non confirmé. Veuillez réessayer.');
+            }
           }
-        }
-      })
-      .catch(error => {
-        console.error('Erreur vérification:', error);
-        alert('Erreur de vérification du paiement. Veuillez contacter le support.');
-        hideLoader();
-        window.paymentVerified = false; // Réinitialiser en cas d'erreur
-      });
-  }
-
-  // Initialisation FedaPay avec gestion d'erreur
-  try {
-    console.log('Initialisation de FedaPay...');
-    
-    // Créer un bouton caché pour l'initialisation FedaPay
-    let hiddenPayBtn = document.getElementById('hidden-pay-btn');
-    if (!hiddenPayBtn) {
-      hiddenPayBtn = document.createElement('button');
-      hiddenPayBtn.id = 'hidden-pay-btn';
-      hiddenPayBtn.type = 'button';
-      hiddenPayBtn.style.display = 'none';
-      document.body.appendChild(hiddenPayBtn);
-    }
-    
-    FedaPay.init('#hidden-pay-btn', {
-      public_key: FEDAPAY_PK,
-      transaction: {
-        amount: amount,
-        currency: 'XOF',
-        description: desc
-      },
-      customer: {
-        email: email,
-        lastname: lastname,
-        firstname: firstname,
-        phone_number: { number: phone.replace('+',''), country: countryCode }
-      },
-      callback: onResult,
-      onComplete: onResult,
-      onclose: function() {
-        // Si fermeture sans callback, vérifier après un délai
-        setTimeout(() => {
-          if (!window.callbackFired && window.lastTransactionId) {
-            verifyPaymentAndComplete();
+        }).catch(()=>{
+          // En cas d'erreur de vérification, utiliser le statut front si positif
+          if (lastTransactionStatus && ['approved','succeeded','success','paid'].includes(String(lastTransactionStatus).toLowerCase())) {
+            confirmMembership();
+          } else {
+            alert('Vérification du paiement indisponible. Réessayez plus tard.');
           }
-        }, 2000);
-      }
-    });
-    
-    fedapayReady = true;
-    console.log('FedaPay initialisé avec succès');
-  } catch (error) {
-    console.error('Erreur lors de l\'initialisation de FedaPay:', error);
-    alert('Erreur lors de l\'initialisation de la passerelle de paiement: ' + error.message);
-    fedapayReady = false;
-    throw error;
-  }
-}
-function fedapayPayThenSubmit() {
-  console.log('fedapayPayThenSubmit appelé, fedapayReady:', fedapayReady);
-  
-  // Initialiser FedaPay si nécessaire
-  if (!fedapayReady) { 
-    console.log('Initialisation de FedaPay...');
-    try {
-      prepareFedaPay(); 
-      // L'initialisation est synchrone, on peut ouvrir immédiatement
-      openFedaPayModal();
-    } catch (error) {
-      console.error('Erreur lors de l\'initialisation:', error);
-      // fedapayReady reste false en cas d'erreur, on peut réessayer
-    }
-  } else {
-    // Si déjà initialisé, ouvrir directement
-    openFedaPayModal();
-  }
-}
-
-function openFedaPayModal() {
-  console.log('Tentative d\'ouverture de la modale FedaPay...');
-  
-  // Cliquer sur le bouton caché initialisé par FedaPay
-  const hiddenBtn = document.getElementById('hidden-pay-btn');
-  if (hiddenBtn) {
-    console.log('Clic sur le bouton caché FedaPay');
-    hiddenBtn.click();
-  } else {
-    console.error('Bouton caché FedaPay non trouvé');
-    
-    // Fallback: essayer FedaPay.open() si disponible
-    if (typeof FedaPay !== 'undefined' && FedaPay && typeof FedaPay.open === 'function') {
-      console.log('Fallback: utilisation de FedaPay.open()');
-      try {
-        FedaPay.open();
-      } catch (error) {
-        console.error('Erreur FedaPay.open():', error);
-        alert('Erreur lors de l\'ouverture de la passerelle de paiement.');
-        fedapayReady = false;
-      }
+        });
     } else {
-      alert('Erreur: Impossible d\'ouvrir la passerelle de paiement. Veuillez rafraîchir la page.');
-      fedapayReady = false;
+      alert('Identifiant de transaction introuvable.');
     }
   }
+
+  FedaPay.init('#pay-btn', {
+    public_key: FEDAPAY_PK,
+    transaction: {
+      amount: amount,
+      currency: 'XOF',
+      description: desc
+    },
+    customer: {
+      email: email,
+      lastname: lastname,
+      firstname: firstname,
+      // selon la spec FedaPay: phone_number peut être soit string, soit objet
+      phone_number: { number: phone.replace('+',''), country: countryCode }
+    },
+    // appelé après le paiement (certains SDK utilisent 'callback' ou 'onComplete')
+    callback: onResult,
+    onComplete: onResult,
+    onclose: function() {
+      // Si la modale se ferme sans callback, tenter une vérification serveur au cas où
+      if (!callbackFired && lastTransactionId) {
+        fetch('{{ path('payment_verify') }}?tx=' + encodeURIComponent(lastTransactionId))
+          .then(r=>r.json()).then(v=>{
+            if (v && v.ok && (['approved','succeeded','success','paid'].includes(String(v.status||'').toLowerCase()))) {
+              confirmMembership();
+            }
+          }).catch(()=>{});
+      }
+    }
+  });
+  fedapayReady = true;
 }
 
-// Remplacez l'handler du bouton
+function fedapayPayThenSubmit() {
+  if (!fedapayReady) { prepareFedaPay(); }
+  // Ouvrir la modale (si nécessaire selon la version)
+  if (typeof FedaPay.open === 'function') { FedaPay.open(); }
+}
+
+// Remplacez l’handler du bouton
 (function bindPayBtn(){
   const btn = document.getElementById('pay-btn');
-  if (!btn) {
-    console.log('Bouton pay-btn non trouvé');
-    return;
-  }
-  
-  // 🔧 CORRECTION : Éviter les event listeners multiples
-  if (btn.hasAttribute('data-listener-added')) {
-    console.log('Event listener déjà ajouté, skip...');
-    return;
-  }
-  
-  btn.setAttribute('data-listener-added', 'true');
-  console.log('Ajout de l\'event listener au bouton');
-  
-  btn.onclick = async function(e) {
-    e.preventDefault();
-    console.log('Clic sur le bouton de paiement');
-    
-    // Validation du formulaire
+  if (!btn) return;
+  btn.onclick = async function() {
+    // si vous souhaitez d’abord s’assurer que l’étape 2 est validée:
     if (!formData || !formData.firstName) {
-      console.log('Validation du formulaire...');
-      const isValid = await validateAndContinue(); // remplit formData si ok
-      if (!isValid) {
-        console.log('Validation échouée');
-        return; // validation échouée
-      }
+      validateAndContinue(); // remplit formData si ok
+      if (!formData || !formData.firstName) return; // validation échouée
     }
-    
-    console.log('Lancement du paiement FedaPay...');
     fedapayPayThenSubmit();
   };
 })();
-
-} // Fin de la condition else (mode normal)
 </script>
 {% endblock %}
