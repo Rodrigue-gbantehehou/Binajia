@@ -4,11 +4,7 @@
 {% block stylesheets %}
 {{ parent() }}
 <style>
-    .hero-gradient {
-        background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
-        position: relative;
-        overflow: hidden;
-    }
+
 
     .floating-shapes {
         position: absolute;
@@ -138,7 +134,7 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="relative bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 pt-32 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+<section class="relative bg-gradient-to-br from-green-600 via-green-700 to-yellow-500 relative overflow-hidden">
     <!-- Background Pattern -->
     <div class="absolute inset-0 opacity-10">
         <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.1&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
@@ -152,15 +148,10 @@
         <div class="absolute top-60 left-1/2 w-20 h-20 bg-yellow-300/15 rounded-full blur-xl animate-pulse" style="animation-delay: 3s;"></div>
     </div>
 
-    <div class="max-w-7xl mx-auto relative z-10">
-        <div class="text-center text-white">
+    <div class="max-w-7xl mx-auto relative py-14 z-10">
+        <div class="text-center text-white ">
             <!-- Badge -->
-            <div class="inline-flex items-center bg-white/20 backdrop-blur-md rounded-full px-6 py-3 mb-8 border border-white/30 hover:bg-white/30 transition-all duration-300">
-                <svg class="w-6 h-6 mr-3 text-emerald-200" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                </svg>
-                <span class="font-bold text-lg text-emerald-50">Impact Social & Développement</span>
-            </div>
+
 
             <!-- Main Headline -->
             <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
@@ -194,33 +185,85 @@
                 </div>
             </div>
 
-            <!-- Enhanced Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                    <div class="text-5xl font-black text-yellow-300 mb-3">5</div>
-                    <div class="text-white font-semibold text-sm uppercase tracking-wider">Domaines d'action</div>
-                    <div class="text-emerald-200 text-xs mt-1">Solidarité • Entrepreneuriat • Droits • Environnement • Propreté</div>
-                </div>
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                    <div class="text-5xl font-black text-yellow-300 mb-3">500+</div>
-                    <div class="text-white font-semibold text-sm uppercase tracking-wider">Bénéficiaires</div>
-                    <div class="text-emerald-200 text-xs mt-1">Vies transformées au quotidien</div>
-                </div>
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                    <div class="text-5xl font-black text-yellow-300 mb-3">2</div>
-                    <div class="text-white font-semibold text-sm uppercase tracking-wider">Pays</div>
-                    <div class="text-emerald-200 text-xs mt-1">Bénin & Nigeria unis dans l'action</div>
-                </div>
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                    <div class="text-5xl font-black text-yellow-300 mb-3">∞</div>
-                    <div class="text-white font-semibold text-sm uppercase tracking-wider">Impact</div>
-                    <div class="text-emerald-200 text-xs mt-1">Un avenir meilleur pour tous</div>
-                </div>
-            </div>
+           
         </div>
     </div>
 </section>
 
+<!-- CTA Section -->
+<section id="join" class="py-14 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-green-50 to-emerald-50 relative overflow-hidden">
+    <div class="absolute inset-0">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-green-200/30 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-48 h-48 bg-emerald-200/30 rounded-full blur-2xl"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <div class="text-center mb-16">
+				<h2 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-yellow-500 via-green-400 to-yellow-500 bg-clip-text text-transparent leading-tight text-center drop-shadow-lg text-gray-800 mb-4">
+					Prêt à nous rejoindre ?
+				</h2>				
+
+				<p class="text-xl text-gray-600 max-w-3xl mx-auto">
+					Chaque geste compte. Que vous soyez particulier, entreprise ou organisation, il y a une place pour vous dans notre mouvement.
+				</p>
+			</div>
+
+        
+
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <!-- Donation Card -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all">
+                <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                    <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                </div>
+                <div class="flex items-center justify-center mb-3">
+                    <h3 class="text-xl font-bold text-gray-900 mr-2">Faire un don</h3>
+                    <span class="bg-yellow-500 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">Bientôt</span>
+                </div>
+                <p class="text-gray-600 mb-4">Votre générosité transforme des vies</p>
+                <button onclick="alert('Fonctionnalité de don en cours de développement. Merci pour votre patience !')" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-full transition-all cursor-not-allowed">
+                    En développement
+                </button>
+            </div>
+
+            <!-- Volunteer Card -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all">
+                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                    </svg>
+                </div>
+                <div class="flex items-center justify-center mb-3">
+                    <h3 class="text-xl font-bold text-gray-900 mr-2">Devenir bénévole</h3>
+                    <span class="bg-yellow-500 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">Bientôt</span>
+                </div>
+                <p class="text-gray-600 mb-4">Rejoignez notre équipe de volontaires</p>
+                <button onclick="alert('Fonctionnalité de bénévolat en cours de développement. Merci pour votre patience !')" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-full transition-all cursor-not-allowed">
+                    En développement
+                </button>
+            </div>
+
+            <!-- Partner Card -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all">
+                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    </svg>
+                </div>
+                <div class="flex items-center justify-center mb-3">
+                    <h3 class="text-xl font-bold text-gray-900 mr-2">Devenir partenaire</h3>
+                    <span class="bg-yellow-500 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">Bientôt</span>
+                </div>
+                <p class="text-gray-600 mb-4">Collaborons pour un impact plus grand</p>
+                <button onclick="alert('Fonctionnalité de partenariat en cours de développement. Merci pour votre patience !')" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-full transition-all cursor-not-allowed">
+                    En développement
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Projects Grid -->
 <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-green-50">
@@ -368,7 +411,32 @@
     </div>
 </section>
 
-
+<section id="join" class="py-14 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-green-600 to-yellow-600 relative overflow-hidden">
+     
+     <!-- Enhanced Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                    <div class="text-5xl font-black text-yellow-300 mb-3">5</div>
+                    <div class="text-white font-semibold text-sm uppercase tracking-wider">Domaines d'action</div>
+                    <div class="text-emerald-200 text-xs mt-1">Solidarité • Entrepreneuriat • Droits • Environnement • Propreté</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                    <div class="text-5xl font-black text-yellow-300 mb-3">500+</div>
+                    <div class="text-white font-semibold text-sm uppercase tracking-wider">Bénéficiaires</div>
+                    <div class="text-emerald-200 text-xs mt-1">Vies transformées au quotidien</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                    <div class="text-5xl font-black text-yellow-300 mb-3">2</div>
+                    <div class="text-white font-semibold text-sm uppercase tracking-wider">Pays</div>
+                    <div class="text-emerald-200 text-xs mt-1">Bénin & Nigeria unis dans l'action</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                    <div class="text-5xl font-black text-yellow-300 mb-3">∞</div>
+                    <div class="text-white font-semibold text-sm uppercase tracking-wider">Impact</div>
+                    <div class="text-emerald-200 text-xs mt-1">Un avenir meilleur pour tous</div>
+                </div>
+            </div>
+</section>
 <!-- Quote Section -->
 <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 text-white relative overflow-hidden">
     <div class="absolute inset-0">
@@ -396,79 +464,8 @@
     </div>
 </section>
 
-<!-- CTA Section -->
-<section id="join" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-green-50 to-emerald-50 relative overflow-hidden">
-    <div class="absolute inset-0">
-        <div class="absolute top-0 right-0 w-64 h-64 bg-green-200/30 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 left-0 w-48 h-48 bg-emerald-200/30 rounded-full blur-2xl"></div>
-    </div>
 
-    <div class="max-w-4xl mx-auto text-center relative z-10">
-        <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-8">
-            <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
-            </svg>
-        </div>
 
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Prêt à nous rejoindre ?</h2>
-        <p class="text-xl text-gray-700 mb-8 leading-relaxed">
-            Chaque geste compte. Que vous soyez particulier, entreprise ou organisation, il y a une place pour vous dans notre mouvement.
-        </p>
-
-        <div class="grid md:grid-cols-3 gap-6 mb-12">
-            <!-- Donation Card -->
-            <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all">
-                <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                    </svg>
-                </div>
-                <div class="flex items-center justify-center mb-3">
-                    <h3 class="text-xl font-bold text-gray-900 mr-2">Faire un don</h3>
-                    <span class="bg-yellow-500 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">Bientôt</span>
-                </div>
-                <p class="text-gray-600 mb-4">Votre générosité transforme des vies</p>
-                <button onclick="alert('Fonctionnalité de don en cours de développement. Merci pour votre patience !')" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-full transition-all cursor-not-allowed">
-                    En développement
-                </button>
-            </div>
-
-            <!-- Volunteer Card -->
-            <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all">
-                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
-                    </svg>
-                </div>
-                <div class="flex items-center justify-center mb-3">
-                    <h3 class="text-xl font-bold text-gray-900 mr-2">Devenir bénévole</h3>
-                    <span class="bg-yellow-500 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">Bientôt</span>
-                </div>
-                <p class="text-gray-600 mb-4">Rejoignez notre équipe de volontaires</p>
-                <button onclick="alert('Fonctionnalité de bénévolat en cours de développement. Merci pour votre patience !')" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-full transition-all cursor-not-allowed">
-                    En développement
-                </button>
-            </div>
-
-            <!-- Partner Card -->
-            <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all">
-                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                    </svg>
-                </div>
-                <div class="flex items-center justify-center mb-3">
-                    <h3 class="text-xl font-bold text-gray-900 mr-2">Devenir partenaire</h3>
-                    <span class="bg-yellow-500 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">Bientôt</span>
-                </div>
-                <p class="text-gray-600 mb-4">Collaborons pour un impact plus grand</p>
-                <button onclick="alert('Fonctionnalité de partenariat en cours de développement. Merci pour votre patience !')" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-full transition-all cursor-not-allowed">
-                    En développement
-                </button>
-            </div>
-        </div>
-    </div>
-</section>
 
 
 {% endblock %}
