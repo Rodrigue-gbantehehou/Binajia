@@ -218,7 +218,7 @@ class PageController extends AbstractController
 
         $this->redirectToRoute('app_home');
         }
-        return $this->render('pages/explorer.html.twig', [
+        return $this->render('pages/explore.html.twig', [
             'form' => $form->createView(),
             'places' => $places,
         ]);
