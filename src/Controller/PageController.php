@@ -203,7 +203,6 @@ class PageController extends AbstractController
                 'A3',
                 'landscape'
             );
-
             // Extract relative path for database storage (from /pdf/ onwards)
             $relativePath = strstr($pdfPath, '/pdf/');
             if ($relativePath === false) {
@@ -211,10 +210,7 @@ class PageController extends AbstractController
             }
 
             $reservation->setFacturepdf($relativePath);
-           
-
             $em->flush();
-
             // Envoyer le PDF par email
             $emailService->sendReservationConfirmation($reservation, $pdfPath);
 
