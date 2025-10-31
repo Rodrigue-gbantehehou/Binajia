@@ -260,4 +260,12 @@ class PageController extends AbstractController
     {
         return $this->render('projects/transit.html.twig');
     }
+
+     #[Route('/faq', name: 'app_faq')]
+    public function faq(): Response
+    {
+        return $this->render('pages/faq.html.twig');
+    }
+    
+    
 }

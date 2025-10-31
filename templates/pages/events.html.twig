@@ -4,118 +4,369 @@
 {% block stylesheets %}
 {{ parent() }}
 <style>
-  .gradient-text {
-    background: linear-gradient(90deg,#facc15,#22c55e);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .card-hover {
-    transition: transform 0.4s, box-shadow 0.4s;
-  }
-  .card-hover:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-  }
+    .gradient-text {
+        background: linear-gradient(135deg, #facc15, #22c55e, #16a34a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200% 200%;
+        animation: gradientShift 3s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+    
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    .card-hover {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .card-hover::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        transition: left 0.6s;
+    }
+    
+    .card-hover:hover::before {
+        left: 100%;
+    }
+    
+    .card-hover:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+    
+    .hero-overlay {
+        background: linear-gradient(135deg, 
+            rgba(34, 197, 94, 0.9) 0%, 
+            rgba(21, 128, 61, 0.85) 50%, 
+            rgba(250, 204, 21, 0.8) 100%);
+    }
+    
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    .floating-shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        animation: float 8s ease-in-out infinite;
+    }
+    
+    .event-badge {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        z-index: 10;
+    }
+    
+    .category-tag {
+        display: inline-block;
+        padding: 4px 12px;
+        background: #f0fdf4;
+        color: #166534;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        border: 1px solid #dcfce7;
+    }
+    
+    .countdown-timer {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.875rem;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section avec mini-cards -->
-<section class="relative h-[80vh] flex items-center justify-center bg-gradient-to-br from-green-800 via-green-700 to-amber-600 overflow-hidden">
-  <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-30"></div>
-  <div class="relative z-10 text-center max-w-4xl px-6">
-    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold gradient-text leading-tight mb-4">Événements à Venir</h1>
-    <p class="text-white text-lg md:text-xl mb-8">Découvrez l’Afrique autrement — entre racines, rencontres et rayonnement</p>
-    <a href="#events" class="inline-block px-8 py-4 bg-yellow-400 hover:bg-yellow-500 rounded-full font-semibold text-gray-900 shadow-lg transition transform hover:-translate-y-1">Découvrir les événements</a>
-  </div>
 
-  <!-- Mini-cards flottantes -->
-  <div class="absolute top-1/4 left-10 grid gap-4">
-    {% for evenement in evenements|slice(0,3) %}
-      {% set slug = evenement.title|lower|replace({" ": "-", "'": ""}) %}
-      <a href="{{ path('app_event_show', {slug: slug}) }}" class="block w-60 rounded-2xl overflow-hidden card-hover shadow-lg bg-white">
-        <img src="{{ evenement.image ? path('secure_upload', {'filename': evenement.image}) : 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1400&auto=format&fit=crop' }}" class="w-full h-36 object-cover">
-        <div class="p-3">
-          <h3 class="font-semibold text-gray-900 text-lg">{{ evenement.title }}</h3>
-          <p class="text-gray-500 text-sm truncate">{{ evenement.description }}</p>
+	{# Hero Section #}
+
+	<section
+		class="relative bg-gradient-to-br from-green-600 via-green-700 to-yellow-500 relative overflow-hidden">
+		<!-- Background Pattern -->
+		<div class="absolute inset-0 opacity-10">
+			<div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.1&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+		</div>
+
+		<!-- Floating Shapes -->
+		<div class="absolute inset-0 pointer-events-none overflow-hidden">
+			<div class="absolute top-20 left-10 w-24 h-24 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+			<div class="absolute top-40 right-20 w-32 h-32 bg-emerald-300/20 rounded-full blur-2xl animate-pulse" style="animation-delay: 1s;"></div>
+			<div class="absolute bottom-20 left-20 w-16 h-16 bg-white/10 rounded-full blur-lg animate-pulse" style="animation-delay: 2s;"></div>
+			<div class="absolute top-60 left-1/2 w-20 h-20 bg-yellow-300/15 rounded-full blur-xl animate-pulse" style="animation-delay: 3s;"></div>
+		</div>
+
+		<div class="max-w-7xl mx-auto relative py-14 z-10">
+			<div class="text-center text-white ">
+				<!-- Badge -->
+				<!-- Main Headline -->
+					<h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight"> Événements <span class=" text-yellow-300">Binajia</span>
+				</h1>
+				<!-- Subtitle -->
+				<p class="text-xl md:text-2xl text-emerald-50 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
+					Découvrez l'Afrique autrement — entre racines authentiques, rencontres inspirantes et rayonnement culturel.
+				</p>
+			</div>
+		</div>
+	</section>
+
+
+
+<!-- Statistiques -->
+<section class="py-14 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-green-600 mb-2">50+</div>
+                <p class="text-gray-600 font-semibold">Événements organisés</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-yellow-600 mb-2">10K+</div>
+                <p class="text-gray-600 font-semibold">Participants</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-green-600 mb-2">15+</div>
+                <p class="text-gray-600 font-semibold">Pays représentés</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-yellow-600 mb-2">95%</div>
+                <p class="text-gray-600 font-semibold">Satisfaction</p>
+            </div>
         </div>
-      </a>
-    {% endfor %}
-  </div>
+    </div>
 </section>
 
-<!-- Section texte introductive -->
-<section class="py-20 bg-gray-50">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-    <div class="text-center">
-      <h2 class="text-3xl md:text-4xl font-serif font-bold text-charcoal mb-4">Ce que vous pouvez vivre avec Binajia</h2>
-      <p class="text-gray-700 max-w-3xl mx-auto">Binajia vous invite à vivre des expériences uniques à travers des événements culturels, spirituels et éducatifs qui célèbrent l’histoire, la créativité et la diversité du continent.</p>
-    </div>
+<!-- Catégories d'événements -->
+<section id="categories" class="py-14 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-gray-800 mb-6">
+                Types <span class="gradient-text">d'Événements</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Découvrez la diversité des expériences que nous vous proposons
+            </p>
+        </div>
 
-    <div class="grid md:grid-cols-2 gap-12">
-      <div>
-        <h3 class="text-2xl font-semibold text-charcoal mb-3">Festivals culturels</h3>
-        <p class="text-gray-600">Musique, danse, artisanat, gastronomie, spiritualité — des célébrations vibrantes qui mettent en lumière les traditions et les expressions contemporaines. Exemples : Festival Vodoun, Dak’Art, MASA, Afrikibar.</p>
-      </div>
-      <div>
-        <h3 class="text-2xl font-semibold text-charcoal mb-3">Rencontres artistiques</h3>
-        <p class="text-gray-600">Expositions, résidences, performances et ateliers créatifs avec des artistes africains et diasporiques.</p>
-      </div>
-
-      <div>
-        <h3 class="text-2xl font-semibold text-charcoal mb-3">Forums et conférences</h3>
-        <p class="text-gray-600">Des espaces de réflexion sur l’innovation, l’éducation, l’environnement, la coopération et les diasporas.</p>
-      </div>
-      <div>
-        <h3 class="text-2xl font-semibold text-charcoal mb-3">Voyages guidés</h3>
-        <p class="text-gray-600">Circuits personnalisés au Bénin, au Nigéria et dans d’autres pays africains, accompagnés par des guides certifiés. Thèmes : spiritualité, histoire, nature, patrimoine, entrepreneuriat.</p>
-      </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="bg-white rounded-2xl p-8 text-center card-hover border border-gray-100">
+                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i data-feather="music" class="w-8 h-8 text-green-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Festivals Culturels</h3>
+                <p class="text-gray-600 text-sm">Musique, danse, artisanat, gastronomie — célébrations vibrantes des traditions africaines</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 text-center card-hover border border-gray-100">
+                <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i data-feather="palette" class="w-8 h-8 text-yellow-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Rencontres Artistiques</h3>
+                <p class="text-gray-600 text-sm">Expositions, résidences et ateliers créatifs avec des artistes talentueux</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 text-center card-hover border border-gray-100">
+                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i data-feather="users" class="w-8 h-8 text-green-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Forums & Conférences</h3>
+                <p class="text-gray-600 text-sm">Réflexions sur l'innovation, l'éducation et la coopération africaine</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 text-center card-hover border border-gray-100">
+                <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i data-feather="map" class="w-8 h-8 text-yellow-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Voyages Guidés</h3>
+                <p class="text-gray-600 text-sm">Circuits personnalisés au Bénin, Nigéria et dans toute l'Afrique</p>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
 <!-- Section grille événements -->
-<section id="events" class="py-20">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl md:text-4xl font-serif font-bold text-charcoal mb-8 text-center">Nos prochains événements</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      {% for evenement in evenements %}
-        {% set slug = evenement.title|lower|replace({" ": "-", "'": ""}) %}
-        {% set isFull = false %}
-        <article class="rounded-2xl overflow-hidden bg-white shadow-sm card-hover">
-          <div class="h-48 overflow-hidden">
-            <a href="{{ path('app_event_show', {slug: slug}) }}">
-              <img src="{{ evenement.image ? path('secure_upload', {'filename': evenement.image}) : 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1400&auto=format&fit=crop' }}" class="w-full h-full object-cover">
-            </a>
-          </div>
-          <div class="p-5">
-            <h3 class="text-lg font-semibold text-charcoal hover:text-green-600 transition">
-              <a href="{{ path('app_event_show', {slug: slug}) }}">{{ evenement.title }}</a>
-            </h3>
-            <p class="text-gray-500 text-sm mt-2 truncate">{{ evenement.description }}</p>
-            <div class="mt-3 text-sm text-gray-500">
-              <div>{{ evenement.startDate ? evenement.startDate|date('d F Y à H:i') : 'Date non définie' }}</div>
-              <div>{{ evenement.location ?: 'Lieu non spécifié' }}</div>
-              <div>
-                {% if isFull %}
-                  <span class="text-red-600 font-medium">0 places disponibles</span>
-                {% else %}
-                  <span class="text-green-700 font-medium">Places disponibles</span>
-                {% endif %}
-              </div>
-            </div>
-            <div class="mt-4 flex items-center justify-between">
-              <div class="font-semibold text-charcoal">Gratuit</div>
-              {% if isFull %}
-                <button class="px-5 py-2 rounded-full bg-gray-200 text-gray-500 cursor-not-allowed">Complet</button>
-              {% else %}
-                <a href="{{ path('app_reservation_event', {'id': evenement.id}) }}" class="px-5 py-2 btn-primary">Réserver</a>
-              {% endif %}
-            </div>
-          </div>
-        </article>
-      {% endfor %}
+<section id="events" class="py-14 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-gray-800 mb-6">
+                Nos Prochains <span class="gradient-text">Événements</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Ne manquez pas ces occasions uniques de vivre l'Afrique autrement
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for evenement in evenements %}
+                {% set slug = evenement.title|lower|replace({" ": "-", "'": ""}) %}
+                {% set isFull = false %}
+                {% set daysUntil = date().diff(evenement.startDate ? evenement.startDate|date('Y-m-d')) %}
+                
+                <article class="rounded-2xl overflow-hidden bg-white shadow-xl card-hover border border-gray-100">
+                    <div class="relative h-56 overflow-hidden">
+                        <a href="{{ path('app_event_show', {slug: slug}) }}">
+                            <img src="{{ evenement.image ? path('secure_upload', {'filename': evenement.image}) : 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1400&auto=format&fit=crop' }}" 
+                                 class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        </a>
+                        <div class="event-badge">
+                            {% if daysUntil.days <= 7 %}
+                                Bientôt
+                            {% else %}
+                                À venir
+                            {% endif %}
+                        </div>
+                        
+                        {% if daysUntil.days > 0 %}
+                            <div class="absolute top-4 right-4 countdown-timer">
+                                J-{{ daysUntil.days }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="category-tag">Culture</span>
+                            {% if evenement.isOnline %}
+                                <span class="category-tag bg-blue-50 text-blue-700 border-blue-200">En ligne</span>
+                            {% endif %}
+                        </div>
+                        
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-green-600 transition-colors">
+                            <a href="{{ path('app_event_show', {slug: slug}) }}">{{ evenement.title }}</a>
+                        </h3>
+                        
+                        <p class="text-gray-600 mb-4 line-clamp-2">{{ evenement.description }}</p>
+                        
+                        <div class="space-y-2 text-sm text-gray-500 mb-4">
+                            <div class="flex items-center gap-2">
+                                <i data-feather="calendar" class="w-4 h-4"></i>
+                                <span>{{ evenement.startDate ? evenement.startDate|date('d F Y à H:i') : 'Date à confirmer' }}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-feather="map-pin" class="w-4 h-4"></i>
+                                <span>{{ evenement.location ?: 'Lieu à préciser' }}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-feather="users" class="w-4 h-4"></i>
+                                {% if isFull %}
+                                    <span class="text-red-600 font-medium">Complet</span>
+                                {% else %}
+                                    <span class="text-green-700 font-medium">Places disponibles</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <div class="font-bold text-gray-900 text-lg">
+                                {% if evenement.price > 0 %}
+                                    {{ evenement.price }} €
+                                {% else %}
+                                    Gratuit
+                                {% endif %}
+                            </div>
+                            
+                            <div class="flex gap-2">
+                                {% if isFull %}
+                                    <button class="px-6 py-2 rounded-full bg-gray-100 text-gray-400 cursor-not-allowed font-semibold text-sm">
+                                        Complet
+                                    </button>
+                                {% else %}
+                                    <a href="{{ path('app_reservation_event', {'id': evenement.id}) }}" 
+                                       class="group inline-flex items-center gap-2 px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-xl">
+                                        <i data-feather="plus" class="w-4 h-4"></i>
+                                        Réserver
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            {% else %}
+                <div class="col-span-3 text-center py-12">
+                    <i data-feather="calendar" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-500 mb-2">Aucun événement à venir</h3>
+                    <p class="text-gray-400">Revenez bientôt pour découvrir nos prochains événements</p>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-  </div>
 </section>
+
+<!-- CTA Newsletter -->
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialiser Feather Icons
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+    
+    // Animation au défilement
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+            }
+        });
+    }, observerOptions);
+    
+    // Observer les cartes d'événements
+    document.querySelectorAll('.card-hover').forEach(card => {
+        observer.observe(card);
+    });
+});
+</script>
 {% endblock %}
