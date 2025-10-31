@@ -31,16 +31,7 @@ class PageController extends AbstractController
         return $this->render('pages/about.html.twig');
     }
 
-    #[Route('/evenements', name: 'app_events')]
-    public function events(EntityManagerInterface $entityManager): Response
-    {
-        $evenements = $entityManager->getRepository(Evenement::class)->findBy([], ['startDate' => 'ASC']);
-
-        return $this->render('pages/events.html.twig', [
-            'evenements' => $evenements,
-        ]);
-    }
-
+    
     #[Route('/lieux', name: 'app_places')]
     public function places(EntityManagerInterface $entityManager): Response
     {

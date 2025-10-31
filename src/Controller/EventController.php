@@ -1,9 +1,11 @@
 <?php
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Evenement;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EventController extends AbstractController
 {
@@ -24,4 +26,15 @@ class EventController extends AbstractController
             'event' => (object)$event,
         ]);
     }
+
+    #[Route('/evenements', name: 'app_events')]
+    public function events(EntityManagerInterface $entityManager): Response
+    {
+        $evenements = $entityManager->getRepository(Evenement::class)->findBy([], ['startDate' => 'ASC']);
+
+        return $this->render('pages/events.html.twig', [
+            'evenements' => $evenements,
+        ]);
+    }
+
 }
