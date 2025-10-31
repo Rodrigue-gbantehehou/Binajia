@@ -1,546 +1,471 @@
 {% extends 'base.html.twig' %}
-{% block title %}Nos Partenaires — Binajia
-{% endblock %}
+{% block title %}Nos Partenaires — Binajia{% endblock %}
 
 {% block content %}
 <style>
-	body {
-		font-family: 'Open Sans', sans-serif;
-	}
-	h1,
-	h2,
-	h3,
-	h4 {
-		font-family: 'Montserrat', sans-serif;
-	}
+    body {
+        font-family: 'Open Sans', sans-serif;
+        background: #f8fafc;
+    }
+    h1, h2, h3, h4 {
+        font-family: 'Montserrat', sans-serif;
+    }
 
-	@keyframes fadeInUp {
-		from {
-			opacity: 0;
-			transform: translateY(30px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-	@keyframes float {
-		0,
-		100% {
-			transform: translateY(0);
-		}
-		50% {
-			transform: translateY(-10px);
-		}
-	}
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
 
-	@keyframes slideInLeft {
-		from {
-			opacity: 0;
-			transform: translateX(-50px);
-		}
-		to {
-			opacity: 1;
-			transform: translateX(0);
-		}
-	}
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
 
-	@keyframes slideInRight {
-		from {
-			opacity: 0;
-			transform: translateX(50px);
-		}
-		to {
-			opacity: 1;
-			transform: translateX(0);
-		}
-	}
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
 
-	.animate-fade-in-up {
-		animation: fadeInUp 0.8s ease-out forwards;
-	}
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
 
-	.animate-slide-left {
-		animation: slideInLeft 0.8s ease-out forwards;
-	}
+    .animate-gradient {
+        background: linear-gradient(45deg, #00871d, #00a854, #ffae00, #ffc107);
+        background-size: 400% 400%;
+    }
 
-	.animate-slide-right {
-		animation: slideInRight 0.8s ease-out forwards;
-	}
+    .hero-overlay {
+        background: linear-gradient(135deg, 
+            rgba(0, 135, 29, 0.85) 0%, 
+            rgba(0, 168, 84, 0.8) 50%, 
+            rgba(255, 174, 0, 0.75) 100%);
+    }
 
-	.animate-float {
-		animation: float 3s ease-in-out infinite;
-	}
+    .card-hover {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+    }
 
-	.hero-overlay {
-		background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.85), rgba(255, 174, 0, 0.9));
-	}
+    .card-hover::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        transition: left 0.6s;
+    }
 
-	.card-hover {
-		transition: all 0.3s ease;
-	}
+    .card-hover:hover::before {
+        left: 100%;
+    }
 
-	.card-hover:hover {
-		transform: translateY(-8px);
-		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-	}
+    .card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
 
-	.section-divider {
-		width: 80px;
-		height: 4px;
-		background: linear-gradient(to right, #00871d, #ffae00);
-		margin: 0 auto;
-	}
+    .section-divider {
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(to right, #00871d, #ffae00);
+        margin: 0 auto;
+        border-radius: 2px;
+    }
 
-	.gradient-text {
-		background: linear-gradient(135deg, #00871d, #ffae00);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-	}
+    .gradient-text {
+        background: linear-gradient(135deg, #00871d, #ffae00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
 
-	.partner-icon {
-		position: relative;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-	}
+    .partner-icon {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
 
-	.partner-icon::before {
-		content: '';
-		position: absolute;
-		width: 120%;
-		height: 120%;
-		background: currentColor;
-		opacity: 0.1;
-		border-radius: 50%;
-		transition: all 0.3s ease;
-	}
+    .partner-icon::before {
+        content: '';
+        position: absolute;
+        width: 120%;
+        height: 120%;
+        background: currentColor;
+        opacity: 0.1;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
 
-	.card-hover:hover .partner-icon::before {
-		transform: scale(1.2);
-		opacity: 0.15;
-	}
+    .card-hover:hover .partner-icon {
+        transform: scale(1.1);
+    }
+
+    .card-hover:hover .partner-icon::before {
+        transform: scale(1.3);
+        opacity: 0.15;
+    }
+
+    .stats-card {
+        background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+        border: 1px solid rgba(255,255,255,0.2);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stats-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(to right, #00871d, #ffae00);
+    }
+
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .floating-shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        animation: float 8s ease-in-out infinite;
+    }
+
+    .hero-pattern {
+        background-image: radial-gradient(circle at 25px 25px, rgba(255,255,255,0.2) 2%, transparent 40%);
+        background-size: 50px 50px;
+    }
+
+    .partner-logo {
+    }
+
+    .partner-logo:hover {
+        filter: grayscale(0%);
+        opacity: 1;
+        transform: scale(1.05);
+    }
+
+    .category-filter {
+        background: white;
+        border-radius: 12px;
+        padding: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .filter-btn {
+        padding: 8px 16px;
+        border-radius: 50PX 50PX 50PX 50PX;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: none;
+        background: transparent;
+        color: #6b7280;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+        background: linear-gradient(135deg, #00871d, #00a854);
+        color: white;
+    }
+
+    .partner-card {
+        background: white;
+        border-radius: 16px;
+        padding: 24px;
+        text-align: center;
+        border: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
+    }
+
+    .partner-card:hover {
+        border-color: #00871d;
+        box-shadow: 0 10px 25px rgba(0, 135, 29, 0.1);
+    }
 </style>
-
 <!-- Hero Section -->
-<header class="relative overflow-hidden bg-cover bg-center min-h-[70vh] flex items-center" style="background-image: url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1200&auto=format&fit=crop');">
-	<div class="hero-overlay absolute inset-0"></div>
-
-	<div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white py-20">
-		<div class="animate-fade-in-up">
-			<div class="inline-flex items-center justify-center mb-8 animate-float">
-				<i data-feather="users" class="w-16 h-16 text-yellow-400"></i>
-			</div>
-
-			<h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
-				Nos
-				<span class="text-yellow-300">Partenaires</span>
-			</h1>
-
-			<p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-95">
-				Des alliances stratégiques pour une Afrique intégrée
-			</p>
-
-			<div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 max-w-4xl mx-auto border border-white border-opacity-20">
-				<p class="text-lg md:text-xl leading-relaxed">
-					Le réseau
-					<span class="font-bold text-yellow-300">Binajia</span>
-					repose sur une diversité de partenaires qui contribuent chacun à leur manière à la réalisation de notre mission. Ces collaborations permettent de renforcer l'impact de nos programmes, d'élargir notre portée et de créer des synergies durables entre les acteurs du changement.
-				</p>
-			</div>
-		</div>
-	</div>
-</header>
-
-<!-- Introduction Section -->
-<section class="py-20 px-4 bg-white">
-	<div class="max-w-7xl mx-auto">
-		<div class="text-center mb-16">
-			<h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-				Types de
-				<span class="gradient-text">Partenaires</span>
-			</h2>
-			<div class="section-divider mb-6"></div>
-			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
-				Cinq catégories de partenaires au service de l'intégration africaine
-			</p>
-		</div>
-
-		<!-- Stats Overview -->
-		<div class="grid md:grid-cols-5 gap-4 mb-16">
-			<div class="bg-gradient-to-br from-green-50 to-white p-6 rounded-xl shadow-md text-center border border-green-100">
-				<div class="text-4xl font-extrabold text-green-600 mb-2">25+</div>
-				<p class="text-sm text-gray-600">Institutions</p>
-			</div>
-			<div class="bg-gradient-to-br from-yellow-50 to-white p-6 rounded-xl shadow-md text-center border border-yellow-100">
-				<div class="text-4xl font-extrabold text-yellow-600 mb-2">40+</div>
-				<p class="text-sm text-gray-600">Entreprises</p>
-			</div>
-			<div class="bg-gradient-to-br from-green-50 to-white p-6 rounded-xl shadow-md text-center border border-green-100">
-				<div class="text-4xl font-extrabold text-green-600 mb-2">30+</div>
-				<p class="text-sm text-gray-600">ONG & Associations</p>
-			</div>
-			<div class="bg-gradient-to-br from-yellow-50 to-white p-6 rounded-xl shadow-md text-center border border-yellow-100">
-				<div class="text-4xl font-extrabold text-yellow-600 mb-2">20+</div>
-				<p class="text-sm text-gray-600">Espaces Culturels</p>
-			</div>
-			<div class="bg-gradient-to-br from-green-50 to-white p-6 rounded-xl shadow-md text-center border border-green-100">
-				<div class="text-4xl font-extrabold text-green-600 mb-2">15+</div>
-				<p class="text-sm text-gray-600">Universités</p>
-			</div>
-		</div>
-	</div>
+<section class="relative bg-gradient-to-br from-green-600 via-green-700 to-yellow-500 relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.1&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+    <div class="max-w-7xl mx-auto relative py-14 z-10">
+        <div class="text-center text-white ">
+            <!-- Badge -->
+            <!-- Main Headline -->
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
+                Nos Partenaires
+            </h1>
+            <!-- Subtitle -->
+            <p class="text-xl md:text-2xl text-emerald-50 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
+                 Construisons ensemble l'Afrique de demain
+            </p>               
+        </div>
+    </div>
 </section>
 
-<!-- Institutions Publiques -->
-<section class="py-20 px-4 bg-gradient-to-br from-green-50 to-white">
-	<div class="max-w-7xl mx-auto">
-		<div class="grid md:grid-cols-2 gap-12 items-center">
-			<div class="order-2 md:order-1">
-				<div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl card-hover">
-					<div class="partner-icon text-green-500 mb-6 w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center">
-						<i data-feather="briefcase" class="w-12 h-12"></i>
-					</div>
-
-					<h3 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
-						Institutions Publiques
-					</h3>
-
-					<div class="w-16 h-1 bg-green-500 mb-6"></div>
-
-					<div class="mb-6">
-						<h4 class="text-xl font-bold text-green-600 mb-3 flex items-center gap-2">
-							<i data-feather="target" class="w-5 h-5"></i>
-							Rôle
-						</h4>
-						<p class="text-gray-700 leading-relaxed">
-							Apportent un soutien logistique, diplomatique et territorial. Elles facilitent l'ancrage local des initiatives Binajia et assurent leur cohérence avec les politiques publiques.
-						</p>
-					</div>
-
-					<div class="bg-green-50 rounded-xl p-6">
-						<h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
-							<i data-feather="check-circle" class="w-5 h-5 text-green-600"></i>
-							Contributions clés
-						</h4>
-						<ul class="space-y-3 text-gray-700">
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
-								<span>Facilitation administrative et réglementaire</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
-								<span>Mise à disposition d'espaces et infrastructures</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
-								<span>Soutien aux démarches transfrontalières</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
-								<span>Légitimité institutionnelle</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<div class="order-1 md:order-2">
-				<div class="relative">
-					<img src="https://images.unsplash.com/photo-1541872703-74c5e44368f9?q=80&w=800&auto=format&fit=crop" alt="Institutions" class="rounded-3xl shadow-2xl">
-					<div class="absolute inset-0 bg-gradient-to-t from-green-900 to-transparent opacity-20 rounded-3xl"></div>
-				</div>
-			</div>
-		</div>
-	</div>
+<!-- Stats Overview -->
+<section class="py-16 px-4 -mt-20 relative z-20">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-6">
+            <div class="stats-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
+                <div class="text-5xl font-black text-green-600 mb-3">25+</div>
+                <p class="text-gray-600 font-semibold">Institutions Publiques</p>
+            </div>
+            <div class="stats-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
+                <div class="text-5xl font-black text-yellow-600 mb-3">40+</div>
+                <p class="text-gray-600 font-semibold">Entreprises Privées</p>
+            </div>
+            <div class="stats-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
+                <div class="text-5xl font-black text-green-600 mb-3">30+</div>
+                <p class="text-gray-600 font-semibold">ONG & Associations</p>
+            </div>
+            <div class="stats-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
+                <div class="text-5xl font-black text-yellow-600 mb-3">20+</div>
+                <p class="text-gray-600 font-semibold">Espaces Culturels</p>
+            </div>
+            <div class="stats-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
+                <div class="text-5xl font-black text-green-600 mb-3">15+</div>
+                <p class="text-gray-600 font-semibold">Universités</p>
+            </div>
+        </div>
+    </div>
 </section>
 
-<!-- Entreprises Privées -->
-<section class="py-20 px-4 bg-white">
-	<div class="max-w-7xl mx-auto">
-		<div class="grid md:grid-cols-2 gap-12 items-center">
-			<div>
-				<div class="relative">
-					<img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=800&auto=format&fit=crop" alt="Entreprises" class="rounded-3xl shadow-2xl">
-					<div class="absolute inset-0 bg-gradient-to-t from-yellow-900 to-transparent opacity-20 rounded-3xl"></div>
-				</div>
-			</div>
+<!-- Liste des Partenaires -->
+<section class="py-14 px-4 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-gray-800 mb-6">
+                Tous nos <span class="gradient-text">Partenaires</span>
+            </h2>
+            <div class="section-divider mb-6"></div>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Découvrez l'ensemble des organisations qui font partie de notre réseau
+            </p>
+        </div>
 
-			<div>
-				<div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl card-hover border-2 border-yellow-100">
-					<div class="partner-icon text-yellow-500 mb-6 w-20 h-20 bg-yellow-100 rounded-2xl flex items-center justify-center">
-						<i data-feather="trending-up" class="w-12 h-12"></i>
-					</div>
+        <!-- Filtres par catégorie -->
+        <div class="flex justify-center mb-12">
+            <div class="category-filter">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="institution">Institutions</button>
+                <button class="filter-btn" data-filter="entreprise">Entreprises</button>
+                <button class="filter-btn" data-filter="ong">ONG & Associations</button>
+                <button class="filter-btn" data-filter="culture">Culture</button>
+                <button class="filter-btn" data-filter="education">Éducation</button>
+            </div>
+        </div>
 
-					<h3 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
-						Entreprises Privées
-					</h3>
+        <!-- Grille des partenaires -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" id="partnersGrid">
+            <!-- Partenaire 1 -->
+            <div class="partner-card card-hover" data-category="institution">
+                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                    <img src="{{ asset('media/partenaire/e.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Institution Publique</h3>
+                <p class="text-sm text-gray-600">Soutien institutionnel</p>
+            </div>
 
-					<div class="w-16 h-1 bg-yellow-500 mb-6"></div>
+            <!-- Partenaire 2 -->
+            <div class="partner-card card-hover" data-category="entreprise">
+                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                    <img src="{{ asset('media/partenaire/efa.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Entreprise Privée</h3>
+                <p class="text-sm text-gray-600">Partenaire économique</p>
+            </div>
 
-					<div class="mb-6">
-						<h4 class="text-xl font-bold text-yellow-600 mb-3 flex items-center gap-2">
-							<i data-feather="target" class="w-5 h-5"></i>
-							Rôle
-						</h4>
-						<p class="text-gray-700 leading-relaxed">
-							Proposent des offres exclusives, du financement et une expertise technique. Elles soutiennent les projets Binajia à travers des ressources, des services et des opportunités de co-branding.
-						</p>
-					</div>
+            <!-- Partenaire 3 -->
+            <div class="partner-card card-hover" data-category="ong">
+                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                    <img src="{{ asset('media/partenaire/ess.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">ONG & Association</h3>
+                <p class="text-sm text-gray-600">Action sociale</p>
+            </div>
 
-					<div class="bg-yellow-50 rounded-xl p-6">
-						<h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
-							<i data-feather="check-circle" class="w-5 h-5 text-yellow-600"></i>
-							Contributions clés
-						</h4>
-						<ul class="space-y-3 text-gray-700">
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
-								<span>Financement et sponsoring d'événements</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
-								<span>Offres exclusives pour les membres</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
-								<span>Expertise technique et innovation</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
-								<span>Opportunités d'emploi et de stage</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+            <!-- Partenaire 4 -->
+            <div class="partner-card card-hover" data-category="culture">
+                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                    <img src="{{ asset('media/partenaire/e.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Espace Culturel</h3>
+                <p class="text-sm text-gray-600">Promotion artistique</p>
+            </div>
+
+            <!-- Partenaire 5 -->
+            <div class="partner-card card-hover" data-category="education">
+                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                    <img src="{{ asset('media/partenaire/efa.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Université</h3>
+                <p class="text-sm text-gray-600">Formation & Recherche</p>
+            </div>
+
+            <!-- Partenaire 6 -->
+            <div class="partner-card card-hover" data-category="entreprise">
+                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                    <img src="{{ asset('media/partenaire/ess.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Startup Innovante</h3>
+                <p class="text-sm text-gray-600">Technologie</p>
+            </div>
+
+            <!-- Partenaire 7 -->
+            <div class="partner-card card-hover" data-category="institution">
+                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                    <img src="{{ asset('media/partenaire/e.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Organisme Public</h3>
+                <p class="text-sm text-gray-600">Développement local</p>
+            </div>
+
+            <!-- Partenaire 8 -->
+            <div class="partner-card card-hover" data-category="ong">
+                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                    <img src="{{ asset('media/partenaire/efa.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Association</h3>
+                <p class="text-sm text-gray-600">Solidarité internationale</p>
+            </div>
+
+            <!-- Partenaire 9 -->
+            <div class="partner-card card-hover" data-category="culture">
+                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                    <img src="{{ asset('media/partenaire/ess.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Centre Culturel</h3>
+                <p class="text-sm text-gray-600">Patrimoine & Création</p>
+            </div>
+
+            <!-- Partenaire 10 -->
+            <div class="partner-card card-hover" data-category="education">
+                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                    <img src="{{ asset('media/partenaire/e.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">École Supérieure</h3>
+                <p class="text-sm text-gray-600">Formation excellence</p>
+            </div>
+        </div>
+
+        <!-- Message quand aucun partenaire ne correspond au filtre -->
+        <div id="noPartnersMessage" class="hidden text-center py-12">
+            <i data-feather="search" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
+            <h3 class="text-xl font-semibold text-gray-500 mb-2">Aucun partenaire trouvé</h3>
+            <p class="text-gray-400">Aucun partenaire ne correspond à cette catégorie</p>
+        </div>
+    </div>
 </section>
-
-<!-- ONG et Associations -->
-<section class="py-20 px-4 bg-gradient-to-br from-green-50 to-white">
-	<div class="max-w-7xl mx-auto">
-		<div class="grid md:grid-cols-2 gap-12 items-center">
-			<div class="order-2 md:order-1">
-				<div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl card-hover">
-					<div class="partner-icon text-green-500 mb-6 w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center">
-						<i data-feather="heart" class="w-12 h-12"></i>
-					</div>
-
-					<h3 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
-						ONG et Associations
-					</h3>
-
-					<div class="w-16 h-1 bg-green-500 mb-6"></div>
-
-					<div class="mb-6">
-						<h4 class="text-xl font-bold text-green-600 mb-3 flex items-center gap-2">
-							<i data-feather="target" class="w-5 h-5"></i>
-							Rôle
-						</h4>
-						<p class="text-gray-700 leading-relaxed">
-							Assurent la mobilisation communautaire et développent des projets sociaux. Leur ancrage local et leur engagement citoyen renforcent l'impact social des actions menées.
-						</p>
-					</div>
-
-					<div class="bg-green-50 rounded-xl p-6">
-						<h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
-							<i data-feather="check-circle" class="w-5 h-5 text-green-600"></i>
-							Contributions clés
-						</h4>
-						<ul class="space-y-3 text-gray-700">
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
-								<span>Mobilisation des communautés locales</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
-								<span>Développement de projets sociaux</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
-								<span>Sensibilisation et plaidoyer</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
-								<span>Accompagnement des populations vulnérables</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<div class="order-1 md:order-2">
-				<div class="relative">
-					<img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=800&auto=format&fit=crop" alt="ONG" class="rounded-3xl shadow-2xl">
-					<div class="absolute inset-0 bg-gradient-to-t from-green-900 to-transparent opacity-20 rounded-3xl"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-
-<!-- Espaces Culturels -->
-<section class="py-20 px-4 bg-white">
-	<div class="max-w-7xl mx-auto">
-		<div class="grid md:grid-cols-2 gap-12 items-center">
-			<div>
-				<div class="relative">
-					<img src="https://images.unsplash.com/photo-1514306191717-452ec28c7814?q=80&w=800&auto=format&fit=crop" alt="Culture" class="rounded-3xl shadow-2xl">
-					<div class="absolute inset-0 bg-gradient-to-t from-yellow-900 to-transparent opacity-20 rounded-3xl"></div>
-				</div>
-			</div>
-
-			<div>
-				<div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl card-hover border-2 border-yellow-100">
-					<div class="partner-icon text-yellow-500 mb-6 w-20 h-20 bg-yellow-100 rounded-2xl flex items-center justify-center">
-						<i data-feather="music" class="w-12 h-12"></i>
-					</div>
-
-					<h3 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
-						Espaces Culturels
-					</h3>
-
-					<div class="w-16 h-1 bg-yellow-500 mb-6"></div>
-
-					<div class="mb-6">
-						<h4 class="text-xl font-bold text-yellow-600 mb-3 flex items-center gap-2">
-							<i data-feather="target" class="w-5 h-5"></i>
-							Rôle
-						</h4>
-						<p class="text-gray-700 leading-relaxed">
-							Accueillent des événements et valorisent la diversité artistique. Ils sont les lieux de rencontre, de dialogue et de célébration des cultures africaines.
-						</p>
-					</div>
-
-					<div class="bg-yellow-50 rounded-xl p-6">
-						<h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
-							<i data-feather="check-circle" class="w-5 h-5 text-yellow-600"></i>
-							Contributions clés
-						</h4>
-						<ul class="space-y-3 text-gray-700">
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
-								<span>Accueil d'événements culturels</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
-								<span>Promotion des artistes locaux</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
-								<span>Espaces de dialogue interculturel</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-1"></i>
-								<span>Valorisation du patrimoine africain</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-
-<!-- Universités -->
-<section class="py-20 px-4 bg-gradient-to-br from-green-50 to-white">
-	<div class="max-w-7xl mx-auto">
-		<div class="grid md:grid-cols-2 gap-12 items-center">
-			<div class="order-2 md:order-1">
-				<div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl card-hover">
-					<div class="partner-icon text-green-500 mb-6 w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center">
-						<i data-feather="book-open" class="w-12 h-12"></i>
-					</div>
-
-					<h3 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
-						Universités et Centres de Formation
-					</h3>
-
-					<div class="w-16 h-1 bg-green-500 mb-6"></div>
-
-					<div class="mb-6">
-						<h4 class="text-xl font-bold text-green-600 mb-3 flex items-center gap-2">
-							<i data-feather="target" class="w-5 h-5"></i>
-							Rôle
-						</h4>
-						<p class="text-gray-700 leading-relaxed">
-							Contribuent à l'éducation, à la recherche et au mentorat. Ils accompagnent les jeunes leaders et favorisent le transfert de compétences à travers des programmes académiques et pratiques.
-						</p>
-					</div>
-
-					<div class="bg-green-50 rounded-xl p-6">
-						<h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
-							<i data-feather="check-circle" class="w-5 h-5 text-green-600"></i>
-							Contributions clés
-						</h4>
-						<ul class="space-y-3 text-gray-700">
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
-								<span>Formation académique et professionnelle</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
-								<span>Recherche et innovation</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
-								<span>Mentorat des jeunes leaders</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<i data-feather="chevron-right" class="w-5 h-5 text-green-600 flex-shrink-0 mt-1"></i>
-								<span>Transfert de connaissances et compétences</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<div class="order-1 md:order-2">
-				<div class="relative">
-					<img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop" alt="Universités" class="rounded-3xl shadow-2xl">
-					<div class="absolute inset-0 bg-gradient-to-t from-green-900 to-transparent opacity-20 rounded-3xl"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-
-<!-- CTA Devenir Partenaire -->
-<section class="py-20 px-4 bg-gradient-to-br from-green-600 to-green-800 text-white relative overflow-hidden">
-	<div class="absolute inset-0 opacity-10">
-		<div class="absolute top-10 left-10 w-64 h-64 bg-yellow-400 rounded-full blur-3xl animate-float"></div>
-		<div class="absolute bottom-10 right-10 w-96 h-96 bg-green-400 rounded-full blur-3xl" style="animation: float 4s ease-in-out infinite;"></div>
-	</div>
-
-	<div class="max-w-4xl mx-auto text-center relative z-10">
-		<div class="inline-flex items-center justify-center w-20 h-20 bg-yellow-400 rounded-full mb-8 animate-float">
-			<i data-feather="handshake" class="w-10 h-10 text-gray-900"></i>
-		</div>
-
-		<h2 class="text-4xl md:text-5xl font-extrabold mb-6">
-			Devenez Partenaire Binajia
-		</h2>
-		<p class="text-xl md:text-2xl mb-10 opacity-90 max-w-2xl mx-auto">
-			Rejoignez notre réseau et contribuez activement à l'intégration africaine
-		</p>
-
-		<div class="flex flex-wrap gap-4 justify-center mb-12">
-			<a href="#" class="inline-flex items-center gap-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-4 px-10 rounded-full text-lg transition-all shadow-xl hover:shadow-2xl transform hover:scale-105">
-				<i data-feather="send" class="w-5 h-5"></i>
-				Proposer un partenariat
-			</a>
-			<a href="#" class="inline-flex items-center gap-3 bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm text-white font-bold py-4 px-10 rounded-full text-lg transition-all shadow-xl hover:shadow-2xl transform hover:scale-105">
-				<i data-feather="phone" class="w-5 h-5"></i>
-				Contactez-nous
-			</a>
-		</div>
-	</div>
+<!-- CTA Section -->
+<section class="py-14 px-4 relative overflow-hidden animate-gradient">
+    <div class="absolute inset-0 her-pattern"></div>
+       <div class="max-w-4xl mx-auto text-center relative z-10">
+                <h2 class="text-4xl md:text-5xl font-black text-white mb-8">
+            Rejoignez Notre <span class="text-yellow-500">Réseau</span>
+        </h2>
+        <p class="text-xl md:text-2xl text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed">
+            Devenez acteur du changement et construisez avec nous l'Afrique intégrée de demain
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <a href="#" class="group inline-flex items-center gap-4 bg-white hover:bg-gray-100 text-green-600 font-bold py-5 px-12 rounded-full text-lg transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:scale-105">
+                <span>Proposer un partenariat</span>
+            </a>
+            <a href="#" class="group inline-flex items-center gap-4 bg-transparent hover:bg-white/10 text-white font-bold py-5 px-12 rounded-full text-lg transition-all duration-300 border-2 border-white/30 hover:border-white backdrop-blur-sm">
+              
+                <span>Contactez-nous</span>
+            </a>
+        </div>
+    </div>
 </section>
 
 {% endblock %}
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialiser Feather Icons
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
+
+        // Filtrage des partenaires
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const partnerCards = document.querySelectorAll('.partner-card');
+        const noPartnersMessage = document.getElementById('noPartnersMessage');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Retirer la classe active de tous les boutons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Ajouter la classe active au bouton cliqué
+                this.classList.add('active');
+
+                const filter = this.getAttribute('data-filter');
+                let visibleCount = 0;
+
+                // Filtrer les cartes
+                partnerCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    
+                    if (filter === 'all' || category === filter) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Afficher ou masquer le message "Aucun partenaire"
+                if (visibleCount === 0) {
+                    noPartnersMessage.classList.remove('hidden');
+                } else {
+                    noPartnersMessage.classList.add('hidden');
+                }
+            });
+        });
+
+        // Animation au défilement
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observer les cartes de partenaires
+        document.querySelectorAll('.partner-card').forEach(card => {
+            observer.observe(card);
+        });
+    });
+</script>
+{% endblock %}

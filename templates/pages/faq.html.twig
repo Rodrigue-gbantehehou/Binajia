@@ -1,247 +1,164 @@
 {% extends 'base.html.twig' %}
-{% block title %}FAQ — Binajia{% endblock %}
+{% block title %}FAQ — Binajia
+{% endblock %}
 
 {% block content %}
 
-{# Hero Section #}
-<section class="relative overflow-hidden min-h-screen -mt-20 pt-20 bg-gradient-to-br from-green-800 via-emerald-700 to-amber-600 flex items-center">
-  {# Animated Background Elements #}
-  <div class="absolute top-0 right-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
-  <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+	{# Hero Section #}
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 text-white relative z-10 w-full">
-    <div class="grid md:grid-cols-12 gap-8 items-center">
-      <div class="md:col-span-7 space-y-6 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
-      {# Badge #}
-      <div class="inline-flex items-center space-x-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-6">
-        <span class="h-2 w-2 rounded-full bg-amber-400"></span>
-        <span class="text-white/90 text-sm tracking-wide font-medium">FAQ BINAJIA</span>
-      </div>
+	<section
+		class="relative bg-gradient-to-br from-green-600 via-green-700 to-yellow-500 relative overflow-hidden">
+		<!-- Background Pattern -->
+		<div class="absolute inset-0 opacity-10">
+			<div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.1&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+		</div>
 
-      <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white drop-shadow-lg">
-        <span class="block text-amber-300 text-lg sm:text-xl md:text-2xl font-medium mb-2 tracking-wide">
-          ❓ Questions fréquentes
-        </span>
-        <span class="block">
-          Tout savoir sur Binajia
-        </span>
-      </h1>
-      
-      <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl">
-        Découvrez tout ce que vous devez savoir sur notre réseau d'ambassadeurs pour l'intégration socioculturelle entre le Bénin, le Nigéria et l'Afrique.
-      </p>
-      </div>
-      
-      <div class="md:col-span-5 opacity-0 translate-y-20 transition-all duration-1000 ease-out delay-300" data-scroll="fade-up">
-        <div class="relative flex justify-center">
-          <div class="relative inline-block bg-gradient-to-br from-amber-400 via-green-500 to-emerald-500 rounded-3xl p-1 shadow-2xl transform hover:scale-105 transition-all duration-500">
-            <div class="bg-white rounded-2xl p-6 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80&w=800&auto=format&fit=crop" alt="FAQ Binajia - Questions fréquentes" class="w-full h-64 object-cover rounded-xl shadow-lg">
-              <div class="mt-4 text-center">
-                <h3 class="font-bold text-xl bg-gradient-to-r from-amber-600 to-green-600 bg-clip-text text-transparent mb-2">
-                  Nous sommes là pour vous aider
-                </h3>
-                <p class="text-gray-600 text-sm">Toutes vos questions ont une réponse</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+		<!-- Floating Shapes -->
+		<div class="absolute inset-0 pointer-events-none overflow-hidden">
+			<div class="absolute top-20 left-10 w-24 h-24 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+			<div class="absolute top-40 right-20 w-32 h-32 bg-emerald-300/20 rounded-full blur-2xl animate-pulse" style="animation-delay: 1s;"></div>
+			<div class="absolute bottom-20 left-20 w-16 h-16 bg-white/10 rounded-full blur-lg animate-pulse" style="animation-delay: 2s;"></div>
+			<div class="absolute top-60 left-1/2 w-20 h-20 bg-yellow-300/15 rounded-full blur-xl animate-pulse" style="animation-delay: 3s;"></div>
+		</div>
 
-{# FAQ Section #}
-<section class="py-20 bg-gradient-to-br from-white via-yellow-50/30 to-green-50/30 relative overflow-hidden">
-  <div class="absolute inset-0 pattern-kente opacity-10 pointer-events-none"></div>
-  <div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-  <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-  
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="space-y-8">
-      {% set faqs = [
+		<div class="max-w-7xl mx-auto relative py-14 z-10">
+			<div class="text-center text-white ">
+				<!-- Badge -->
+				<!-- Main Headline -->
+					<h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight"> FAQ
+				</h1>
+				<!-- Subtitle -->
+				<p class="text-xl md:text-2xl text-emerald-50 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
+					Découvrez tout ce que vous devez savoir sur notre réseau d'ambassadeurs pour l'intégration socioculturelle entre le Bénin, le Nigéria et l'Afrique.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	{# FAQ Section #}
+	<section class="py-20 bg-gradient-to-br from-white via-yellow-50/30 to-green-50/30 relative overflow-hidden">
+		<div class="absolute inset-0 pattern-kente opacity-10 pointer-events-none"></div>
+		<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+
+		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+			<div class="space-y-8">
+				{% set faqs = [
         {
-          question: "🔹 Qu'est-ce que Binajia?",
+          question: " Qu'est-ce que Binajia?",
           answer: "Binajia est un réseau de jeunes ambassadeurs dédié à l'intégration socioculturelle entre le Bénin, le Nigéria et l'Afrique. Le projet vise à créer des ponts durables entre les peuples à travers des initiatives culturelles, économiques et éducatives."
         },
         {
-          question: "🔹 Qui peut rejoindre Binajia?",
+          question: " Qui peut rejoindre Binajia?",
           answer: "Le réseau est ouvert à:<br>• Jeunes artistes, étudiants, entrepreneurs<br>• Leaders communautaires et porteurs de projets<br>• Institutions éducatives, culturelles et diplomatiques"
         },
         {
-          question: "🔹 Quels sont les programmes proposés?",
+          question: " Quels sont les programmes proposés?",
           answer: "Binajia propose six programmes principaux:<br>• <strong>Travel Week</strong>: tourisme et échanges culturels<br>• <strong>Lab</strong>: innovation locale (écologie, tech, design)<br>• <strong>Exchange</strong>: mobilité des jeunes leaders et artistes<br>• <strong>Culture Fest</strong>: festival multiculturel<br>• <strong>Market Connect</strong>: collaboration économique locale<br>• <strong>Transit</strong>: libre circulation des savoirs et des talents"
         },
         {
-          question: "🔹 Comment devenir partenaire ou soutenir Binajia?",
+          question: " Comment devenir partenaire ou soutenir Binajia?",
           answer: "Vous pouvez:<br>• Accueillir un programme dans votre structure<br>• Soutenir la logistique, la diffusion ou les échanges<br>• Contribuer à la valorisation de l'identité régionale commune<br><br>📧 Contact: <a href='mailto:ibrahimakpanon@gmail.com' class='text-green-600 hover:text-green-700 font-semibold'>ibrahimakpanon@gmail.com</a><br>📞 Téléphone: 01 62 77 24 24"
         },
         {
-          question: "🔹 Binajia est-il soutenu par des institutions?",
+          question: " Binajia est-il soutenu par des institutions?",
           answer: "Oui. Binajia collabore avec:<br>• Les ministères des Affaires étrangères, du Tourisme et de la Culture<br>• Des centres culturels, ambassades et fondations internationales<br>• Des programmes régionaux de jeunesse et de coopération Sud-Sud"
         },
         {
-          question: "🔹 Où suivre les actualités de Binajia?",
+          question: " Où suivre les actualités de Binajia?",
           answer: "Les informations sont disponibles sur:<br>• Le site officiel de Binajia (en cours de développement)<br>• Les réseaux sociaux du projet<br>• Les plateformes partenaires et médias culturels"
         }
       ] %}
 
-      {% for faq in faqs %}
-      <div class="group bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 150 }}ms">
-        <div class="p-8">
-          <button class="w-full text-left focus:outline-none" onclick="toggleFaq({{ loop.index }})">
-            <div class="flex items-start justify-between">
-              <h3 class="font-bold text-xl text-gray-900 group-hover:text-green-600 transition-colors pr-4">
-                {{ faq.question|raw }}
-              </h3>
-              <div class="flex-shrink-0">
-                <svg id="icon-{{ loop.index }}" class="w-6 h-6 text-green-600 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                </svg>
-              </div>
-            </div>
-          </button>
-          <div id="answer-{{ loop.index }}" class="mt-4 text-gray-700 leading-relaxed hidden">
-            <div class="border-l-4 border-green-400 pl-6 py-2">
-              {{ faq.answer|raw }}
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
+				{% for faq in faqs %}
+					<div class="group bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 150 }}ms">
+						<div class="p-8">
+							<button class="w-full text-left focus:outline-none" onclick="toggleFaq({{ loop.index }})">
+								<div class="flex items-start justify-between">
+									<h3 class="font-bold text-xl text-gray-900 group-hover:text-green-600 transition-colors pr-4">
+										{{ faq.question|raw }}
+									</h3>
+									<div class="flex-shrink-0">
+										<svg id="icon-{{ loop.index }}" class="w-6 h-6 text-green-600 transform transition-transform duration-300" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+										</svg>
+									</div>
+								</div>
+							</button>
+							<div id="answer-{{ loop.index }}" class="mt-4 text-gray-700 leading-relaxed hidden">
+								<div class="border-l-4 border-green-400 pl-6 py-2">
+									{{ faq.answer|raw }}
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
 
-{# Contact CTA Section #}
-<section class="py-20 bg-gradient-to-br from-green-800 via-emerald-700 to-amber-600 relative overflow-hidden">
-  <div class="absolute top-0 right-0 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
-  <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
-  
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center text-white">
-    <div class="opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
-      <h2 class="font-serif text-3xl md:text-4xl font-bold leading-tight mb-6">
-        Une question non résolue ?
-      </h2>
-      
-      <p class="text-lg text-white/90 leading-relaxed mb-8 max-w-2xl mx-auto">
-        Notre équipe est là pour vous accompagner dans votre parcours avec Binajia. N'hésitez pas à nous contacter.
-      </p>
-      
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="mailto:ibrahimakpanon@gmail.com" class="group relative px-8 py-4 bg-gradient-to-r from-amber-400 to-amber-500 text-green-900 rounded-full font-bold overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50 transform">
-          <span class="relative z-10 flex items-center justify-center">
-            📧 Nous contacter
-            <span class="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
-          </span>
-          <span class="absolute inset-0 bg-gradient-to-r from-amber-300 to-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-        </a>
-        
-        <a href="tel:+33162772424" class="group px-8 py-4 bg-white/10 text-white rounded-full font-bold ring-2 ring-white/30 hover:ring-white/50 transition-all duration-300 hover:scale-105 hover:shadow-xl transform backdrop-blur-md">
-          📞 01 62 77 24 24
-          <span class="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
-        </a>
-      </div>
-      
-      {# Contact Info Cards #}
-      <div class="grid md:grid-cols-2 gap-6 mt-12">
-        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-          <div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-lg text-white mb-2">Email</h3>
-          <p class="text-white/80 text-sm">ibrahimakpanon@gmail.com</p>
-        </div>
-        
-        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-          <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-lg text-white mb-2">Téléphone</h3>
-          <p class="text-white/80 text-sm">01 62 77 24 24</p>
-        </div>
-      </div>
-      
-      <div class="md:col-span-6 opacity-0 translate-y-20 transition-all duration-1000 ease-out delay-300" data-scroll="fade-up">
-        <div class="relative flex justify-center">
-          <div class="relative inline-block bg-gradient-to-br from-amber-400 via-green-500 to-emerald-500 rounded-3xl p-1 shadow-2xl transform hover:scale-105 transition-all duration-500">
-            <div class="bg-white rounded-2xl p-6 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80&w=800&auto=format&fit=crop" alt="FAQ Binajia - Questions fréquentes" class="w-full h-64 object-cover rounded-xl shadow-lg">
-              <div class="mt-4 text-center">
-                <h3 class="font-bold text-xl bg-gradient-to-r from-amber-600 to-green-600 bg-clip-text text-transparent mb-2">
-                  Nous sommes là pour vous aider
-                </h3>
-                <p class="text-gray-600 text-sm">Toutes vos questions ont une réponse</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<script>
-  // FAQ Toggle functionality
-  function toggleFaq(index) {
-    const answer = document.getElementById(`answer-${index}`);
-    const icon = document.getElementById(`icon-${index}`);
-    
-    if (answer.classList.contains('hidden')) {
-      answer.classList.remove('hidden');
-      answer.classList.add('animate-fade-in');
-      icon.style.transform = 'rotate(180deg)';
-    } else {
-      answer.classList.add('hidden');
-      answer.classList.remove('animate-fade-in');
-      icon.style.transform = 'rotate(0deg)';
-    }
-  }
+	<script>
+		// FAQ Toggle functionality
+function toggleFaq(index) {
+const answer = document.getElementById (`answer-${index}`);
+const icon = document.getElementById (`icon-${index}`);
 
-  // Scroll animations
-  document.addEventListener('DOMContentLoaded', function() {
-    const scrollElements = document.querySelectorAll('[data-scroll]');
-    
-    const elementInView = (el, dividend = 1) => {
-      const elementTop = el.getBoundingClientRect().top;
-      return (
-        elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
-      );
-    };
-    
-    const displayScrollElement = (element) => {
-      element.classList.add('opacity-100', 'translate-y-0');
-      element.classList.remove('opacity-0', 'translate-y-16', 'translate-y-20');
-    };
-    
-    const handleScrollAnimation = () => {
-      scrollElements.forEach((el) => {
-        if (elementInView(el, 1.25)) {
-          displayScrollElement(el);
-        }
-      });
-    };
-    
-    handleScrollAnimation();
-    window.addEventListener('scroll', () => {
-      handleScrollAnimation();
-    });
-  });
-</script>
+if (answer.classList.contains('hidden')) {
+answer.classList.remove('hidden');
+answer.classList.add('animate-fade-in');
+icon.style.transform = 'rotate(180deg)';
+} else {
+answer.classList.add('hidden');
+answer.classList.remove('animate-fade-in');
+icon.style.transform = 'rotate(0deg)';
+}
+}
 
-<style>
-  .animate-fade-in {
-    animation: fadeIn 0.3s ease-in-out;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-</style>
+// Scroll animations
+document.addEventListener('DOMContentLoaded', function () {
+const scrollElements = document.querySelectorAll('[data-scroll]');
+
+const elementInView = (el, dividend = 1) => {
+const elementTop = el.getBoundingClientRect().top;
+return(elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend);
+};
+
+const displayScrollElement = (element) => {
+element.classList.add('opacity-100', 'translate-y-0');
+element.classList.remove('opacity-0', 'translate-y-16', 'translate-y-20');
+};
+
+const handleScrollAnimation = () => {
+scrollElements.forEach((el) => {
+if (elementInView(el, 1.25)) {
+displayScrollElement(el);
+}
+});
+};
+
+handleScrollAnimation();
+window.addEventListener('scroll', () => {
+handleScrollAnimation();
+});
+});
+	</script>
+
+	<style>
+		.animate-fade-in {
+			animation: fadeIn 0.3s ease-in-out;
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(-10px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+	</style>
 
 {% endblock %}
