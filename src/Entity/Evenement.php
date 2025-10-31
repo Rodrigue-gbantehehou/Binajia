@@ -41,6 +41,9 @@ class Evenement
     #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'evenement')]
     private $reservations;
 
+    #[ORM\Column]
+    private ?bool $isOnline = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -145,5 +148,17 @@ class Evenement
     public function getReservations()
     {
         return $this->reservations;
+    }
+
+    public function isOnline(): ?bool
+    {
+        return $this->isOnline;
+    }
+
+    public function setIsOnline(bool $isOnline): static
+    {
+        $this->isOnline = $isOnline;
+
+        return $this;
     }
 }
