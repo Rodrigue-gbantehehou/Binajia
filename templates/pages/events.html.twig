@@ -1,136 +1,127 @@
 {% extends 'base.html.twig' %}
-{% block title %}Événements — Binajia
-{% endblock %}
+{% block title %}Événements — Binajia{% endblock %}
 
 {% block stylesheets %}
-	{{ parent() }}
-	<style>
-		.gradient-text {
-			background: linear-gradient(135deg, #facc15, #22c55e, #16a34a);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			background-size: 200% 200%;
-			animation: gradientShift 3s ease infinite;
-		}
-
-		@keyframes gradientShift {
-			0% {
-				background-position: 0 50%;
-			}
-			50% {
-				background-position: 100% 50%;
-			}
-			100% {
-				background-position: 0 50%;
-			}
-		}
-
-		@keyframes fadeInUp {
-			from {
-				opacity: 0;
-				transform: translateY(40px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-
-		@keyframes float {
-			0,
-			100% {
-				transform: translateY(0px);
-			}
-			50% {
-				transform: translateY(-20px);
-			}
-		}
-
-		.animate-fade-in-up {
-			animation: fadeInUp 0.8s ease-out forwards;
-		}
-
-		.animate-float {
-			animation: float 6s ease-in-out infinite;
-		}
-
-		.card-hover {
-			transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-			position: relative;
-			overflow: hidden;
-		}
-
-		.card-hover::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: -100%;
-			width: 100%;
-			height: 100%;
-			background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-			transition: left 0.6s;
-		}
-
-		.card-hover:hover::before {
-			left: 100%;
-		}
-
-		.card-hover:hover {
-			transform: translateY(-12px) scale(1.02);
-			box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-		}
-
-		.hero-overlay {
-			background: linear-gradient(135deg, rgba(34, 197, 94, 0.9) 0%, rgba(21, 128, 61, 0.85) 50%, rgba(250, 204, 21, 0.8) 100%);
-		}
-
-		.floating-shapes {
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			overflow: hidden;
-		}
-
-		.floating-shape {
-			position: absolute;
-			border-radius: 50%;
-			background: rgba(255, 255, 255, 0.1);
-			animation: float 8s ease-in-out infinite;
-		}
-
-		.event-badge {
-			position: absolute;
-			top: 16px;
-			left: 16px;
-			background: linear-gradient(135deg, #22c55e, #16a34a);
-			color: white;
-			padding: 6px 12px;
-			border-radius: 20px;
-			font-size: 0.75rem;
-			font-weight: 600;
-			z-index: 10;
-		}
-
-		.category-tag {
-			display: inline-block;
-			padding: 4px 12px;
-			background: #f0fdf4;
-			color: #166534;
-			border-radius: 12px;
-			font-size: 0.75rem;
-			font-weight: 500;
-			border: 1px solid #dcfce7;
-		}
-
-		.countdown-timer {
-			background: linear-gradient(135deg, #22c55e, #16a34a);
-			color: white;
-			padding: 8px 16px;
-			border-radius: 12px;
-			font-weight: 600;
-			font-size: 0.875rem;
-		}
-	</style>
+{{ parent() }}
+<style>
+    .gradient-text {
+        background: linear-gradient(135deg, #facc15, #22c55e, #16a34a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200% 200%;
+        animation: gradientShift 3s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+    
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    .card-hover {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .card-hover::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        transition: left 0.6s;
+    }
+    
+    .card-hover:hover::before {
+        left: 100%;
+    }
+    
+    .card-hover:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+    
+    .hero-overlay {
+        background: linear-gradient(135deg, 
+            rgba(34, 197, 94, 0.9) 0%, 
+            rgba(21, 128, 61, 0.85) 50%, 
+            rgba(250, 204, 21, 0.8) 100%);
+    }
+    
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    .floating-shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        animation: float 8s ease-in-out infinite;
+    }
+    
+    .event-badge {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        z-index: 10;
+    }
+    
+    .category-tag {
+        display: inline-block;
+        padding: 4px 12px;
+        background: #f0fdf4;
+        color: #166534;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        border: 1px solid #dcfce7;
+    }
+    
+    .countdown-timer {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.875rem;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -156,8 +147,7 @@
 			<div class="text-center text-white ">
 				<!-- Badge -->
 				<!-- Main Headline -->
-					<h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight"> Événements
-					<span class=" text-yellow-300">Binajia</span>
+					<h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight"> Événements <span class=" text-yellow-300">Binajia</span>
 				</h1>
 				<!-- Subtitle -->
 				<p class="text-xl md:text-2xl text-emerald-50 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
@@ -168,214 +158,215 @@
 	</section>
 
 
-	<!-- Statistiques -->
-	<section class="py-14 bg-white">
-		<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-				<div class="text-center">
-					<div class="text-4xl md:text-5xl font-black text-green-600 mb-2">50+</div>
-					<p class="text-gray-600 font-semibold">Événements organisés</p>
-				</div>
-				<div class="text-center">
-					<div class="text-4xl md:text-5xl font-black text-yellow-600 mb-2">10K+</div>
-					<p class="text-gray-600 font-semibold">Participants</p>
-				</div>
-				<div class="text-center">
-					<div class="text-4xl md:text-5xl font-black text-green-600 mb-2">15+</div>
-					<p class="text-gray-600 font-semibold">Pays représentés</p>
-				</div>
-				<div class="text-center">
-					<div class="text-4xl md:text-5xl font-black text-yellow-600 mb-2">95%</div>
-					<p class="text-gray-600 font-semibold">Satisfaction</p>
-				</div>
-			</div>
-		</div>
-	</section>
 
-	<!-- Catégories d'événements -->
-	<section id="categories" class="py-14 bg-gray-50">
-		<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="text-center mb-16">
-				<h2 class="text-4xl md:text-5xl font-black text-gray-800 mb-6">
-					Types
-					<span class="gradient-text">d'Événements</span>
-				</h2>
-				<p class="text-xl text-gray-600 max-w-2xl mx-auto">
-					Découvrez la diversité des expériences que nous vous proposons
-				</p>
-			</div>
+<!-- Statistiques -->
+<section class="py-14 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-green-600 mb-2">50+</div>
+                <p class="text-gray-600 font-semibold">Événements organisés</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-yellow-600 mb-2">10K+</div>
+                <p class="text-gray-600 font-semibold">Participants</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-green-600 mb-2">15+</div>
+                <p class="text-gray-600 font-semibold">Pays représentés</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-yellow-600 mb-2">95%</div>
+                <p class="text-gray-600 font-semibold">Satisfaction</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-			<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-				<div class="bg-white rounded-2xl p-8 text-center card-hover border border-gray-100">
-					<div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-						<i data-feather="music" class="w-8 h-8 text-green-600"></i>
-					</div>
-					<h3 class="text-xl font-bold text-gray-800 mb-3">Festivals Culturels</h3>
-					<p class="text-gray-600 text-sm">Musique, danse, artisanat, gastronomie — célébrations vibrantes des traditions africaines</p>
-				</div>
+<!-- Catégories d'événements -->
+<section id="categories" class="py-14 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-gray-800 mb-6">
+                Types <span class="gradient-text">d'Événements</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Découvrez la diversité des expériences que nous vous proposons
+            </p>
+        </div>
 
-				<div class="bg-white rounded-2xl p-8 text-center card-hover border border-gray-100">
-					<div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-						<i data-feather="palette" class="w-8 h-8 text-yellow-600"></i>
-					</div>
-					<h3 class="text-xl font-bold text-gray-800 mb-3">Rencontres Artistiques</h3>
-					<p class="text-gray-600 text-sm">Expositions, résidences et ateliers créatifs avec des artistes talentueux</p>
-				</div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="bg-white rounded-2xl p-8 text-center card-hover border border-gray-100">
+                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i data-feather="music" class="w-8 h-8 text-green-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Festivals Culturels</h3>
+                <p class="text-gray-600 text-sm">Musique, danse, artisanat, gastronomie — célébrations vibrantes des traditions africaines</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 text-center card-hover border border-gray-100">
+                <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i data-feather="palette" class="w-8 h-8 text-yellow-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Rencontres Artistiques</h3>
+                <p class="text-gray-600 text-sm">Expositions, résidences et ateliers créatifs avec des artistes talentueux</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 text-center card-hover border border-gray-100">
+                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i data-feather="users" class="w-8 h-8 text-green-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Forums & Conférences</h3>
+                <p class="text-gray-600 text-sm">Réflexions sur l'innovation, l'éducation et la coopération africaine</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 text-center card-hover border border-gray-100">
+                <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i data-feather="map" class="w-8 h-8 text-yellow-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Voyages Guidés</h3>
+                <p class="text-gray-600 text-sm">Circuits personnalisés au Bénin, Nigéria et dans toute l'Afrique</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-				<div class="bg-white rounded-2xl p-8 text-center card-hover border border-gray-100">
-					<div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-						<i data-feather="users" class="w-8 h-8 text-green-600"></i>
-					</div>
-					<h3 class="text-xl font-bold text-gray-800 mb-3">Forums & Conférences</h3>
-					<p class="text-gray-600 text-sm">Réflexions sur l'innovation, l'éducation et la coopération africaine</p>
-				</div>
+<!-- Section grille événements -->
+<!-- Section grille événements -->
+<section id="events" class="py-14 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-gray-800 mb-6">
+                Nos Prochains
+                <span class="gradient-text">Événements</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Ne manquez pas ces occasions uniques de vivre l'Afrique autrement
+            </p>
+        </div>
 
-				<div class="bg-white rounded-2xl p-8 text-center card-hover border border-gray-100">
-					<div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-						<i data-feather="map" class="w-8 h-8 text-yellow-600"></i>
-					</div>
-					<h3 class="text-xl font-bold text-gray-800 mb-3">Voyages Guidés</h3>
-					<p class="text-gray-600 text-sm">Circuits personnalisés au Bénin, Nigéria et dans toute l'Afrique</p>
-				</div>
-			</div>
-		</div>
-	</section>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for evenement in evenements %}
+                {% set slug = evenement.title|lower|replace({" ": "-", "'": ""}) %}
+                {% set isFull = false %}
+                {% set daysUntil = date().diff(evenement.startDate).days %}
+                
+                <article class="rounded-2xl overflow-hidden bg-white shadow-xl card-hover border border-gray-100">
+                    <div class="relative h-56 overflow-hidden">
+                        <a href="{{ path('app_event_show', {slug: slug}) }}">
+                            <img src="{{ evenement.image ? path('secure_upload', {'filename': evenement.image}) : 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1400&auto=format&fit=crop' }}" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        </a>
+                        <div class="event-badge">
+                            {% if daysUntil <= 7 %}
+                                Bientôt
+                            {% else %}
+                                À venir
+                            {% endif %}
+                        </div>
 
-	<!-- Section grille événements -->
-	<section id="events" class="py-14 bg-white">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="text-center mb-16">
-				<h2 class="text-4xl md:text-5xl font-black text-gray-800 mb-6">
-					Nos Prochains
-					<span class="gradient-text">Événements</span>
-				</h2>
-				<p class="text-xl text-gray-600 max-w-2xl mx-auto">
-					Ne manquez pas ces occasions uniques de vivre l'Afrique autrement
-				</p>
-			</div>
+                        {% if daysUntil > 0 %}
+                            <div class="absolute top-4 right-4 countdown-timer">
+                                J-{{ daysUntil }}
+                            </div>
+                        {% endif %}
+                    </div>
 
-			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-				{% for evenement in evenements %}
-					{% for evenement in evenements %}
-						{% set slug = evenement.title|lower|replace({" ": "-", "'": ""}) %}
-						{% set isFull = false %}
-						{% set daysUntil = date().diff(evenement.startDate).days %}
-						<article class="rounded-2xl overflow-hidden bg-white shadow-xl card-hover border border-gray-100">
-							<div class="relative h-56 overflow-hidden">
-								<a href="{{ path('app_event_show', {slug: slug}) }}">
-									<img src="{{ evenement.image ? path('secure_upload', {'filename': evenement.image}) : 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1400&auto=format&fit=crop' }}" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
-								</a>
-								<div class="event-badge">
-									{% if daysUntil.days <= 7 %}
-										Bientôt
-									{% else %}
-										À venir
-									{% endif %}
-								</div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="category-tag">Culture</span>
+                            {% if evenement.isOnline %}
+                                <span class="category-tag bg-blue-50 text-blue-700 border-blue-200">En ligne</span>
+                            {% endif %}
+                        </div>
 
-								{% if daysUntil.days > 0 %}
-									<div class="absolute top-4 right-4 countdown-timer">
-										J-{{ daysUntil.days }}
-									</div>
-								{% endif %}
-							</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-green-600 transition-colors">
+                            <a href="{{ path('app_event_show', {slug: slug}) }}">{{ evenement.title }}</a>
+                        </h3>
 
-							<div class="p-6">
-								<div class="flex items-center gap-2 mb-3">
-									<span class="category-tag">Culture</span>
-									{% if evenement.isOnline %}
-										<span class="category-tag bg-blue-50 text-blue-700 border-blue-200">En ligne</span>
-									{% endif %}
-								</div>
+                        <p class="text-gray-600 mb-4 line-clamp-2">{{ evenement.description }}</p>
 
-								<h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-green-600 transition-colors">
-									<a href="{{ path('app_event_show', {slug: slug}) }}">{{ evenement.title }}</a>
-								</h3>
+                        <div class="space-y-2 text-sm text-gray-500 mb-4">
+                            <div class="flex items-center gap-2">
+                                <i data-feather="calendar" class="w-4 h-4"></i>
+                                <span>{{ evenement.startDate ? evenement.startDate|date('d F Y à H:i') : 'Date à confirmer' }}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-feather="map-pin" class="w-4 h-4"></i>
+                                <span>{{ evenement.location ?: 'Lieu à préciser' }}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-feather="users" class="w-4 h-4"></i>
+                                {% if isFull %}
+                                    <span class="text-red-600 font-medium">Complet</span>
+                                {% else %}
+                                    <span class="text-green-700 font-medium">Places disponibles</span>
+                                {% endif %}
+                            </div>
+                        </div>
 
-								<p class="text-gray-600 mb-4 line-clamp-2">{{ evenement.description }}</p>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <div class="font-bold text-gray-900 text-lg">
+                                {% if evenement.price > 0 %}
+                                    {{ evenement.price }} €
+                                {% else %}
+                                    Gratuit
+                                {% endif %}
+                            </div>
 
-								<div class="space-y-2 text-sm text-gray-500 mb-4">
-									<div class="flex items-center gap-2">
-										<i data-feather="calendar" class="w-4 h-4"></i>
-										<span>{{ evenement.startDate ? evenement.startDate|date('d F Y à H:i') : 'Date à confirmer' }}</span>
-									</div>
-									<div class="flex items-center gap-2">
-										<i data-feather="map-pin" class="w-4 h-4"></i>
-										<span>{{ evenement.location ?: 'Lieu à préciser' }}</span>
-									</div>
-									<div class="flex items-center gap-2">
-										<i data-feather="users" class="w-4 h-4"></i>
-										{% if isFull %}
-											<span class="text-red-600 font-medium">Complet</span>
-										{% else %}
-											<span class="text-green-700 font-medium">Places disponibles</span>
-										{% endif %}
-									</div>
-								</div>
+                            <div class="flex gap-2">
+                                {% if isFull %}
+                                    <button class="px-6 py-2 rounded-full bg-gray-100 text-gray-400 cursor-not-allowed font-semibold text-sm">
+                                        Complet
+                                    </button>
+                                {% else %}
+                                    <a href="{{ path('app_reservation_event', {'id': evenement.id}) }}" class="group inline-flex items-center gap-2 px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-xl">
+                                        <i data-feather="plus" class="w-4 h-4"></i>
+                                        Réserver
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            {% else %}
+                <div class="col-span-3 text-center py-12">
+                    <i data-feather="calendar" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-500 mb-2">Aucun événement à venir</h3>
+                    <p class="text-gray-400">Revenez bientôt pour découvrir nos prochains événements</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
-								<div class="flex items-center justify-between pt-4 border-t border-gray-100">
-									<div class="font-bold text-gray-900 text-lg">
-										{% if evenement.price > 0 %}
-											{{ evenement.price }}
-											€
-										{% else %}
-											Gratuit
-										{% endif %}
-									</div>
-
-									<div class="flex gap-2">
-										{% if isFull %}
-											<button class="px-6 py-2 rounded-full bg-gray-100 text-gray-400 cursor-not-allowed font-semibold text-sm">
-												Complet
-											</button>
-										{% else %}
-											<a href="{{ path('app_reservation_event', {'id': evenement.id}) }}" class="group inline-flex items-center gap-2 px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-xl">
-												<i data-feather="plus" class="w-4 h-4"></i>
-												Réserver
-											</a>
-										{% endif %}
-									</div>
-								</div>
-							</div>
-						</article>
-					{% else %}
-						<div class="col-span-3 text-center py-12">
-							<i data-feather="calendar" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
-							<h3 class="text-xl font-semibold text-gray-500 mb-2">Aucun événement à venir</h3>
-							<p class="text-gray-400">Revenez bientôt pour découvrir nos prochains événements</p>
-						</div>
-					{% endfor %}
-				</div>
-			</div>
-		</section>
-
-		<!-- CTA Newsletter -->
+<!-- CTA Newsletter -->
 
 
-		<script>
-			document.addEventListener('DOMContentLoaded', function () { // Initialiser Feather Icons
-if (typeof feather !== 'undefined') {
-feather.replace();
-}
-
-// Animation au défilement
-const observerOptions = {
-threshold: 0.1,
-rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-entries.forEach(entry => {
-if (entry.isIntersecting) {
-entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
-}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialiser Feather Icons
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+    
+    // Animation au défilement
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+            }
+        });
+    }, observerOptions);
+    
+    // Observer les cartes d'événements
+    document.querySelectorAll('.card-hover').forEach(card => {
+        observer.observe(card);
+    });
 });
-}, observerOptions);
-
-// Observer les cartes d'événements
-document.querySelectorAll('.card-hover').forEach(card => {
-observer.observe(card);
-});
-});
-		</script>
-	{% endblock %}
+</script>
+{% endblock %}
