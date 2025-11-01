@@ -236,8 +236,6 @@ fontFamily: {
 						<a href="{{ path('app_about') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">A propos</a>
 						<a href="{{ path('app_contact') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">Contact</a>
 						<a href="{{ path('app_avantage') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">Avantages</a>
-						<a href="{{ path('app_partenaire') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_partenaire' %}active{% endif %}">Partenariats</a>
-						<a href="{{ path('app_faq') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_faq' %}active{% endif %}">FAQ</a>
 						{% if is_granted('ROLE_ADMIN') %}
 							<a href="{{ path('admin_dashboard') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'admin_dashboard' %}active{% endif %}">Admin</a>
 						{% endif %}
@@ -298,8 +296,6 @@ fontFamily: {
 					<a href="{{ path('app_about') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">A propos</a>
 					<a href="{{ path('app_contact') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">Contact</a>
 					<a href="{{ path('app_avantage') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">Avantages</a>
-					<a href="{{ path('app_partenaire') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_partenaire' %}active{% endif %}">Partenariats</a>
-					<a href="{{ path('app_faq') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_faq' %}active{% endif %}">FAQ</a>
 					{% if is_granted('ROLE_ADMIN') %}
 						<a href="{{ path('admin_dashboard') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'admin_dashboard' %}active{% endif %}">Admin</a>
 					{% endif %}
