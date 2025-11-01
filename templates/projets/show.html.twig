@@ -1,33 +1,176 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ projet.nom }} — Binajia{% endblock %}
 
+{% block stylesheets %}
+<style>
+    .projet-hero {
+        background: linear-gradient(135deg, #f0fdf4 0%, #fffbeb 50%, #f0f9ff 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .projet-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 50 0 L 0 0 0 50" fill="none" stroke="%2305926933" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+        opacity: 0.3;
+    }
+    
+    .description-content {
+        line-height: 1.8;
+    }
+    
+    .description-content p {
+        margin-bottom: 1.5rem;
+    }
+    
+    .description-content strong {
+        color: #059669;
+        font-weight: 600;
+    }
+    
+    .description-content em {
+        color: #7c3aed;
+        font-style: italic;
+    }
+    
+    .logo-container {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    .logo-container:hover {
+        transform: translateY(-8px);
+    }
+    
+    .logo-shadow {
+        filter: drop-shadow(0 20px 40px rgba(5, 150, 105, 0.2));
+    }
+    
+    @media (max-width: 768px) {
+        .projet-hero {
+            padding: 3rem 0;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 
-<section class="py-16 bg-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <h1 class="text-4xl font-bold text-gray-900 mb-6">
-                    {{ projet.nom }}
-                </h1>
-                <p class="text-lg text-gray-700 leading-relaxed">
-                    {{ projet.description }}
-                </p>
-            </div>
-            
-            <div class="flex justify-center">
-                {% if projet.logos %}
-                    <img src="{{ asset('uploads/' ~ projet.logos) }}" 
-                         alt="{{ projet.nom }}" 
-                         class="max-w-full h-auto rounded-2xl shadow-lg">
-                {% else %}
-                    <div class="w-full h-64 bg-gray-100 rounded-2xl flex items-center justify-center">
-                        <span class="text-gray-500">Logo non disponible</span>
+<section class="projet-hero py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <!-- Navigation breadcrumb -->
+        
+
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            <!-- Content Section -->
+            <div class="space-y-8">
+                <!-- Badge et titre -->
+                <div class="space-y-4">
+                    <div class="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        Projet Actif
                     </div>
-                {% endif %}
+                    
+                    <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                        {{ projet.nom }}
+                    </h1>
+                </div>
+
+                <!-- Description avec formatage intelligent -->
+                <div class="prose prose-lg max-w-none">
+                    <div class="description-content text-gray-700 text-lg leading-relaxed">
+                        {{ projet.description|raw|nl2br }}
+                    </div>
+                </div>
+
+                
+                
+            </div>
+
+            <!-- Logo Section -->
+            <div class="flex justify-center lg:justify-end">
+                <div class="logo-container">
+                    {% if projet.logos %}
+                        <div class="relative">
+                            <img src="{{ path('secure_upload', {'filename': projet.logos}) }}" 
+                                 alt="{{ projet.nom }}" 
+                                 class="logo-shadow w-full max-w-md h-auto rounded-3xl">
+                            <!-- Effet de brillance -->
+                            <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/20 to-transparent pointer-events-none"></div>
+                        </div>
+                    {% else %}
+                        <div class="w-full max-w-md h-80 bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl flex flex-col items-center justify-center p-8 text-center">
+                            <svg class="w-16 h-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <p class="text-gray-500 font-medium">Logo du projet</p>
+                            <p class="text-gray-400 text-sm mt-2">En cours de création</p>
+                        </div>
+                    {% endif %}
+                    
+                    <!-- Badge de statut flottant -->
+                    <div class="absolute -top-4 -right-4 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+                        En Cours
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+
+
+
+<script>
+    // Animation au défilement
+    document.addEventListener('DOMContentLoaded', function() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Animer les éléments au chargement
+        const animatedElements = document.querySelectorAll('.logo-container, .prose, .grid > div');
+        animatedElements.forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+            observer.observe(el);
+        });
+    });
+
+    // Gestion du partage
+    function shareProject() {
+        if (navigator.share) {
+            navigator.share({
+                title: '{{ projet.nom }}',
+                text: 'Découvrez ce projet sur Binajia',
+                url: window.location.href,
+            });
+        } else {
+            // Fallback pour copier le lien
+            navigator.clipboard.writeText(window.location.href);
+            alert('Lien copié dans le presse-papier !');
+        }
+    }
+
+    // Ajouter l'événement de partage
+    document.querySelector('button:contains("Partager")').addEventListener('click', shareProject);
+</script>
 {% endblock %}
