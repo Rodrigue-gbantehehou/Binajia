@@ -1,27 +1,629 @@
 {% extends 'base.html.twig' %}
-{% block title %}Mon espace — Binajia{% endblock %}
-{% block content %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-  <div class="flex flex-wrap gap-2">
-    <a href="#profile" class="px-4 py-2 rounded-full bg-primary text-white">Profil</a>
-    <a href="#payments" class="px-4 py-2 rounded-full ring-1 ring-gray-300">Paiements</a>
-    <a href="#tickets" class="px-4 py-2 rounded-full ring-1 ring-gray-300">Tickets</a>
-    <a href="#card" class="px-4 py-2 rounded-full ring-1 ring-gray-300">Carte</a>
-  </div>
 
-  <div class="mt-8 grid lg:grid-cols-3 gap-6">
-    <div id="profile" class="lg:col-span-2 p-6 rounded-2xl bg-white ring-1 ring-gray-200">Profil…</div>
-    <div class="p-6 rounded-2xl bg-white ring-1 ring-gray-200">
-      <h3 class="font-semibold">Résumé</h3>
-      <ul class="mt-3 text-sm text-gray-600 space-y-2">
-        <li>Membre depuis {{ app.user.joinedAt|date('Y') }}</li>
-        <li>Dernier paiement: {{ lastPayment.date|date('d/m/Y') }}</li>
-        <li>Tickets actifs: {{ tickets|length }}</li>
-      </ul>
+{% block title %}Mon espace — Binajia{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-green-50/30 py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {# Header #}
+    <div class="text-center mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-600 to-orange-500 bg-clip-text text-transparent mb-4">
+        Mon Espace Membre
+      </h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Gérez votre profil, vos paiements et accédez à tous vos avantages membres
+      </p>
     </div>
-    <div id="payments" class="lg:col-span-2 p-6 rounded-2xl bg-white ring-1 ring-gray-200">Paiements…</div>
-    <div id="tickets" class="lg:col-span-2 p-6 rounded-2xl bg-white ring-1 ring-gray-200">Tickets…</div>
-    <div id="card" class="lg:col-span-3 p-6 rounded-2xl bg-white ring-1 ring-gray-200">{% include 'partials/member-card-digital.html.twig' with { user: app.user } %}</div>
+
+    {# Navigation Tabs #}
+    <div class="flex flex-wrap justify-center gap-3 mb-12">
+      <a href="#profile" class="group nav-tab active">
+        <i class="fas fa-user-circle mr-2 group-hover:scale-110 transition-transform"></i>
+        Profil
+      </a>
+      <a href="#payments" class="group nav-tab">
+        <i class="fas fa-credit-card mr-2 group-hover:scale-110 transition-transform"></i>
+        Paiements
+      </a>
+      <a href="#tickets" class="group nav-tab">
+        <i class="fas fa-ticket-alt mr-2 group-hover:scale-110 transition-transform"></i>
+        Tickets
+      </a>
+      <a href="#card" class="group nav-tab">
+        <i class="fas fa-id-card mr-2 group-hover:scale-110 transition-transform"></i>
+        Carte Membre
+      </a>
+    </div>
+
+    {# Main Content Grid #}
+    <div class="grid lg:grid-cols-3 gap-8">
+      {# Left Column - Profile & Main Content #}
+      <div class="lg:col-span-2 space-y-8">
+        {# Profile Section #}
+        <section id="profile" class="content-section active">
+          <div class="section-header">
+            <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-orange-400 rounded-xl flex items-center justify-center">
+              <i class="fas fa-user-circle text-white text-lg"></i>
+            </div>
+            <div>
+              <h2 class="section-title">Mon Profil</h2>
+              <p class="section-subtitle">Gérez vos informations personnelles</p>
+            </div>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            {# Personal Info #}
+            <div class="info-card">
+              <h3 class="info-card-title">
+                <i class="fas fa-user text-green-500 mr-2"></i>
+                Informations personnelles
+              </h3>
+              <div class="space-y-3">
+                <div class="info-item">
+                  <span class="info-label">Nom complet</span>
+                  <span class="info-value">{{ app.user.fullName ?? 'Non renseigné' }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Email</span>
+                  <span class="info-value">{{ app.user.email }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Téléphone</span>
+                  <span class="info-value">{{ app.user.phone ?? 'Non renseigné' }}</span>
+                </div>
+              </div>
+              <button class="edit-btn">
+                <i class="fas fa-edit mr-2"></i>
+                Modifier
+              </button>
+            </div>
+
+            {# Membership Info #}
+            <div class="info-card">
+              <h3 class="info-card-title">
+                <i class="fas fa-star text-orange-500 mr-2"></i>
+                Adhésion
+              </h3>
+              <div class="space-y-3">
+                <div class="info-item">
+                  <span class="info-label">Statut</span>
+                  <span class="info-badge active">Actif</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Membre depuis</span>
+                  <span class="info-value">{{ app.user.createdAt|date('F Y') }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Type de membre</span>
+                  <span class="info-value">Standard</span>
+                </div>
+              </div>
+              <button class="upgrade-btn">
+                <i class="fas fa-crown mr-2"></i>
+                Améliorer
+              </button>
+            </div>
+
+            {# Address #}
+            <div class="info-card md:col-span-2">
+              <h3 class="info-card-title">
+                <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>
+                Adresse
+              </h3>
+              <div class="space-y-3">
+                <div class="info-item">
+                  <span class="info-label">Adresse</span>
+                  <span class="info-value">{{ app.user.address ?? 'Non renseignée' }}</span>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="info-item">
+                    <span class="info-label">Ville</span>
+                    <span class="info-value">{{ app.user.city ?? 'Non renseignée' }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="info-label">Code postal</span>
+                    <span class="info-value">{{ app.user.zipCode ?? 'Non renseigné' }}</span>
+                  </div>
+                </div>
+              </div>
+              <button class="edit-btn">
+                <i class="fas fa-edit mr-2"></i>
+                Modifier l'adresse
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {# Payments Section #}
+        <section id="payments" class="content-section">
+          <div class="section-header">
+            <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+              <i class="fas fa-credit-card text-white text-lg"></i>
+            </div>
+            <div>
+              <h2 class="section-title">Historique des Paiements</h2>
+              <p class="section-subtitle">Suivez vos transactions et factures</p>
+            </div>
+          </div>
+          
+          <div class="space-y-4">
+            {% if payments|length > 0 %}
+              {% for payment in payments %}
+                <div class="payment-card {{ payment.status == 'completed' ? 'completed' : 'pending' }}">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                      <div class="payment-icon">
+                        <i class="fas fa-{{ payment.status == 'completed' ? 'check-circle' : 'clock' }}"></i>
+                      </div>
+                      <div>
+                        <h4 class="payment-title">Adhésion Annuelle</h4>
+                        <p class="payment-date">{{ payment.date|date('d/m/Y') }}</p>
+                      </div>
+                    </div>
+                    <div class="text-right">
+                      <p class="payment-amount">{{ payment.amount }} €</p>
+                      <span class="payment-status {{ payment.status == 'completed' ? 'status-completed' : 'status-pending' }}">
+                        {{ payment.status == 'completed' ? 'Payé' : 'En attente' }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="payment-actions">
+                    <button class="action-btn">
+                      <i class="fas fa-download mr-2"></i>
+                      Facture
+                    </button>
+                    <button class="action-btn">
+                      <i class="fas fa-eye mr-2"></i>
+                      Détails
+                    </button>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="empty-state">
+                <i class="fas fa-credit-card text-gray-300 text-4xl mb-4"></i>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Aucun paiement</h3>
+                <p class="text-gray-500">Vous n'avez pas encore effectué de paiement.</p>
+              </div>
+            {% endif %}
+          </div>
+        </section>
+
+        {# Tickets Section #}
+        <section id="tickets" class="content-section">
+          <div class="section-header">
+            <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+              <i class="fas fa-ticket-alt text-white text-lg"></i>
+            </div>
+            <div>
+              <h2 class="section-title">Mes Tickets</h2>
+              <p class="section-subtitle">Accédez à vos billets d'événements</p>
+            </div>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            {% if tickets|length > 0 %}
+              {% for ticket in tickets %}
+                <div class="ticket-card">
+                  <div class="ticket-header">
+                    <h4 class="ticket-event">{{ ticket.eventName }}</h4>
+                    <span class="ticket-status {{ ticket.used ? 'used' : 'active' }}">
+                      {{ ticket.used ? 'Utilisé' : 'Actif' }}
+                    </span>
+                  </div>
+                  <div class="ticket-details">
+                    <div class="ticket-info">
+                      <i class="fas fa-calendar text-gray-400"></i>
+                      <span>{{ ticket.date|date('d/m/Y') }}</span>
+                    </div>
+                    <div class="ticket-info">
+                      <i class="fas fa-map-marker-alt text-gray-400"></i>
+                      <span>{{ ticket.location }}</span>
+                    </div>
+                  </div>
+                  <div class="ticket-actions">
+                    <button class="ticket-btn primary">
+                      <i class="fas fa-eye mr-2"></i>
+                      Voir le ticket
+                    </button>
+                    <button class="ticket-btn secondary">
+                      <i class="fas fa-download mr-2"></i>
+                      Télécharger
+                    </button>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="empty-state md:col-span-2">
+                <i class="fas fa-ticket-alt text-gray-300 text-4xl mb-4"></i>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Aucun ticket</h3>
+                <p class="text-gray-500">Vous n'avez pas encore de tickets d'événements.</p>
+                <a href="{{ path('app_events') }}" class="cta-btn mt-4">
+                  <i class="fas fa-calendar-plus mr-2"></i>
+                  Voir les événements
+                </a>
+              </div>
+            {% endif %}
+          </div>
+        </section>
+      </div>
+
+      {# Right Column - Summary & Card #}
+      <div class="space-y-8">
+        {# Summary Card #}
+        <div class="summary-card">
+          <h3 class="summary-title">
+            <i class="fas fa-chart-pie text-green-500 mr-2"></i>
+            Résumé
+          </h3>
+          <div class="space-y-4">
+            <div class="summary-item">
+              <div class="summary-icon bg-green-100">
+                <i class="fas fa-calendar-check text-green-600"></i>
+              </div>
+              <div>
+                <p class="summary-label">Membre depuis</p>
+                <p class="summary-value">{{ app.user.createdAt|date('Y') }}</p>
+              </div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-icon bg-blue-100">
+                <i class="fas fa-credit-card text-blue-600"></i>
+              </div>
+              <div>
+                <p class="summary-label">Dernier paiement</p>
+                <p class="summary-value">{{ lastPayment.date|date('d/m/Y') }}</p>
+              </div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-icon bg-purple-100">
+                <i class="fas fa-ticket-alt text-purple-600"></i>
+              </div>
+              <div>
+                <p class="summary-label">Tickets actifs</p>
+                <p class="summary-value">{{ tickets|length }}</p>
+              </div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-icon bg-orange-100">
+                <i class="fas fa-star text-orange-600"></i>
+              </div>
+              <div>
+                <p class="summary-label">Avantages actifs</p>
+                <p class="summary-value">12</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {# Quick Actions #}
+        <div class="quick-actions-card">
+          <h3 class="quick-actions-title">
+            <i class="fas fa-bolt text-orange-500 mr-2"></i>
+            Actions rapides
+          </h3>
+          <div class="space-y-3">
+            <a href="{{ path('app_events') }}" class="quick-action-btn">
+              <i class="fas fa-calendar-plus text-green-500"></i>
+              <span>Réserver un événement</span>
+            </a>
+            <a href="{{ path('app_membership') }}" class="quick-action-btn">
+              <i class="fas fa-crown text-yellow-500"></i>
+              <span>Améliorer mon adhésion</span>
+            </a>
+            <a href="{{ path('app_contact') }}" class="quick-action-btn">
+              <i class="fas fa-headset text-blue-500"></i>
+              <span>Support client</span>
+            </a>
+            <a href="{{ path('app_avantage') }}" class="quick-action-btn">
+              <i class="fas fa-gift text-purple-500"></i>
+              <span>Voir mes avantages</span>
+            </a>
+          </div>
+        </div>
+
+        {# Member Card Section #}
+        <section id="card" class="content-section">
+          <div class="section-header">
+            <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl flex items-center justify-center">
+              <i class="fas fa-id-card text-white text-lg"></i>
+            </div>
+            <div>
+              <h2 class="section-title">Ma Carte Membre</h2>
+              <p class="section-subtitle">Votre carte digitale Binajia</p>
+            </div>
+          </div>
+          {% include 'partials/member-card-digital.html.twig' with { user: app.user } %}
+          <div class="mt-4 space-y-3">
+            <button class="w-full action-btn">
+              <i class="fas fa-download mr-2"></i>
+              Télécharger la carte
+            </button>
+            <button class="w-full action-btn secondary">
+              <i class="fas fa-share-alt mr-2"></i>
+              Partager
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
   </div>
 </div>
+
+<style>
+  /* Navigation Tabs */
+  .nav-tab {
+    @apply inline-flex items-center px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-white text-gray-700 border border-gray-200 shadow-sm hover:shadow-md hover:scale-105;
+  }
+  
+  .nav-tab.active {
+    @apply bg-gradient-to-r from-green-600 to-orange-500 text-white shadow-lg border-transparent;
+  }
+
+  /* Content Sections */
+  .content-section {
+    @apply hidden p-8 rounded-2xl bg-white shadow-lg border border-gray-100;
+  }
+  
+  .content-section.active {
+    @apply block;
+  }
+
+  .section-header {
+    @apply flex items-center gap-4 mb-8;
+  }
+
+  .section-title {
+    @apply text-2xl font-bold text-gray-900;
+  }
+
+  .section-subtitle {
+    @apply text-gray-600 mt-1;
+  }
+
+  /* Info Cards */
+  .info-card {
+    @apply p-6 rounded-xl bg-gray-50 border border-gray-200 relative;
+  }
+
+  .info-card-title {
+    @apply text-lg font-semibold text-gray-900 mb-4 flex items-center;
+  }
+
+  .info-item {
+    @apply flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0;
+  }
+
+  .info-label {
+    @apply text-sm text-gray-600;
+  }
+
+  .info-value {
+    @apply text-sm font-medium text-gray-900;
+  }
+
+  .info-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .info-badge.active {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .edit-btn, .upgrade-btn {
+    @apply w-full mt-4 px-4 py-2 rounded-lg font-semibold transition-all duration-300;
+  }
+
+  .edit-btn {
+    @apply bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-green-500;
+  }
+
+  .upgrade-btn {
+    @apply bg-gradient-to-r from-yellow-500 to-orange-500 text-white hover:shadow-lg hover:scale-105;
+  }
+
+  /* Payment Cards */
+  .payment-card {
+    @apply p-6 rounded-xl border-2 transition-all duration-300;
+  }
+
+  .payment-card.completed {
+    @apply border-green-200 bg-green-50;
+  }
+
+  .payment-card.pending {
+    @apply border-orange-200 bg-orange-50;
+  }
+
+  .payment-icon {
+    @apply w-12 h-12 rounded-full flex items-center justify-center;
+  }
+
+  .payment-card.completed .payment-icon {
+    @apply bg-green-100 text-green-600;
+  }
+
+  .payment-card.pending .payment-icon {
+    @apply bg-orange-100 text-orange-600;
+  }
+
+  .payment-title {
+    @apply font-semibold text-gray-900;
+  }
+
+  .payment-date {
+    @apply text-sm text-gray-600 mt-1;
+  }
+
+  .payment-amount {
+    @apply text-lg font-bold text-gray-900;
+  }
+
+  .payment-status {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold mt-1;
+  }
+
+  .status-completed {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .status-pending {
+    @apply bg-orange-100 text-orange-800;
+  }
+
+  .payment-actions {
+    @apply flex gap-2 mt-4;
+  }
+
+  /* Ticket Cards */
+  .ticket-card {
+    @apply p-6 rounded-xl bg-white border-2 border-gray-200 hover:border-green-300 transition-all duration-300;
+  }
+
+  .ticket-header {
+    @apply flex justify-between items-start mb-4;
+  }
+
+  .ticket-event {
+    @apply font-semibold text-gray-900;
+  }
+
+  .ticket-status {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .ticket-status.active {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .ticket-status.used {
+    @apply bg-gray-100 text-gray-800;
+  }
+
+  .ticket-details {
+    @apply space-y-2 mb-4;
+  }
+
+  .ticket-info {
+    @apply flex items-center gap-2 text-sm text-gray-600;
+  }
+
+  .ticket-actions {
+    @apply flex gap-2;
+  }
+
+  .ticket-btn {
+    @apply flex-1 px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-300;
+  }
+
+  .ticket-btn.primary {
+    @apply bg-green-600 text-white hover:bg-green-700;
+  }
+
+  .ticket-btn.secondary {
+    @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
+  }
+
+  /* Summary Card */
+  .summary-card {
+    @apply p-6 rounded-2xl bg-white shadow-lg border border-gray-100;
+  }
+
+  .summary-title {
+    @apply text-xl font-bold text-gray-900 mb-6 flex items-center;
+  }
+
+  .summary-item {
+    @apply flex items-center gap-4 py-3 border-b border-gray-100 last:border-b-0;
+  }
+
+  .summary-icon {
+    @apply w-10 h-10 rounded-xl flex items-center justify-center;
+  }
+
+  .summary-label {
+    @apply text-sm text-gray-600;
+  }
+
+  .summary-value {
+    @apply text-lg font-semibold text-gray-900;
+  }
+
+  /* Quick Actions */
+  .quick-actions-card {
+    @apply p-6 rounded-2xl bg-white shadow-lg border border-gray-100;
+  }
+
+  .quick-actions-title {
+    @apply text-xl font-bold text-gray-900 mb-4 flex items-center;
+  }
+
+  .quick-action-btn {
+    @apply flex items-center gap-3 w-full p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-all duration-300 hover:scale-105;
+  }
+
+  /* Buttons */
+  .action-btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-semibold transition-all duration-300;
+  }
+
+  .action-btn:not(.secondary) {
+    @apply bg-green-600 text-white hover:bg-green-700;
+  }
+
+  .action-btn.secondary {
+    @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
+  }
+
+  .cta-btn {
+    @apply inline-flex items-center px-6 py-3 rounded-xl font-semibold bg-gradient-to-r from-green-600 to-orange-500 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300;
+  }
+
+  /* Empty States */
+  .empty-state {
+    @apply text-center py-12;
+  }
+</style>
+
+<script>
+  // Tab navigation
+  document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.nav-tab');
+    const sections = document.querySelectorAll('.content-section');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Remove active class from all tabs and sections
+        tabs.forEach(t => t.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+        
+        // Add active class to clicked tab
+        this.classList.add('active');
+        
+        // Show corresponding section
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          targetSection.classList.add('active');
+        }
+      });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  });
+</script>
 {% endblock %}

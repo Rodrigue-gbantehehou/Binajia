@@ -34,6 +34,8 @@ class UploadController extends AbstractController
             $filePath = $this->uploadDir . '/' . $safeFilename;
         } elseif (str_starts_with($safeFilename, 'projets/')) {
             $filePath = $this->uploadDir . '/' . $safeFilename;
+        } elseif (str_starts_with($safeFilename, 'partenaire/')) {
+            $filePath = $this->uploadDir . '/' . $safeFilename;
         } else {
             // Fichier media traditionnel
             $filePath = $this->uploadDir . '/media/' . $safeFilename;

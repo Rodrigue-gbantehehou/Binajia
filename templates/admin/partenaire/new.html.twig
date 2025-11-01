@@ -1,0 +1,279 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nouveau Partenaire{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-green-50/30 p-6">
+    <div class="max-w-4xl mx-auto">
+        {# Header #}
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+            <div class="space-y-2">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gradient-to-r from-green-600 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-handshake text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-600 to-orange-500 bg-clip-text text-transparent">
+                            Nouveau Partenaire
+                        </h1>
+                        <p class="text-gray-600 text-lg">Ajoutez un nouveau partenaire à votre réseau</p>
+                    </div>
+                </div>
+            </div>
+            <a href="{{ path('app_partenaire_index') }}" class="group inline-flex items-center gap-3 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-white text-gray-700 border border-gray-200 shadow-sm hover:shadow-md hover:border-green-400 hover:scale-105">
+                <i class="fas fa-arrow-left text-green-500 group-hover:-translate-x-1 transition-transform"></i>
+                <span>Retour à la liste</span>
+            </a>
+        </div>
+
+        {# Form Card #}
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            {{ form_start(form, {'attr': {'class': 'p-0', 'novalidate': 'novalidate'}}) }}
+            
+            {# Informations générales #}
+            <div class="p-8 border-b border-gray-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-orange-400 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-info-circle text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-900">Informations du partenaire</h2>
+                        <p class="text-gray-500 text-sm">Renseignez les détails de votre partenaire</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    {# Nom du partenaire #}
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-gray-700">
+                            Nom du partenaire <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            {{ form_widget(form.nom, {'attr': {
+                                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 placeholder-gray-400',
+                                'placeholder': 'Ex: Entreprise XYZ'
+                            }}) }}
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                <i class="fas fa-building text-gray-400"></i>
+                            </div>
+                        </div>
+                        {% if form_errors(form.nom) %}
+                            <div class="text-red-500 text-sm flex items-center gap-2 mt-1">
+                                <i class="fas fa-exclamation-circle"></i>
+                                {{ form_errors(form.nom) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    {# Description #}
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-gray-700">
+                            Description
+                        </label>
+                        {{ form_widget(form.description, {'attr': {
+                            'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 placeholder-gray-400 min-h-[120px] resize-vertical',
+                            'placeholder': 'Décrivez votre partenaire et la nature de votre collaboration...',
+                            'rows': 4
+                        }}) }}
+                        {% if form_errors(form.description) %}
+                            <div class="text-red-500 text-sm flex items-center gap-2 mt-1">
+                                <i class="fas fa-exclamation-circle"></i>
+                                {{ form_errors(form.description) }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {# Logo du partenaire #}
+                    <div class="space-y-4">
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-gray-700">
+                                Logo du partenaire
+                            </label>
+                            
+                            {# Upload zone #}
+                            <div class="relative">
+                                <div class="flex items-center justify-center w-full">
+                                    <label for="{{ form.logos.vars.id }}" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition-all duration-300 group">
+                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                            <i class="fas fa-cloud-upload-alt text-2xl text-gray-400 group-hover:text-green-500 mb-2 transition-colors"></i>
+                                            <p class="text-sm text-gray-500 group-hover:text-gray-700">
+                                                <span class="font-semibold">Cliquez pour uploader</span> ou glissez-déposez
+                                            </p>
+                                            <p class="text-xs text-gray-400 mt-1">PNG, JPG, GIF jusqu'à 5MB</p>
+                                        </div>
+                                        {{ form_widget(form.logos, {'attr': {
+                                            'class': 'hidden',
+                                            'onchange': 'previewImage(this)'
+                                        }}) }}
+                                    </label>
+                                </div>
+                                
+                                {# Aperçu de la nouvelle image #}
+                                <div id="image-preview" class="mt-4 hidden">
+                                    <p class="text-sm font-medium text-gray-700 mb-2">Aperçu du logo :</p>
+                                    <div class="relative inline-block">
+                                        <img id="preview-img" src="" alt="Aperçu du logo" class="w-32 h-32 object-contain rounded-lg border-2 border-green-500 shadow-md bg-white p-2">
+                                        <button type="button" 
+                                                class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-all duration-300"
+                                                onclick="clearImagePreview()">
+                                            <i class="fas fa-times text-xs"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {% if form_errors(form.logos) %}
+                                <div class="text-red-500 text-sm flex items-center gap-2 mt-1">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    {{ form_errors(form.logos) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Actions #}
+            <div class="p-8 bg-gray-50/50">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                        <i class="fas fa-info-circle text-green-500"></i>
+                        <span>Les champs marqués d'un <span class="text-red-500">*</span> sont obligatoires</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <a href="{{ path('app_partenaire_index') }}" 
+                           class="group inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-white text-gray-700 border border-gray-300 shadow-sm hover:shadow-md hover:border-red-400 hover:scale-105">
+                            <i class="fas fa-times text-red-500 group-hover:scale-110 transition-transform"></i>
+                            <span>Annuler</span>
+                        </a>
+                        <button type="submit" 
+                                class="group inline-flex items-center gap-3 px-8 py-3 rounded-xl font-semibold transition-all duration-300 bg-gradient-to-r from-green-600 to-orange-500 text-white shadow-lg hover:shadow-xl hover:scale-105 transform">
+                            <i class="fas fa-plus group-hover:scale-110 transition-transform"></i>
+                            <span>Créer le partenaire</span>
+                            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(input) {
+        const preview = document.getElementById('image-preview');
+        const previewImg = document.getElementById('preview-img');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                preview.classList.remove('hidden');
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.classList.add('hidden');
+        }
+    }
+
+    function clearImagePreview() {
+        const input = document.getElementById('{{ form.logos.vars.id }}');
+        const preview = document.getElementById('image-preview');
+        
+        input.value = '';
+        preview.classList.add('hidden');
+    }
+
+    // Drag and drop functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropZone = document.querySelector('label[for="{{ form.logos.vars.id }}"]');
+        const fileInput = document.getElementById('{{ form.logos.vars.id }}');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            dropZone.classList.add('border-green-500', 'bg-green-50');
+        }
+
+        function unhighlight() {
+            dropZone.classList.remove('border-green-500', 'bg-green-50');
+        }
+
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            fileInput.files = files;
+            previewImage(fileInput);
+        }
+    });
+
+    // Form validation
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const nomField = document.getElementById('{{ form.nom.vars.id }}');
+        if (!nomField.value.trim()) {
+            e.preventDefault();
+            nomField.focus();
+            nomField.classList.add('border-red-500');
+            
+            // Add error message
+            if (!document.querySelector('.nom-error')) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'text-red-500 text-sm flex items-center gap-2 mt-1 nom-error';
+                errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Le nom du partenaire est obligatoire';
+                nomField.parentNode.parentNode.appendChild(errorDiv);
+            }
+        }
+    });
+</script>
+
+<style>
+    .min-h-\[120px\] {
+        min-height: 120px;
+    }
+    
+    /* Custom scrollbar for textarea */
+    textarea::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    textarea::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+    
+    textarea::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 3px;
+    }
+    
+    textarea::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
+    
+    /* Focus styles */
+    input:focus, textarea:focus {
+        outline: none;
+        ring: 2px;
+    }
+</style>
+{% endblock %}

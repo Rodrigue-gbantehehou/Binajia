@@ -91,6 +91,7 @@ class UserController extends AbstractController
             'cardPdf' => $cardPdf,
             'receipts' => $receiptsByPayment,
             'carteActuele' => $carteActuele,
+            'email' => $authUser->getEmail(),
         ];
 
         $tickets = [];

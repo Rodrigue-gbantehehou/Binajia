@@ -222,6 +222,18 @@
                 <span>Paiements</span>
               </a>
             </li>
+            <li>
+              <a href="{{ path('admin_projets_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_projets' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-building w-4 text-green-300"></i>
+                <span>projets</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ path('app_partenaire_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'app_partenaire' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-handshake w-4 text-green-300"></i>
+                <span>Partenaires</span>
+              </a>
+            </li>
             
             <li class="px-2 mt-4 mb-2 text-xs uppercase text-orange-200 tracking-wide font-semibold">Culture</li>
             <li>
@@ -238,12 +250,7 @@
               </a>
             </li>
 
-            <li>
-              <a href="{{ path('admin_projets_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_projets' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
-                <i class="fas fa-project w-4 text-green-300"></i>
-                <span>projets</span>
-              </a>
-            </li>
+            
             
             <li class="px-2 mt-4 mb-2 text-xs uppercase text-orange-200 tracking-wide font-semibold">Configuration</li>
             <li>

@@ -282,94 +282,16 @@
         <!-- Grille des partenaires -->
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" id="partnersGrid">
             <!-- Partenaire 1 -->
+            {% for partenaire in partenaires %}
             <div class="partner-card card-hover" data-category="institution">
                 <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                    <img src="{{ asset('media/partenaire/e.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
+                    <img src="{{ path('secure_upload', {'filename': partenaire.logos}) }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
                 </div>
-                <h3 class="font-bold text-gray-800 mb-2">Institution Publique</h3>
-                <p class="text-sm text-gray-600">Soutien institutionnel</p>
+                <h3 class="font-bold text-gray-800 mb-2">{{ partenaire.nom }}</h3>
+             
             </div>
-
-            <!-- Partenaire 2 -->
-            <div class="partner-card card-hover" data-category="entreprise">
-                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                    <img src="{{ asset('media/partenaire/efa.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
-                </div>
-                <h3 class="font-bold text-gray-800 mb-2">Entreprise Privée</h3>
-                <p class="text-sm text-gray-600">Partenaire économique</p>
-            </div>
-
-            <!-- Partenaire 3 -->
-            <div class="partner-card card-hover" data-category="ong">
-                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                    <img src="{{ asset('media/partenaire/ess.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
-                </div>
-                <h3 class="font-bold text-gray-800 mb-2">ONG & Association</h3>
-                <p class="text-sm text-gray-600">Action sociale</p>
-            </div>
-
-            <!-- Partenaire 4 -->
-            <div class="partner-card card-hover" data-category="culture">
-                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                    <img src="{{ asset('media/partenaire/e.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
-                </div>
-                <h3 class="font-bold text-gray-800 mb-2">Espace Culturel</h3>
-                <p class="text-sm text-gray-600">Promotion artistique</p>
-            </div>
-
-            <!-- Partenaire 5 -->
-            <div class="partner-card card-hover" data-category="education">
-                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                    <img src="{{ asset('media/partenaire/efa.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
-                </div>
-                <h3 class="font-bold text-gray-800 mb-2">Université</h3>
-                <p class="text-sm text-gray-600">Formation & Recherche</p>
-            </div>
-
-            <!-- Partenaire 6 -->
-            <div class="partner-card card-hover" data-category="entreprise">
-                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                    <img src="{{ asset('media/partenaire/ess.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
-                </div>
-                <h3 class="font-bold text-gray-800 mb-2">Startup Innovante</h3>
-                <p class="text-sm text-gray-600">Technologie</p>
-            </div>
-
-            <!-- Partenaire 7 -->
-            <div class="partner-card card-hover" data-category="institution">
-                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                    <img src="{{ asset('media/partenaire/e.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
-                </div>
-                <h3 class="font-bold text-gray-800 mb-2">Organisme Public</h3>
-                <p class="text-sm text-gray-600">Développement local</p>
-            </div>
-
-            <!-- Partenaire 8 -->
-            <div class="partner-card card-hover" data-category="ong">
-                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                    <img src="{{ asset('media/partenaire/efa.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
-                </div>
-                <h3 class="font-bold text-gray-800 mb-2">Association</h3>
-                <p class="text-sm text-gray-600">Solidarité internationale</p>
-            </div>
-
-            <!-- Partenaire 9 -->
-            <div class="partner-card card-hover" data-category="culture">
-                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                    <img src="{{ asset('media/partenaire/ess.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
-                </div>
-                <h3 class="font-bold text-gray-800 mb-2">Centre Culturel</h3>
-                <p class="text-sm text-gray-600">Patrimoine & Création</p>
-            </div>
-
-            <!-- Partenaire 10 -->
-            <div class="partner-card card-hover" data-category="education">
-                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                    <img src="{{ asset('media/partenaire/e.jpeg') }}" alt="Partenaire" class="partner-logo w-full h-full object-contain">
-                </div>
-                <h3 class="font-bold text-gray-800 mb-2">École Supérieure</h3>
-                <p class="text-sm text-gray-600">Formation excellence</p>
-            </div>
+            {% endfor %}
+           
         </div>
 
         <!-- Message quand aucun partenaire ne correspond au filtre -->
