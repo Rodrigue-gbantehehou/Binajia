@@ -29,7 +29,26 @@ final class ProjetsController extends AbstractController
         $form = $this->createForm(ProjetsType::class, $projet);
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $form->get('logos')->getData();
+            if ($file) {
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                //creer le dossier uploads/projets si il n'existe pas
+                if (!file_exists($this->getParameter('kernel.project_dir') . '/var/uploads/projets')) {
+                    mkdir($this->getParameter('kernel.project_dir') . '/var/uploads/projets', 0777, true);
+                }
+                $file->move(
+                    $this->getParameter('kernel.project_dir') . '/var/uploads/projets',
+                    $fileName
+                );
+                $path = 'projets/' . $fileName;
+                $projet->setLogos($path);
+            }
+
+           
             $entityManager->persist($projet);
             $entityManager->flush();
 

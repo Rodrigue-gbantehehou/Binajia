@@ -2,19 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\CulturalContent;
+use App\Entity\User;
+use App\Entity\Projets;
 use App\Entity\Evenement;
 use App\Entity\Reservation;
-use App\Entity\User;
 use App\Form\ReservationType;
 use App\Service\EmailService;
+use App\Entity\CulturalContent;
 use App\Service\PdfGeneratorService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PageController extends AbstractController
 {
@@ -256,6 +257,23 @@ class PageController extends AbstractController
     public function faq(): Response
     {
         return $this->render('pages/faq.html.twig');
+    }
+
+    #[Route('/projets', name: 'app_projets')]
+    public function projets(EntityManagerInterface $entityManager): Response
+    {
+        $projets = $entityManager->getRepository(Projets::class)->findAll();
+        return $this->render('pages/projets.html.twig', [
+            'projets' => $projets,
+        ]);
+    }
+    #[Route('/projets/{id}', name: 'projets_show')]
+    public function show(Projets $projets): Response
+    {
+
+        return $this->render('projets/show.html.twig', [
+            'projet' => $projets,
+        ]);
     }
     
     

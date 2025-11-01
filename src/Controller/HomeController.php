@@ -1,8 +1,9 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\CulturalContent;
+use App\Entity\Projets;
 use App\Entity\Evenement;
+use App\Entity\CulturalContent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -44,11 +45,12 @@ class HomeController extends AbstractController
 
             return 0;
         });
+        $projets = $entityManager->getRepository(Projets::class)->findAll();
 
         $places = $entityManager->getRepository(CulturalContent::class)->findAll();
 
         // Render the redesigned homepage by default
-        return $this->render('home/index_c.html.twig', compact('places','events'));
+        return $this->render('home/index_c.html.twig', compact('places','events','projets'));
     }
 
     #[Route('/home/b', name: 'app_home_b')]
