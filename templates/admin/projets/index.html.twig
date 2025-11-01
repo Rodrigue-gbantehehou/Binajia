@@ -1,0 +1,69 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Projets{% endblock %}
+
+{% block admin_body %}
+  <div class="space-y-6">
+    {# Header Section #}
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+          <i class="fas fa-images text-orange-500 mr-2"></i>Projets
+        </h1>
+        <p class="text-sm md:text-base text-gray-600">Projets</p>
+      </div>
+      <div class="flex items-center gap-2 md:gap-3">
+        <button class="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-base rounded-xl font-semibold transition-all duration-300 bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-green-500">
+          <i class="fas fa-download"></i>
+          <span class="hidden sm:inline">Exporter</span>
+        </button>
+        <a href="{{ path('admin_projets_new') }}" class="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-base rounded-xl font-semibold transition-all duration-300 bg-gradient-to-r from-green-600 to-orange-500 text-white shadow-lg hover:-translate-y-0.5 hover:shadow-xl">
+          <i class="fas fa-plus"></i>
+          <span class="hidden sm:inline">Ajouter</span>
+        </a>
+      </div>
+    </div>
+
+    
+
+ 
+
+    {# projets Grid #}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+      {% for projet in projets %}
+        <a href="{{ path('admin_projets_show', {id: projet.id}) }}" class="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+          <div class="relative h-48 bg-gray-200 overflow-hidden">
+            {% if projet.image %}
+              <img src="{{ path('secure_upload', {'filename': projet.image}) }}" alt="{{ projet.nom }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+           
+            {% else %}
+              <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                <i class="fas fa-image text-gray-400 text-4xl"></i>
+              </div>
+            {% endif %}
+            <div class="absolute top-2 right-2">
+              <span class="px-2 py-1 text-xs font-medium rounded-full {{ projet.type == 'photo' ? 'bg-blue-500' : (projet.type == 'video' ? 'bg-purple-500' : (projet.type == 'event' ? 'bg-green-500' : 'bg-orange-500')) }} text-white">
+                <i class="fas {{ projet.type == 'photo' ? 'fa-image' : (projet.type == 'video' ? 'fa-video' : (projet.type == 'event' ? 'fa-calendar' : 'fa-map-marker-alt')) }} mr-1"></i>
+                {{ projet.type|capitalize }}
+              </span>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-gray-900 mb-1 line-clamp-1">{{ projet.nom }}</h3>
+            <p class="text-sm text-gray-600 line-clamp-2 mb-2">{{ projet.description|default('Aucune description') }}</p>
+            <div class="flex items-center justify-between text-xs text-gray-500">
+              <span><i class="fas fa-clock mr-1"></i>{{ projet.createdAt ? projet.createdAt|date('d/m/Y') : '—' }}</span>
+            </div>
+          </div>
+        </a>
+      {% else %}
+        <div class="col-span-full text-center py-12">
+          <i class="fas fa-images text-gray-300 text-6xl mb-4"></i>
+          <p class="text-gray-500 text-lg">Aucun contenu trouvé</p>
+        </div>
+      {% endfor %}
+    </div>
+
+ 
+  </div>
+{% endblock %}

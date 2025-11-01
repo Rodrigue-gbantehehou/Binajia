@@ -193,7 +193,7 @@ fontFamily: {
 	</head>
 	<body class="min-h-full bg-cream text-charcoal font-sans">
 		{% block header %}
-			<nav class="bg-gradient-to-r from-yellow-500 via-yellow-400 to-green-600 shadow-lg fixed w-full z-50 transition-all duration-300" role="navigation" aria-label="Navigation principale">
+			<nav class="bg-gradient-to-r py-5 from-yellow-500 via-yellow-400 to-green-600 shadow-lg fixed w-full z-50 transition-all duration-300" role="navigation" aria-label="Navigation principale">
 				<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
 
 					<div class="flex items-center">
@@ -204,13 +204,14 @@ fontFamily: {
 							</span>
 						</a>
 					</div>
-					<div class="hidden lg:flex items-center space-x-4">
+					<div class="hidden lg:flex items-center space-x-1 ">
 						<a href="{{ path('app_home') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}">Accueil</a>
 						<a href="{{ path('app_explorer') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_explorer' %}active{% endif %}">Explorer</a>
 						<a href="{{ path('app_social_impact') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_social_impact' %}active{% endif %}">Impact Social</a>
 						<a href="{{ path('app_events') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_events' %}active{% endif %}">Événements</a>
 						<a href="{{ path('app_about') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">A propos</a>
 						<a href="{{ path('app_contact') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">Contact</a>
+						<a href="{{ path('app_avantage') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">Avantages</a>
 						{% if is_granted('ROLE_ADMIN') %}
 							<a href="{{ path('admin_dashboard') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'admin_dashboard' %}active{% endif %}">Admin</a>
 						{% endif %}
@@ -267,6 +268,7 @@ fontFamily: {
 					<a href="{{ path('app_events') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_events' %}active{% endif %}">Événements</a>
 					<a href="{{ path('app_about') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">A propos</a>
 					<a href="{{ path('app_contact') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">Contact</a>
+					<a href="{{ path('app_avantage') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">Avantages</a>
 					{% if is_granted('ROLE_ADMIN') %}
 						<a href="{{ path('admin_dashboard') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'admin_dashboard' %}active{% endif %}">Admin</a>
 					{% endif %}
@@ -474,11 +476,11 @@ fontFamily: {
 										&copy; {{ "now"|date('Y') }} BINAJIA. Tous droits réservés.
 									</p>
 									<div class="flex space-x-4">
-										<a href="#" class="text-sm text-white hover:text-yellow-400 transition-colors">Confidentialité</a>
+										<a href="{{ path('app_legal_privacy') }}" class="text-sm text-white hover:text-yellow-400 transition-colors">Confidentialité</a>
 										<span class="text-gray-600 hidden sm:inline">•</span>
-										<a href="#" class="text-sm text-white hover:text-yellow-400 transition-colors">Conditions</a>
+										<a href="{{ path('app_legal_cgu') }}" class="text-sm text-white hover:text-yellow-400 transition-colors">Conditions</a>
 										<span class="text-gray-600 hidden sm:inline">•</span>
-										<a href="#" class="text-sm text-white hover:text-yellow-400 transition-colors">Mentions légales</a>
+										<a href="{{ path('app_legal_mentions') }}" class="text-sm text-white hover:text-yellow-400 transition-colors">Mentions légales</a>
 									</div>
 								</div>
 
