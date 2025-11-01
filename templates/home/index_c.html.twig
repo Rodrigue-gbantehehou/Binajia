@@ -256,64 +256,61 @@
 	</section>
 
 	{# Nos 6 Projets Phares - Couleurs logo #}
-	<section id="projets" class="py-16 bg-gradient-to-br from-green-600 via-yellow-300 to-green-600 relative overflow-hidden" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9), rgb(255, 174, 0))">
-		<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
-		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+<section id="projets" class="py-16 bg-gradient-to-br from-green-600 via-yellow-300 to-green-600 relative overflow-hidden" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9), rgb(255, 174, 0))">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
 
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-			<div class="text-center mb-12 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
-				<h2 class="font-serif text-4xl font-bold leading-tight  drop-shadow-lg md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-500 via-green-400 to-yellow-500 bg-clip-text text-transparent leading-tight text-center">Nos Six Projets Phares</h2>
-				<h3 class="font-serif text-3xl md:text-4xl font-bold text-green-900 mb-3 mt-3">
-					<span class="bg-white bg-clip-text text-transparent">
-						Construire des ponts par des actions
-					</span>
-				</h3>
-				<p class="text-base md:text-lg text-white max-w-3xl mx-auto leading-relaxed">
-					Des actions tangibles pour relier<span class="font-bold text-yellow-500">
-						cultures</span>,
-					<span class="font-bold text-yellow-500">économies</span>,
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-12 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+            <h2 class="font-serif text-4xl font-bold leading-tight drop-shadow-lg md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-500 via-green-400 to-yellow-500 bg-clip-text text-transparent leading-tight text-center">Nos Six Projets Phares</h2>
+            <h3 class="font-serif text-3xl md:text-4xl font-bold text-green-900 mb-3 mt-3">
+                <span class="bg-white bg-clip-text text-transparent">
+                    Construire des ponts par des actions
+                </span>
+            </h3>
+            <p class="text-base md:text-lg text-white max-w-3xl mx-auto leading-relaxed">
+                Des actions tangibles pour relier <span class="font-bold text-yellow-500">cultures</span>,
+                <span class="font-bold text-yellow-500">économies</span>,
+                <span class="font-bold text-yellow-500">échanges</span>
+                entre le Bénin, le Nigéria, l'Afrique et sa diaspora.
+            </p>
+        </div>
 
-					<span class="font-bold text-yellow-500">échanges</span>
-					entre
-										le Bénin, le Nigéria, l'Afrique et sa diaspora.
-				</p>
-			</div>
-
-			{% set projects = [
-			{ title: 'Binajia Safari', desc: "Semaine de découvertes croisées en Afrique — Jeunes, touristes, voyageurs", img: asset('/media/binajia/binajiasafari.jpeg'), color: 'yellow', impact: '500+ voyageurs/an' },
-			{ title: 'Binajia Lab', desc: "Laboratoire d'innovation (écologie, tech, design) — Jeunes créatifs, étudiants, startups", img: asset('/media/lab.jfif'), color: 'green', impact: '100+ projets innovants' },
-			{ title: 'Exchange Programme', desc: "Programme d'échange pour jeunes leaders et artistes — Étudiants, leaders communautaires", img: asset('/media/exchange.jfif'), color: 'emerald', impact: '200+ leaders formés' },
-			{ title: 'Market Connect', desc: "Plateforme de collaboration économique locale — Artisans, commerçants, femmes", img: asset('/media/market.jfif'), color: 'yellow', impact: '1000+ entrepreneurs' },
-			{ title: 'Culture Fest', desc: "Festival culturel : musique, masques, gastronomie — Grand public, artistes", img: asset('/media/culture.jfif'), color: 'green', impact: '50+ événements/an' },
-			{ title: 'Transit', desc: "Promotion de la libre circulation et des savoirs — Institutions, société civile", img: asset('/media/transit.jfif'), color: 'emerald', impact: 'Libre circulation' }
-		] %}
-
-			<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-				{% for p in projects %}
-					<div class="group relative rounded-3xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 150 }}ms">
-						<div class="absolute inset-0 bg-gradient-to-br from-{{ p.color }}-400/20 to-{{ p.color }}-600/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-						<div class="relative p-6">
-							<div class="mb-5">
-								<div class="w-20 h-20 bg-gradient-to-br from-{{ p.color }}-400 to-{{ p.color }}-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300">
-									<img src="{{ p.img }}" alt="Logo {{ p.title }}" class="w-12 h-12 object-contain rounded-lg">
-								</div>
-							</div>
-							<h3 class="font-bold text-xl text-green-900 mb-2 group-hover:text-{{ p.color }}-600 transition-colors">{{ p.title }}</h3>
-							<p class="text-green-700 mb-3 leading-relaxed">{{ p.desc }}</p>
-							<div class="flex items-center justify-between">
-								<span class="px-3 py-1 bg-{{ p.color }}-100 text-{{ p.color }}-800 text-xs font-bold rounded-full">{{ p.impact }}</span>
-								<a href="#" class="group/btn px-5 py-3 bg-gradient-to-r from-{{ p.color }}-400 to-{{ p.color }}-600 text-white rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-lg">
-									Découvrir
-									<span class="inline-block transition-transform group-hover/btn:translate-x-1 ml-1">→</span>
-								</a>
-							</div>
-						</div>
-					</div>
-				{% endfor %}
-			</div>
-		</div>
-	</section>
-
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for p in projets %}
+                <div class="group relative rounded-3xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up" style="animation-delay: {{ loop.index * 150 }}ms">
+                    <div class="absolute inset-0 bg-gradient-to-br from-green-400/20 to-green-600/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative p-6 flex flex-col h-full">
+                        <div class="mb-5">
+                            <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300">
+                                <img src="{{ path('secure_upload', {'filename': p.logos}) }}" alt="Logo {{ p.nom }}" class="w-12 h-12 object-contain rounded-lg">
+                            </div>
+                        </div>
+                        
+                        <h3 class="font-bold text-xl text-green-900 mb-3 group-hover:text-green-600 transition-colors">{{ p.nom }}</h3>
+                        
+                        {# Description améliorée #}
+                        <div class="flex-grow mb-4">
+                            <p class="text-green-700 leading-relaxed text-sm line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
+                                {{ p.description }}
+                            </p>
+                        </div>
+                        
+                        <div class="mt-auto pt-4 border-t border-green-100">
+                            <div class="flex items-center justify-between">
+                                <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full">{{ p.nom|slice(0, 15) }}{{ p.nom|length > 15 ? '...' : '' }}</span>
+                                <a href="{{ path('projets_show', {'id': p.id}) }}" class="group/btn px-4 py-2 bg-gradient-to-r from-green-400 to-green-600 text-white rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:from-green-500 hover:to-green-700">
+                                    Découvrir
+                                    <span class="inline-block transition-transform group-hover/btn:translate-x-1 ml-1">→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 	{# Mission - Design stable et moderne #}
 	<section id="mission" class="py-14 bg-gradient-to-br from-green-50 via-yellow-50 to-green-50 relative overflow-hidden">
 		<div class="absolute top-0 right-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>

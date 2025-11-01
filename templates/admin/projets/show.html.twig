@@ -1,34 +1,254 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Projets{% endblock %}
+{% block title %}{{ projet.nom }} - Détails du Projet{% endblock %}
 
-{% block body %}
-    <h1>Projets</h1>
+{% block admin_body %}
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-green-50/30 p-6">
+    <div class="max-w-7xl mx-auto">
+      {# Header #}
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
+        <div class="flex items-center gap-4">
+          <a href="{{ path('admin_projets_index') }}" 
+             class="group w-12 h-12 bg-white rounded-xl shadow-lg border border-gray-200 flex items-center justify-center hover:shadow-xl hover:border-green-400 hover:scale-105 transition-all duration-300">
+            <i class="fas fa-arrow-left text-gray-600 group-hover:text-green-500 group-hover:-translate-x-0.5 transition-all"></i>
+          </a>
+          <div class="space-y-2">
+            <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-600 to-orange-500 bg-clip-text text-transparent">
+              {{ projet.nom }}
+            </h1>
+            <p class="text-gray-600 text-lg">Détails et informations du projet</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="{{ path('admin_projets_edit', {id: projet.id}) }}" 
+             class="group inline-flex items-center gap-3 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-gradient-to-r from-green-600 to-orange-500 text-white shadow-lg hover:shadow-xl hover:scale-105">
+            <i class="fas fa-edit group-hover:scale-110 transition-transform"></i>
+            <span>Modifier le projet</span>
+          </a>
+        </div>
+      </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ projet.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ projet.nom }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ projet.description }}</td>
-            </tr>
-            <tr>
-                <th>Logos</th>
-                <td>{{ projet.logos }}</td>
-            </tr>
-        </tbody>
-    </table>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {# Main Content #}
+        <div class="lg:col-span-2 space-y-6">
+          {# Project Image #}
+          {% if projet.logos %}
+            <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div class="relative h-64 md:h-80 bg-gradient-to-br from-gray-100 to-gray-200">
+                <img src="{{ path('secure_upload', {'filename': projet.logos}) }}" 
+                     alt="Image de {{ projet.nom }}" 
+                     class="w-full h-full object-cover">
+                <div class="absolute top-4 right-4">
+                  <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-green-100 text-green-800 border border-green-200 shadow-sm">
+                    <i class="fas fa-circle text-green-500 mr-2 text-xs"></i>
+                    Projet Actif
+                  </span>
+                </div>
+              </div>
+            </div>
+          {% endif %}
 
-    <a href="{{ path('app_projets_index') }}">back to list</a>
+          {# Project Details Card #}
+          <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <div class="p-8 border-b border-gray-100">
+              <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-orange-400 rounded-xl flex items-center justify-center shadow-lg">
+                  <i class="fas fa-info-circle text-white text-xl"></i>
+                </div>
+                <div>
+                  <h2 class="text-xl font-semibold text-gray-900">Informations du projet</h2>
+                  <p class="text-gray-500 text-sm">Détails complets sur le projet</p>
+                </div>
+              </div>
 
-    <a href="{{ path('app_projets_edit', {'id': projet.id}) }}">edit</a>
+              <div class="space-y-6">
+                {# Nom #}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 py-3 border-b border-gray-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <i class="fas fa-tag text-blue-600"></i>
+                    </div>
+                    <div>
+                      <div class="text-sm font-medium text-gray-500">Nom du projet</div>
+                      <div class="text-lg font-semibold text-gray-900">{{ projet.nom }}</div>
+                    </div>
+                  </div>
+                </div>
 
-    {{ include('projets/_delete_form.html.twig') }}
+                {# Description #}
+                <div class="py-3 border-b border-gray-100">
+                  <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i class="fas fa-align-left text-purple-600"></i>
+                    </div>
+                    <div class="flex-1">
+                      <div class="text-sm font-medium text-gray-500 mb-2">Description</div>
+                      <div class="text-gray-700 leading-relaxed">
+                        {{ projet.description ?: 
+                          '<span class="text-gray-400 italic">Aucune description fournie</span>'|raw 
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {# Dates #}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="flex items-center gap-3 py-3">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                      <i class="fas fa-calendar-plus text-green-600"></i>
+                    </div>
+                    
+                  </div>
+
+                  <div class="flex items-center gap-3 py-3">
+                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                      <i class="fas fa-calendar-check text-orange-600"></i>
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {# Activities Section - Placeholder for future features #}
+          <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <div class="p-8">
+              <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
+                  <i class="fas fa-chart-line text-white text-xl"></i>
+                </div>
+                <div>
+                  <h2 class="text-xl font-semibold text-gray-900">Activités récentes</h2>
+                  <p class="text-gray-500 text-sm">Historique des actions sur ce projet</p>
+                </div>
+              </div>
+              
+              <div class="text-center py-8">
+                <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-2xl flex items-center justify-center">
+                  <i class="fas fa-chart-bar text-gray-400 text-2xl"></i>
+                </div>
+                <p class="text-gray-500 mb-2">Aucune activité récente</p>
+                <p class="text-sm text-gray-400">Les activités apparaîtront ici</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {# Sidebar #}
+        <div class="space-y-6">
+          {# Quick Stats #}
+          <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
+              <i class="fas fa-chart-pie text-green-500"></i>
+              Statistiques
+            </h3>
+
+            <div class="space-y-4">
+              <div class="p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border border-blue-200">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <i class="fas fa-calendar-check text-white"></i>
+                  </div>
+                  <div>
+                    <div class="text-sm text-gray-600">Événements associés</div>
+                    <div class="text-2xl font-bold text-gray-900">0</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-xl border border-green-200">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <i class="fas fa-users text-white"></i>
+                  </div>
+                  <div>
+                    <div class="text-sm text-gray-600">Participants totaux</div>
+                    <div class="text-2xl font-bold text-gray-900">0</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl border border-orange-200">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <i class="fas fa-eye text-white"></i>
+                  </div>
+                  <div>
+                    <div class="text-sm text-gray-600">Vues</div>
+                    <div class="text-2xl font-bold text-gray-900">0</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {# Quick Actions #}
+          <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
+              <i class="fas fa-bolt text-orange-500"></i>
+              Actions rapides
+            </h3>
+
+            <div class="space-y-3">
+              <button class="w-full group inline-flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 bg-blue-50 text-blue-700 hover:bg-blue-100 hover:scale-105">
+                <i class="fas fa-map-marked-alt group-hover:scale-110 transition-transform"></i>
+                <span>Voir sur la carte</span>
+              </button>
+
+              <button class="w-full group inline-flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 bg-green-50 text-green-700 hover:bg-green-100 hover:scale-105">
+                <i class="fas fa-share-alt group-hover:scale-110 transition-transform"></i>
+                <span>Partager le projet</span>
+              </button>
+
+              <button class="w-full group inline-flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 bg-purple-50 text-purple-700 hover:bg-purple-100 hover:scale-105">
+                <i class="fas fa-file-export group-hover:scale-110 transition-transform"></i>
+                <span>Exporter les données</span>
+              </button>
+
+              <form method="post" 
+                    action="{{ path('admin_projets_delete', {id: projet.id}) }}" 
+                    onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ? Cette action est irréversible.')"
+                    class="pt-3 border-t border-gray-100">
+                <button type="submit" 
+                        class="w-full group inline-flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 bg-red-50 text-red-700 hover:bg-red-100 hover:scale-105">
+                  <i class="fas fa-trash group-hover:scale-110 transition-transform"></i>
+                  <span>Supprimer le projet</span>
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {# Project Meta #}
+          <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
+              <i class="fas fa-database text-gray-500"></i>
+              Métadonnées
+            </h3>
+
+            <div class="space-y-3 text-sm">
+              <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-gray-600">ID du projet</span>
+                <span class="font-mono text-gray-900 bg-gray-100 px-2 py-1 rounded">#{{ projet.id }}</span>
+              </div>
+              <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-gray-600">Statut</span>
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                  Actif
+                </span>
+              </div>
+              <div class="flex justify-between items-center py-2">
+                <span class="text-gray-600">Visibilité</span>
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                  <i class="fas fa-globe mr-1"></i>
+                  Public
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

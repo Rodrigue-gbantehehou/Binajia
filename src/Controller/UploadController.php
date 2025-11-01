@@ -29,8 +29,10 @@ class UploadController extends AbstractController
         // Empêche les traversals de dossier
         $safeFilename = str_replace(['..', './', '.\\'], '', $filename);
 
-        // Vérifier si c'est un fichier membre (avatars)
+        // Vérifier le type de fichier
         if (str_starts_with($safeFilename, 'membres/')) {
+            $filePath = $this->uploadDir . '/' . $safeFilename;
+        } elseif (str_starts_with($safeFilename, 'projets/')) {
             $filePath = $this->uploadDir . '/' . $safeFilename;
         } else {
             // Fichier media traditionnel

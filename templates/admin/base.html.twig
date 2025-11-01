@@ -230,16 +230,18 @@
                 <span>Événements</span>
               </a>
             </li>
-            <li>
-              <a href="{{ path('admin_places_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_places' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
-                <i class="fas fa-map-marker-alt w-4 text-orange-300"></i>
-                <span>Lieux</span>
-              </a>
-            </li>
+           
             <li>
               <a href="{{ path('admin_cultural_content_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_cultural_content' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
                 <i class="fas fa-images w-4 text-green-300"></i>
-                <span>Galerie</span>
+                <span>lieux culturels</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="{{ path('admin_projets_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_projets' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-project w-4 text-green-300"></i>
+                <span>projets</span>
               </a>
             </li>
             
