@@ -19,7 +19,7 @@ class Partenaire
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $logos = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $description = null;
 
     public function getId(): ?int
