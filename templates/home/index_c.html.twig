@@ -771,15 +771,9 @@
 						<div
 							id="carouselTrack" class="flex gap-6 transition-transform duration-500 ease-out">
 							{# Cartes logos (dupliquées pour avoir assez d'items) #}
-							{% for i in 1..2 %}
+							{% for partenaire in partenaires %}
 								<div class="p-4 bg-white rounded-2xl shadow-md w-40 h-40 sm:w-44 sm:h-44 md:w-48 md:h-48 flex-shrink-0 flex items-center justify-center hover:-translate-y-1 transition-transform duration-300">
-									<img src="{{ asset('media/partenaire/e.jpeg') }}" alt="Partenaire" class="w-full h-full object-contain p-4 opacity-70 hover:opacity-100 transition-opacity">
-								</div>
-								<div class="p-4 bg-white rounded-2xl shadow-md w-40 h-40 sm:w-44 sm:h-44 md:w-48 md:h-48 flex-shrink-0 flex items-center justify-center hover:-translate-y-1 transition-transform duration-300">
-									<img src="{{ asset('media/partenaire/efa.jpeg') }}" alt="Partenaire" class="w-full h-full object-contain p-4 opacity-70 hover:opacity-100 transition-opacity">
-								</div>
-								<div class="p-4 bg-white rounded-2xl shadow-md w-40 h-40 sm:w-44 sm:h-44 md:w-48 md:h-48 flex-shrink-0 flex items-center justify-center hover:-translate-y-1 transition-transform duration-300">
-									<img src="{{ asset('media/partenaire/ess.jpeg') }}" alt="Partenaire" class="w-full h-full object-contain p-4 opacity-70 hover:opacity-100 transition-opacity">
+									<img src="{{ path('secure_upload', {'filename': partenaire.logos}) }}" alt="Partenaire" class="w-full h-full object-contain p-4 opacity-70 hover:opacity-100 transition-opacity">
 								</div>
 							{% endfor %}
 						</div>

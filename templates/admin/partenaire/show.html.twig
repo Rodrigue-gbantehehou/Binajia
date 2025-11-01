@@ -1,0 +1,228 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Détails du Partenaire - {{ partenaire.nom }}{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-green-50/30 p-4 md:p-6">
+    <div class="max-w-4xl mx-auto">
+        {# Header Section #}
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+            <div class="space-y-2">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gradient-to-r from-green-600 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-handshake text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-600 to-orange-500 bg-clip-text text-transparent">
+                            Détails du Partenaire
+                        </h1>
+                        <p class="text-sm md:text-base text-gray-600">Informations complètes sur {{ partenaire.nom }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 md:gap-3">
+                <a href="{{ path('app_partenaire_index') }}" class="group inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-base rounded-xl font-semibold transition-all duration-300 bg-white text-gray-700 border border-gray-200 shadow-sm hover:shadow-md hover:border-green-400 hover:scale-105">
+                    <i class="fas fa-arrow-left text-green-500 group-hover:-translate-x-1 transition-transform"></i>
+                    <span>Retour à la liste</span>
+                </a>
+                <a href="{{ path('app_partenaire_edit', {'id': partenaire.id}) }}" class="group inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-base rounded-xl font-semibold transition-all duration-300 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg hover:shadow-xl hover:scale-105">
+                    <i class="fas fa-edit group-hover:scale-110 transition-transform"></i>
+                    <span>Modifier</span>
+                </a>
+            </div>
+        </div>
+
+        {# Main Content Card #}
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            {# Header with Logo #}
+            <div class="bg-gradient-to-r from-green-50 to-orange-50 p-8 border-b border-gray-100">
+                <div class="flex flex-col md:flex-row md:items-center gap-6">
+                    <div class="flex-shrink-0">
+                        {% if partenaire.logos %}
+                            <div class="w-24 h-24 md:w-32 md:h-32 bg-white border-2 border-white rounded-2xl shadow-lg flex items-center justify-center p-4">
+                                <img src="{{ path('secure_upload', {'filename': partenaire.logos}) }}" 
+                                     alt="{{ partenaire.nom }}" 
+                                     class="w-full h-full object-contain"
+                                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik02NCA0OEw0OCA2NEg4MEw2NCA0OFoiIGZpbGw9IiM4RTkwQTAiLz4KPHBhdGggZD0iTTY0IDQ4TDQ4IDgwSDgwTDY0IDQ4WiIgZmlsbD0iIzhFOTBBMCIvPgo8L3N2Zz4K'">
+                            </div>
+                        {% else %}
+                            <div class="w-24 h-24 md:w-32 md:h-32 bg-white border-2 border-gray-200 rounded-2xl shadow-lg flex items-center justify-center">
+                                <i class="fas fa-handshake text-gray-400 text-3xl"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{{ partenaire.nom }}</h2>
+                        <div class="flex flex-wrap items-center gap-4">
+                            <span class="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
+                                <i class="fas fa-check-circle text-green-600"></i>
+                                Partenaire actif
+                            </span>
+                            <span class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium">
+                                <i class="fas fa-hashtag text-gray-500"></i>
+                                ID: {{ partenaire.id }}
+                            </span>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Details Section #}
+            <div class="p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {# Informations principales #}
+                    <div class="lg:col-span-2 space-y-6">
+                        {# Description #}
+                        <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-file-alt text-green-600 text-sm"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900">Description</h3>
+                            </div>
+                            {% if partenaire.description %}
+                                <p class="text-gray-700 leading-relaxed">{{ partenaire.description }}</p>
+                            {% else %}
+                                <p class="text-gray-500 italic">Aucune description fournie</p>
+                            {% endif %}
+                        </div>
+
+                        {# Informations techniques #}
+                        <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-info-circle text-blue-600 text-sm"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900">Informations techniques</h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <span class="text-sm font-medium text-gray-600">ID du partenaire</span>
+                                    <span class="text-sm font-mono text-gray-900">{{ partenaire.id }}</span>
+                                </div>
+                                <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <span class="text-sm font-medium text-gray-600">Statut</span>
+                                    <span class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
+                                        <i class="fas fa-circle text-green-500 text-xs"></i>
+                                        Actif
+                                    </span>
+                                </div>
+                             
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Sidebar Actions #}
+                    <div class="space-y-6">
+                        {# Actions rapides #}
+                        <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Actions</h3>
+                            <div class="space-y-3">
+                                <a href="{{ path('app_partenaire_edit', {'id': partenaire.id}) }}" 
+                                   class="group w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-blue-50 text-blue-700 rounded-xl font-semibold transition-all duration-300 hover:bg-blue-100 hover:scale-105 border border-blue-200">
+                                    <i class="fas fa-edit group-hover:scale-110 transition-transform"></i>
+                                    Modifier le partenaire
+                                </a>
+                                <a href="{{ path('app_partenaire_index') }}" 
+                                   class="group w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 text-gray-700 rounded-xl font-semibold transition-all duration-300 hover:bg-gray-100 hover:scale-105 border border-gray-200">
+                                    <i class="fas fa-list group-hover:scale-110 transition-transform"></i>
+                                    Voir tous les partenaires
+                                </a>
+                                <button onclick="document.getElementById('delete-modal').classList.remove('hidden')"
+                                        class="group w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-red-50 text-red-700 rounded-xl font-semibold transition-all duration-300 hover:bg-red-100 hover:scale-105 border border-red-200">
+                                    <i class="fas fa-trash group-hover:scale-110 transition-transform"></i>
+                                    Supprimer le partenaire
+                                </button>
+                            </div>
+                        </div>
+
+                        {# Logo Preview #}
+                        {% if partenaire.logos %}
+                        <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Logo</h3>
+                            <div class="bg-gray-50 rounded-xl p-4 border-2 border-dashed border-gray-200 flex items-center justify-center">
+                                <img src="{{ path('secure_upload', {'filename': partenaire.logos}) }}" 
+                                     alt="{{ partenaire.nom }}" 
+                                     class="max-w-full max-h-32 object-contain"
+                                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik02NCA0OEw0OCA2NEg4MEw2NCA0OFoiIGZpbGw9IiM4RTkwQTAiLz4KPHBhdGggZD0iTTY0IDQ4TDQ4IDgwSDgwTDY0IDQ4WiIgZmlsbD0iIzhFOTBBMCIvPgo8L3N2Zz4K'">
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Delete Confirmation Modal #}
+<div id="delete-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform transition-all duration-300 scale-95">
+        <div class="text-center">
+            <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Confirmer la suppression</h3>
+            <p class="text-gray-600 mb-6">
+                Êtes-vous sûr de vouloir supprimer le partenaire <strong>"{{ partenaire.nom }}"</strong> ? 
+                Cette action est irréversible.
+            </p>
+            <div class="flex items-center justify-center gap-3">
+                <button onclick="document.getElementById('delete-modal').classList.add('hidden')"
+                        class="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-colors">
+                    Annuler
+                </button>
+                {{ include('admin/partenaire/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Smooth transitions for modal */
+    #delete-modal {
+        backdrop-filter: blur(4px);
+    }
+    
+    #delete-modal:not(.hidden) {
+        animation: fadeIn 0.3s ease-out;
+    }
+    
+    #delete-modal > div {
+        animation: slideUp 0.3s ease-out;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+        from { 
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+        }
+        to { 
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+</style>
+
+<script>
+    // Close modal when clicking outside
+    document.getElementById('delete-modal')?.addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.add('hidden');
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.getElementById('delete-modal')?.classList.add('hidden');
+        }
+    });
+</script>
+{% endblock %}

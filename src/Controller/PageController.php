@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Projets;
 use App\Entity\Evenement;
+use App\Entity\Partenaire;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Service\EmailService;
@@ -153,12 +154,6 @@ class PageController extends AbstractController
         ]);
     }
 
-    //page partenaire
-    #[Route('/partenaire', name: 'app_partenaire')]
-    public function partenaire(): Response
-    {
-        return $this->render('pages/partenaire.html.twig');
-    }
 
     // Social Impact page
     #[Route('/impact-social', name: 'app_social_impact')]
@@ -167,6 +162,7 @@ class PageController extends AbstractController
         return $this->render('pages/social_impact.html.twig');
     }
 
+    // routes explorer
     #[Route('/explorer', name: 'app_explorer')]
     public function explorer(EntityManagerInterface $em, Request $request, PdfGeneratorService $pdfGeneratorService, EmailService $emailService): Response
     {
@@ -216,49 +212,16 @@ class PageController extends AbstractController
         ]);
     }
 
-    // Project Pages
-    #[Route('/projets/binajia-travel-week', name: 'app_project_travel_week')]
-    public function projectTravelWeek(): Response
-    {
-        return $this->render('projects/travel_week.html.twig');
-    }
+    
 
-    #[Route('/projets/binajia-lab', name: 'app_project_lab')]
-    public function projectLab(): Response
-    {
-        return $this->render('projects/lab.html.twig');
-    }
-
-    #[Route('/projets/exchange-programme', name: 'app_project_exchange')]
-    public function projectExchange(): Response
-    {
-        return $this->render('projects/exchange.html.twig');
-    }
-
-    #[Route('/projets/market-connect', name: 'app_project_market')]
-    public function projectMarket(): Response
-    {
-        return $this->render('projects/market.html.twig');
-    }
-
-    #[Route('/projets/culture-fest', name: 'app_project_culture')]
-    public function projectCulture(): Response
-    {
-        return $this->render('projects/culture.html.twig');
-    }
-
-    #[Route('/projets/transit', name: 'app_project_transit')]
-    public function projectTransit(): Response
-    {
-        return $this->render('projects/transit.html.twig');
-    }
-
+    // routes des faq
      #[Route('/faq', name: 'app_faq')]
     public function faq(): Response
     {
         return $this->render('pages/faq.html.twig');
     }
 
+    // routes des projets
     #[Route('/projets', name: 'app_projets')]
     public function projets(EntityManagerInterface $entityManager): Response
     {
@@ -275,6 +238,25 @@ class PageController extends AbstractController
             'projet' => $projets,
         ]);
     }
+
+    // routes des partenaire
+    #[Route('/partenaire', name: 'app_partenaire')]
+    public function partenaire(EntityManagerInterface $entityManager): Response
+    {
+        $partenaires = $entityManager->getRepository(Partenaire::class)->findAll();
+        return $this->render('pages/partenaire.html.twig', [
+            'partenaires' => $partenaires,
+        ]);
+    }
+    #[Route('/partenaire/{id}', name: 'partenaire_show')]
+    public function showpartenaire(EntityManagerInterface $entityManager, Partenaire $partenaire): Response
+    {
+        $partenaire = $entityManager->getRepository(Partenaire::class)->find($partenaire->getId());
+        return $this->render('partenaire/show.html.twig', [
+            'partenaire' => $partenaire,
+        ]);
+    }
+
     
     
 }
