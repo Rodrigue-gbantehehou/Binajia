@@ -3,193 +3,212 @@
 {% block title %}Avantages - Binajia{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gradient-to-br from-green-50 via-green-100 to-yellow-50">
+<div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-yellow-50">
     <!-- Hero Section -->
-    <section class="relative py-20 text-white overflow-hidden" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9), rgb(255, 174, 0))">
-        <div class="absolute inset-0">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
-            <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+    <section class="relative py-24 text-white overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-green-600 via-emerald-600 to-yellow-500"></div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-10 left-10 w-32 h-32 bg-yellow-300 rounded-full opacity-20 blur-3xl animate-float"></div>
+            <div class="absolute top-40 right-20 w-48 h-48 bg-green-400 rounded-full opacity-15 blur-3xl animate-float" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-white rounded-full opacity-10 blur-2xl animate-float" style="animation-delay: 4s;"></div>
         </div>
+
         <div class="container mx-auto px-4 relative z-10">
-            <div class="max-w-4xl mx-auto text-center">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                    Les avantages à devenir membre de Binajia
+            <div class="max-w-6xl mx-auto text-center">
+              
+                <h1 class="text-6xl md:text-7xl font-bold text-gray-900 drop-shadow-lg font-extrabold mb-6 leading-tight bg-gradient-to-r from-green-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">
+                    Avantages
+                    Exclusifs
                 </h1>
-                <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-                    Rejoindre Binajia, c'est bien plus qu'adhérer à une association — c'est entrer dans un réseau vivant, engagé et tourné vers l'avenir.
+                
+                <p class="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed">
+                    Rejoindre Binajia, c'est intégrer un réseau vivant, engagé et tourné vers l'avenir de l'Afrique
+                </p>
+
+               
+            </div>
+        </div>
+    </section>
+
+    <!-- Avantages Principaux -->
+    <section class="py-20 bg-gradient-to-br from-white via-green-50/30 to-yellow-50/30">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 drop-shadow-lg font-extrabold mb-6 leading-tight bg-gradient-to-r from-green-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">
+                    Vos <span class="bg-gradient-to-r from-green-600 to-yellow-600 bg-clip-text text-transparent">Privilèges</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Découvrez tous les avantages réservés à nos membres
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% set avantages = [
+                    {
+                        icon: 'M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5z',
+                        title: 'Accès Prioritaire',
+                        description: 'Accès prioritaire aux événements Binajia : festivals, forums, voyages, célébrations, ateliers',
+                        color: 'yellow'
+                    },
+                    {
+                        icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+                        title: 'Carte de Membre',
+                        description: 'Carte de membre personnalisée avec reconnaissance officielle de votre statut',
+                        color: 'green'
+                    },
+                    {
+                        icon: 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+                        title: 'Réseau International',
+                        description: 'Participation à des projets transfrontaliers en Afrique et dans la diaspora',
+                        color: 'yellow'
+                    },
+                    {
+                        icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.478 3 6.252v13C4.168 18.497 5.754 18 7.5 18s3.332.497 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.497 18.247 18 16.5 18c-1.746 0-3.332.497-4.5 1.253',
+                        title: 'Contenus Exclusifs',
+                        description: 'Accès à des ressources culturelles, historiques et éducatives uniques',
+                        color: 'green'
+                    },
+                    {
+                        icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
+                        title: 'Réseautage',
+                        description: 'Rencontres avec des artistes, entrepreneurs et porteurs de projets inspirants',
+                        color: 'yellow'
+                    },
+                    {
+                        icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z',
+                        title: 'Visibilité',
+                        description: 'Mise en avant de vos initiatives et projets personnels',
+                        color: 'green'
+                    }
+                ] %}
+
+                {% for avantage in avantages %}
+                <div class="group bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                    <div class="p-8">
+                        <div class="w-20 h-20 bg-gradient-to-br from-{{ avantage.color }}-100 to-{{ avantage.color }}-50 rounded-2xl flex items-center justify-center mb-6 mx-auto transform group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-10 h-10 text-{{ avantage.color }}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ avantage.icon }}"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-center mb-4 text-gray-800 group-hover:text-{{ avantage.color }}-600 transition-colors">
+                            {{ avantage.title }}
+                        </h3>
+                        <p class="text-gray-600 text-center leading-relaxed">
+                            {{ avantage.description }}
+                        </p>
+                    </div>
+                    <div class="h-1 bg-gradient-to-r from-{{ avantage.color }}-400 to-{{ avantage.color }}-600 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Pourquoi nous rejoindre -->
+    <section class="py-20 bg-gradient-to-br from-green-600 via-emerald-600 to-green-700 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-300 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-400 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-6xl mx-auto text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black mb-6 text-4xl md:text-5xl font-bold text-gray-900 drop-shadow-lg font-extrabold mb-6 leading-tight bg-gradient-to-r from-green-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">
+                    Pourquoi devenir membre ?
+                </h2>
+                <p class="text-xl text-white/80 max-w-2xl mx-auto">
+                    Découvrez les raisons qui font de Binajia une communauté unique
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                {% set raisons = [
+                    {
+                        icon: 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+                        title: 'Vivre l\'Afrique autrement',
+                        description: 'Entre authenticité, engagement et rayonnement'
+                    },
+                    {
+                        icon: 'M13 10V3L4 14h7v7l9-11h-7z',
+                        title: 'Un mouvement porteur',
+                        description: 'Enraciné dans nos valeurs, ouvert sur le monde'
+                    },
+                    {
+                        icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
+                        title: 'Grandir ensemble',
+                        description: 'Dans le respect des cultures et des mémoires'
+                    }
+                ] %}
+
+                {% for raison in raisons %}
+                <div class="group text-center p-8 rounded-2xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-500 transform hover:scale-105 border border-white/20">
+                    <div class="w-24 h-24 bg-yellow-400/20 rounded-2xl flex items-center justify-center mb-6 mx-auto transform group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-12 h-12 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ raison.icon }}"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">{{ raison.title }}</h3>
+                    <p class="text-yellow-100 text-lg leading-relaxed">{{ raison.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA Final -->
+    <section class="py-20 bg-gradient-to-br from-green-50 via-white to-yellow-50">
+        <div class="container mx-auto px-4 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-black text-gray-800 mb-6 text-4xl md:text-5xl font-bold text-gray-900 drop-shadow-lg font-extrabold mb-6 leading-tight bg-gradient-to-r from-green-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">
+                    Rejoignez l'aventure Binajia
+                </h2>
+                <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+                    Portez la carte. Partagez la vision. Construisons ensemble l'Afrique de demain.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-6">
+                    <a href="{{ path('app_membership') }}" 
+                       class="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-bold rounded-2xl text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        <span class="flex items-center">
+                            Devenir membre
+                            <svg class="ml-3 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </span>
+                    </a>
+                    
+                    <a href="{{ path('app_contact') }}" 
+                       class="group inline-flex items-center justify-center px-8 py-4 border-2 border-green-600 text-green-700 hover:bg-green-600 hover:text-white font-bold rounded-2xl text-lg transition-all duration-300 transform hover:scale-105">
+                        <span class="flex items-center">
+                            Nous contacter
+                            <svg class="ml-3 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+                
+                <p class="text-gray-500 mt-8 text-sm">
+                    Déjà plus de 1000 membres nous font confiance
                 </p>
             </div>
         </div>
     </section>
-
-    <!-- Introduction -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <p class="text-center text-lg md:text-xl text-gray-700 leading-relaxed">
-                En tant que membre, vous bénéficiez d'un ensemble d'avantages concrets, symboliques et relationnels qui renforcent votre lien avec l'Afrique, ses diasporas et ses territoires.
-            </p>
-        </div>
-    </section>
-
-    <!-- Avantages Principaux -->
-    <!-- Avantages Principaux -->
-<section class="py-16 bg-gradient-to-br from-green-50 via-yellow-50 to-white">
-    <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-4">Vos privilèges</h2>
-            <div class="w-24 h-1.5 bg-yellow-400 mx-auto rounded-full"></div>
-        </div>
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Avantage 1 -->
-            <div class="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
-                <div class="p-6">
-                    <div class="w-16 h-16 bg-yellow-50 rounded-xl flex items-center justify-center mb-4 mx-auto transform group-hover:-translate-y-1 transition-transform duration-300">
-                        <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Accès prioritaire</h3>
-                    <p class="text-gray-600 text-center text-sm leading-relaxed">Accès prioritaire aux événements Binajia : festivals, forums, voyages, célébrations, ateliers.</p>
-                </div>
-            </div>
-
-            <!-- Avantage 2 -->
-            <div class="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
-                <div class="p-6">
-                    <div class="w-16 h-16 bg-green-50 rounded-xl flex items-center justify-center mb-4 mx-auto transform group-hover:-translate-y-1 transition-transform duration-300">
-                        <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Carte de membre</h3>
-                    <p class="text-gray-600 text-center text-sm leading-relaxed">Carte de membre personnalisée avec reconnaissance officielle de votre statut.</p>
-                </div>
-            </div>
-
-            <!-- Avantage 3 -->
-            <div class="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
-                <div class="p-6">
-                    <div class="w-16 h-16 bg-yellow-50 rounded-xl flex items-center justify-center mb-4 mx-auto transform group-hover:-translate-y-1 transition-transform duration-300">
-                        <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Réseau international</h3>
-                    <p class="text-gray-600 text-center text-sm leading-relaxed">Participation à des projets transfrontaliers en Afrique et dans la diaspora.</p>
-                </div>
-            </div>
-
-            <!-- Avantage 4 -->
-            <div class="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
-                <div class="p-6">
-                    <div class="w-16 h-16 bg-green-50 rounded-xl flex items-center justify-center mb-4 mx-auto transform group-hover:-translate-y-1 transition-transform duration-300">
-                        <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.478 3 6.252v13C4.168 18.497 5.754 18 7.5 18s3.332.497 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.497 18.247 18 16.5 18c-1.746 0-3.332.497-4.5 1.253" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Contenus exclusifs</h3>
-                    <p class="text-gray-600 text-center text-sm leading-relaxed">Accès à des ressources culturelles, historiques et éducatives uniques.</p>
-                </div>
-            </div>
-
-            <!-- Avantage 5 -->
-            <div class="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
-                <div class="p-6">
-                    <div class="w-16 h-16 bg-yellow-50 rounded-xl flex items-center justify-center mb-4 mx-auto transform group-hover:-translate-y-1 transition-transform duration-300">
-                        <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Réseautage</h3>
-                    <p class="text-gray-600 text-center text-sm leading-relaxed">Rencontres avec des artistes, entrepreneurs et porteurs de projets inspirants.</p>
-                </div>
-            </div>
-
-            <!-- Avantage 6 -->
-            <div class="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
-                <div class="p-6">
-                    <div class="w-16 h-16 bg-green-50 rounded-xl flex items-center justify-center mb-4 mx-auto transform group-hover:-translate-y-1 transition-transform duration-300">
-                        <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Visibilité</h3>
-                    <p class="text-gray-600 text-center text-sm leading-relaxed">Mise en avant de vos initiatives et projets personnels.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-  <!-- Pourquoi nous rejoindre -->
-<section class="py-20" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9))">
-    <div class="container mx-auto px-4">
-        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-white">Pourquoi devenir membre ?</h2>
-        
-        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <!-- Carte 1 -->
-            <div class="text-center p-8 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 group">
-                <div class="w-24 h-24 bg-yellow-400/20 rounded-2xl flex items-center justify-center mb-6 mx-auto transform group-hover:scale-110 transition-transform duration-300">
-                    <svg class="w-12 h-12 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold mb-3 text-white">Vivre l'Afrique autrement</h3>
-                <p class="text-yellow-100">Entre authenticité, engagement et rayonnement.</p>
-            </div>
-            
-            <!-- Carte 2 -->
-            <div class="text-center p-8 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 group">
-                <div class="w-24 h-24 bg-yellow-400/20 rounded-2xl flex items-center justify-center mb-6 mx-auto transform group-hover:scale-110 transition-transform duration-300">
-                    <svg class="w-12 h-12 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold mb-3 text-white">Un mouvement porteur</h3>
-                <p class="text-yellow-100">Enraciné dans nos valeurs, ouvert sur le monde.</p>
-            </div>
-            
-            <!-- Carte 3 -->
-            <div class="text-center p-8 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 group">
-                <div class="w-24 h-24 bg-yellow-400/20 rounded-2xl flex items-center justify-center mb-6 mx-auto transform group-hover:scale-110 transition-transform duration-300">
-                    <svg class="w-12 h-12 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold mb-3 text-white">Grandir ensemble</h3>
-                <p class="text-yellow-100">Dans le respect des cultures et des mémoires.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <!-- CTA Final -->
-    <section id="rejoindre" class="py-20 bg-white">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-6">Binajia – Unis pour grandir ensemble</h2>
-            <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">Rejoignez-nous. Portez la carte. Partagez la vision.</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="{{ path('app_membership') }}" 
-                   class="group px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-400 hover:from-yellow-300 hover:to-yellow-400 text-green-900 font-bold rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-                    <span class="flex items-center justify-center">
-                        Devenir membre
-                        <svg class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                        </svg>
-                    </span>
-                </a>
-                <a href="{{ path('app_contact') }}" 
-                   class="group px-8 py-4 border-2 border-green-600 text-green-700 hover:bg-green-50 font-bold rounded-full text-lg transition-all duration-300 transform hover:scale-105">
-                    <span class="flex items-center justify-center">
-                        Nous contacter
-                    </span>
-                </a>
-            </div>
-        </div>
-    </section>
 </div>
+
+<style>
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -202,10 +221,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, { threshold: 0.1 });
 
-    // Observer chaque section
-    document.querySelectorAll('section > div').forEach(section => {
-        section.classList.add('opacity-0', 'translate-y-8', 'transition-all', 'duration-700', 'ease-out');
-        observer.observe(section);
+    // Observer chaque carte d'avantage
+    document.querySelectorAll('.grid > div').forEach(card => {
+        card.classList.add('opacity-0', 'translate-y-8', 'transition-all', 'duration-700', 'ease-out');
+        observer.observe(card);
+    });
+
+    // Observer les sections principales
+    document.querySelectorAll('section').forEach(section => {
+        const content = section.querySelector('.container');
+        if (content) {
+            content.classList.add('opacity-0', 'translate-y-8', 'transition-all', 'duration-700', 'ease-out');
+            observer.observe(content);
+        }
     });
 });
 </script>
