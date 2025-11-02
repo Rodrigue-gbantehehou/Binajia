@@ -283,6 +283,7 @@ class RegistrationController extends AbstractController
             }
         }
 
+
         // Check if card was generated successfully
         if (!$cardGenerated) {
             return $this->json([
@@ -293,13 +294,10 @@ class RegistrationController extends AbstractController
 
         // Build the redirect URL with parameters
         $redirectUrl = $this->generateUrl('app_membership_card_generated', ['id' => $user->getId()]);
-        $redirectUrl .= '?plan=' . urlencode($plan) . '&avatar=' . urlencode($this->getRelativePath($avatarPath));
-
-
 
         return $this->json([
             'ok' => true,
-            'redirect' => $redirectUrl, // URL simple sans paramètres
+            'redirectUrl' => $redirectUrl, // URL simple sans paramètres
             'message' => 'Adhésion réussie'
         ]);
     }

@@ -309,7 +309,7 @@ async function confirmMembership(){
     const data = await res.json();
     if (!res.ok || !data.ok) { throw new Error(data.message||'Erreur lors de l\'inscription'); }
     // redirect to generated card page
-    window.location.href = data.cardUrl + '?plan=' + encodeURIComponent(selectedPlan||'standard') + (data.avatar?('&avatar='+encodeURIComponent(data.avatar)):'');
+    window.location.href = data.redirectUrl;
   } catch(e) {
     alert('Impossible de finaliser l\'adhésion: '+ e.message);
   } finally { hideLoader(); }
