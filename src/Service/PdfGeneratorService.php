@@ -45,20 +45,50 @@ class PdfGeneratorService
         $options->set('isHtml5ParserEnabled', true);
         $options->set('isPhpEnabled', false); // par sécurité
         $options->set('isFontSubsettingEnabled', true);
-        $options->set('defaultMediaType', 'screen');
+        $options->set('defaultMediaType', 'print'); // Changé de 'screen' à 'print' pour un meilleur rendu PDF
         $options->set('isCssFloatEnabled', true);
         $options->set('isJavascriptEnabled', false);
-
-        // 🔐 Chroot limité aux assets nécessaires (si tu veux charger des images depuis public/)
+        $options->set('isRemoteEnabled', true);
+        
+        // Chemin absolu vers le répertoire public
+        $publicDir = realpath(__DIR__ . '/../../public');
+        
+        // 🔐 Configuration des chemins autorisés
         $options->setChroot([
             $this->uploadDir,
-            __DIR__ . '/../../public', // utile si tes templates Twig chargent des logos ou styles depuis public/
+            $publicDir,
+            '/',  // Nécessaire pour certaines configurations serveur
         ]);
+        
+        // Définir le répertoire de base pour les URLs
+        $options->set('basePath', $publicDir);
+        
+        // Convertir les chemins relatifs en absolus dans les paramètres
+        foreach ($params as $key => $value) {
+            if (is_string($value) && strpos($value, 'media/') === 0) {
+                $params[$key] = $publicDir . '/' . $value;
+            }
+        }
 
         $dompdf = new Dompdf($options);
+        
+        // Rendre le template avec les paramètres
         $html = $this->twig->render($template, $params);
+        
+        // Remplacer les chemins des assets
+        $html = str_replace(
+            ['src="media/', 'src="/media/'],
+            ['src="' . $publicDir . '/media/', 'src="' . $publicDir . '/media/'],
+            $html
+        );
+        
         $dompdf->loadHtml($html, 'UTF-8');
         $dompdf->setPaper($paper, $orientation);
+        
+        // Augmenter la mémoire et le temps d'exécution pour les gros documents
+        @ini_set('memory_limit', '512M');
+        @set_time_limit(120);
+        
         $dompdf->render();
         $pdfOutput = $dompdf->output();
 
