@@ -1,10 +1,161 @@
 {% extends 'base.html.twig' %}
 {% block title %}Politique de confidentialité — Binajia{% endblock %}
 {% block content %}
-<section class="pt-24 pb-16">
-  <div class="max-w-5xl mx-auto px-4">
-    <h1 class="font-serif text-3xl font-bold mb-6">Politique de confidentialité</h1>
-    <p class="text-gray-700">Collecte, traitement et conservation des données personnelles.</p>
+<section class="pt-24 pb-16 bg-gray-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- En-tête -->
+    <div class="text-center mb-12">
+      <h1 class="font-serif text-4xl md:text-5xl font-bold drop-shadow-lg bg-gradient-to-r from-green-500 via-yellow-500 to-green-500 bg-clip-text text-transparent mb-4">Politique de confidentialité</h1>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">Collecte, traitement et conservation des données personnelles</p>
+    </div>
+    
+    <!-- Introduction -->
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+      <p class="text-lg text-gray-700 leading-relaxed">
+        Chez Binajia, nous accordons une importance fondamentale à la protection des données personnelles, 
+        à la transparence et au respect des personnes. Cette politique explique comment nous collectons, 
+        utilisons et protégeons vos informations.
+      </p>
+    </div>
+    
+    <!-- Contenu principal -->
+    <div class="space-y-8">
+      <!-- Section Collecte des données -->
+      <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+        <div class="flex items-start p-6">
+          <div class="flex-shrink-0 mr-4 mt-1">
+            <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
+              <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Collecte des données</h2>
+            <p class="text-gray-700 mb-4">Nous collectons uniquement les informations nécessaires à :</p>
+            <ul class="list-disc pl-5 text-gray-700 space-y-2">
+              <li>L'inscription aux programmes et événements</li>
+              <li>La délivrance de la carte de membre</li>
+              <li>La communication avec les participants, partenaires et institutions</li>
+              <li>L'amélioration de nos services et de nos contenus</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Section Utilisation des données -->
+      <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+        <div class="flex items-start p-6">
+          <div class="flex-shrink-0 mr-4 mt-1">
+            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Utilisation des données</h2>
+            <p class="text-gray-700">
+              Les données collectées sont utilisées exclusivement dans le cadre des activités de Binajia.
+              Elles ne sont ni vendues, ni partagées à des tiers sans consentement explicite, 
+              sauf en cas d'obligation légale ou de partenariat clairement identifié.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Section Consentement et droits -->
+      <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+        <div class="flex items-start p-6">
+          <div class="flex-shrink-0 mr-4 mt-1">
+            <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
+              <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Consentement et droits des utilisateurs</h2>
+            <p class="text-gray-700 mb-4">Chaque membre ou participant peut :</p>
+            <ul class="list-disc pl-5 text-gray-700 space-y-2">
+              <li>Accéder à ses données personnelles</li>
+              <li>Demander leur modification ou leur suppression</li>
+              <li>Retirer son consentement à tout moment</li>
+              <li>S'opposer à certaines utilisations (communication, statistiques, etc.)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Section Sécurité -->
+      <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+        <div class="flex items-start p-6">
+          <div class="flex-shrink-0 mr-4 mt-1">
+            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Sécurité des données</h2>
+            <p class="text-gray-700">
+              Binajia met en œuvre des mesures techniques et organisationnelles pour protéger les données 
+              contre tout accès non autorisé, perte ou altération. Les informations sensibles sont traitées 
+              avec rigueur et confidentialité.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Section Engagement éthique -->
+      <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+        <div class="flex items-start p-6">
+          <div class="flex-shrink-0 mr-4 mt-1">
+            <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
+              <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Engagement éthique</h2>
+            <p class="text-gray-700">
+              Binajia s'engage à respecter les lois en vigueur en matière de protection des données, 
+              notamment au Bénin, au Nigéria et dans les pays partenaires. Nous privilégions une approche 
+              responsable, inclusive et respectueuse des réalités locales.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section Contact -->
+    <div class="mt-12 bg-green-50 rounded-xl p-6 border border-green-100">
+      <div class="flex items-center">
+        <div class="flex-shrink-0 mr-4">
+          <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Questions sur la confidentialité ?</h3>
+          <p class="text-gray-700 mb-4">
+            Pour toute question relative à la confidentialité ou à vos données personnelles, 
+            vous pouvez nous contacter via notre page de contact.
+          </p>
+          <a href="{{ path('app_contact') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+            Nous contacter
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Date de mise à jour -->
+    <div class="mt-8 text-center text-gray-500 text-sm">
+      Dernière mise à jour : {{ "now"|date("d/m/Y") }}
+    </div>
   </div>
 </section>
 {% endblock %}

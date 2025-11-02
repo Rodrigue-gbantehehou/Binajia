@@ -16,6 +16,9 @@ class LegalController extends AbstractController
     #[Route('/confidentialite', name: 'app_legal_privacy')]
     public function privacy(): Response { return $this->render('legal/privacy.html.twig'); }
 
+    #[Route('/engagement-ethique', name: 'app_engagement_ethique')]
+    public function engagement(): Response { return $this->render('legal/engagement.html.twig'); }
+
     #[Route('/faq', name: 'app_faq')]
     public function faq(): Response { return $this->render('legal/faq.html.twig'); }
 }

@@ -3,37 +3,32 @@
 {% endblock %}
 {% block content %}
 	<!-- Bannière d'en-tête -->
-	<section
-		class="relative bg-gradient-to-br from-green-600 via-green-700 to-yellow-500 relative overflow-hidden">
-		<!-- Background Pattern -->
-		<div class="absolute inset-0 opacity-10">
-			<div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.1&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-		</div>
+	<section class="relative py-24 text-white overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-green-600 via-emerald-600 to-yellow-500"></div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-10 left-10 w-32 h-32 bg-yellow-300 rounded-full opacity-20 blur-3xl animate-float"></div>
+            <div class="absolute top-40 right-20 w-48 h-48 bg-green-400 rounded-full opacity-15 blur-3xl animate-float" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-white rounded-full opacity-10 blur-2xl animate-float" style="animation-delay: 4s;"></div>
+        </div>
 
-		<!-- Floating Shapes -->
-		<div class="absolute inset-0 pointer-events-none overflow-hidden">
-			<div class="absolute top-20 left-10 w-24 h-24 bg-white/10 rounded-full blur-xl animate-pulse"></div>
-			<div class="absolute top-40 right-20 w-32 h-32 bg-emerald-300/20 rounded-full blur-2xl animate-pulse" style="animation-delay: 1s;"></div>
-			<div class="absolute bottom-20 left-20 w-16 h-16 bg-white/10 rounded-full blur-lg animate-pulse" style="animation-delay: 2s;"></div>
-			<div class="absolute top-60 left-1/2 w-20 h-20 bg-yellow-300/15 rounded-full blur-xl animate-pulse" style="animation-delay: 3s;"></div>
-		</div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-6xl mx-auto text-center">
+              
+                <h1 class="text-6xl md:text-7xl font-bold text-gray-900 drop-shadow-lg font-extrabold mb-6 leading-tight bg-gradient-to-r from-green-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">
+                    Contactez-nous
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-white/90 mb-2 max-w-3xl mx-auto leading-relaxed">
+                    Nous sommes là pour répondre à toutes vos questions et discuter de collaborations futures.
+                </p>
 
-		<div class="max-w-7xl mx-auto relative py-14 z-10">
-			<div class="text-center  ">
-				<!-- Badge -->
-				<!-- Main Headline -->
-					<h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight bg-gradient-to-r from-green-500 via-yellow-500 to-green-500 bg-clip-text text-transparent"> Contactez-nous
-				</h1>
-				<h3 class="font-serif text-1xl md:text-2xl font-bold text-gray-600 ">
-					<span class="bg-white bg-clip-text text-transparent">
-						Nous sommes là pour répondre à toutes vos questions <br> et discuter de collaborations futures.
-					</span>
-				</h3>
-				<!-- Subtitle -->
-			
-			</div>
-		</div>
-	</section>
+               
+            </div>
+        </div>
+    </section>
+	
 
 	<!-- Section principale -->
 	<section class="py-16 bg-white">

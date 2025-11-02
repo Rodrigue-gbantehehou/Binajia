@@ -206,12 +206,12 @@
     }
 </style>
 <!-- Hero Section -->
-<section class="relative bg-gradient-to-br from-green-600 via-green-700 to-yellow-500 relative overflow-hidden">
+<section class="relative py-20 bg-gradient-to-br from-green-600 via-green-700 to-yellow-500 relative overflow-hidden">
     <!-- Background Pattern -->
-    <div class="absolute inset-0 opacity-10">
+    <div class="absolute  inset-0 opacity-10">
         <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.1&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
     </div>
-    <div class="max-w-7xl mx-auto relative py-14 z-10">
+    <div class="max-w-7xl mx-auto relative py-20 z-10">
         <div class="text-center text-white ">
             <!-- Badge -->
             <!-- Main Headline -->
@@ -226,40 +226,14 @@
     </div>
 </section>
 
-<!-- Stats Overview -->
-<section class="py-16 px-4 -mt-20 relative z-20">
-    <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-2 lg:grid-cols-5 gap-6">
-            <div class="stats-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
-                <div class="text-5xl font-black text-green-600 mb-3">25+</div>
-                <p class="text-gray-600 font-semibold">Institutions Publiques</p>
-            </div>
-            <div class="stats-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
-                <div class="text-5xl font-black text-yellow-600 mb-3">40+</div>
-                <p class="text-gray-600 font-semibold">Entreprises Privées</p>
-            </div>
-            <div class="stats-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
-                <div class="text-5xl font-black text-green-600 mb-3">30+</div>
-                <p class="text-gray-600 font-semibold">ONG & Associations</p>
-            </div>
-            <div class="stats-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
-                <div class="text-5xl font-black text-yellow-600 mb-3">20+</div>
-                <p class="text-gray-600 font-semibold">Espaces Culturels</p>
-            </div>
-            <div class="stats-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
-                <div class="text-5xl font-black text-green-600 mb-3">15+</div>
-                <p class="text-gray-600 font-semibold">Universités</p>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 <!-- Liste des Partenaires -->
 <section class="py-14 px-4 bg-white">
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-black text-gray-800 mb-6">
-                Tous nos <span class="gradient-text">Partenaires</span>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-800 mb-6 drop-shadow-lg bg-gradient-to-r from-green-500 via-yellow-500 to-green-500 bg-clip-text text-transparent leading-tight">
+                Tous nos Partenaires
             </h2>
             <div class="section-divider mb-6"></div>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -267,17 +241,6 @@
             </p>
         </div>
 
-        <!-- Filtres par catégorie -->
-        <div class="flex justify-center mb-12">
-            <div class="category-filter">
-                <button class="filter-btn active" data-filter="all">Tous</button>
-                <button class="filter-btn" data-filter="institution">Institutions</button>
-                <button class="filter-btn" data-filter="entreprise">Entreprises</button>
-                <button class="filter-btn" data-filter="ong">ONG & Associations</button>
-                <button class="filter-btn" data-filter="culture">Culture</button>
-                <button class="filter-btn" data-filter="education">Éducation</button>
-            </div>
-        </div>
 
         <!-- Grille des partenaires -->
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" id="partnersGrid">
@@ -320,6 +283,33 @@
               
                 <span>Contactez-nous</span>
             </a>
+        </div>
+    </div>
+</section>
+<!-- Stats Overview -->
+<section class="py-16 px-4 -mt-20 relative ">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-6">
+            <div class="stat-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
+                <div class="text-5xl font-black text-green-600 mb-3">25+</div>
+                <p class="text-gray-600 font-semibold">Institutions Publiques</p>
+            </div>
+            <div class="stat-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
+                <div class="text-5xl font-black text-yellow-600 mb-3">40+</div>
+                <p class="text-gray-600 font-semibold">Entreprises Privées</p>
+            </div>
+            <div class="stat-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
+                <div class="text-5xl font-black text-green-600 mb-3">30+</div>
+                <p class="text-gray-600 font-semibold">ONG & Associations</p>
+            </div>
+            <div class="stat-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
+                <div class="text-5xl font-black text-yellow-600 mb-3">20+</div>
+                <p class="text-gray-600 font-semibold">Espaces Culturels</p>
+            </div>
+            <div class="stat-card p-6 rounded-2xl shadow-xl text-center col-span-2 lg:col-span-1">
+                <div class="text-5xl font-black text-green-600 mb-3">15+</div>
+                <p class="text-gray-600 font-semibold">Universités</p>
+            </div>
         </div>
     </div>
 </section>
