@@ -5,9 +5,7 @@
 {% block content %}
 
 	{# Hero Section #}
-
-	<section
-		class="relative bg-gradient-to-br from-green-600 via-green-700 to-yellow-500 relative overflow-hidden">
+	<section class="relative bg-gradient-to-br from-green-600 via-green-700 to-yellow-500 relative overflow-hidden">
 		<!-- Background Pattern -->
 		<div class="absolute inset-0 opacity-10">
 			<div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.1&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
@@ -45,28 +43,56 @@
 			<div class="space-y-8">
 				{% set faqs = [
         {
-          question: " Qu'est-ce que Binajia?",
-          answer: "Binajia est un réseau de jeunes ambassadeurs dédié à l'intégration socioculturelle entre le Bénin, le Nigéria et l'Afrique. Le projet vise à créer des ponts durables entre les peuples à travers des initiatives culturelles, économiques et éducatives."
+          question: "Qu'est-ce que Binajia ?",
+          answer: "Binajia est une initiative qui relie les peuples, les idées et les projets entre le Bénin, le Nigéria, l'ensemble du territoire africain et ses diasporas. Elle agit à travers des programmes culturels, économiques, éducatifs et solidaires, avec pour objectif de favoriser l'unité, la coopération et l'action concrète."
         },
         {
-          question: " Qui peut rejoindre Binajia?",
-          answer: "Le réseau est ouvert à:<br>• Jeunes artistes, étudiants, entrepreneurs<br>• Leaders communautaires et porteurs de projets<br>• Institutions éducatives, culturelles et diplomatiques"
+          question: "Quelle est la mission de Binajia ?",
+          answer: "Binajia vise à créer des ponts entre les territoires africains et leurs diasporas, à valoriser les talents locaux et les savoirs partagés, à soutenir une économie inclusive, et à promouvoir la libre circulation des personnes, des idées et des biens dans le respect des lois et des réalités locales."
         },
         {
-          question: " Quels sont les programmes proposés?",
-          answer: "Binajia propose six programmes principaux:<br>• <strong>Travel Week</strong>: tourisme et échanges culturels<br>• <strong>Lab</strong>: innovation locale (écologie, tech, design)<br>• <strong>Exchange</strong>: mobilité des jeunes leaders et artistes<br>• <strong>Culture Fest</strong>: festival multiculturel<br>• <strong>Market Connect</strong>: collaboration économique locale<br>• <strong>Transit</strong>: libre circulation des savoirs et des talents"
+          question: "Qui peut participer aux activités de Binajia ?",
+          answer: "Binajia est ouvert à tous : jeunes, femmes, artistes, entrepreneurs, étudiants, chercheurs, voyageurs, membres de la diaspora, institutions, ONG et collectivités locales. Chacun peut s'impliquer selon son profil et ses aspirations."
         },
         {
-          question: " Comment devenir partenaire ou soutenir Binajia?",
-          answer: "Vous pouvez:<br>• Accueillir un programme dans votre structure<br>• Soutenir la logistique, la diffusion ou les échanges<br>• Contribuer à la valorisation de l'identité régionale commune<br><br>📧 Contact: <a href='mailto:ibrahimakpanon@gmail.com' class='text-green-600 hover:text-green-700 font-semibold'>ibrahimakpanon@gmail.com</a><br>📞 Téléphone: 01 62 77 24 24"
+          question: "Où Binajia est-il actif ?",
+          answer: "Binajia agit principalement entre le Bénin et le Nigéria, tout en s'étendant à l'ensemble du continent africain. L'initiative est également ouverte à la diaspora et aux partenaires internationaux, avec une volonté de connecter l'Afrique au monde sans perdre ses racines."
         },
         {
-          question: " Binajia est-il soutenu par des institutions?",
-          answer: "Oui. Binajia collabore avec:<br>• Les ministères des Affaires étrangères, du Tourisme et de la Culture<br>• Des centres culturels, ambassades et fondations internationales<br>• Des programmes régionaux de jeunesse et de coopération Sud-Sud"
+          question: "Quels sont les programmes proposés ?",
+          answer: "Binajia propose plusieurs programmes complémentaires :<br>• <strong>Binajia Travel Week</strong> : visites guidées certifiées pour découvrir les territoires, les cultures et les initiatives locales.<br>• <strong>Binajia Lab</strong> : laboratoire d'innovation en écologie, technologie et design.<br>• <strong>Exchange Programme</strong> : échanges pour jeunes leaders, artistes et étudiants.<br>• <strong>Market Connect</strong> : plateforme de collaboration économique.<br>• <strong>Culture Fest</strong> : festival culturel grand public.<br>• <strong>Transit</strong> : initiative pour faciliter la libre circulation des personnes, des savoirs et des marchandises."
         },
         {
-          question: " Où suivre les actualités de Binajia?",
-          answer: "Les informations sont disponibles sur:<br>• Le site officiel de Binajia (en cours de développement)<br>• Les réseaux sociaux du projet<br>• Les plateformes partenaires et médias culturels"
+          question: "Comment devenir membre de Binajia ?",
+          answer: "Pour devenir membre, il suffit de remplir le formulaire d'adhésion en ligne ou lors d'un événement Binajia. Une fois inscrit, vous recevrez une carte de membre officielle, valable un an, renouvelable chaque année. Cette carte vous identifie comme acteur du réseau Binajia et vous donne accès à des avantages exclusifs."
+        },
+        {
+          question: "Quels sont les avantages de la carte de membre ?",
+          answer: "La carte de membre Binajia vous permet de :<br>• Participer activement aux programmes et événements<br>• Bénéficier de réductions sur les visites guidées, les formations et les produits partenaires<br>• Recevoir des invitations prioritaires aux festivals, forums et ateliers<br>• Accéder à des ressources pratiques, des contenus exclusifs et des appels à projets<br>• Être mis en relation avec des partenaires, mentors, institutions et entrepreneurs<br>• Obtenir une reconnaissance symbolique au sein du réseau Binajia"
+        },
+        {
+          question: "La carte de membre est-elle payante ?",
+          answer: "Une contribution annuelle peut être demandée selon le profil du membre (étudiant, professionnel, institution). Cette contribution permet de soutenir les activités de Binajia et d'assurer la qualité des services proposés. Des tarifs solidaires et des exonérations sont possibles selon les situations."
+        },
+        {
+          question: "Comment faire un don à Binajia ?",
+          answer: "Vous pouvez soutenir les actions de Binajia en cliquant sur le bouton 'Faire un don' sur notre site ou en nous contactant directement. Chaque contribution aide à financer des projets concrets, inclusifs et durables portés par les communautés locales."
+        },
+        {
+          question: "Comment devenir partenaire ou collaborateur ?",
+          answer: "Binajia collabore avec des institutions publiques et privées, des ONG, des fondations, des artistes, des chercheurs, des entrepreneurs et des collectivités locales. Si vous souhaitez proposer une collaboration, vous pouvez nous contacter via la page dédiée aux partenariats ou par email : <a href='mailto:ibrahimakpanon@gmail.com' class='text-green-600 hover:text-green-700 font-semibold'>ibrahimakpanon@gmail.com</a>"
+        },
+        {
+          question: "Binajia est-il une organisation officielle ?",
+          answer: "Oui. Binajia fonctionne avec des partenaires reconnus, des guides certifiés, des structures locales et régionales, dans le respect des lois, des protocoles et des réalités locales. L'initiative est structurée, transparente et engagée."
+        },
+        {
+          question: "Comment rester informé(e) ?",
+          answer: "Pour suivre l'actualité de Binajia, vous pouvez vous abonner à notre newsletter, nous suivre sur les réseaux sociaux (Facebook, Instagram, LinkedIn, WhatsApp), et consulter régulièrement notre site web pour découvrir les appels à projets, les événements et les nouvelles opportunités."
+        },
+        {
+          question: "Comment contacter Binajia ?",
+          answer: "Vous pouvez nous contacter via notre formulaire en ligne, par email ou par WhatsApp. Binajia est également présent physiquement dans certaines villes du Bénin et du Nigéria, avec des relais locaux et des partenaires sur le terrain.<br><br>📧 Email : <a href='mailto:ibrahimakpanon@gmail.com' class='text-green-600 hover:text-green-700 font-semibold'>ibrahimakpanon@gmail.com</a><br>📞 Téléphone : 01 62 77 24 24"
         }
       ] %}
 
@@ -96,7 +122,6 @@
 			</div>
 		</div>
 	</section>
-
 
 	<script>
 		// FAQ Toggle functionality

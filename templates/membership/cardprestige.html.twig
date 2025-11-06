@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<title>Carte Membre BINAJIA</title>
+<style>
+body { 
+    font-family: DejaVu Sans, Arial, sans-serif; 
+    margin: 0; 
+    padding: 20px; 
+    background: #fff; 
+}
+.card-container { 
+    width: 100%; 
+}
+
+.card-box {
+    
+    width: 450px; 
+    height: 280px;
+    margin: 0 auto 20px;
+    border: 1px solid #d4d4d4;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    page-break-inside: avoid;
+}
+
+/* RECTO */
+.card-header {
+    background: #f59e0b;
+    height: 60px;
+    padding: 8px 14px;
+    border-bottom: 1px solid #f59e0b;
+    display: table; 
+    width: 100%;
+    box-sizing: border-box;
+}
+.header-left, .header-right { 
+    display: table-cell; 
+    vertical-align: middle; 
+}
+.header-left, .header-text{
+    
+    position:relative;
+    top: 5px;
+    
+    
+}
+
+.header-left img { 
+    width: 55px; 
+    height: 55px; 
+    border-radius: 50%; 
+    margin-right: 8px; 
+    float: left; 
+    top: 9px;
+    
+}
+.header-text { 
+  
+    float: left; 
+}
+.header-title { 
+    color: #083a2a; 
+    font-size: 28px; 
+    font-weight: 900; 
+    line-height: 19px; 
+    
+}
+.header-subtitle { 
+    font-size: 14px; 
+    text-transform: uppercase; 
+    color: #083a2a; 
+    letter-spacing: 1px; 
+}
+
+.header-right img { 
+    width: 55px; 
+    border-radius: 4px; 
+    float: right; 
+}
+
+.card-body {
+    background: #ac6c00;
+    background-size: contain;
+    height: 220px;
+    color: #fff;
+    padding: 10px 14px;
+    display: table;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.col { 
+    display: table-cell; 
+    vertical-align: top; 
+}
+
+.left-col { 
+    width: 100px; 
+    text-align: center; 
+    padding-right: 5px;
+}
+.middle-col { 
+    width: 180px; 
+    padding: 0 8px; 
+}
+.right-col { 
+    width: 120px; 
+    text-align: center;
+    padding-left: 5px;
+}
+
+.card-photo {
+    width: 78px; 
+    height: 95px; 
+    border-radius: 6px;
+    border: 1px solid #f59e0b;
+    overflow: hidden; 
+    background: #fff; 
+    margin: 4px auto;
+    position: relative;
+}
+.member-id { 
+    background: rgba(245, 158, 11, 0.1); 
+    border: 1px solid #f59e0b; 
+    padding: 2px 4px; 
+    font-size: 8px; 
+    border-radius: 4px; 
+    margin-top: 4px; 
+    display: inline-block; 
+}
+.role { 
+    font-size: 7px; 
+    font-weight: 900; 
+    text-transform: uppercase; 
+    margin-top: 3px; 
+    line-height: 1.1;
+}
+
+.name-card { 
+    font-size: 15px; 
+    font-weight: 800; 
+    color: #f59e0b; 
+    text-align: right; 
+
+}
+.tagline { 
+    font-size:18px; 
+    font-style: italic; 
+    opacity: 0.9; 
+    text-align: right; 
+}
+.member-name { 
+    font-size: 14px; 
+    font-weight: 900; 
+    margin-bottom: 8px; 
+    color: #fff; 
+    text-align: left; 
+    line-height: 1.2;
+}
+
+.detail-section {
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.detail-label {
+    font-size: 8px;
+    color: #003515;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.detail-value {
+    font-size: 10px;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.detail-row { 
+       text-align: left; 
+}
+.field-label { 
+    color: #f59e0b; 
+    font-weight: bold;
+    font-size: 9px;
+   
+}
+.field-value { 
+    color: #fff; 
+    font-weight: bold;
+    font-size: 10px;
+   
+}
+
+.qr-code { 
+    width: 85px; 
+    height: 85px; 
+    border-radius: 6px; 
+    background: #fff; 
+    border: 2px solid #f59e0b; 
+    padding: 2px; 
+    margin-top: 8px;
+    display: inline-block;
+}
+
+.card-footer {
+    position: absolute;
+    bottom:39px;
+    left: 14px;
+    right: 14px;
+    font-size: 9px;
+    padding-top: 5px;
+}
+
+/* VERSO */
+.card-verso { 
+    background: #ab6b01; 
+    color: #fff; 
+    text-align: center; 
+}
+.verso-logo { 
+    width: 110px; 
+}
+.back-title { 
+    font-size: 25px; 
+    color: #003515; 
+    font-weight: 800; 
+    text-transform: uppercase; 
+}
+.back-card{
+    position:relative;
+    top:50px;
+}
+.back-subtitle{
+font-style:italic;
+font-size:12px;
+}
+.back-text{
+    font-size:12px;
+    font-style:italic;
+}
+
+/* Section contact */
+.contact-section {
+    width: 100%;
+    max-width: 350px;
+    padding: 15px;
+    background: rgba(8, 58, 42, 0.7);
+    border-radius: 8px;
+    border: 2px solid #f59e0b;
+}
+
+.contact-title {
+    font-size: 14px;
+    color: #f59e0b;
+    font-weight: bold;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.contact-info {
+    font-size: 11px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.contact-item {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact-type {
+    color: #f59e0b;
+    font-weight: bold;
+    font-size: 11px;
+    text-align: left;
+    flex: 1;
+}
+
+.contact-detail {
+    color: #fff;
+    font-size: 11px;
+    text-align: right;
+    flex: 1;
+    font-weight: bold;
+}
+
+.emergency-note {
+    font-size: 10px;
+    font-style: italic;
+    color: #f59e0b;
+    margin-top: 15px;
+    text-align: center;
+    border-top: 1px solid rgba(245, 158, 11, 0.5);
+    padding-top: 10px;
+    line-height: 1.3;
+    font-weight: bold;
+}
+
+.membership-text {
+    font-size: 7px;
+    text-transform: uppercase;
+    font-weight: 900;
+    margin-bottom: 2px;
+    line-height: 1.1;
+}
+
+/* Styles spécifiques pour DOMpdf */
+.photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 8px;
+}
+
+.qr-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f59e0b;
+    font-size: 7px;
+    border: 2px solid #f59e0b;
+    border-radius: 6px;
+}
+
+.footer-contact {
+    text-align: right;
+    font-size: 9px;
+    line-height: 1.3;
+}
+
+.footer-contact strong {
+    color: #f59e0b;
+}
+</style>
+</head>
+
+<body>
+<div class="card-container">
+
+    <!-- RECTO -->
+    <div class="card-box">
+        <div class="card-header">
+            <div class="header-left">
+                <img src="{{ asset('media/binajia/logopng.png') }}" style="width:55px;height:55px;">
+                <div class="header-text" >
+                    <div class="header-title">BINAJIA</div>
+                    <div class="header-subtitle">PRESTIGE CARD</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="{{ asset('media/binajia/carteafrique.png') }}" style="width:55px;border-radius:4px;">
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="col left-col">
+                <div class="membership-text">
+                    Carte de membre<br>Membership
+                </div>
+
+                <div class="card-photo">
+                    {% if avatar %}
+                        <img src="{{ avatar }}" style="width:100%;height:100%;object-fit:cover;">
+                    {% else %}
+                        <div class="photo-placeholder">PHOTO</div>
+                    {% endif %}
+                </div>
+
+                <div class="role">{{ roleBadge }}</div>
+                <div class="member-id">ID: {{ memberId }}</div>
+            </div>
+
+            <div class="col middle-col">
+                <div class="detail-row">
+                    <div class="field-label">Nom / Name</div>
+                    <div class="field-value">{{ name }}</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="field-label">Tel / Phone</div>
+                    <div class="field-value">{{ phone }}</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="field-label">Nationalité / Nationality</div>
+                    <div class="field-value">{{ nationality }}</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="field-label">Date d'adhesion / Join Date</div>
+                    <div class="field-value">{{ joinDate }}</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="field-label">Date Exp / Exp</div>
+                    <div class="field-value">{{ expiry }}</div>
+                </div>
+            </div>
+
+            <div class="col right-col">
+                {% if qrCode %}
+                    <img src="{{ qrCode }}" class="qr-code" style="width:85px;height:85px;">
+                {% else %}
+                    <div class="qr-placeholder">QR CODE</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="card-footer">
+            <div class="footer-contact">
+                <strong>contact@binajia.org</strong><br>
+                <strong>(+229) 01 46 10 10 50</strong><br>
+                <strong>(+234) 707 047 7730</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- VERSO -->
+    <div class="card-box card-verso">
+        <div class="back-card">
+             <img src="{{ asset('media/binajia/logopng.png') }}" class="verso-logo" >
+        <div class="back-title">BINAJIA</div>
+        <div class="back-subtitle">United to grow together</div>
+        <div class="back-text">unis pour grandir ensemble</div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

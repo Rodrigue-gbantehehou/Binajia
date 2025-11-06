@@ -123,8 +123,7 @@ class RegistrationController extends AbstractController
 
 
 
-        // Build a member ID like BjNg-YYYY-000{id}
-        $memberId = sprintf('BjNg-%s-%03d', (new \DateTime())->format('Y'), $user->getId());
+        
 
         // Photo is required: handled by FileUploader service (crop 3:4, resize 300x400)
         $tempAvatarPath = null;
@@ -146,6 +145,17 @@ class RegistrationController extends AbstractController
         }
         $em->flush(); // Flush final pour obtenir l'ID définitif
 
+        // Récupérer l'ID
+        $id = $user->getId();
+
+        // Code unique (3 chiffres)
+        $uniq = random_int(100, 999);
+
+        // Année sur 2 chiffres
+        $year = date('y'); // "25" si 2025
+
+        // Construction finale
+        $memberId = sprintf('B%d%d%sJ', $id, $uniq, $year);
         // Maintenant renommer l'avatar avec le bon ID utilisateur
         try {
             $finalAvatarPath = $fileUploader->renameTempAvatarToFinal($tempAvatarPath, (int)$user->getId());
@@ -228,7 +238,7 @@ class RegistrationController extends AbstractController
             if (is_string($finalStatus) && in_array(strtolower($finalStatus), ['approved', 'succeeded', 'success', 'paid'])) {
                 try {
                     // Générer la carte et le reçu + persister en base via le service
-                    $result = $membershipCardService->generateAndPersist($user, $payment, $avatarPath, $memberId);
+                    $result = $membershipCardService->generateAndPersist($user, $payment, $avatarPath, $memberId, $plan);
                     $cardGenerated = true;
                     $cardPdfUrl = $result['cardPdfUrl'];
                     $receiptPdfPath = $result['receiptPdfPath'];
@@ -271,7 +281,7 @@ class RegistrationController extends AbstractController
         // If no payment or not approved yet, still generate the card PDF and persist entity (without receipt)
         if (!$cardGenerated) {
             try {
-                $membershipCardService->generateAndPersist($user, null, $avatarPath, $memberId);
+                $membershipCardService->generateAndPersist($user, null, $avatarPath, $memberId, $plan);
                 $cardGenerated = true; // ✅ Mark as generated
             } catch (\Throwable $e) {
                 // Log errors but do not block the flow
@@ -309,12 +319,12 @@ class RegistrationController extends AbstractController
         if (!$user) {
             throw $this->createNotFoundException('Utilisateur introuvable');
         }
-        
+
         // 🔧 NOUVELLE FONCTIONNALITÉ : Vérifier l'authentification automatique
         $session = $request->getSession();
         $sessionUserId = $session->get('user_id');
         $sessionToken = $session->get('session_token');
-        
+
         // Si l'utilisateur n'est pas authentifié via session normale, vérifier l'auto-auth
         if (!$this->getUser() && $sessionUserId && $sessionToken) {
             if ($sessionUserId == $user->getId()) {
@@ -322,8 +332,8 @@ class RegistrationController extends AbstractController
                 try {
                     $this->container->get('security.token_storage')->setToken(
                         new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken(
-                            $user, 
-                            'main', 
+                            $user,
+                            'main',
                             $user->getRoles()
                         )
                     );
@@ -333,7 +343,7 @@ class RegistrationController extends AbstractController
                 }
             }
         }
-        
+
         $memberId = sprintf('BjNg-%s-%03d', (new \DateTime())->format('Y'), $user->getId());
 
         $memberCard = $em->getRepository(MembershipCards::class)->findOneBy(['user' => $user]);
