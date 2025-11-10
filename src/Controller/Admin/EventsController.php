@@ -63,6 +63,7 @@ class EventsController extends AbstractController
             $ed = $request->request->get('endDate');
             $e->setStartDate($sd ? new \DateTime($sd) : null);
             $e->setEndDate($ed ? new \DateTime($ed) : null);
+            $e->setIsOnline(true);
 
             // Handle image upload
             $imageFile = $request->files->get('image');
