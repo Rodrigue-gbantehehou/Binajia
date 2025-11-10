@@ -90,6 +90,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'utilisateur')]
     private Collection $reservations;
 
+    /**
+     * @var Collection<int, Don>
+     */
+    #[ORM\OneToMany(targetEntity: Don::class, mappedBy: 'membre')]
+    private Collection $dons;
+
     public function __construct()
     {
         $this->membershipCards = new ArrayCollection();
@@ -99,6 +105,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->passwordResetTokens = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->reservations = new ArrayCollection();
+        $this->dons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -410,6 +417,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($passwordResetToken->getUser() === $this) {
                 $passwordResetToken->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Don>
+     */
+    public function getDons(): Collection
+    {
+        return $this->dons;
+    }
+
+    public function addDon(Don $don): static
+    {
+        if (!$this->dons->contains($don)) {
+            $this->dons->add($don);
+            $don->setMembre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDon(Don $don): static
+    {
+        if ($this->dons->removeElement($don)) {
+            // set the owning side to null (unless already changed)
+            if ($don->getMembre() === $this) {
+                $don->setMembre(null);
             }
         }
 

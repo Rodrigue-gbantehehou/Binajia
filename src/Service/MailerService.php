@@ -44,4 +44,29 @@ class MailerService
 
         $this->mailer->send($email);
     }
+    public function sendDonationReceipt(string $to, string $subject, string $htmlContent, ?string $receiptPdfPath = null, ?string $receiptFileName = null): void
+    {
+        $fromAddress = $_ENV['MAIL_FROM_ADDRESS']
+            ?? $_SERVER['MAIL_FROM_ADDRESS']
+            ?? $_ENV['MAIL_FROM_ADRESS']
+            ?? $_SERVER['MAIL_FROM_ADRESS']
+            ?? 'no-reply@binajia.org';
+        $fromName = $_ENV['MAIL_FROM_NAME']
+            ?? $_SERVER['MAIL_FROM_NAME']
+            ?? 'BINAJIA';
+
+        $email = (new Email())
+            ->from(sprintf('%s <%s>', $fromName, $fromAddress))
+            ->to($to)
+            ->subject($subject)
+            ->html($htmlContent);
+
+        // Ajouter le reçu en pièce jointe
+        if ($receiptPdfPath && file_exists($receiptPdfPath)) {
+            $receiptName = $receiptFileName ?? ('reçu_' . basename($receiptPdfPath));
+            $email->attachFromPath($receiptPdfPath, $receiptName, 'application/pdf');
+        }
+
+        $this->mailer->send($email);
+    }
 }

@@ -3,451 +3,489 @@
 {% endblock %}
 
 {% block content %}
-	<style>
-		body {
-			font-family: 'Open Sans', sans-serif;
+<style>
+	body {
+		font-family: 'Open Sans', sans-serif;
+	}
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-family: 'Montserrat', sans-serif;
+	}
+
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
 		}
-		h1,
-		h2,
-		h3,
-		h4 {
-			font-family: 'Montserrat', sans-serif;
+		to {
+			opacity: 1;
+			transform: translateY(0);
 		}
+	}
 
-		@keyframes fadeInUp {
-			from {
-				opacity: 0;
-				transform: translateY(30px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
+	@keyframes float {
+		0,
+		100% {
+			transform: translateY(0);
 		}
-
-		@keyframes float {
-			0,
-			100% {
-				transform: translateY(0);
-			}
-			50% {
-				transform: translateY(-10px);
-			}
+		50% {
+			transform: translateY(-10px);
 		}
+	}
 
-		.animate-fade-in-up {
-			animation: fadeInUp 0.8s ease-out forwards;
-		}
+	.animate-fade-in-up {
+		animation: fadeInUp 0.8s ease-out forwards;
+	}
 
-		.animate-float {
-			animation: float 3s ease-in-out infinite;
-		}
+	.animate-float {
+		animation: float 3s ease-in-out infinite;
+	}
 
-		.hero-overlay {
-			background: linear-gradient(135deg, rgba(0, 135, 29, 0.85), rgba(0, 135, 81, 0.75), rgba(255, 174, 0, 0.85));
-		}
+	.hero-overlay {
+		background: linear-gradient(135deg, rgba(0, 135, 29, 0.85), rgba(0, 135, 81, 0.75), rgba(255, 174, 0, 0.85));
+	}
 
-		.card-hover {
-			transition: all 0.3s ease;
-		}
+	.card-hover {
+		transition: all 0.3s ease;
+	}
 
-		.card-hover:hover {
-			transform: translateY(-8px);
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-		}
+	.card-hover:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+	}
 
-		.feature-icon {
-			transition: transform 0.3s ease;
-		}
+	.feature-icon {
+		transition: transform 0.3s ease;
+	}
 
-		.feature-card:hover .feature-icon {
-			transform: scale(1.1) rotate(5deg);
-		}
+	.feature-card:hover .feature-icon {
+		transform: scale(1.1) rotate(5deg);
+	}
 
-		.section-divider {
-			width: 80px;
-			height: 4px;
-			background: linear-gradient(to right, #00871d, #ffae00);
-			margin: 0 auto;
-		}
+	.section-divider {
+		width: 80px;
+		height: 4px;
+		background: linear-gradient(to right, #00871d, #ffae00);
+		margin: 0 auto;
+	}
 
-		.experience-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-			gap: 1.5rem;
-		}
+	.experience-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 1.5rem;
+	}
 
-		.experience-item {
-			background: rgba(255, 255, 255, 0.1);
-			backdrop-filter: blur(10px);
-			border: 1px solid rgba(255, 255, 255, 0.2);
-			border-radius: 1rem;
-			padding: 1.5rem;
-			transition: all 0.3s ease;
-		}
+	.experience-item {
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 1rem;
+		padding: 1.5rem;
+		transition: all 0.3s ease;
+	}
 
-		.experience-item:hover {
-			background: rgba(255, 255, 255, 0.2);
-			transform: translateY(-5px);
-		}
-	</style>
+	.experience-item:hover {
+		background: rgba(255, 255, 255, 0.2);
+		transform: translateY(-5px);
+	}
+</style>
 
-	<!-- Hero Section -->
-	<header class="relative overflow-hidden bg-cover bg-center min-h-screen flex items-center" style="background-image: url('{{ asset('media/binajia/amazone.jpg') }}');">
-		<div class="hero-overlay absolute inset-0"></div>
+<!-- Hero Section -->
+<header class="relative overflow-hidden bg-cover bg-center min-h-screen flex items-center" style="background-image: url('{{ asset('media/binajia/amazone.jpg') }}');">
+	<div class="hero-overlay absolute inset-0"></div>
 
-		<div class="relative z-5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white py-1">
-			<div class="animate-fade-in-up" style="animation-delay: 0.1s;">
-				<div class="inline-flex items-center justify-center mb-8 animate-float">
-					<i data-feather="globe" class="w-16 h-16 text-yellow-400"></i>
-				</div>
-				<h1 class="text-5xl md:text-7xl drop-shadow-lg font-extrabold mb-6 leading-tight bg-gradient-to-r from-green-500 via-yellow-500 to-green-500 bg-clip-text text-transparent ">
-					<span class="block mb-2">Explorez Binajia</span>
-					<span class="block ">Découvrez l'Afrique</span>
-				</h1>
+	<div class="relative z-5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white py-1">
+		<div class="animate-fade-in-up" style="animation-delay: 0.1s;">
+			<div class="inline-flex items-center justify-center mb-8 animate-float">
+				<i data-feather="globe" class="w-16 h-16 text-yellow-400"></i>
+			</div>
+			<h1 class="text-5xl md:text-7xl drop-shadow-lg font-extrabold mb-6 leading-tight bg-gradient-to-r from-green-500 via-yellow-500 to-green-500 bg-clip-text text-transparent ">
+				<span class="block mb-2">Explorez Binajia</span>
+				<span class="block ">Découvrez l'Afrique</span>
+			</h1>
 
-				<p class="text-2xl md:text-3xl font-semibold mb-8">
-					Le tourisme local, régional et africain à travers des aventures guidées et authentiques
+			<p class="text-2xl md:text-3xl font-semibold mb-8">
+				Le tourisme local, régional et africain à travers des aventures guidées et authentiques
+			</p>
+
+			<div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 max-w-4xl mx-auto mb-12 border border-white border-opacity-20">
+				<p class="text-xl md:text-2xl leading-relaxed mb-6">
+					Chez Binajia, nous croyons que chaque territoire africain mérite d'être découvert, valorisé et partagé.
 				</p>
 
-				<div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 max-w-4xl mx-auto mb-12 border border-white border-opacity-20">
-					<p class="text-xl md:text-2xl leading-relaxed mb-6">
-						Chez Binajia, nous croyons que chaque territoire africain mérite d'être découvert, valorisé et partagé.
-					</p>
-				
+			</div>
+		</div>
+	</div>
+
+	<!-- Scroll Indicator -->
+	<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+		<i data-feather="chevron-down" class="w-8 h-8 text-white"></i>
+	</div>
+</header>
+
+<!-- Experiences Section -->
+<section class="py-12 px-4 bg-gradient-to-br from-green-600 to-green-800 text-white">
+	<div class="max-w-7xl mx-auto">
+		<div class="text-center mb-16">
+			<h2 class="text-4xl md:text-5xl font-extrabold drop-shadow-lg font-extrabold mb-6 leading-tight bg-gradient-to-r from-green-500 via-yellow-500 to-green-500 bg-clip-text text-transparent  mb-4">
+				Explorez les richesses de l'Afrique
+			</h2>
+
+			<p class="text-xl max-w-3xl mx-auto opacity-90">
+				Découvrez le Bénin, le Nigéria et l'ensemble du continent africain à travers nos expériences uniques
+			</p>
+		</div>
+
+		<div class="experience-grid">
+			<div class="experience-item">
+				<div class="flex items-center gap-4 mb-4">
+					<h3 class="text-xl font-bold">Sites historiques et culturels</h3>
+				</div>
+				<p class="opacity-90">Palais, temples, marchés, lieux sacrés et mémoires vivantes</p>
+			</div>
+
+			<div class="experience-item">
+				<div class="flex items-center gap-4 mb-4">
+					<h3 class="text-xl font-bold">Festivals et traditions</h3>
+				</div>
+				<p class="opacity-90">Masques, musiques, danses, langues et savoir-faire locaux</p>
+			</div>
+
+			<div class="experience-item">
+				<div class="flex items-center gap-4 mb-4">
+					<h3 class="text-xl font-bold">Expériences durables</h3>
+				</div>
+				<p class="opacity-90">Écotourisme, artisanat, agriculture, design et innovation sociale</p>
+			</div>
+
+			<div class="experience-item">
+				<div class="flex items-center gap-4 mb-4">
+					<h3 class="text-xl font-bold">Rencontres humaines</h3>
+				</div>
+				<p class="opacity-90">Artisans, artistes, entrepreneurs, jeunes leaders et porteurs de savoirs</p>
+			</div>
+
+
+		</div>
+	</div>
+</section>
+<section id="lieux" class="py-16 relative overflow-hidden bg-cream">
+	<div class="absolute inset-0 -z-10 bg-cover bg-center opacity-20" style="background-image:url('https://images.unsplash.com/photo-1547036967-23d11aacaee0?q=80&w=1200&auto=format&fit=crop')"></div>
+	<div class="absolute inset-0 -z-10 pattern-african opacity-10"></div>
+	<div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="flex items-end justify-between mb-6">
+			<div>
+				<h2 class="font-serif text-3xl font-bold text-yellow-400">Lieux emblématiques</h2>
+				<p class="mt-2 text-gray-600">Explorez les sites historiques et culturels du Bénin et du Nigéria</p>
+			</div>
+			<a href="{{ path('app_places') }}" class="text-primary font-semibold hover:underline">Voir tous →</a>
+		</div>
+		<div
+			class="relative">
+			<!-- Carousel Container -->
+			<div class="overflow-hidden">
+				<div id="carousel" class="flex gap-6">
+					{% set places = places|default([]) %}
+					{% for place in places %}
+						<article class="shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden bg-white ring-1 ring-gray-200 hover:shadow-lg transition-shadow cursor-pointer">
+							<div class="h-44 overflow-hidden">
+								<img src="{{ path('secure_upload', {'filename': place.image}) }}" alt="{{ place.title }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+							</div>
+							<div class="p-4">
+								<div class="text-xs text-gray-500">{{ place.country }}</div>
+								<h3 class="mt-1 font-semibold text-charcoal">{{ place.title }}</h3>
+								<p class="mt-1 text-sm text-gray-600">{{ place.description|slice(0,100) ~ (place.description|length > 100 ? '...' : '') }}</p>
+								<div class="mt-4">
+									<a href="{{ path('app_places') }}" class="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 inline-block rounded-xl text-white transition-colors">Découvrir</a>
+								</div>
+							</div>
+						</article>
+					{% endfor %}
 				</div>
 			</div>
 		</div>
+	</div>
+</section>
+<!-- Why Choose Us Section -->
+<section class="py-12 px-4 bg-gradient-to-br from-green-500 to-yellow-400">
+	<div class="max-w-7xl mx-auto">
 
-		<!-- Scroll Indicator -->
-		<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-			<i data-feather="chevron-down" class="w-8 h-8 text-white"></i>
+		<div class="text-center mb-16">
+			<h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 bg-gradient-to-r from-green-500 via-yellow-400 to-green-500 bg-clip-text text-transparent leading-tight text-center drop-shadow-lg">
+				Notre Philosophie
+			</h2>
+			<p class="text-xl text-white max-w-3xl mx-auto">
+				Chez Binajia, nous croyons en un tourisme qui transforme les voyageurs et les communautés
+			</p>
 		</div>
-	</header>
 
-	<!-- Experiences Section -->
-	<section class="py-12 px-4 bg-gradient-to-br from-green-600 to-green-800 text-white">
-		<div class="max-w-7xl mx-auto">
-			<div class="text-center mb-16">
-				<h2 class="text-4xl md:text-5xl font-extrabold drop-shadow-lg font-extrabold mb-6 leading-tight bg-gradient-to-r from-green-500 via-yellow-500 to-green-500 bg-clip-text text-transparent  mb-4">
-					Explorez les richesses de l'Afrique
-				</h2>
-				
-				<p class="text-xl max-w-3xl mx-auto opacity-90">
-					Découvrez le Bénin, le Nigéria et l'ensemble du continent africain à travers nos expériences uniques
-				</p>
+		<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+			<div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-green-500">
+
+				<h3 class="text-xl font-bold mb-4 text-green-500">Guides Certifiés</h3>
+				<p class="text-gray-600 leading-relaxed">Des guides touristiques certifiés et des communautés locales engagées</p>
 			</div>
 
-			<div class="experience-grid">
-				<div class="experience-item">
-					<div class="flex items-center gap-4 mb-4">
-						<h3 class="text-xl font-bold">Sites historiques et culturels</h3>
-					</div>
-					<p class="opacity-90">Palais, temples, marchés, lieux sacrés et mémoires vivantes</p>
-				</div>
+			<div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-yellow-500">
 
-				<div class="experience-item">
-					<div class="flex items-center gap-4 mb-4">
-						<h3 class="text-xl font-bold">Festivals et traditions</h3>
-					</div>
-					<p class="opacity-90">Masques, musiques, danses, langues et savoir-faire locaux</p>
-				</div>
+				<h3 class="text-xl font-bold mb-4 text-yellow-500">Tourisme Responsable</h3>
+				<p class="text-gray-600 leading-relaxed">Immersion solidaire qui valorise les territoires africains</p>
+			</div>
 
-				<div class="experience-item">
-					<div class="flex items-center gap-4 mb-4">
-						<h3 class="text-xl font-bold">Expériences durables</h3>
-					</div>
-					<p class="opacity-90">Écotourisme, artisanat, agriculture, design et innovation sociale</p>
-				</div>
+			<div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-green-500">
 
-				<div class="experience-item">
-					<div class="flex items-center gap-4 mb-4">
-						<h3 class="text-xl font-bold">Rencontres humaines</h3>
-					</div>
-					<p class="opacity-90">Artisans, artistes, entrepreneurs, jeunes leaders et porteurs de savoirs</p>
-				</div>
+				<h3 class="text-xl font-bold mb-4 text-green-500">Communautés Locales</h3>
+				<p class="text-gray-600 leading-relaxed">Expériences authentiques créées avec les populations locales</p>
+			</div>
 
-			
+			<div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-yellow-500">
+
+				<h3 class="text-xl font-bold mb-4 text-yellow-500">Immersion Totale</h3>
+				<p class="text-gray-600 leading-relaxed">Découverte profonde des cultures et traditions africaines</p>
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
 
-	<!-- Why Choose Us Section -->
-	<section class="py-12 px-4 bg-gradient-to-br from-gray-50 to-white">
-		<div class="max-w-7xl mx-auto">
-			
-			<div class="text-center mb-16">
-				<h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 bg-gradient-to-r from-green-500 via-yellow-400 to-green-500 bg-clip-text text-transparent leading-tight text-center drop-shadow-lg">
-					Notre Philosophie
-				</h2>
-				<p class="text-xl text-gray-600 max-w-3xl mx-auto">
-					Chez Binajia, nous croyons en un tourisme qui transforme les voyageurs et les communautés
-				</p>
-			</div>
+<!-- Destinations Section -->
+<section class="py-12 px-4 bg-white">
+	<div class="max-w-7xl mx-auto">
+		<div class="text-center mb-16">
+			<h2 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-green-500 via-yellow-400 to-green-500 bg-clip-text text-transparent leading-tight text-center drop-shadow-lg text-gray-800 mb-4">
+				Où partir avec Binajia ?
+			</h2>
 
-			<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-				<div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-green-500">
-					
-					<h3 class="text-xl font-bold mb-4 text-gray-800">Guides Certifiés</h3>
-					<p class="text-gray-600 leading-relaxed">Des guides touristiques certifiés et des communautés locales engagées</p>
-				</div>
-
-				<div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-yellow-500">
-					
-					<h3 class="text-xl font-bold mb-4 text-gray-800">Tourisme Responsable</h3>
-					<p class="text-gray-600 leading-relaxed">Immersion solidaire qui valorise les territoires africains</p>
-				</div>
-
-				<div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-green-500">
-					
-					<h3 class="text-xl font-bold mb-4 text-gray-800">Communautés Locales</h3>
-					<p class="text-gray-600 leading-relaxed">Expériences authentiques créées avec les populations locales</p>
-				</div>
-
-				<div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-yellow-500">
-					
-					<h3 class="text-xl font-bold mb-4 text-gray-800">Immersion Totale</h3>
-					<p class="text-gray-600 leading-relaxed">Découverte profonde des cultures et traditions africaines</p>
-				</div>
-			</div>
+			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
+				Nos guides certifiés vous accompagnent à travers les plus belles destinations africaines
+			</p>
 		</div>
-	</section>
 
-	<!-- Destinations Section -->
-	<section class="py-12 px-4 bg-white">
-		<div class="max-w-7xl mx-auto">
-			<div class="text-center mb-16">
-				<h2 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-green-500 via-yellow-400 to-green-500 bg-clip-text text-transparent leading-tight text-center drop-shadow-lg text-gray-800 mb-4">
-					Où partir avec Binajia ?
-				</h2>				
-
-				<p class="text-xl text-gray-600 max-w-3xl mx-auto">
-					Nos guides certifiés vous accompagnent à travers les plus belles destinations africaines
-				</p>
-			</div>
-
-			<!-- Benin Section -->
-			<div class="mb-16 rounded-3xl overflow-hidden shadow-2xl card-hover">
-				<div class="bg-gradient-to-br from-yellow-400 to-yellow-600 p-10 md:p-16 text-white">
-					<div class="max-w-4xl">
-						<div class="flex items-center gap-4 mb-6">
-							<i data-feather="map-pin" class="w-12 h-12"></i>
-							<h3 class="text-3xl md:text-4xl font-extrabold">Le Bénin</h3>
-						</div>
-
-						<p class="text-lg md:text-xl mb-8 leading-relaxed opacity-95">
-							Partout au Bénin : Cotonou, Porto-Novo, Abomey, Ouidah, Natitingou...
-						</p>
-
-						<div class="grid md:grid-cols-3 gap-6 mb-8">
-							<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-								<i data-feather="landmark" class="w-8 h-8 mb-3"></i>
-								<h4 class="font-bold text-lg mb-2">Porte du Non-Retour</h4>
-								<p class="text-sm opacity-90">Mémorial historique à Ouidah</p>
-							</div>
-
-							<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-								<i data-feather="droplet" class="w-8 h-8 mb-3"></i>
-								<h4 class="font-bold text-lg mb-2">Ganvié</h4>
-								<p class="text-sm opacity-90">La Venise de l'Afrique</p>
-							</div>
-
-							<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-								<i data-feather="tree" class="w-8 h-8 mb-3"></i>
-								<h4 class="font-bold text-lg mb-2">Parc Pendjari</h4>
-								<p class="text-sm opacity-90">Faune sauvage préservée</p>
-							</div>
-						</div>
-
-						
-					</div>
-				</div>
-			</div>
-
-			<!-- Nigeria Section -->
-			<div class="mb-16 rounded-3xl overflow-hidden shadow-2xl card-hover">
-				<div class="bg-gradient-to-br from-green-500 to-green-700 p-10 md:p-16 text-white">
-					<div class="max-w-4xl">
-						<div class="flex items-center gap-4 mb-6">
-							<i data-feather="map-pin" class="w-12 h-12"></i>
-							<h3 class="text-3xl md:text-4xl font-extrabold">Le Nigeria</h3>
-						</div>
-
-						<p class="text-lg md:text-xl mb-8 leading-relaxed opacity-95">
-							Partout au Nigéria : Lagos, Abuja, Calabar, Ibadan, Kano...
-						</p>
-
-						<div class="grid md:grid-cols-3 gap-6 mb-8">
-							<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-								<i data-feather="activity" class="w-8 h-8 mb-3"></i>
-								<h4 class="font-bold text-lg mb-2">Lagos</h4>
-								<p class="text-sm opacity-90">Métropole vibrante d'Afrique</p>
-							</div>
-
-							<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-								<i data-feather="star" class="w-8 h-8 mb-3"></i>
-								<h4 class="font-bold text-lg mb-2">Sukur</h4>
-								<p class="text-sm opacity-90">Patrimoine mondial UNESCO</p>
-							</div>
-
-							<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-								<i data-feather="mountain" class="w-8 h-8 mb-3"></i>
-								<h4 class="font-bold text-lg mb-2">Obudu</h4>
-								<p class="text-sm opacity-90">Station montagneuse unique</p>
-							</div>
-						</div>
-
-						
-					</div>
-				</div>
-			</div>
-
-			<!-- Other African Countries -->
-			<div class="rounded-3xl overflow-hidden shadow-2xl card-hover bg-gradient-to-br from-yellow-500 to-green-700 p-10 md:p-16 text-white">
+		<!-- Benin Section -->
+		<div class="mb-16 rounded-3xl overflow-hidden shadow-2xl card-hover">
+			<div class="bg-gradient-to-br from-yellow-400 to-yellow-600 p-10 md:p-16 text-white">
 				<div class="max-w-4xl">
 					<div class="flex items-center gap-4 mb-6">
-						<i data-feather="globe" class="w-12 h-12"></i>
-						<h3 class="text-3xl md:text-4xl font-extrabold">Autres Pays Africains</h3>
+						<i data-feather="map-pin" class="w-12 h-12"></i>
+						<h3 class="text-3xl md:text-4xl font-extrabold">Le Bénin</h3>
 					</div>
 
 					<p class="text-lg md:text-xl mb-8 leading-relaxed opacity-95">
-						Ghana, Togo, Sénégal, Côte d'Ivoire,Cameroun, Rwanda, Sénégal, Mali, Niger et tout les autres pays africains					</p>
+						Partout au Bénin : Cotonou, Porto-Novo, Abomey, Ouidah, Natitingou...
+					</p>
 
 					<div class="grid md:grid-cols-3 gap-6 mb-8">
 						<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-							<i data-feather="castles" class="w-8 h-8 mb-3"></i>
-							<h4 class="font-bold text-lg mb-2">Ghana</h4>
-							<p class="text-sm opacity-90">Châteaux et histoire</p>
+							<i data-feather="landmark" class="w-8 h-8 mb-3"></i>
+							<h4 class="font-bold text-lg mb-2">Porte du Non-Retour</h4>
+							<p class="text-sm opacity-90">Mémorial historique à Ouidah</p>
 						</div>
 
 						<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-							<i data-feather="sun" class="w-8 h-8 mb-3"></i>
-							<h4 class="font-bold text-lg mb-2">Sénégal</h4>
-							<p class="text-sm opacity-90">Plages et culture</p>
+							<i data-feather="droplet" class="w-8 h-8 mb-3"></i>
+							<h4 class="font-bold text-lg mb-2">Ganvié</h4>
+							<p class="text-sm opacity-90">La Venise de l'Afrique</p>
 						</div>
 
 						<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
-							<i data-feather="camera" class="w-8 h-8 mb-3"></i>
-							<h4 class="font-bold text-lg mb-2">Rwanda</h4>
-							<p class="text-sm opacity-90">Gorilles et paysages</p>
+							<i data-feather="tree" class="w-8 h-8 mb-3"></i>
+							<h4 class="font-bold text-lg mb-2">Parc Pendjari</h4>
+							<p class="text-sm opacity-90">Faune sauvage préservée</p>
 						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+		<!-- Nigeria Section -->
+		<div class="mb-16 rounded-3xl overflow-hidden shadow-2xl card-hover">
+			<div class="bg-gradient-to-br from-green-500 to-green-700 p-10 md:p-16 text-white">
+				<div class="max-w-4xl">
+					<div class="flex items-center gap-4 mb-6">
+						<i data-feather="map-pin" class="w-12 h-12"></i>
+						<h3 class="text-3xl md:text-4xl font-extrabold">Le Nigeria</h3>
+					</div>
+
+					<p class="text-lg md:text-xl mb-8 leading-relaxed opacity-95">
+						Partout au Nigéria : Lagos, Abuja, Calabar, Ibadan, Kano...
+					</p>
+
+					<div class="grid md:grid-cols-3 gap-6 mb-8">
+						<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
+							<i data-feather="activity" class="w-8 h-8 mb-3"></i>
+							<h4 class="font-bold text-lg mb-2">Lagos</h4>
+							<p class="text-sm opacity-90">Métropole vibrante d'Afrique</p>
+						</div>
+
+						<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
+							<i data-feather="star" class="w-8 h-8 mb-3"></i>
+							<h4 class="font-bold text-lg mb-2">Sukur</h4>
+							<p class="text-sm opacity-90">Patrimoine mondial UNESCO</p>
+						</div>
+
+						<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
+							<i data-feather="mountain" class="w-8 h-8 mb-3"></i>
+							<h4 class="font-bold text-lg mb-2">Obudu</h4>
+							<p class="text-sm opacity-90">Station montagneuse unique</p>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+		<!-- Other African Countries -->
+		<div class="rounded-3xl overflow-hidden shadow-2xl card-hover bg-gradient-to-br from-yellow-500 to-green-700 p-10 md:p-16 text-white">
+			<div class="max-w-4xl">
+				<div class="flex items-center gap-4 mb-6">
+					<i data-feather="globe" class="w-12 h-12"></i>
+					<h3 class="text-3xl md:text-4xl font-extrabold">Autres Pays Africains</h3>
+				</div>
+
+				<p class="text-lg md:text-xl mb-8 leading-relaxed opacity-95">
+					Ghana, Togo, Sénégal, Côte d'Ivoire,Cameroun, Rwanda, Sénégal, Mali, Niger et tout les autres pays africains
+				</p>
+
+				<div class="grid md:grid-cols-3 gap-6 mb-8">
+					<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
+						<i data-feather="castles" class="w-8 h-8 mb-3"></i>
+						<h4 class="font-bold text-lg mb-2">Ghana</h4>
+						<p class="text-sm opacity-90">Châteaux et histoire</p>
+					</div>
+
+					<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
+						<i data-feather="sun" class="w-8 h-8 mb-3"></i>
+						<h4 class="font-bold text-lg mb-2">Sénégal</h4>
+						<p class="text-sm opacity-90">Plages et culture</p>
+					</div>
+
+					<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 hover:bg-opacity-30 transition-all">
+						<i data-feather="camera" class="w-8 h-8 mb-3"></i>
+						<h4 class="font-bold text-lg mb-2">Rwanda</h4>
+						<p class="text-sm opacity-90">Gorilles et paysages</p>
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
 
-	<!-- How to Participate Section -->
-	<section class="py-12 px-4 bg-gradient-to-br from-gray-50 to-yellow-50">
-		<div class="max-w-7xl mx-auto">
-			<div class="text-center mb-16">
-				<h2 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-green-500 via-yellow-400 to-green-500 bg-clip-text text-transparent leading-tight text-center drop-shadow-lg text-gray-800 mb-4">
-					Comment participer ?
-				</h2>
-				<p class="text-xl text-gray-600 max-w-3xl mx-auto">
-					Rejoignez une expérience collective, inclusive et transformative
+<!-- How to Participate Section -->
+<section class="py-12 px-4 bg-gradient-to-br from-gray-50 to-yellow-50">
+	<div class="max-w-7xl mx-auto">
+		<div class="text-center mb-16">
+			<h2 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-green-500 via-yellow-400 to-green-500 bg-clip-text text-transparent leading-tight text-center drop-shadow-lg text-gray-800 mb-4">
+				Comment participer ?
+			</h2>
+			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
+				Rejoignez une expérience collective, inclusive et transformative
+			</p>
+		</div>
+
+		<div class="grid md:grid-cols-3 gap-8">
+			<div class="bg-white rounded-2xl p-8 shadow-lg card-hover text-center">
+				<div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+					<i data-feather="calendar" class="w-10 h-10 text-green-600"></i>
+				</div>
+				<h3 class="text-2xl font-bold text-gray-800 mb-4">Réservez votre visite</h3>
+				<p class="text-gray-600 leading-relaxed">
+					Réservez votre visite guidée Binajia Safari et vivez une aventure authentique
 				</p>
 			</div>
 
-			<div class="grid md:grid-cols-3 gap-8">
-				<div class="bg-white rounded-2xl p-8 shadow-lg card-hover text-center">
-					<div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-						<i data-feather="calendar" class="w-10 h-10 text-green-600"></i>
-					</div>
-					<h3 class="text-2xl font-bold text-gray-800 mb-4">Réservez votre visite</h3>
-					<p class="text-gray-600 leading-relaxed">
-						Réservez votre visite guidée Binajia Safari et vivez une aventure authentique
-					</p>
+			<div class="bg-white rounded-2xl p-8 shadow-lg card-hover text-center">
+				<div class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
+					<i data-feather="credit-card" class="w-10 h-10 text-yellow-600"></i>
 				</div>
+				<h3 class="text-2xl font-bold text-gray-800 mb-4">Carte Binajia</h3>
+				<p class="text-gray-600 leading-relaxed">
+					Profitez des avantages membres avec la carte Binajia (réductions, accès prioritaire, privilèges)
+				</p>
+			</div>
 
-				<div class="bg-white rounded-2xl p-8 shadow-lg card-hover text-center">
-					<div class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
-						<i data-feather="credit-card" class="w-10 h-10 text-yellow-600"></i>
-					</div>
-					<h3 class="text-2xl font-bold text-gray-800 mb-4">Carte Binajia</h3>
-					<p class="text-gray-600 leading-relaxed">
-						Profitez des avantages membres avec la carte Binajia (réductions, accès prioritaire, privilèges)
-					</p>
+			<div class="bg-white rounded-2xl p-8 shadow-lg card-hover text-center">
+				<div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+					<i data-feather="users" class="w-10 h-10 text-green-600"></i>
 				</div>
-
-				<div class="bg-white rounded-2xl p-8 shadow-lg card-hover text-center">
-					<div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-						<i data-feather="users" class="w-10 h-10 text-green-600"></i>
-					</div>
-					<h3 class="text-2xl font-bold text-gray-800 mb-4">Expérience collective</h3>
-					<p class="text-gray-600 leading-relaxed">
-						Rejoignez une communauté de voyageurs passionnés par l'Afrique authentique
-					</p>
-				</div>
+				<h3 class="text-2xl font-bold text-gray-800 mb-4">Expérience collective</h3>
+				<p class="text-gray-600 leading-relaxed">
+					Rejoignez une communauté de voyageurs passionnés par l'Afrique authentique
+				</p>
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
 
-	<!-- Booking Form Section -->
-	<section id="formulaire" class="py-12 px-4 bg-gradient-to-br from-green-50 to-yellow-50">
-		<div class="max-w-4xl mx-auto">
-			<div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
-				<!-- Header -->
-				<div class="bg-gradient-to-r from-green-500 to-yellow-500 p-8 text-white text-center">
-					<i data-feather="send" class="w-12 h-12 mx-auto mb-4"></i>
-					<h2 class="text-3xl md:text-4xl font-extrabold mb-2">Réservez Votre Aventure</h2>
-					<p class="text-lg opacity-90">Remplissez le formulaire et nous vous contacterons sous 24h</p>
+<!-- Booking Form Section -->
+<section id="formulaire" class="py-12 px-4 bg-gradient-to-br from-green-50 to-yellow-50">
+	<div class="max-w-4xl mx-auto">
+		<div
+			class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+			<!-- Header -->
+			<div class="bg-gradient-to-r from-green-500 to-yellow-500 p-8 text-white text-center">
+				<i data-feather="send" class="w-12 h-12 mx-auto mb-4"></i>
+				<h2 class="text-3xl md:text-4xl font-extrabold mb-2">Réservez Votre Aventure</h2>
+				<p class="text-lg opacity-90">Remplissez le formulaire et nous vous contacterons sous 24h</p>
+			</div>
+
+			<!-- Formulaire -->
+			<div class="p-8 md:p-12">
+				{{ form_start(form, {'attr': {'class': 'space-y-8'}}) }}
+
+				<div class="grid md:grid-cols-2 gap-6">
+					<div>
+						{{ form_label(form.Nom, 'Nom complet *', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
+						{{ form_widget(form.Nom, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
+						{{ form_errors(form.Nom) }}
+					</div>
+
+					<div>
+						{{ form_label(form.email, 'Email *', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
+						{{ form_widget(form.email, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
+						{{ form_errors(form.email) }}
+					</div>
 				</div>
 
-				<!-- Formulaire -->
-				<div class="p-8 md:p-12">
-					{{ form_start(form, {'attr': {'class': 'space-y-8'}}) }}
-
-					<div class="grid md:grid-cols-2 gap-6">
-						<div>
-							{{ form_label(form.Nom, 'Nom complet *', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.Nom, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-							{{ form_errors(form.Nom) }}
-						</div>
-
-						<div>
-							{{ form_label(form.email, 'Email *', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.email, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-							{{ form_errors(form.email) }}
-						</div>
-					</div>
-
-					<div class="grid md:grid-cols-2 gap-6">
-						<div>
-							{{ form_label(form.telephone, 'Téléphone', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.telephone, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-						</div>
-
-						<div>
-							{{ form_label(form.paysresidence, 'Pays de résidence', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.paysresidence, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-						</div>
+				<div class="grid md:grid-cols-2 gap-6">
+					<div>
+						{{ form_label(form.telephone, 'Téléphone', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
+						{{ form_widget(form.telephone, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
 					</div>
 
 					<div>
-						{{ form_label(form.destination, 'Destination souhaitée *', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-						{{ form_widget(form.destination, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
+						{{ form_label(form.paysresidence, 'Pays de résidence', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
+						{{ form_widget(form.paysresidence, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
 					</div>
+				</div>
 
-					<div class="grid md:grid-cols-2 gap-6">
-						<div>
-							{{ form_label(form.datedepart, 'Date de départ', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.datedepart, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-						</div>
+				<div>
+					{{ form_label(form.destination, 'Destination souhaitée *', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
+					{{ form_widget(form.destination, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
+				</div>
 
-						<div>
-							{{ form_label(form.nbrvoyageurs, 'Nombre de voyageurs', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-							{{ form_widget(form.nbrvoyageurs, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
-						</div>
+				<div class="grid md:grid-cols-2 gap-6">
+					<div>
+						{{ form_label(form.datedepart, 'Date de départ', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
+						{{ form_widget(form.datedepart, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
 					</div>
 
 					<div>
-						{{ form_label(form.typevoyage, 'Type de voyage', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
-						{{ form_widget(form.typevoyage, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
+						{{ form_label(form.nbrvoyageurs, 'Nombre de voyageurs', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
+						{{ form_widget(form.nbrvoyageurs, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
 					</div>
-					<div class="grid md:grid-cols-2 gap-6">
-						<div>
-							{{ form_label(form.centreinteret, 'Centres d\'intérêt', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
+				</div>
+
+				<div>
+					{{ form_label(form.typevoyage, 'Type de voyage', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
+					{{ form_widget(form.typevoyage, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
+				</div>
+				<div class="grid md:grid-cols-2 gap-6">
+					<div>
+						{{ form_label(form.centreinteret, 'Centres d\'intérêt', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
 							{{ form_widget(form.centreinteret ,{'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition'}}) }}
 						</div>
 

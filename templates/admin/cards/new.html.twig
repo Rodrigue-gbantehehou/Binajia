@@ -35,8 +35,8 @@
         </nav>
       </div>
 
-      {# Existing User Form #}
-      <form method="post" id="existing-user-form" class="tab-content p-6">
+      {# Existing User Form - CORRECTION: ajout de enctype #}
+      <form method="post" id="existing-user-form" class="tab-content p-6" enctype="multipart/form-data">
         <input type="hidden" name="mode" value="existing">
         <div class="space-y-6">
           {# User Selection #}
@@ -92,7 +92,6 @@
               <option value="ROLE_MEMBRE">Membre</option>
               <option value="ROLE_MANAGER">Manager</option>
               <option value="ROLE_SECRETARY">Secrétaire</option>
-             
             </select>
           </div>
 
@@ -112,8 +111,8 @@
         </div>
       </form>
 
-      {# New User Form #}
-      <form method="post" id="new-user-form" class="tab-content hidden p-6">
+      {# New User Form - CORRECTION: ajout de enctype #}
+      <form method="post" id="new-user-form" class="tab-content hidden p-6" enctype="multipart/form-data">
         <input type="hidden" name="mode" value="new">
         <div class="space-y-6">
           {# Personal Information #}
@@ -212,7 +211,7 @@
             </label>
             <select id="role_new" name="role" 
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all">
-             <option value="ROLE_MEMBRE">Membre</option>
+              <option value="ROLE_MEMBRE">Membre</option>
               <option value="ROLE_MANAGER">Manager</option>
               <option value="ROLE_SECRETARY">Secrétaire</option>
             </select>
@@ -346,6 +345,41 @@
           } else {
             photoPreviewExisting.style.display = 'none';
             photoPreviewExisting.src = '';
+          }
+        });
+      }
+
+      // Photo preview functionality for new user
+      const photoInput = document.getElementById('photo');
+      const photoPreview = document.getElementById('photo-preview');
+      
+      if (photoInput) {
+        photoInput.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file) {
+            // Validate file size (2MB max)
+            if (file.size > 2 * 1024 * 1024) {
+              alert('La taille de l\'image ne doit pas dépasser 2MB');
+              e.target.value = '';
+              return;
+            }
+            
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+              alert('Veuillez sélectionner un fichier image valide');
+              e.target.value = '';
+              return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              photoPreview.src = e.target.result;
+              photoPreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+          } else {
+            photoPreview.style.display = 'none';
+            photoPreview.src = '';
           }
         });
       }

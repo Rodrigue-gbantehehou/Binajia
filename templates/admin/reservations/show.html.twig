@@ -1,0 +1,242 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Réservation #{{ reservation.id }}{% endblock %}
+
+{% block admin_body %}
+<div class="space-y-6">
+    {# Header #}
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900">
+                <i class="fas fa-calendar-check text-green-500 mr-3"></i>
+                Réservation #{{ reservation.id }}
+            </h1>
+            <p class="text-gray-600 mt-1">Détails complets de la réservation</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="{{ path('admin_reservations_index') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-green-500">
+                <i class="fas fa-arrow-left"></i>Retour à la liste
+            </a>
+            <a href="{{ path('admin_reservations_edit', {'id': reservation.id}) }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-yellow-500 text-white hover:bg-yellow-600">
+                <i class="fas fa-edit"></i>Modifier
+            </a>
+        </div>
+    </div>
+
+    {# Main Content #}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {# Informations principales #}
+        <div class="lg:col-span-2 space-y-6">
+            {# Carte des informations client #}
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-user-circle text-green-500 mr-2"></i>
+                    Informations client
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Nom complet</label>
+                            <p class="text-lg font-semibold text-gray-900">{{ reservation.Nom }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Email</label>
+                            <p class="text-lg font-semibold text-gray-900">{{ reservation.email }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Téléphone</label>
+                            <p class="text-lg font-semibold text-gray-900">{{ reservation.telephone }}</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Pays de résidence</label>
+                            <p class="text-lg font-semibold text-gray-900">{{ reservation.paysresidence }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Type de réservation</label>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium 
+                                {% if reservation.typereservation == 'confirmée' %}bg-green-100 text-green-800
+                                {% elseif reservation.typereservation == 'en attente' %}bg-yellow-100 text-yellow-800
+                                {% else %}bg-gray-100 text-gray-800{% endif %}">
+                                <i class="fas 
+                                    {% if reservation.typereservation == 'confirmée' %}fa-check-circle
+                                    {% elseif reservation.typereservation == 'en attente' %}fa-clock
+                                    {% else %}fa-question-circle{% endif %} mr-1"></i>
+                                {{ reservation.typereservation|capitalize }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Carte des détails du voyage #}
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-plane text-yellow-500 mr-2"></i>
+                    Détails du voyage
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Destination</label>
+                            <p class="text-lg font-semibold text-gray-900">{{ reservation.destination }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Date de départ</label>
+                            <p class="text-lg font-semibold text-gray-900">
+                                {{ reservation.datedepart ? reservation.datedepart|date('d/m/Y') : 'N/A' }}
+                            </p>
+                            {% if reservation.datedepart %}
+                                {% set daysLeft = date(reservation.datedepart).diff(date()).days %}
+                                <p class="text-sm {% if daysLeft > 0 %}text-green-600{% else %}text-gray-500{% endif %}">
+                                    {% if daysLeft > 0 %}
+                                        <i class="fas fa-clock mr-1"></i>Dans {{ daysLeft }} jours
+                                    {% else %}
+                                        <i class="fas fa-check mr-1"></i>Voyage passé
+                                    {% endif %}
+                                </p>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Nombre de voyageurs</label>
+                            <div class="flex items-center">
+                                <i class="fas fa-users text-gray-400 mr-3"></i>
+                                <span class="text-2xl font-bold text-gray-900">{{ reservation.nbrvoyageurs }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Type de voyage</label>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium 
+                                {% if reservation.typevoyage == 'affaires' %}bg-blue-100 text-blue-800
+                                {% elseif reservation.typevoyage == 'familial' %}bg-green-100 text-green-800
+                                {% elseif reservation.typevoyage == 'romantique' %}bg-pink-100 text-pink-800
+                                {% else %}bg-gray-100 text-gray-800{% endif %}">
+                                {{ reservation.typevoyage|capitalize }}
+                            </span>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Budget estimé</label>
+                            <p class="text-2xl font-bold text-green-600">
+                                {{ reservation.budgetestime ? reservation.budgetestime ~ ' €' : 'Non spécifié' }}
+                            </p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Centre d'intérêt</label>
+                            <p class="text-lg font-semibold text-gray-900">{{ reservation.centreinteret ?: 'Non spécifié' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Carte commentaire #}
+            {% if reservation.commentaire %}
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-comment text-blue-500 mr-2"></i>
+                    Commentaire
+                </h2>
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <p class="text-gray-700 leading-relaxed">{{ reservation.commentaire }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        {# Sidebar #}
+        <div class="space-y-6">
+            {# Carte statut #}
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-info-circle text-purple-500 mr-2"></i>
+                    Statut
+                </h2>
+                <div class="space-y-4">
+                    <div class="text-center p-4 bg-green-50 rounded-lg border border-green-200">
+                        <div class="text-2xl font-bold text-green-600">{{ reservation.nbrvoyageurs }}</div>
+                        <div class="text-sm text-green-800">Voyageurs</div>
+                    </div>
+                    <div class="text-center p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                        <div class="text-2xl font-bold text-yellow-600">
+                            {{ reservation.typereservation|capitalize }}
+                        </div>
+                        <div class="text-sm text-yellow-800">Réservation</div>
+                    </div>
+                    {% if reservation.facturepdf %}
+                    <div class="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <div class="text-2xl font-bold text-blue-600">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="text-sm text-blue-800">Facture disponible</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {# Carte actions #}
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-bolt text-orange-500 mr-2"></i>
+                    Actions
+                </h2>
+                <div class="space-y-3">
+                    <a href="{{ path('admin_reservations_edit', {'id': reservation.id}) }}" 
+                       class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-yellow-500 text-white rounded-xl font-semibold hover:bg-yellow-600 transition-all duration-300">
+                        <i class="fas fa-edit"></i>
+                        Modifier
+                    </a>
+                    <a href="{{ path('admin_reservations_index') }}" 
+                       class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-300">
+                        <i class="fas fa-list"></i>
+                        Toutes les réservations
+                    </a>
+                    {% if reservation.facturepdf %}
+                    <a href="{{ path('secure_upload', {'filename': reservation.facturepdf}) }}" 
+                       target="_blank"
+                       class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-green-500 text-white rounded-xl font-semibold hover:bg-green-600 transition-all duration-300">
+                        <i class="fas fa-download"></i>
+                        Télécharger la facture
+                    </a>
+                    {% endif %}
+                    <button type="button" 
+                            onclick="document.getElementById('delete-form').classList.toggle('hidden')" 
+                            class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 transition-all duration-300">
+                        <i class="fas fa-trash"></i>
+                        Supprimer
+                    </button>
+                </div>
+                
+                {# Formulaire de suppression #}
+                <div id="delete-form" class="hidden mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <p class="text-sm text-red-800 mb-3">Êtes-vous sûr de vouloir supprimer cette réservation ? Cette action est irréversible.</p>
+                    {{ include('admin/reservations/_delete_form.html.twig') }}
+                </div>
+            </div>
+
+            {# Carte informations techniques #}
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-cog text-gray-500 mr-2"></i>
+                    Informations techniques
+                </h2>
+                <div class="space-y-3 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">ID:</span>
+                        <span class="font-mono text-gray-900">{{ reservation.id }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Créé le:</span>
+                        <span class="text-gray-900">N/A</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Modifié le:</span>
+                        <span class="text-gray-900">N/A</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,468 @@
+{# templates/don/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-emerald-50 via-amber-50 to-cyan-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- En-tête -->
+        <div class="text-center mb-12">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full mb-6 shadow-lg">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+            </div>
+            <h1 class="font-serif text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-600 to-amber-500 bg-clip-text text-transparent mb-4">
+                Soutenez Notre Mission
+            </h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Votre don contribue à renforcer les liens entre le Bénin, le Nigéria et la diaspora africaine
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Colonne gauche - Informations impact -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-3xl shadow-2xl p-8 sticky top-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 font-serif">Votre Impact</h2>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center mr-4 flex-shrink-0">
+                                <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Formation Professionnelle</h3>
+                                <p class="text-sm text-gray-600">Financez des programmes de formation pour les jeunes entrepreneurs</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mr-4 flex-shrink-0">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Projets Concrets</h3>
+                                <p class="text-sm text-gray-600">Soutenez des initiatives de développement économique local</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center mr-4 flex-shrink-0">
+                                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9m0 9c-5 0-9-4-9-9s4-9 9-9"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Coopération Régionale</h3>
+                                <p class="text-sm text-gray-600">Renforcez les échanges entre le Bénin et le Nigéria</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Colonne droite - Formulaire -->
+            <div class="lg:col-span-2">
+                <div class="bg-gradient-to-br from-emerald-600 to-green-700 rounded-3xl shadow-2xl p-8">
+                    <form id="donation-form">
+                        <!-- Option don anonyme -->
+                        <div class="mb-6 p-4 bg-white/10 rounded-xl border border-white/20">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" id="anonymous-donation" name="anonymous" class="w-5 h-5 text-emerald-500 border-white/30 rounded focus:ring-emerald-500 bg-white/10 focus:ring-2">
+                                <span class="text-white font-semibold text-lg">Faire un don anonyme</span>
+                            </label>
+                            <p class="text-white/70 text-sm mt-2 ml-8">
+                                Votre nom et email n'apparaîtront pas dans nos listes de donateurs
+                            </p>
+                        </div>
+
+                        <!-- Section informations personnelles -->
+                        <div id="personal-info-section" class="space-y-4 transition-all duration-300">
+                            <div>
+                                <label class="block text-white/80 text-sm mb-2" for="don-nom">
+                                    Votre nom *
+                                </label>
+                                <input type="text" id="don-nom" name="nom" required 
+                                       class="w-full bg-white/10 border border-white/20 rounded-xl py-3 px-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-300" 
+                                       placeholder="Votre nom complet">
+                            </div>
+
+                            <div>
+                                <label class="block text-white/80 text-sm mb-2" for="don-email">
+                                    Votre email *
+                                </label>
+                                <input type="email" id="don-email" name="email" required 
+                                       class="w-full bg-white/10 border border-white/20 rounded-xl py-3 px-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-300" 
+                                       placeholder="votre@email.com">
+                            </div>
+                        </div>
+
+                        <!-- Sélection du montant -->
+                        <div class="mt-8">
+                            <label class="block text-white/80 text-sm mb-4 font-semibold">
+                                Choisissez votre montant de don
+                            </label>
+                            <div class="grid grid-cols-3 gap-4 mb-6">
+                                <button type="button" data-amount="1000" 
+                                        class="amount-btn bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl py-4 px-2 text-white font-medium transition-all duration-300 hover:scale-105 active-don-amount">
+                                    1 000 F
+                                </button>
+                                <button type="button" data-amount="5000" 
+                                        class="amount-btn bg-amber-400 hover:bg-amber-300 border border-amber-500 rounded-xl py-4 px-2 text-gray-900 font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                    5 000 F
+                                    <span class="block text-xs font-normal mt-1">Le plus choisi</span>
+                                </button>
+                                <button type="button" data-amount="10000" 
+                                        class="amount-btn bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl py-4 px-2 text-white font-medium transition-all duration-300 hover:scale-105">
+                                    10 000 F
+                                </button>
+                            </div>
+
+                            <div class="mb-6">
+                                <label class="block text-white/80 text-sm mb-2" for="custom-amount">
+                                    Ou montant personnalisé (FCFA)
+                                </label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70">F</span>
+                                    <input type="number" id="custom-amount" name="montant" required 
+                                           class="w-full bg-white/10 border border-white/20 rounded-xl py-3 pl-8 pr-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-300" 
+                                           placeholder="Montant" min="100" step="100">
+                                </div>
+                                <p class="text-white/60 text-xs mt-2">Montant minimum: 100 FCFA</p>
+                            </div>
+                        </div>
+
+                        <!-- Bouton de soumission -->
+                        <button type="button" id="pay-btn" onclick="processDonation()"
+                                class="w-full bg-amber-400 hover:bg-amber-300 text-gray-900 font-bold py-4 px-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center justify-center mt-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                            </svg>
+                            Faire un don sécurisé
+                        </button>
+
+                        <div class="mt-4 flex items-center justify-center space-x-2 text-white/60 text-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            <span>Paiement sécurisé par Fedapay</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loader pour les paiements -->
+<div id="payment-loader" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl p-8 text-center shadow-2xl transform transition-all">
+        <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-600 mx-auto mb-6"></div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Traitement en cours</h3>
+        <p class="text-gray-600">Votre don est en cours de traitement...</p>
+        <p class="text-sm text-gray-500 mt-2">Merci de ne pas fermer cette page</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
+<script>
+const FEDAPAY_PK = '{{ fedapay_public_key|e('js') }}';
+let lastTransactionId = null;
+let callbackFired = false;
+let paymentCompleted = false;
+let checkoutInstance = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeDonationForm();
+});
+
+function initializeDonationForm() {
+    const amountButtons = document.querySelectorAll('.amount-btn');
+    const customAmountInput = document.getElementById('custom-amount');
+    const anonymousCheckbox = document.getElementById('anonymous-donation');
+    const personalInfoSection = document.getElementById('personal-info-section');
+
+    // Configuration du don anonyme
+    anonymousCheckbox.addEventListener('change', function() {
+        const personalFields = personalInfoSection.querySelectorAll('input[required]');
+        
+        if (this.checked) {
+            personalInfoSection.style.opacity = '0.6';
+            personalFields.forEach(field => field.disabled = true);
+        } else {
+            personalInfoSection.style.opacity = '1';
+            personalFields.forEach(field => field.disabled = false);
+        }
+    });
+
+    // Sélection du montant
+    amountButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Retirer les styles actifs de tous les boutons
+            amountButtons.forEach(b => {
+                b.classList.remove('bg-emerald-500', 'text-white');
+                b.classList.add('bg-white/10', 'text-white');
+            });
+            
+            // Appliquer le style au bouton sélectionné
+            this.classList.remove('bg-white/10', 'text-white');
+            this.classList.add('bg-emerald-500', 'text-white');
+            
+            // Mettre à jour l'input
+            customAmountInput.value = this.dataset.amount;
+        });
+    });
+
+    // Montant personnalisé
+    customAmountInput.addEventListener('input', function() {
+        amountButtons.forEach(b => {
+            b.classList.remove('bg-emerald-500', 'text-white');
+            b.classList.add('bg-white/10', 'text-white');
+        });
+        
+        // Validation basique
+        const amount = parseFloat(this.value);
+        if (amount < 100) {
+            this.setCustomValidity('Le montant minimum est de 100 FCFA');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+
+    // Sélectionner le montant recommandé par défaut
+    const defaultAmountBtn = document.querySelector('[data-amount="5000"]');
+    if (defaultAmountBtn) {
+        defaultAmountBtn.click();
+    }
+}
+
+async function processDonation() {
+    const form = document.getElementById('donation-form');
+    const formData = new FormData(form);
+    const amount = parseFloat(formData.get('montant'));
+
+    // Validation
+    if (!amount || amount < 100) {
+        showAlert('Le montant minimum est de 100 FCFA.', 'error');
+        return;
+    }
+
+    const isAnonymous = document.getElementById('anonymous-donation').checked;
+    const nom = isAnonymous ? 'Donateur Anonyme' : formData.get('nom');
+    const email = isAnonymous ? 'anonyme@binajia.org' : formData.get('email');
+
+    if (!isAnonymous && (!nom || !email)) {
+        showAlert('Veuillez remplir vos informations personnelles.', 'error');
+        return;
+    }
+
+    const donationData = {
+        nom: nom,
+        email: email,
+        montant: amount
+    };
+
+    // Désactiver le bouton
+    const payBtn = document.getElementById('pay-btn');
+    payBtn.disabled = true;
+    payBtn.innerHTML = `
+        <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900 mr-2"></div>
+        Traitement en cours...
+    `;
+
+    // Réinitialiser les flags
+    callbackFired = false;
+    paymentCompleted = false;
+    lastTransactionId = null;
+
+    try {
+        await initializeFedaPayPayment(donationData);
+    } catch (error) {
+        console.error('Erreur initialisation paiement:', error);
+        showAlert('Erreur lors de l\'initialisation du paiement.', 'error');
+        resetPaymentButton();
+    }
+}
+
+function initializeFedaPayPayment(donationData) {
+    return new Promise((resolve, reject) => {
+        checkoutInstance = FedaPay.init({
+            public_key: FEDAPAY_PK,
+            transaction: { 
+                amount: donationData.montant, 
+                description: `Don Binajia - ${donationData.montant} FCFA`,
+                currency: 'XOF'
+            },
+            customer: { 
+                email: donationData.email,
+                lastname: donationData.nom
+            },
+            callback: function(response) {
+                handlePaymentCallback(response, donationData);
+                resolve(response);
+            },
+            onComplete: function(response) {
+                handlePaymentCallback(response, donationData);
+                resolve(response);
+            },
+            onClose: function() {
+                console.log('Modal FedaPay fermé');
+                setTimeout(() => {
+                    if (!paymentCompleted && !callbackFired) {
+                        showAlert('Paiement annulé. Vous pouvez réessayer.', 'info');
+                        resetPaymentButton();
+                    }
+                }, 1000);
+            },
+            onError: function(error) {
+                console.error('Erreur FedaPay:', error);
+                showAlert('Erreur lors du processus de paiement.', 'error');
+                reject(error);
+                resetPaymentButton();
+            }
+        });
+
+        checkoutInstance.open();
+    });
+}
+
+function handlePaymentCallback(response, donationData) {
+    if (callbackFired) return;
+    callbackFired = true;
+
+    console.log('Callback FedaPay:', response);
+
+    if (!response?.transaction?.id) {
+        console.log('Transaction invalide');
+        return;
+    }
+
+    const transactionStatus = response.transaction.status?.toLowerCase();
+    const paidStatuses = ['approved', 'succeeded', 'success', 'paid'];
+    
+    if (paidStatuses.includes(transactionStatus)) {
+        paymentCompleted = true;
+        lastTransactionId = response.transaction.id;
+        saveDonation(donationData, lastTransactionId);
+    } else {
+        console.log('Transaction non payée, statut:', transactionStatus);
+        showAlert('Le paiement n\'a pas abouti. Veuillez réessayer.', 'error');
+        resetPaymentButton();
+    }
+}
+
+async function saveDonation(donationData, transactionId) {
+    showPaymentLoader();
+    
+    try {
+        const response = await fetch('{{ path('app_don_process') }}', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: new URLSearchParams({
+                nom: donationData.nom,
+                email: donationData.email,
+                montant: donationData.montant,
+                transaction_id: transactionId,
+                _token: '{{ csrf_token('donation') }}'
+            })
+        });
+
+        const data = await response.json();
+        console.log('Réponse sauvegarde don:', data);
+
+        if (data.success) {
+            hidePaymentLoader();
+            window.location.href = `/don/confirmation/${data.don_id}`;
+        } else {
+            throw new Error(data.message || 'Erreur lors de l\'enregistrement');
+        }
+    } catch (error) {
+        console.error('Erreur sauvegarde:', error);
+        hidePaymentLoader();
+        showAlert('Erreur lors de l\'enregistrement du don: ' + error.message, 'error');
+        resetPaymentButton();
+    }
+}
+
+// Fonctions utilitaires
+function resetPaymentButton() {
+    const payBtn = document.getElementById('pay-btn');
+    if (payBtn) {
+        payBtn.disabled = false;
+        payBtn.innerHTML = `
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+            </svg>
+            Faire un don sécurisé
+        `;
+    }
+}
+
+function showPaymentLoader() {
+    const loader = document.getElementById('payment-loader');
+    if (loader) loader.classList.remove('hidden');
+}
+
+function hidePaymentLoader() {
+    const loader = document.getElementById('payment-loader');
+    if (loader) loader.classList.add('hidden');
+}
+
+function showAlert(message, type = 'info') {
+    // Vous pouvez implémenter un système de notifications toast ici
+    alert(message); // Solution temporaire
+}
+
+// Gestion de la fermeture de la page
+window.addEventListener('beforeunload', function(e) {
+    const payBtn = document.getElementById('pay-btn');
+    if (payBtn && payBtn.disabled) {
+        e.preventDefault();
+        e.returnValue = 'Un paiement est en cours. Êtes-vous sûr de vouloir quitter ?';
+    }
+});
+</script>
+
+<style>
+.amount-btn.active-don-amount {
+    background-color: #10b981 !important;
+    color: white !important;
+    border-color: #10b981 !important;
+    transform: scale(1.05);
+}
+
+.amount-btn:hover {
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+#personal-info-section {
+    transition: all 0.3s ease;
+}
+
+#payment-loader {
+    transition: opacity 0.3s ease;
+}
+
+/* Animation de pulse pour le bouton de don */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+</style>
+{% endblock %}

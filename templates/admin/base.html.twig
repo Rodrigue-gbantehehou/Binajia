@@ -234,6 +234,18 @@
                 <span>Partenaires</span>
               </a>
             </li>
+            <li>
+              <a href="{{ path('admin_reservations_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_reservations' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-calendar-alt w-4 text-green-300"></i>
+                <span>Reservations</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ path('admin_dons_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_dons' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-hand-holding-heart w-4 text-green-300"></i>
+                <span>donations</span>
+              </a>
+            </li>
             
             <li class="px-2 mt-4 mb-2 text-xs uppercase text-orange-200 tracking-wide font-semibold">Culture</li>
             <li>
@@ -251,14 +263,7 @@
             </li>
 
             
-            
-            <li class="px-2 mt-4 mb-2 text-xs uppercase text-orange-200 tracking-wide font-semibold">Configuration</li>
-            <li>
-              <a href="{{ path('admin_settings_index') }}" class="flex items-center gap-2 px-3 py-3 text-sm text-white/80 hover:text-white hover:bg-orange-500/15 hover:translate-x-1 rounded-lg mx-2 transition-all duration-200 {{ app.request.get('_route') starts with 'admin_settings' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg' : '' }}">
-                <i class="fas fa-cog w-4 text-orange-300"></i>
-                <span>Réglages</span>
-              </a>
-            </li>
+           
           </ul>
         </nav>
       </div>

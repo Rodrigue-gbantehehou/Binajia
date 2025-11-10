@@ -204,8 +204,8 @@
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
 									{% if p.amount %}
-										<div class="text-lg font-bold text-gray-900">€
-											{{ p.amount|number_format(2, ',', ' ') }}</div>
+										<div class="text-lg font-bold text-gray-900">
+											{{ p.amount|number_format(2, ',', ' ') }} F</div>
 									{% else %}
 										<span class="text-gray-400">—</span>
 									{% endif %}

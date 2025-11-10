@@ -1,5 +1,6 @@
 parameters:
     fedapay_public_key: '%env(FEDAPAY_PUBLIC_KEY)%'
+    fedapay_secret_key: '%env(FEDAPAY_SECRET_KEY)%'
     # 📁 Dossier sécurisé hors de public
     upload_directory: '%kernel.project_dir%/var/uploads'
 

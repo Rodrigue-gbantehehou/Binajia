@@ -1,61 +1,81 @@
 <?php
+
 namespace App\Controller\Admin;
 
+use App\Entity\Reservation;
+use App\Form\Reservation1Type;
+use App\Repository\ReservationRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_ADMIN')]
-class ReservationsController extends AbstractController
+#[Route('/reservations')]
+final class ReservationsController extends AbstractController
 {
-    #[Route('/admin/reservations', name: 'admin_reservations_index', methods: ['GET'])]
-    public function index(Request $request): Response
+    #[Route(name: 'admin_reservations_index', methods: ['GET'])]
+    public function index(ReservationRepository $reservationRepository): Response
     {
-        // Placeholder data - replace with real entity when available
-        $reservations = [
-            [
-                'id' => 1,
-                'event' => 'Conférence Binajia 2025',
-                'user' => 'Jean Dupont',
-                'email' => 'jean@example.com',
-                'date' => new \DateTime('2025-01-15'),
-                'status' => 'confirmed',
-                'seats' => 2,
-            ],
-            [
-                'id' => 2,
-                'event' => 'Atelier Culturel',
-                'user' => 'Marie Martin',
-                'email' => 'marie@example.com',
-                'date' => new \DateTime('2025-01-20'),
-                'status' => 'pending',
-                'seats' => 1,
-            ],
-        ];
-
         return $this->render('admin/reservations/index.html.twig', [
-            'reservations' => $reservations,
-            'total' => count($reservations),
+            'reservations' => $reservationRepository->findAll(),
         ]);
     }
 
-    #[Route('/admin/reservations/export', name: 'admin_reservations_export', methods: ['GET'])]
-    public function export(): Response
+    #[Route('/new', name: 'admin_reservations_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // Placeholder CSV export
-        $csv = "Date,Événement,Utilisateur,Email,Places,Statut\n";
-        $csv .= "15/01/2025,Conférence Binajia 2025,Jean Dupont,jean@example.com,2,Confirmé\n";
-        $csv .= "20/01/2025,Atelier Culturel,Marie Martin,marie@example.com,1,En attente\n";
+        $reservation = new Reservation();
+        $form = $this->createForm(Reservation1Type::class, $reservation);
+        $form->handleRequest($request);
 
-        return new Response(
-            $csv,
-            200,
-            [
-                'Content-Type' => 'text/csv; charset=UTF-8',
-                'Content-Disposition' => 'attachment; filename="reservations.csv"'
-            ]
-        );
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($reservation);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('admin_reservations_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('admin/reservations/new.html.twig', [
+            'reservation' => $reservation,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'admin_reservations_show', methods: ['GET'])]
+    public function show(Reservation $reservation): Response
+    {
+        return $this->render('admin/reservations/show.html.twig', [
+            'reservation' => $reservation,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'admin_reservations_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(Reservation1Type::class, $reservation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('admin_reservations_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('admin/reservations/edit.html.twig', [
+            'reservation' => $reservation,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'admin_reservations_delete', methods: ['POST'])]
+    public function delete(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$reservation->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($reservation);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('admin_reservations_index', [], Response::HTTP_SEE_OTHER);
     }
 }

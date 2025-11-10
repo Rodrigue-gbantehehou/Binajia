@@ -1,0 +1,202 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Détails du don #{{ don.id }}{% endblock %}
+
+{% block admin_body %}
+<div class="space-y-6">
+    {# Header #}
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900">
+                <i class="fas fa-hand-holding-heart text-red-500 mr-3"></i>
+                Détails du don #{{ don.id }}
+            </h1>
+            <p class="text-gray-600 mt-1">Informations complètes sur le don</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="{{ path('admin_dons_index') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-green-500">
+                <i class="fas fa-arrow-left"></i>Retour à la liste
+            </a>
+            <a href="{{ path('admin_dons_edit', {'id': don.id}) }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-blue-600 text-white hover:bg-blue-700">
+                <i class="fas fa-edit"></i>Modifier
+            </a>
+        </div>
+    </div>
+
+    {# Main Content #}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {# Informations principales #}
+        <div class="lg:col-span-2 space-y-6">
+            {# Carte des informations du donateur #}
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-user-circle text-blue-500 mr-2"></i>
+                    Informations du donateur
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-1">Nom</label>
+                        <p class="text-lg font-semibold text-gray-900">{{ don.nom }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-1">Email</label>
+                        <p class="text-lg font-semibold text-gray-900">{{ don.email }}</p>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-500 mb-1">Anonymat</label>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{ don.isanonymous ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
+                            <i class="fas {{ don.isanonymous ? 'fa-eye-slash' : 'fa-eye' }} mr-1"></i>
+                            {{ don.isanonymous ? 'Don anonyme' : 'Don public' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            {# Carte des détails du don #}
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-money-bill-wave text-green-500 mr-2"></i>
+                    Détails du don
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-1">Montant</label>
+                        <p class="text-2xl font-bold text-green-600">{{ don.montant }} €</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-1">Type de don</label>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium 
+                            {% if don.typeDon == 'ponctuel' %}bg-blue-100 text-blue-800
+                            {% elseif don.typeDon == 'mensuel' %}bg-purple-100 text-purple-800
+                            {% else %}bg-orange-100 text-orange-800{% endif %}">
+                            <i class="fas 
+                                {% if don.typeDon == 'ponctuel' %}fa-star
+                                {% elseif don.typeDon == 'mensuel' %}fa-calendar-alt
+                                {% else %}fa-calendar-day{% endif %} mr-1"></i>
+                            {{ don.typeDon|capitalize }}
+                        </span>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-1">Statut</label>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium 
+                            {% if don.statut == 'completed' %}bg-green-100 text-green-800
+                            {% elseif don.statut == 'pending' %}bg-yellow-100 text-yellow-800
+                            {% elseif don.statut == 'failed' %}bg-red-100 text-red-800
+                            {% else %}bg-gray-100 text-gray-800{% endif %}">
+                            <i class="fas 
+                                {% if don.statut == 'completed' %}fa-check-circle
+                                {% elseif don.statut == 'pending' %}fa-clock
+                                {% elseif don.statut == 'failed' %}fa-times-circle
+                                {% else %}fa-ban{% endif %} mr-1"></i>
+                            {{ don.statut|capitalize }}
+                        </span>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-1">ID de transaction</label>
+                        <p class="text-lg font-mono text-gray-900">{{ don.transactionId ?: 'N/A' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Sidebar - Informations techniques #}
+        <div class="space-y-6">
+            {# Carte des dates #}
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-calendar-alt text-orange-500 mr-2"></i>
+                    Dates
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-1">Créé le</label>
+                        <p class="text-sm font-semibold text-gray-900">
+                            <i class="fas fa-calendar-plus text-green-500 mr-2"></i>
+                            {{ don.createdAt ? don.createdAt|date('d/m/Y à H:i') : 'N/A' }}
+                        </p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-1">Modifié le</label>
+                        <p class="text-sm font-semibold text-gray-900">
+                            <i class="fas fa-edit text-blue-500 mr-2"></i>
+                            {{ don.updatedAt ? don.updatedAt|date('d/m/Y à H:i') : 'N/A' }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {# Carte des actions rapides #}
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-bolt text-purple-500 mr-2"></i>
+                    Actions
+                </h2>
+                <div class="space-y-3">
+                    <a href="{{ path('admin_dons_edit', {'id': don.id}) }}" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all duration-300">
+                        <i class="fas fa-edit"></i>
+                        Modifier le don
+                    </a>
+                    <a href="{{ path('admin_dons_index') }}" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-300">
+                        <i class="fas fa-list"></i>
+                        Voir tous les dons
+                    </a>
+                    <button type="button" onclick="document.getElementById('delete-form').classList.toggle('hidden')" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 transition-all duration-300">
+                        <i class="fas fa-trash"></i>
+                        Supprimer
+                    </button>
+                </div>
+                
+                {# Formulaire de suppression #}
+                <div id="delete-form" class="hidden mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <p class="text-sm text-red-800 mb-3">Êtes-vous sûr de vouloir supprimer ce don ? Cette action est irréversible.</p>
+                    {{ include('admin/dons/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Statistiques supplémentaires #}
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+            <i class="fas fa-chart-bar text-indigo-500 mr-2"></i>
+            Résumé
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="text-center p-4 bg-blue-50 rounded-lg">
+                <div class="text-2xl font-bold text-blue-600">{{ don.montant }} €</div>
+                <div class="text-sm text-blue-800">Montant du don</div>
+            </div>
+            <div class="text-center p-4 bg-green-50 rounded-lg">
+                <div class="text-2xl font-bold text-green-600">
+                    {% if don.statut == 'completed' %}Validé
+                    {% elseif don.statut == 'pending' %}En attente
+                    {% elseif don.statut == 'failed' %}Échoué
+                    {% else %}Annulé{% endif %}
+                </div>
+                <div class="text-sm text-green-800">Statut</div>
+            </div>
+            <div class="text-center p-4 bg-purple-50 rounded-lg">
+                <div class="text-2xl font-bold text-purple-600">{{ don.typeDon|capitalize }}</div>
+                <div class="text-sm text-purple-800">Type</div>
+            </div>
+            <div class="text-center p-4 bg-orange-50 rounded-lg">
+                <div class="text-2xl font-bold text-orange-600">
+                    {{ don.isanonymous ? 'Anonyme' : 'Public' }}
+                </div>
+                <div class="text-sm text-orange-800">Visibilité</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+</style>
+{% endblock %}

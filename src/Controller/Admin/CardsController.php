@@ -282,14 +282,14 @@ class CardsController extends AbstractController
     private function generateCardPdf(MembershipCards $card, User $user, PdfGeneratorService $pdf): void
     {
         $projectDir = $this->uploadDir;
-        $cardsDir = $projectDir . '/media/cards';
+        $cardsDir = $projectDir . '/cards';
         if (!is_dir($cardsDir)) {
             @mkdir($cardsDir, 0775, true);
         }
-
-        $filename = sprintf('card_%d_%s.pdf', $user->getId(), date('YmdHis'));
-        $outputPath = $cardsDir . '/' . $filename;
-        $cardPdfUrl = '/media/cards/' . $filename;
+ $stamp = date('YmdHis');
+        $cardFilename = sprintf('card_%d_%s.pdf', (int)$user->getId(), $stamp);
+        $outputPath = $cardsDir . '/' . $cardFilename;
+        $cardPdfUrl = '/media/cards/' . $cardFilename;
         //generation du code qr
         $qrData = sprintf(
             "BINAJIA Member\nID: %s\nName: %s\nPhone: %s\nExpiry: %s",
@@ -317,7 +317,7 @@ class CardsController extends AbstractController
                 'joinDate' => $card->getIssuedate()->format('d/m/Y'),
                 'qrCode' => $qrCode,
             ],
-            $outputPath,
+            $cardFilename,
             'A4',
             'Portrait'
         );

@@ -200,7 +200,7 @@ class MembershipCardService
         ];
     }
 
-    private function prepareAvatar(string $avatarPath): ?string
+    public function prepareAvatar(string $avatarPath): ?string
     {
         if (empty($avatarPath)) {
             return $this->createDefaultAvatar();
@@ -224,7 +224,7 @@ class MembershipCardService
         return $this->createDefaultAvatar();
     }
 
-    private function createDefaultAvatar(): string
+    public function createDefaultAvatar(): string
     {
         $defaultImage = <<<SVG
 <svg width="80" height="95" xmlns="http://www.w3.org/2000/svg">

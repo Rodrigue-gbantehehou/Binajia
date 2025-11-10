@@ -363,7 +363,7 @@ class RegistrationController extends AbstractController
             }
         }
 
-        return $this->render('membership/card_generated.html.twig', [
+        return $this->render('membership/card.html.twig', [
             'user' => $user,
             'memberId' => $memberId,
             'plan' => $plan,
