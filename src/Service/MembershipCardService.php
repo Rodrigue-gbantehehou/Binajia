@@ -103,7 +103,7 @@ class MembershipCardService
                     'name' => $name,
                     'phone' => $phone,
                     'nationality' => $nationality,
-                    'roleBadge' => $roleBadge,
+                    'roleBadge' => 'Membre Binajia',
                     'roleTitle' => $roleTitle,
                     'memberId' => $memberId,
                     'expiry' => $expiryAt->format('d/m/Y'),
