@@ -264,6 +264,7 @@ final class ReservationController extends AbstractController
             $emailService->sendReservationConfirmation($reservation, $pdfPath);
 
             $this->addFlash('success', 'Facture proforma générée et envoyée par email avec succès.');
+            return $this->redirectToRoute('app_home');
 
         }
         return $this->render('reservation/form_reservation.html.twig', [

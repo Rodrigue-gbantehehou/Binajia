@@ -37,7 +37,7 @@ class ReservationType extends AbstractType
                 'label' => false,
                 'attr' => ['placeholder' => 'Votre pays']
             ])
-            ->add('destination', TextType::class, [
+            ->add('destination', CountryType::class, [
                 'label' => false,
                 'attr' => ['class' => 'form-w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-colors', 'placeholder' => 'Destination du voyage']
             ])

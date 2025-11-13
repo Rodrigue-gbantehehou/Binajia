@@ -141,6 +141,7 @@
     <header>
         <div>
             <img src="{{ asset('media/logo.jpeg') }}" alt="Logo Ninajia">
+            <img src="{{ asset('media/binajiasafari.jpeg') }}" alt="Logo Binajia Safari">
         </div>
         <div style="text-align:right;">
             <h1>Facture Proforma</h1>
@@ -171,9 +172,9 @@
         <thead>
         <tr>
             <th>Description</th>
-            <th>Quantité</th>
-            <th>Prix unitaire (€)</th>
-            <th>Total (€)</th>
+            <th>Nbr de voyageurs</th>
+            <th>Prix unitaire (f CFA)</th>
+            <th>Total (f CFA)</th>
         </tr>
         </thead>
         <tbody>
@@ -187,7 +188,7 @@
     </table>
 
     <div class="total">
-        <p><strong>Total estimé : <span class="highlight">{{ reservation.budgetestime|default(0)|number_format(2, ',', ' ') }} €</span></strong></p>
+        <p><strong>Total estimé : <span class="highlight">{{ reservation.budgetestime|default(0)|number_format(2, ',', ' ') }} f CFA</span></strong></p>
     </div>
 
     {% if reservation.commentaire %}
@@ -199,7 +200,7 @@
 </div>
 
 <footer>
-    Ninajia ✈️ — Voyages & Aventures Authentiques  
+    Binajia Safari | Voyages & Aventures Authentiques  
     | Email : contact@ninajia.com | Tel : (+229) 01 46 10 10 50 / (+234) 707 047 7730  
     | Cette facture proforma n’est pas un document comptable officiel.
 </footer>
