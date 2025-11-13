@@ -2,16 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\CulturalContent;
 use App\Entity\Evenement;
 use App\Entity\Reservation;
-use App\Service\PdfGeneratorService;
+use App\Form\ReservationType;
 use App\Service\EmailService;
+use App\Form\Reservation1Type;
+use App\Entity\CulturalContent;
+use App\Service\PdfGeneratorService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class ReservationController extends AbstractController
 {
@@ -225,10 +227,49 @@ final class ReservationController extends AbstractController
     }
 
     #[Route('/reservation', name: 'app_reservation')]
-    public function index(): Response
+    public function index(EntityManagerInterface $em, Request $request, PdfGeneratorService $pdfGeneratorService, EmailService $emailService): Response
     {
-        return $this->render('reservation/index.html.twig', [
-            'controller_name' => 'ReservationController',
+
+        $reservation = new Reservation();
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $em->persist($reservation);
+            //generer le pdf du facture proforma
+            $timestamp = (new \DateTime())->format('YmdHis');
+            $filename = 'facture_proforma_' . ($reservation->getId() ?: $timestamp) . '.pdf';
+          //empecher de generer la carte si la soumission est pas valid ou a ete deja soumise
+          if ($reservation->getFacturepdf() !== null) {
+            $this->addFlash('warning', 'Facture proforma deja generée.');
+            return $this->redirectToRoute('app_avantage');
+          }
+            $pdfPath = $pdfGeneratorService->generatePdf(
+                'reservation/facture_proforma.html.twig',
+                ['reservation' => $reservation],
+                $filename,
+                'A3',
+                'landscape'
+            );
+            // Extract relative path for database storage (from /pdf/ onwards)
+            $relativePath = strstr($pdfPath, '/pdf/');
+            if ($relativePath === false) {
+                $relativePath = '/pdf/' . $filename;
+            }
+
+            $reservation->setFacturepdf($relativePath);
+            $em->flush();
+            // Envoyer le PDF par email
+            $emailService->sendReservationConfirmation($reservation, $pdfPath);
+
+            $this->addFlash('success', 'Facture proforma générée et envoyée par email avec succès.');
+
+        }
+        return $this->render('reservation/form_reservation.html.twig', [
+            'reservation' => $reservation,
+            'form' => $form,
         ]);
+       
     }
 }

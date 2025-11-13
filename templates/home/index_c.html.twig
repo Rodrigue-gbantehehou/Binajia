@@ -64,7 +64,7 @@
 								<button onclick="goToEvents()" class="group px-8 py-1 rounded-full font-bold text-white bg-yellow-400 backdrop-blur-sm border border-white/30 hover:bg-white/20 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
 									<span class="flex items-center">Tickets</span>
 								</button>
-								<button onclick="goToPlaces()" class="group px-8 py-1 bg-green-500 rounded-full font-bold text-white bg-green-400 backdrop-blur-sm border border-white/30 hover:bg-white/20 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
+								<button onclick="goToReservation()" class="group px-8 py-1 bg-green-500 rounded-full font-bold text-white bg-green-400 backdrop-blur-sm border border-white/30 hover:bg-white/20 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
 									<span class="flex items-center">Réservation</span>
 								</button>
 							</div>
@@ -754,11 +754,11 @@
 					{# Trust Indicators #}
 					<div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
 						<div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
-							<div class="text-2xl md:text-3xl font-black text-white mb-1">5000+</div>
+							<div class="text-2xl md:text-3xl font-black text-white mb-1">100+</div>
 							<div class="text-white/80 text-xs">Membres</div>
 						</div>
 						<div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
-							<div class="text-2xl md:text-3xl font-black text-white mb-1">50+</div>
+							<div class="text-2xl md:text-3xl font-black text-white mb-1">8+</div>
 							<div class="text-white/80 text-xs">Événements/an</div>
 						</div>
 
@@ -1115,8 +1115,8 @@ function goToEvents() {
 window.location.href = "{{ path('app_events') }}";
 }
 
-function goToPlaces() {
-window.location.href = "{{ path('app_explorer') }}";
+function goToReservation() {
+window.location.href = "{{ path('app_reservation') }}";
 }
 
 // Scroll animations with Tailwind classes

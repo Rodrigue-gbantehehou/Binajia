@@ -234,9 +234,9 @@ fontFamily: {
 						<a href="{{ path('app_explorer') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_explorer' %}active{% endif %}">Explorer</a>
 						<a href="{{ path('app_social_impact') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_social_impact' %}active{% endif %}">Impact Social</a>
 						<a href="{{ path('app_events') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_events' %}active{% endif %}">Événements</a>
+						<a href="{{ path('app_avantage') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">Avantages</a>					
 						<a href="{{ path('app_about') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">A propos</a>
 						<a href="{{ path('app_contact') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">Contact</a>
-						<a href="{{ path('app_avantage') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">Avantages</a>
 						{% if is_granted('ROLE_ADMIN') %}
 							<a href="{{ path('admin_dashboard') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'admin_dashboard' %}active{% endif %}">Admin</a>
 						{% endif %}
@@ -247,7 +247,7 @@ fontFamily: {
 							<a href="{{ path('app_login', {}, false) ?? '#' }}" class="hidden lg:block px-6 py-3 rounded-full bg-white border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-all duration-300">Connexion</a>
 						{% endif %}
 						{% if app.user %}
-							<a href="{{ path('app_user_dashboard') }}" class="hidden lg:block px-6 py-3 text-white bg-primary text-center rounded-full font-medium transition duration-300 bg-yellow-400 hover:bg-yellow-500 {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active bg-yellow-600{% endif %}">Espace membre</a>
+							<a href="{{ path('app_user_dashboard') }}" class="hidden lg:block px-6 py-3 text-white bg-primary text-center rounded-full font-medium transition duration-300 bg-yellow-500 hover:bg-yellow-500 {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active bg-yellow-600{% endif %}">Espace membre</a>
 							<a href="{{ path('app_logout') }}" class="hidden lg:block p-2.5 rounded-full ring-1 ring-white hover:bg-yellow-400 transition-all duration-300" title="Se déconnecter" aria-label="Se déconnecter">
 								<svg class="w-5 h-5 text-white" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 									<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -274,7 +274,7 @@ fontFamily: {
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
 								</svg>
 							</button>
-							<a href="{{ path('app_membership') }}" class="hidden lg:block px-6 py-3 text-white rounded-full bg-yellow-400 outline outline-2 outline-white font-semibold hover:bg-yellow-500 transition-all duration-300 {% if app.request.attributes.get('_route') == 'app_membership' %}active bg-yellow-600 outline-yellow-600{% endif %}">
+							<a href="{{ path('app_membership') }}" class="hidden lg:block px-6 py-3 text-white rounded-full bg-yellow-500 outline outline-2 outline-white font-semibold hover:bg-yellow-500 transition-all duration-300 {% if app.request.attributes.get('_route') == 'app_membership' %}active bg-yellow-600 outline-yellow-600{% endif %}">
 								Devenir membre
 							</a>
 						{% endif %}
@@ -303,9 +303,9 @@ fontFamily: {
 					<a href="{{ path('app_explorer') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_explorer' %}active{% endif %}">Explorer</a>
 					<a href="{{ path('app_social_impact') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_social_impact' %}active{% endif %}">Impact Social</a>
 					<a href="{{ path('app_events') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_events' %}active{% endif %}">Événements</a>
+					<a href="{{ path('app_avantage') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">Avantages</a>
 					<a href="{{ path('app_about') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">A propos</a>
 					<a href="{{ path('app_contact') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">Contact</a>
-					<a href="{{ path('app_avantage') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">Avantages</a>
 					{% if is_granted('ROLE_ADMIN') %}
 						<a href="{{ path('admin_dashboard') }}" class="block text-white hover:text-green-500 font-medium text-lg py-3 px-4 rounded-full hover:bg-cream transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'admin_dashboard' %}active{% endif %}">Admin</a>
 					{% endif %}
@@ -314,7 +314,7 @@ fontFamily: {
 							<a href="{{ path('app_membership') }}" class="block w-full px-6 py-3 text-center bg-primary hover:bg-secondary text-white rounded-full font-medium transition duration-300 nav-link-mobile {% if app.request.attributes.get('_route') == 'app_membership' %}active{% endif %}">Devenir membre</a>
 							<a href="{{ path('app_login') }}" class="block w-full px-6 py-3 text-center bg-white border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_login' %}active{% endif %}">Connexion</a>
 						{% else %}
-							<a href="{{ path('app_user_dashboard') }}" class="block w-full rounded-full px-6 py-3 text-center btn-primary nav-link-mobile {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active{% endif %}">Espace membre</a>
+							<a href="{{ path('app_user_dashboard') }}" class="block w-full rounded-full px-6 py-3 text-center btn-yellow-500 nav-link-mobile {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active{% endif %}">Espace membre</a>
 							<a href="{{ path('app_logout') }}" class="block w-full px-6 py-3 text-center bg-primary border-2 border-gray-300 text-white rounded-full font-semibold hover:bg-cream transition-all">Se déconnecter</a>
 						{% endif %}
 					</div>
