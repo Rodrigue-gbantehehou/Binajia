@@ -225,8 +225,8 @@ final class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/reserver', name: 'app_reserver')]
-    public function reserver(EntityManagerInterface $em, Request $request, PdfGeneratorService $pdfGeneratorService, EmailService $emailService): Response
+    #[Route('/reservation', name: 'app_reserver')]
+    public function index(EntityManagerInterface $em, Request $request, PdfGeneratorService $pdfGeneratorService, EmailService $emailService): Response
     {
 
         $reservation = new Reservation();
