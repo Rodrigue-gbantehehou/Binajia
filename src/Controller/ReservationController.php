@@ -225,8 +225,8 @@ final class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/reservation', name: 'app_reservation')]
-    public function index(EntityManagerInterface $em, Request $request, PdfGeneratorService $pdfGeneratorService, EmailService $emailService): Response
+    #[Route('/reserver', name: 'app_reserver')]
+    public function reserver(EntityManagerInterface $em, Request $request, PdfGeneratorService $pdfGeneratorService, EmailService $emailService): Response
     {
 
         $reservation = new Reservation();
@@ -266,7 +266,7 @@ final class ReservationController extends AbstractController
             return $this->redirectToRoute('app_home');
 
         }
-        return $this->render('reservation/form_reservation.html.twig', [
+        return $this->render('reservation/form.html.twig', [
             'reservation' => $reservation,
             'form' => $form,
         ]);
