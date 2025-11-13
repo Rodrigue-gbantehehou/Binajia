@@ -222,17 +222,14 @@
                     Informations techniques
                 </h2>
                 <div class="space-y-3 text-sm">
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">ID:</span>
-                        <span class="font-mono text-gray-900">{{ reservation.id }}</span>
-                    </div>
+               
                     <div class="flex justify-between">
                         <span class="text-gray-500">Créé le:</span>
-                        <span class="text-gray-900">N/A</span>
+                        <span class="text-gray-900">{{ reservation.createdAt|date('d/m/Y H:i') }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-500">Modifié le:</span>
-                        <span class="text-gray-900">N/A</span>
+                        <span class="text-gray-900">{{ reservation.updatedAt|date('d/m/Y H:i') }}</span>
                     </div>
                 </div>
             </div>

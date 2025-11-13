@@ -377,8 +377,8 @@ class CardsController extends AbstractController
         $name = trim(($user->getFirstname() ?? '') . ' ' . ($user->getLastname() ?? ''));
         $phone = (string)($user->getPhone() ?? '');
         $nationality = (string)($user->getCountry() ?? '');
-        $roleBadge = $user->getRoleoncard() ?? 'MEMBRE';
-        $roleTitle = $user->getRoleoncard() ? strtoupper($user->getRoleoncard()) . "\nBINAJIA" : 'MEMBER\nBINAJIA';
+        $roleBadge = $card->getRoleoncard() ?? 'MEMBRE';
+        $roleTitle = $card->getRoleoncard() ? strtoupper($card->getRoleoncard()) . "\nBINAJIA" : 'MEMBER\nBINAJIA';
         $memberId = $card->getCardnumberC() ?? sprintf('BjNg-%s-%03d', (new \DateTime())->format('Y'), $user->getId());
         $expiry = $card->getExpiryDate() ? $card->getExpiryDate()->format('d/m/Y') : (new \DateTime('+1 year'))->format('d/m/Y');
         $joinDate = $card->getIssuedate() ? $card->getIssuedate()->format('d/m/Y') : (new \DateTime())->format('d/m/Y');

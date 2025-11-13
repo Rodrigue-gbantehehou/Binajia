@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ place.name }} — Binajia{% endblock %}
+{% block title %}{{ place.title }} — Binajia{% endblock %}
 
 {% block content %}
 <div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-yellow-50">
@@ -9,7 +9,7 @@
       
             <img 
                 src="{{ path('secure_upload', {'filename': place.image}) }}" 
-                alt="{{ place.name }}" 
+                alt="{{ place.title }}" 
                 class="w-full h-full object-cover"
             >
       
@@ -35,14 +35,14 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
                 <div class="max-w-3xl">
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-                        {{ place.name }}
+                        {{ place.title }}
                     </h1>
                     <div class="flex items-center text-white/90 text-lg">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
-                        {{ place.city }}, {{ place.country }}
+                        {{ place.country }}
                     </div>
                 </div>
             </div>

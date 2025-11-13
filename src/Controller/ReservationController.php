@@ -20,10 +20,10 @@ final class ReservationController extends AbstractController
         private EmailService $emailService
     ) {}
 
-    #[Route('/reservation/{id}', name: 'app_reservation_event')]
-    public function reserveEvent(Request $request, EntityManagerInterface $entityManager, int $id): Response
+    #[Route('/reservation/{slug}', name: 'app_reservation_event')]
+    public function reserveEvent(Request $request, EntityManagerInterface $entityManager, string $slug): Response
     {
-        $evenement = $entityManager->getRepository(Evenement::class)->find($id);
+        $evenement = $entityManager->getRepository(Evenement::class)->findOneBy(['slug' => $slug]);
 
         if (!$evenement) {
             throw $this->createNotFoundException('Événement non trouvé');

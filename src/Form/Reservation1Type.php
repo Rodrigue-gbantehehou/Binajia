@@ -4,10 +4,11 @@ namespace App\Form;
 
 use App\Entity\Evenement;
 use App\Entity\Reservation;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class Reservation1Type extends AbstractType
 {
@@ -19,13 +20,22 @@ class Reservation1Type extends AbstractType
             ->add('telephone')
             ->add('paysresidence')
             ->add('destination')
-            ->add('datedepart')
+            ->add('datedepart', DateTimeType::class, [
+                'widget' => 'single_text',
+                'html5' => false, // ← Désactiver html5
+                'format' => 'dd/MM/yyyy | HH:mm',
+                'data' => new \DateTime(),
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'dd/MM/yyyy | HH:mm',
+                ],
+            ])
             ->add('nbrvoyageurs')
             ->add('typevoyage')
             ->add('centreinteret')
             ->add('budgetestime')
             ->add('commentaire')
-         
+
             ->add('typereservation')
             ->add('evenement', EntityType::class, [
                 'class' => Evenement::class,

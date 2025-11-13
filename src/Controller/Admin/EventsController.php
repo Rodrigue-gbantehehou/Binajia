@@ -63,7 +63,11 @@ class EventsController extends AbstractController
             $ed = $request->request->get('endDate');
             $e->setStartDate($sd ? new \DateTime($sd) : null);
             $e->setEndDate($ed ? new \DateTime($ed) : null);
+            $e->setPrice($request->request->get('price'));
+            $e->setCreatedBy($this->getUser());
             $e->setIsOnline(true);
+            $slug = str_replace(' ', '-', $request->request->get('title'));
+            $e->setSlug($slug);
 
             // Handle image upload
             $imageFile = $request->files->get('image');
@@ -105,6 +109,10 @@ class EventsController extends AbstractController
             $e->setStartDate($sd ? new \DateTime($sd) : null);
             $e->setEndDate($ed ? new \DateTime($ed) : null);
             $e->setIsOnline(true);
+            $e->setPrice($request->request->get('price'));
+            $e->setCreatedBy($this->getUser());
+            $slug = str_replace(' ', '-', $request->request->get('title'));
+            $e->setSlug($slug);
 
             // Handle image upload
             $imageFile = $request->files->get('image');

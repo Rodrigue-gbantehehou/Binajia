@@ -17,9 +17,11 @@
             <a href="{{ path('admin_dons_index') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-green-500">
                 <i class="fas fa-arrow-left"></i>Retour à la liste
             </a>
+            <!--
             <a href="{{ path('admin_dons_edit', {'id': don.id}) }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-blue-600 text-white hover:bg-blue-700">
                 <i class="fas fa-edit"></i>Modifier
             </a>
+            -->
         </div>
     </div>
 
@@ -132,10 +134,12 @@
                     Actions
                 </h2>
                 <div class="space-y-3">
+                <!--
                     <a href="{{ path('admin_dons_edit', {'id': don.id}) }}" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all duration-300">
                         <i class="fas fa-edit"></i>
                         Modifier le don
                     </a>
+                    -->
                     <a href="{{ path('admin_dons_index') }}" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-300">
                         <i class="fas fa-list"></i>
                         Voir tous les dons

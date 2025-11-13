@@ -1,0 +1,172 @@
+{% if app.request.cookies.get('cookie_consent') is null %}
+<div id="cookie-banner" 
+    class="fixed bottom-4 left-1/2 -translate-x-1/2 max-w-md w-[90%] bg-gradient-to-br from-white to-gray-50 shadow-xl rounded-2xl border border-gray-100 p-6 z-50 transform transition-all duration-500 ease-out opacity-0 translate-y-10">
+    
+    {# Header avec icône #}
+    <div class="flex items-start gap-3 mb-3">
+        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-md">
+            <i class="fas fa-cookie-bite text-white text-lg"></i>
+        </div>
+        <div class="flex-1">
+            <h2 class="text-lg font-bold text-gray-900 mb-1">Votre vie privée nous importe</h2>
+            <p class="text-sm text-gray-600 leading-relaxed">
+                Nous utilisons des cookies essentiels et des cookies optionnels pour améliorer votre expérience. 
+                Vous pouvez choisir vos préférences ci-dessous.
+            </p>
+        </div>
+    </div>
+
+    {# Options de cookies #}
+    <div class="space-y-3 mb-4">
+        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-shield-alt text-blue-600 text-sm"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-gray-900">Cookies essentiels</p>
+                    <p class="text-xs text-gray-500">Toujours activés</p>
+                </div>
+            </div>
+            <div class="relative">
+                <input type="checkbox" checked disabled class="sr-only">
+                <div class="w-10 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                    <i class="fas fa-check text-white text-xs"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-chart-line text-purple-600 text-sm"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-gray-900">Analytics</p>
+                    <p class="text-xs text-gray-500">Amélioration du site</p>
+                </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="analytics-cookies" class="sr-only peer">
+                <div class="w-10 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+            </label>
+        </div>
+    </div>
+
+    {# Actions #}
+    <div class="flex flex-col sm:flex-row gap-3">
+        <button id="refuse-cookies" 
+            class="flex-1 px-4 py-3 text-sm font-medium rounded-xl border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 flex items-center justify-center gap-2">
+            <i class="fas fa-times"></i>
+            Refuser les optionnels
+        </button>
+        <button id="accept-cookies" 
+            class="flex-1 px-4 py-3 text-sm font-medium rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2">
+            <i class="fas fa-check"></i>
+            Accepter
+        </button>
+    </div>
+
+    {# Lien politique de confidentialité #}
+    <div class="mt-4 text-center">
+        <a href="{{ path('app_legal_privacy') }}" class="text-xs text-gray-500 hover:text-gray-700 transition-colors inline-flex items-center gap-1">
+            <i class="fas fa-info-circle"></i>
+            Politique de confidentialité
+        </a>
+    </div>
+</div>
+
+<style>
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 30px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes slideOutDown {
+    from {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, 30px);
+    }
+}
+
+.cookie-banner-enter {
+    animation: slideInUp 0.6s ease-out forwards;
+}
+
+.cookie-banner-exit {
+    animation: slideOutDown 0.4s ease-in forwards;
+}
+
+/* Toggle switch styling */
+input:checked + div {
+    background-color: #10B981;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const banner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('accept-cookies');
+    const refuseBtn = document.getElementById('refuse-cookies');
+    const analyticsCheckbox = document.getElementById('analytics-cookies');
+
+    // Animation d'entrée
+    setTimeout(() => {
+        banner.classList.remove('opacity-0', 'translate-y-10');
+        banner.classList.add('cookie-banner-enter');
+    }, 100);
+
+    // Accepter tous les cookies
+    acceptBtn.addEventListener('click', function() {
+        const analyticsAccepted = analyticsCheckbox.checked;
+        setCookieConsent('accepted', analyticsAccepted);
+        hideBanner();
+    });
+
+    // Refuser les cookies optionnels
+    refuseBtn.addEventListener('click', function() {
+        setCookieConsent('refused', false);
+        hideBanner();
+    });
+
+    function setCookieConsent(choice, analytics) {
+        const expiryDate = new Date();
+        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+        
+        document.cookie = `cookie_consent=${choice}; expires=${expiryDate.toUTCString()}; path=/; SameSite=Lax`;
+        document.cookie = `analytics_cookies=${analytics}; expires=${expiryDate.toUTCString()}; path=/; SameSite=Lax`;
+        
+        // Déclencher un événement personnalisé pour que d'autres scripts puissent réagir
+        window.dispatchEvent(new CustomEvent('cookieConsentUpdated', {
+            detail: { consent: choice, analytics: analytics }
+        }));
+    }
+
+    function hideBanner() {
+        banner.classList.remove('cookie-banner-enter');
+        banner.classList.add('cookie-banner-exit');
+        
+        setTimeout(() => {
+            banner.remove();
+        }, 400);
+    }
+
+    // Fermer en cliquant à l'extérieur
+    document.addEventListener('click', function(e) {
+        if (!banner.contains(e.target) && !e.target.closest('#cookie-banner')) {
+            hideBanner();
+        }
+    });
+});
+</script>
+{% endif %}

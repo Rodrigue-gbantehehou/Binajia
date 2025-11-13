@@ -86,6 +86,8 @@ class CulturalContentController extends AbstractController
             $content->setCountry($request->request->get('country'));
             $content->setVideoUrl($request->request->get('video_url'));
             $content->setCreatedAt(new \DateTimeImmutable());
+            $slug=str_replace(' ', '-', $request->request->get('title'));
+            $content->setSlug($slug);
 
             // Upload image
             $imageFile = $request->files->get('image');
@@ -125,6 +127,8 @@ class CulturalContentController extends AbstractController
             $content->setType($request->request->get('type'));
             $content->setCountry($request->request->get('country'));
             $content->setVideoUrl($request->request->get('video_url'));
+            $slug=str_replace(' ', '-', $request->request->get('title'));
+            $content->setSlug($slug);
 
             // Upload new image if provided
             $imageFile = $request->files->get('image');

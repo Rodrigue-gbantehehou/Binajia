@@ -47,6 +47,7 @@ class PlacesController extends AbstractController
             $pl->setDescription($request->request->get('description'));
             $pl->setCountry($request->request->get('country'));
             $pl->setCity($request->request->get('city'));
+            $pl->setSlug($request->request->get('name'));
 
             // Handle image upload
             $imageFile = $request->files->get('image');
@@ -78,6 +79,7 @@ class PlacesController extends AbstractController
             $pl->setDescription($request->request->get('description'));
             $pl->setCountry($request->request->get('country'));
             $pl->setCity($request->request->get('city'));
+            $pl->setSlug($request->request->get('name'));
 
             // Handle image upload
             $imageFile = $request->files->get('image');

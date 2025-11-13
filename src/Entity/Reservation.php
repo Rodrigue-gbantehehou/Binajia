@@ -57,6 +57,12 @@ class Reservation
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $typereservation = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $UpdatedAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -226,6 +232,30 @@ class Reservation
     public function setTypereservation(?string $typereservation): static
     {
         $this->typereservation = $typereservation;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->UpdatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $UpdatedAt): static
+    {
+        $this->UpdatedAt = $UpdatedAt;
 
         return $this;
     }

@@ -183,7 +183,7 @@
     <!-- Sidebar -->
     <aside class="sidebar w-64 hidden md:block fixed h-screen overflow-hidden bg-gradient-to-b from-green-900 to-green-800 text-white flex flex-col">
       <div class="p-4 border-b border-white/10 flex-shrink-0">
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-2" onclick="app_home()" style="cursor: pointer;">
           <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
             <i class="fas fa-crown text-white text-base"></i>
           </div>
@@ -330,6 +330,12 @@
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="{{ asset('js/admin.js') }}"></script>
   <script>
+ 
+  function app_home(id){
+    
+    window.location.href = "{{ path('app_home') }}";
+  }
+
     document.addEventListener('DOMContentLoaded', function() {
       // Toggle sidebar on mobile
       var toggle = document.getElementById('sidebarToggle');

@@ -235,11 +235,13 @@
                                    title="Voir les détails">
                                     <i class="fas fa-eye"></i>
                                 </a>
+                                <!---
                                 <a href="{{ path('admin_dons_edit', {'id': don.id}) }}" 
                                    class="text-green-600 hover:text-green-900 transition-colors duration-150 p-2 rounded-lg hover:bg-green-50"
                                    title="Modifier">
                                     <i class="fas fa-edit"></i>
                                 </a>
+                                -->
                                 {% if don.statut == 'pending' %}
                                 <button class="text-purple-600 hover:text-purple-900 transition-colors duration-150 p-2 rounded-lg hover:bg-purple-50"
                                         title="Approuver le don">

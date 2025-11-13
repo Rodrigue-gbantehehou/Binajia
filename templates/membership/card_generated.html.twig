@@ -127,10 +127,7 @@
                 <dt class="text-gray-500 font-medium">Ville</dt>
                 <dd class="font-semibold text-charcoal">{{ user.city ?? 'Non renseignée' }}</dd>
               </div>
-              <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                <dt class="text-gray-500 font-medium">ID Membre</dt>
-                <dd class="font-semibold text-primary font-mono">{{ memberId }}</dd>
-              </div>
+            
               <div class="flex items-center justify-between py-2 border-b border-gray-100">
                 <dt class="text-gray-500 font-medium">Date d'adhésion</dt>
                 <dd class="font-semibold text-charcoal">{{ (user.createdAt ? user.createdAt|date('d/m/Y') : "now"|date('d/m/Y')) }}</dd>

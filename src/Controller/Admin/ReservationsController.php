@@ -30,6 +30,10 @@ final class ReservationsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $datedepart = $form->get('datedepart')->getData();
+            $reservation->setDatedepart($datedepart);
+            $reservation->setCreatedAt(new \DateTimeImmutable());
+            $reservation->setUpdatedAt(new \DateTimeImmutable());
             $entityManager->persist($reservation);
             $entityManager->flush();
 
@@ -57,6 +61,7 @@ final class ReservationsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $reservation->setUpdatedAt(new \DateTimeImmutable());
             $entityManager->flush();
 
             return $this->redirectToRoute('admin_reservations_index', [], Response::HTTP_SEE_OTHER);

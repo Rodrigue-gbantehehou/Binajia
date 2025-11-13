@@ -44,6 +44,12 @@ class Evenement
     #[ORM\Column]
     private ?bool $isOnline = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $price = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -158,6 +164,30 @@ class Evenement
     public function setIsOnline(bool $isOnline): static
     {
         $this->isOnline = $isOnline;
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?string $price): static
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

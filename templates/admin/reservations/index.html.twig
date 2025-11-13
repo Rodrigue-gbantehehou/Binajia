@@ -67,11 +67,11 @@
                     <p class="text-2xl font-bold text-gray-900">
                         {% set totalBudget = reservations|reduce((total, r) => total + (r.budgetestime ?: 0), 0) %}
                         {% set avgBudget = reservations|length > 0 ? totalBudget / reservations|length : 0 %}
-                        {{ avgBudget|number_format(0, ',', ' ') }} €
+                        {{ avgBudget|number_format(0, ',', ' ') }} F
                     </p>
                 </div>
                 <div class="p-3 bg-orange-100 rounded-xl">
-                    <i class="fas fa-euro-sign text-orange-600 text-xl"></i>
+                    <i class="fas fa-money-bill-wave text-orange-600 text-xl"></i>
                 </div>
             </div>
         </div>
@@ -145,7 +145,8 @@
                             <div class="text-xs text-gray-500">
                                 {% if reservation.datedepart %}
                                     {% set daysLeft = date(reservation.datedepart).diff(date()).days %}
-                                    {% if daysLeft > 0 %}
+                                   
+                                    {% if date(reservation.datedepart) > date() %}
                                         <span class="text-orange-600">Dans {{ daysLeft }} jours</span>
                                     {% else %}
                                         <span class="text-green-600">Passé</span>
@@ -165,7 +166,7 @@
                         {# Budget #}
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">
-                                {{ reservation.budgetestime ? reservation.budgetestime ~ ' €' : 'N/A' }}
+                                {{ reservation.budgetestime ? reservation.budgetestime ~ ' FCFA' : 'N/A' }}
                             </div>
                         </td>
 

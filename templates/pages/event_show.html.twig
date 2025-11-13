@@ -4,17 +4,17 @@
 <section class="pt-24 pb-16 bg-white">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid md:grid-cols-2 gap-8 items-start">
-      <img src="{{ event.image }}" alt="" class="rounded-2xl shadow-lg">
+      <img src="{{ path('secure_upload', {'filename': event.image}) }}" alt="" class="rounded-2xl shadow-lg">
       <div>
         <h1 class="font-serif text-4xl font-bold text-charcoal">{{ event.title }}</h1>
         <div class="mt-3 text-gray-600 space-y-1">
-          <div>{{ event.datetime }}</div>
-          <div>{{ event.location }}</div>
+          <div>Du {{ event.startDate | date('d/m/Y') }} au {{ event.endDate | date('d/m/Y') }}</div>
+          <div> à {{ event.location }}</div>
           <div class="font-semibold text-primary">{{ event.price }}</div>
         </div>
         <p class="mt-6 text-gray-700">{{ event.description }}</p>
         <div class="mt-8">
-          <a href="#" class="btn-primary px-6 py-3">Réserver une place</a>
+          <a href="{{ path('app_reservation_event', {'slug': event.slug})  }}" class="btn-primary px-6 py-3">Réserver une place</a>
         </div>
       </div>
     </div>

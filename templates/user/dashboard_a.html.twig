@@ -2,87 +2,6 @@
 {% block title %}Mon espace — Binajia
 {% endblock %}
 
-{% block stylesheets %}
-	<style>
-		.dashboard-card {
-			background: white;
-			border-radius: 16px;
-			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-			border: 1px solid rgba(0, 0, 0, 0.05);
-			transition: all 0.3s ease;
-		}
-		.dashboard-card:hover {
-			box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-			transform: translateY(-2px);
-		}
-		.profile-photo {
-			transition: all 0.3s ease;
-		}
-		.profile-photo:hover {
-			transform: scale(1.05);
-		}
-		.member-card-3d {
-			background: linear-gradient(135deg, #059669 0%, #047857 100%);
-			border-radius: 20px;
-			box-shadow: 0 20px 40px rgba(5, 150, 105, 0.3);
-			position: relative;
-			overflow: hidden;
-		}
-		.member-card-3d::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-			opacity: 0.6;
-		}
-		
-		/* Mobile optimizations */
-		@media (max-width: 768px) {
-			.dashboard-card {
-				margin: 0 -1rem;
-				border-radius: 0;
-				border-left: none;
-				border-right: none;
-			}
-			.mobile-sticky-header {
-				position: sticky;
-				top: 0;
-				background: white;
-				z-index: 40;
-				padding: 1rem 0;
-				margin: 0 -1rem;
-				padding-left: 1rem;
-				padding-right: 1rem;
-				border-bottom: 1px solid #e5e7eb;
-			}
-		}
-		
-		/* Custom animations */
-		@keyframes fadeInUp {
-			from {
-				opacity: 0;
-				transform: translateY(20px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-		
-		.animate-fade-in-up {
-			animation: fadeInUp 0.6s ease-out;
-		}
-
-		/* Smooth scrolling */
-		html {
-			scroll-behavior: smooth;
-		}
-	</style>
-{% endblock %}
-
 {% block content %}
 	<div class="min-h-screen py-12 bg-gradient-to-br from-yellow-200 via-green-200 to-green-200">
 		<!-- Mobile Header -->
@@ -242,12 +161,15 @@
 								</svg>
 								Mon Profil
 							</h2>
+
+							<!--
 							<button class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors text-sm lg:text-base">
 								<svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
 								</svg>
 								Modifier
 							</button>
+							-->
 						</div>
 
 						<!-- Profile Photo Section -->
@@ -564,59 +486,5 @@
 		</div>
 	</div>
 
-	<script>
-		// Mobile navigation
-		document.addEventListener('DOMContentLoaded', function () {
-			const navLinks = document.querySelectorAll('.nav-link');
-			
-			navLinks.forEach(link => {
-				link.addEventListener('click', function (e) {
-					e.preventDefault();
-					const targetId = this.getAttribute('href');
-					const targetSection = document.querySelector(targetId);
-
-					if (targetSection) {
-						// Update active state
-						navLinks.forEach(l => {
-							l.classList.remove('bg-emerald-100', 'text-emerald-700', 'border-emerald-200');
-							l.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
-						});
-						this.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
-						this.classList.add('bg-emerald-100', 'text-emerald-700', 'border-emerald-200');
-
-						// Smooth scroll
-						targetSection.scrollIntoView({
-							behavior: 'smooth',
-							block: 'start'
-						});
-					}
-				});
-			});
-
-			// Add intersection observer for animations
-			const observer = new IntersectionObserver((entries) => {
-				entries.forEach(entry => {
-					if (entry.isIntersecting) {
-						entry.target.classList.add('animate-fade-in-up');
-					}
-				});
-			}, {
-				threshold: 0.1
-			});
-
-			// Observe all dashboard cards
-			document.querySelectorAll('.dashboard-card').forEach(card => {
-				observer.observe(card);
-			});
-		});
-
-		// Card functions
-		function showQRCode() {
-			alert('Fonctionnalité QR Code en développement');
-		}
-
-		function showTicketQR(ticketId) {
-			alert('QR Code pour le ticket #' + ticketId);
-		}
-	</script>
+	
 {% endblock %}
