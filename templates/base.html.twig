@@ -79,7 +79,7 @@
             .nav-link-mobile.active {
                 background: white;
                 color: #0a4b1e;
-                border-radius: 9999px;
+                border-radius: 12px;
                 font-weight: 600;
             }
 
@@ -96,13 +96,13 @@
                 padding-right: 2rem;
             }
 
-            /* === AMÉLIORATIONS DU MENU MOBILE === */
+            /* === CORRECTIONS DU MENU MOBILE === */
             
             /* Animation fluide pour le menu mobile */
             .mobile-menu {
                 transform: translateX(100%);
                 transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+                box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
             }
 
             .mobile-menu.active {
@@ -110,15 +110,15 @@
             }
 
             /* Overlay amélioré */
-            .menu-overlay {
+            #menu-overlay {
                 opacity: 0;
                 visibility: hidden;
                 transition: all 0.3s ease;
                 background: rgba(0, 0, 0, 0.5);
-                backdrop-filter: blur(4px);
+                backdrop-filter: blur(2px);
             }
 
-            .menu-overlay.active {
+            #menu-overlay.active {
                 opacity: 1;
                 visibility: visible;
             }
@@ -127,96 +127,54 @@
             .nav-link-mobile {
                 position: relative;
                 overflow: hidden;
-                transition: all 0.3s ease;
-                margin: 4px 0;
+                transition: all 0.2s ease;
+                margin: 2px 0;
+                border-radius: 12px;
             }
 
             .nav-link-mobile:not(.active):hover {
-                background: rgba(255, 255, 255, 0.15);
-                transform: translateX(8px);
-            }
-
-            .nav-link-mobile::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-                transition: left 0.6s;
-            }
-
-            .nav-link-mobile:hover::before {
-                left: 100%;
+                background: rgba(255, 255, 255, 0.1);
+                transform: translateX(4px);
             }
 
             /* Scroll personnalisé pour le menu */
             .mobile-menu-content {
-                max-height: calc(100vh - 120px);
+                max-height: calc(100vh - 100px);
                 overflow-y: auto;
-                scrollbar-width: thin;
-                scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+                scrollbar-width: none;
             }
 
             .mobile-menu-content::-webkit-scrollbar {
-                width: 4px;
+                display: none;
             }
 
-            .mobile-menu-content::-webkit-scrollbar-track {
-                background: transparent;
+            /* Cacher le menu par défaut */
+            #mobile-menu {
+                display: none;
             }
 
-            .mobile-menu-content::-webkit-scrollbar-thumb {
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 2px;
-            }
-
-            /* Animation des boutons */
-            #mobile-menu-btn, #menu-close-btn {
-                transition: all 0.2s ease;
-                transform: scale(1);
-            }
-
-            #mobile-menu-btn:active, #menu-close-btn:active {
-                transform: scale(0.92);
+            #mobile-menu.active {
+                display: block;
             }
 
             /* Responsive amélioré */
             @media (max-width: 640px) {
                 .mobile-menu {
-                    width: 85vw;
-                    max-width: 320px;
-                }
-                
-                .nav-link-mobile {
-                    font-size: 16px;
-                    padding: 14px 20px;
+                    width: 300px;
                 }
             }
 
             @media (max-width: 480px) {
                 .mobile-menu {
-                    width: 90vw;
-                    max-width: 280px;
-                    padding: 1.5rem;
-                }
-                
-                .nav-link-mobile {
-                    font-size: 15px;
-                    padding: 12px 16px;
-                }
-                
-                .mobile-menu-content {
-                    max-height: calc(100vh - 100px);
+                    width: 280px;
+                    padding: 1rem;
                 }
             }
 
             @media (max-width: 360px) {
                 .mobile-menu {
-                    width: 95vw;
-                    max-width: none;
-                    padding: 1rem;
+                    width: 260px;
+                    padding: 0.75rem;
                 }
             }
 
@@ -353,7 +311,7 @@
                     <a href="{{ path('app_explorer') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_explorer' %}active{% endif %}">Explorer</a>
                     <a href="{{ path('app_social_impact') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_social_impact' %}active{% endif %}">Impact Social</a>
                     <a href="{{ path('app_events') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_events' %}active{% endif %}">Événements</a>
-                    <a href="{{ path('app_avantage') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_avantage' %}active{% endif %}">Avantages</a>					
+                    <a href="{{ path('app_avantage') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">Avantages</a>					
                     <a href="{{ path('app_about') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">A propos</a>
                     <a href="{{ path('app_contact') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">Contact</a>
                     {% if is_granted('ROLE_ADMIN') %}
@@ -381,7 +339,7 @@
                     {% endif %}
                     
                     <!-- Bouton menu mobile unifié -->
-                    <button id="mobile-menu-btn" class="lg:hidden p-3 hover:bg-white/20 rounded-full transition-all duration-300" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
+                    <button id="mobile-menu-btn" class="lg:hidden p-2 hover:bg-white/20 rounded-full transition-all duration-200" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
@@ -391,61 +349,66 @@
         </nav>
 
         <!-- Overlay pour le menu mobile -->
-        <div id="menu-overlay" class="menu-overlay fixed inset-0 z-40" aria-hidden="true"></div>
+        <div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
 
-        <!-- Menu mobile élargi -->
-        <div id="mobile-menu" class="mobile-menu fixed top-0 bg-gradient-to-br from-yellow-400 to-green-500 right-0 h-full w-96 max-w-full z-50 p-6" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
-            <div class="flex justify-between items-center mb-8">
-                <a href="{{ path('app_home') }}" class="flex items-center">
-                        <img src="https://huggingface.co/spaces/Babangida77/binajia/resolve/main/images/binajia%20logo.jpg" alt="Binajia Logo" class="h-20 w-20">
-                        <span class="ml-2 text-xl font-bold text-white bg-gradient-to-r from-green-500 to-green-700 px-4 py-1 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-pulse">
-                            B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
-                        </span>
-                    </a>
+        <!-- Menu mobile corrigé -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-80 bg-gradient-to-b from-yellow-400 to-green-500 z-50 p-4" aria-hidden="true">
+            <!-- En-tête avec bouton fermer -->
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center space-x-3">
+                    <img src="/media/logo.jpeg" alt="Logo Binajia" class="h-10 w-10  object-cover">
+                    <span class="font-serif text-xl font-bold text-white">BINAJIA</span>
+                </div>
+                <button id="menu-close-btn" class="p-2 hover:bg-white/20 rounded-full transition-all duration-200" aria-label="Fermer le menu">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
             
+            <!-- Contenu du menu -->
             <div class="mobile-menu-content space-y-1">
-                <!-- Section Navigation -->
-                <a href="{{ path('app_home') }}" class="block text-white font-medium text-lg py-4 px-6 rounded-full transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}">
+                <a href="{{ path('app_home') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}">
                     Accueil
                 </a>
-                <a href="{{ path('app_explorer') }}" class="block text-white font-medium text-lg py-4 px-6 rounded-full transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_explorer' %}active{% endif %}">
+                <a href="{{ path('app_explorer') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_explorer' %}active{% endif %}">
                     Explorer
                 </a>
-                <a href="{{ path('app_social_impact') }}" class="block text-white font-medium text-lg py-4 px-6 rounded-full transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_social_impact' %}active{% endif %}">
+                <a href="{{ path('app_social_impact') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_social_impact' %}active{% endif %}">
                     Impact Social
                 </a>
-                <a href="{{ path('app_events') }}" class="block text-white font-medium text-lg py-4 px-6 rounded-full transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_events' %}active{% endif %}">
+                <a href="{{ path('app_events') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_events' %}active{% endif %}">
                     Événements
                 </a>
-                <a href="{{ path('app_avantage') }}" class="block text-white font-medium text-lg py-4 px-6 rounded-full transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_avantage' %}active{% endif %}">
+                <a href="{{ path('app_avantage') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">
                     Avantages
                 </a>
-                <a href="{{ path('app_about') }}" class="block text-white font-medium text-lg py-4 px-6 rounded-full transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">
+                <a href="{{ path('app_about') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">
                     A propos
                 </a>
-                <a href="{{ path('app_contact') }}" class="block text-white font-medium text-lg py-4 px-6 rounded-full transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">
+                <a href="{{ path('app_contact') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">
                     Contact
                 </a>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('admin_dashboard') }}" class="block text-white font-medium text-lg py-4 px-6 rounded-full transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'admin_dashboard' %}active{% endif %}">
+                    <a href="{{ path('admin_dashboard') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'admin_dashboard' %}active{% endif %}">
                         Admin
                     </a>
                 {% endif %}
                 
-                <div class="pt-6 space-y-4 border-t border-white/30 mt-4">
+                <!-- Section actions -->
+                <div class="pt-4 space-y-3 border-t border-white/20 mt-4">
                     {% if not app.user %}
-                        <a href="{{ path('app_membership') }}" class="block w-full px-6 py-4 text-center bg-white text-primary rounded-full font-semibold transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 nav-link-mobile {% if app.request.attributes.get('_route') == 'app_membership' %}active{% endif %}">
+                        <a href="{{ path('app_membership') }}" class="block w-full px-4 py-3 text-center bg-white text-primary rounded-full font-semibold transition-all duration-200 hover:bg-primary hover:text-white nav-link-mobile {% if app.request.attributes.get('_route') == 'app_membership' %}active{% endif %}">
                             Devenir membre
                         </a>
-                        <a href="{{ path('app_login') }}" class="block w-full px-6 py-4 text-center bg-primary border-2 border-white text-white rounded-full font-semibold transition-all duration-300 hover:bg-white hover:text-primary hover:scale-105 nav-link-mobile {% if app.request.attributes.get('_route') == 'app_login' %}active{% endif %}">
+                        <a href="{{ path('app_login') }}" class="block w-full px-4 py-3 text-center bg-primary border border-white text-white rounded-full font-semibold transition-all duration-200 hover:bg-white hover:text-primary nav-link-mobile {% if app.request.attributes.get('_route') == 'app_login' %}active{% endif %}">
                             Connexion
                         </a>
                     {% else %}
-                        <a href="{{ path('app_user_dashboard') }}" class="block w-full px-6 py-4 text-center bg-yellow-500 text-white rounded-full font-semibold transition-all duration-300 hover:bg-yellow-600 hover:scale-105 nav-link-mobile {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active{% endif %}">
+                        <a href="{{ path('app_user_dashboard') }}" class="block w-full px-4 py-3 text-center bg-yellow-500 text-white rounded-full font-semibold transition-all duration-200 hover:bg-yellow-600 nav-link-mobile {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active{% endif %}">
                             Espace membre
                         </a>
-                        <a href="{{ path('app_logout') }}" class="block w-full px-6 py-4 text-center bg-white/20 border-2 border-white text-white rounded-full font-semibold transition-all duration-300 hover:bg-white hover:text-primary hover:scale-105">
+                        <a href="{{ path('app_logout') }}" class="block w-full px-4 py-3 text-center bg-white/10 border border-white text-white rounded-full font-semibold transition-all duration-200 hover:bg-white hover:text-primary">
                             Se déconnecter
                         </a>
                     {% endif %}
@@ -524,12 +487,9 @@
     <main class="pt-20 main-container"> {% block content %}{% endblock %}
     </main>
 
-    {% block footer %}
-        <!-- Footer inchangé -->
-        <footer class="bg-gradient-to-r from-yellow-500 via-green-600 to-green-800 shadow-lg text-white py-12 px-8 relative overflow-hidden">
-            <!-- Contenu du footer existant -->
-       
-				
+    <footer
+					class="bg-gradient-to-r from-yellow-500 via-green-600 to-green-800 shadow-lg text-white py-12 px-8 relative overflow-hidden">
+					<!-- Effet de fond décoratif -->
 					<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10"></div>
 
 					<div
@@ -688,37 +648,37 @@
 						</div>
 					</div>
 				</footer>
-    {% endblock %}
+    
 
     {% block scripts %}
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script>
-            // Gestion améliorée du menu mobile
+            // Gestion du menu mobile
             document.addEventListener('DOMContentLoaded', function() {
                 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
                 const menuCloseBtn = document.getElementById('menu-close-btn');
                 const mobileMenu = document.getElementById('mobile-menu');
                 const menuOverlay = document.getElementById('menu-overlay');
                 
+                // Fonction pour ouvrir le menu
                 function openMobileMenu() {
                     mobileMenu.classList.add('active');
                     menuOverlay.classList.add('active');
                     document.body.style.overflow = 'hidden';
                     mobileMenuBtn.setAttribute('aria-expanded', 'true');
                     mobileMenu.setAttribute('aria-hidden', 'false');
-                    menuCloseBtn.focus();
                 }
                 
+                // Fonction pour fermer le menu
                 function closeMobileMenu() {
                     mobileMenu.classList.remove('active');
                     menuOverlay.classList.remove('active');
                     document.body.style.overflow = '';
                     mobileMenuBtn.setAttribute('aria-expanded', 'false');
                     mobileMenu.setAttribute('aria-hidden', 'true');
-                    mobileMenuBtn.focus();
                 }
                 
-                // Événements d'ouverture/fermeture
+                // Événements
                 mobileMenuBtn.addEventListener('click', openMobileMenu);
                 menuCloseBtn.addEventListener('click', closeMobileMenu);
                 menuOverlay.addEventListener('click', closeMobileMenu);
@@ -730,24 +690,10 @@
                     }
                 });
                 
-                // Animation d'entrée des liens
-                const mobileLinks = mobileMenu.querySelectorAll('.nav-link-mobile');
-                mobileLinks.forEach((link, index) => {
-                    link.style.opacity = '0';
-                    link.style.transform = 'translateX(20px)';
-                    link.style.transition = `opacity 0.3s ease ${index * 0.05}s, transform 0.3s ease ${index * 0.05}s`;
-                    
-                    // Observer pour l'animation
-                    const observer = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.style.opacity = '1';
-                                entry.target.style.transform = 'translateX(0)';
-                            }
-                        });
-                    }, { threshold: 0.1 });
-                    
-                    observer.observe(link);
+                // Fermeture au clic sur les liens (pour une navigation fluide)
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', closeMobileMenu);
                 });
             });
         </script>
