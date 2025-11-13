@@ -211,7 +211,7 @@
 							</div>
 
 							<h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-green-600 transition-colors">
-								<a >{{ evenement.title }}</a>
+								<a href="{{ path('app_event_show', {slug: evenement.slug}) }}">{{ evenement.title }}</a>
 							</h3>
 
 							<p class="text-gray-600 mb-4 line-clamp-2">{{ evenement.description }}</p>
@@ -252,7 +252,9 @@
 											Complet
 										</button>
 									{% else %}
-									
+										<a href="{{ path('app_reservation_event', {'slug': evenement.slug}) }}" class="group inline-flex items-center gap-2 px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-xl">
+											Réserver
+										</a>
 									{% endif %}
 								</div>
 							</div>
