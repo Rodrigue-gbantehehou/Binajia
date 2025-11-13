@@ -211,7 +211,10 @@
 							</div>
 
 							<h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-green-600 transition-colors">
-								<a href="{{ path('app_event_show', {slug: evenement.slug}) }}">{{ evenement.title }}</a>
+							<!--
+							<a href="{{ path('app_event_show', {slug: evenement.slug}) }}">{{ evenement.title }}</a>
+							-->
+							{{ evenement.title }}
 							</h3>
 
 							<p class="text-gray-600 mb-4 line-clamp-2">{{ evenement.description }}</p>
