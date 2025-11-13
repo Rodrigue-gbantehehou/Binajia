@@ -48,14 +48,14 @@
                     <i class="fas fa-user text-white text-lg"></i>
                 </div>
                 <div>
-                    <h2 class="text-xl lg:text-2xl font-bold text-white">Informations personnelles</h2>
-                    <p class="text-white/80 text-sm mt-1">Vos coordonnées de contact</p>
+                    <h2 class="text-xl lg:text-3xl font-bold text-white">Informations personnelles</h2>
+                    <p class="text-white/80 text-xl mt-1">Vos coordonnées de contact</p>
                 </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
                 <div class="space-y-2">
-                    {{ form_label(form.Nom, 'Nom complet *', {'label_attr': {'class': 'block text-sm font-semibold text-white mb-2'}}) }}
+                    {{ form_label(form.Nom, 'Nom complet *', {'label_attr': {'class': 'block text-xl font-semibold text-white mb-2'}}) }}
                     <div class="relative">
                         {{ form_widget(form.Nom, {'attr': {
                             'class': 'w-full px-4 py-3 lg:py-4 border border-white/20 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all duration-300 bg-white/10 text-gray-800 placeholder-white/50 hover:bg-white/20 shadow-sm',
@@ -67,7 +67,7 @@
                 </div>
                 
                 <div class="space-y-2">
-                    {{ form_label(form.email, 'Email *', {'label_attr': {'class': 'block text-sm font-semibold text-white mb-2'}}) }}
+                    {{ form_label(form.email, 'Email *', {'label_attr': {'class': 'block text-xl font-semibold text-white mb-2'}}) }}
                     <div class="relative">
                         {{ form_widget(form.email, {'attr': {
                             'class': 'w-full px-4 py-3 lg:py-4 border border-white/20 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all duration-300 bg-white/10 text-gray-800 placeholder-white/50 hover:bg-white/20 shadow-sm',
@@ -79,7 +79,7 @@
                 </div>
                 
                 <div class="space-y-2">
-                    {{ form_label(form.telephone, 'Téléphone *', {'label_attr': {'class': 'block text-sm font-semibold text-white mb-2'}}) }}
+                    {{ form_label(form.telephone, 'Téléphone *', {'label_attr': {'class': 'block text-xl font-semibold text-white mb-2'}}) }}
                     <div class="relative">
                         {{ form_widget(form.telephone, {'attr': {
                             'class': 'w-full px-4 py-3 lg:py-4 border border-white/20 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all duration-300 bg-white/10 text-gray-800 placeholder-white/50 hover:bg-white/20 shadow-sm',
@@ -91,7 +91,7 @@
                 </div>
                 
                 <div class="space-y-2">
-                    {{ form_label(form.paysresidence, 'Pays de résidence *', {'label_attr': {'class': 'block text-sm font-semibold text-white mb-2'}}) }}
+                    {{ form_label(form.paysresidence, 'Pays de résidence *', {'label_attr': {'class': 'block text-xl font-semibold text-white mb-2'}}) }}
                     <div class="relative">
                         {{ form_widget(form.paysresidence, {'attr': {
                             'class': 'w-full px-4 py-3 lg:py-4 border border-white/20 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all duration-300 bg-white/10 text-gray-800 placeholder-white/50 hover:bg-white/20 shadow-sm',
@@ -118,7 +118,7 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
                 <div class="space-y-2">
-                    {{ form_label(form.destination, 'Destination *', {'label_attr': {'class': 'block text-sm font-semibold text-white mb-2'}}) }}
+                    {{ form_label(form.destination, 'Destination *', {'label_attr': {'class': 'block text-xl font-semibold text-white mb-2'}}) }}
                     <div class="relative">
                         {{ form_widget(form.destination, {'attr': {
                             'class': 'w-full px-4 py-3 lg:py-4 border border-white/20 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all duration-300 bg-white/10 text-gray-800 placeholder-white/50 hover:bg-white/20 shadow-sm',
@@ -130,7 +130,7 @@
                 </div>
                 
                 <div class="space-y-2">
-                    {{ form_label(form.datedepart, 'Date de départ *', {'label_attr': {'class': 'block text-sm font-semibold text-white mb-2'}}) }}
+                    {{ form_label(form.datedepart, 'Date de départ *', {'label_attr': {'class': 'block text-xl font-semibold text-white mb-2'}}) }}
                     <div class="relative">
                         {{ form_widget(form.datedepart, {'attr': {
                             'class': 'w-full px-4 py-3 lg:py-4 border border-white/20 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all duration-300 bg-white/10 text-gray-800 placeholder-white/50 hover:bg-white/20 shadow-sm',
@@ -142,7 +142,7 @@
                 </div>
                 
                 <div class="space-y-2">
-                    {{ form_label(form.nbrvoyageurs, 'Nombre de voyageurs *', {'label_attr': {'class': 'block text-sm font-semibold text-white mb-2'}}) }}
+                    {{ form_label(form.nbrvoyageurs, 'Nombre de voyageurs *', {'label_attr': {'class': 'block text-xl font-semibold text-white mb-2'}}) }}
                     <div class="relative">
                         {{ form_widget(form.nbrvoyageurs, {'attr': {
                             'class': 'w-full px-4 py-3 lg:py-4 border border-white/20 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all duration-300 bg-white/10 text-gray-800 placeholder-white/50 hover:bg-white/20 shadow-sm',
@@ -154,7 +154,7 @@
                 </div>
                 
                 <div class="space-y-2">
-                    {{ form_label(form.typevoyage, 'Type de voyage *', {'label_attr': {'class': 'block text-sm font-semibold text-white mb-2'}}) }}
+                    {{ form_label(form.typevoyage, 'Type de voyage *', {'label_attr': {'class': 'block text-xl font-semibold text-white mb-2'}}) }}
                     <div class="relative">
                         {{ form_widget(form.typevoyage, {'attr': {
                             'class': 'w-full px-4 py-3 lg:py-4 border border-white/20 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all duration-300 bg-white/10 text-gray-800 placeholder-white/50 hover:bg-white/20 shadow-sm appearance-none'
@@ -180,7 +180,7 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
                 <div class="space-y-2">
-                    {{ form_label(form.centreinteret, 'Centre d\'intérêt', {'label_attr': {'class': 'block text-sm font-semibold text-white mb-2'}}) }}
+                    {{ form_label(form.centreinteret, 'Centre d\'intérêt', {'label_attr': {'class': 'block text-xl font-semibold text-white mb-2'}}) }}
                     <div class="relative">
                         {{ form_widget(form.centreinteret, {'attr': {
                             'class': 'w-full px-4 py-3 lg:py-4 border border-white/20 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all duration-300 bg-white/10 text-gray-800 placeholder-white/50 hover:bg-white/20 shadow-sm',
@@ -192,7 +192,7 @@
                 </div>
                 
                 <div class="space-y-2">
-                    {{ form_label(form.budgetestime, 'Budget estimé (FCFA)', {'label_attr': {'class': 'block text-sm font-semibold text-white mb-2'}}) }}
+                    {{ form_label(form.budgetestime, 'Budget estimé (FCFA)', {'label_attr': {'class': 'block text-xl font-semibold text-white mb-2'}}) }}
                     <div class="relative">
                         {{ form_widget(form.budgetestime, {'attr': {
                             'class': 'w-full pl-12 pr-4 py-3 lg:py-4 border border-white/20 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all duration-300 bg-white/10 text-gray-800 placeholder-white/50 hover:bg-white/20 shadow-sm',
@@ -205,7 +205,8 @@
                 </div>
                 
                 <div class="md:col-span-2 space-y-2">
-                    {{ form_label(form.commentaire, 'Commentaire ou demandes spéciales', {'label_attr': {'class': 'block text-sm font-semibold text-white mb-2'}}) }}
+                    {{ form_label(form.commentaire, 'Commentaire ou demandes spéciales', {'label_attr': {'class': 'block text-x
+                    l font-semibold text-white mb-2'}}) }}
                     <div class="relative">
                         {{ form_widget(form.commentaire, {'attr': {
                             'class': 'w-full px-4 py-3 border border-white/20 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all duration-300 bg-white/10 text-gray-800 placeholder-white/50 hover:bg-white/20 shadow-sm resize-none',

@@ -3,9 +3,10 @@
 {% block title %}Gestion des Événements{% endblock %}
 
 {% block admin_body %}
-  <div class="space-y-6">
+  <div class="min-h-screen p-6">
+  <div class="max-w-7xl mx-auto">
     {# Header Section #}
-    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+    <div class="flex flex-col mb-6  lg:flex-row lg:items-center lg:justify-between gap-4">
       <div>
         <h1 class="text-3xl font-bold text-gray-900 mb-2">
           <i class="fas fa-calendar-alt text-orange-500 mr-3"></i>Gestion des Événements
@@ -13,9 +14,11 @@
         <p class="text-gray-600">Organisez et gérez tous vos événements culturels</p>
       </div>
       <div class="flex items-center gap-3">
+      <!--
         <button class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-green-500">
           <i class="fas fa-download"></i>Exporter
         </button>
+        -->
         <a class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 bg-gradient-to-r from-green-600 to-orange-500 text-white shadow-lg hover:-translate-y-0.5 hover:shadow-xl" href="{{ path('admin_events_new') }}">
           <i class="fas fa-plus"></i>Nouvel Événement
         </a>
@@ -23,7 +26,7 @@
     </div>
 
     {# Quick Stats #}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 mb-6  md:grid-cols-2 lg:grid-cols-4 gap-6">
       <div class="bg-white rounded-2xl shadow-lg border border-green-100 p-6 relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 bg-gradient-to-br from-green-50 to-green-100 border-l-4 border-green-500">
         <div class="flex items-center">
           <div class="flex-shrink-0">
@@ -277,6 +280,7 @@
         </div>
       </div>
     {% endif %}
+    </div>
   </div>
 
   {# JavaScript for interactivity #}

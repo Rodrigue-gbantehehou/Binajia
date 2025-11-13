@@ -1,702 +1,703 @@
 <html lang="fr" class="h-full scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>
-        {% block title %}Binajia
-        {% endblock %}
-    </title>
-    <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
-    <link rel="icon" href="/media/logo.jpeg" type="image/jpeg" sizes="16x16">
-    {% block styles %}
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        colors: {
-                            'primary': '#0a4b1e',
-                            'primary-dark': '#08381a',
-                            'primary-light': '#062e15',
-                            'secondary': '#2D7A4F',
-                            'secondary-dark': '#1F5438',
-                            'secondary-light': '#3A8C63',
-                            'accent': '#f5880b',
-                            'accent-dark': '#F59E0B',
-                            'accent-light': '#d97706',
-                            'cream': '#FAF8F5',
-                            'charcoal': '#2B2520'
-                        },
-                        fontFamily: {
-                            'sans': [
-                                'Roboto',
-                                'Inter',
-                                'ui-sans-serif',
-                                'system-ui',
-                                'sans-serif'
-                            ],
-                            'serif': ['Roboto']
-                        }
-                    }
-                }
-            }
-        </script>
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <style>
-            @keyframes scroll {
-                0% {
-                    transform: translateX(0);
-                }
-                100% {
-                    transform: translateX(-50%);
-                }
-            }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>
+			{% block title %}Binajia
+			{% endblock %}
+		</title>
+		<script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
+		<link rel="icon" href="/media/logo.jpeg" type="image/jpeg" sizes="16x16">
+		{% block styles %}
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+			<script src="https://cdn.tailwindcss.com"></script>
+			<script>
+				tailwind.config = {
+theme: {
+extend: {
+colors: {
+'primary': '#0a4b1e',
+'primary-dark': '#08381a',
+'primary-light': '#062e15',
+'secondary': '#2D7A4F',
+'secondary-dark': '#1F5438',
+'secondary-light': '#3A8C63',
+'accent': '#f5880b',
+'accent-dark': '#F59E0B',
+'accent-light': '#d97706',
+'cream': '#FAF8F5',
+'charcoal': '#2B2520'
+},
+fontFamily: {
+'sans': [
+'Roboto',
+'Inter',
+'ui-sans-serif',
+'system-ui',
+'sans-serif'
+],
+'serif': ['Roboto']
+}
+}
+}
+}
+			</script>
+			<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+			<style>
+				@keyframes scroll {
+					0% {
+						transform: translateX(0);
+					}
+					100% {
+						transform: translateX(-50%);
+					}
+				}
 
-            #carousel {
-                animation: scroll 40s linear infinite;
-            }
+				#carousel {
+					animation: scroll 40s linear infinite;
+				}
 
-            #carousel:hover {
-                animation-play-state: paused;
-            }
+				#carousel:hover {
+					animation-play-state: paused;
+				}
 
-            #carousel article:hover {
-                animation-play-state: paused;
-            }
+				#carousel article:hover {
+					animation-play-state: paused;
+				}
 
-            /* Styles pour les liens actifs */
-            .nav-link.active {
-                background: rgba(255, 255, 255, 0.2);
-                color: white;
-                border-radius: 9999px;
-                border-bottom: 4px solid white;
-                padding: 8px 16px;
-                font-weight: 600;
-            }
+				/* Styles pour les liens actifs */
+				.nav-link.active {
+					background: rgba(255, 255, 255, 0.2);
+					color: white;
+					border-radius: 9999px;
+					border-bottom: 4px solid white;
+					padding: 8px 16px;
+					font-weight: 600;
+				}
 
-            .nav-link-mobile.active {
-                background: white;
-                color: #0a4b1e;
-                border-radius: 12px;
-                font-weight: 600;
-            }
+				.nav-link-mobile.active {
+					background: white;
+					color: #0a4b1e;
+					border-radius: 12px;
+					font-weight: 600;
+				}
 
-            /* Conteneur principal élargi */
-            .main-container {
-                max-width: 100%;
-                margin: 0 auto;
-            }
+				/* Conteneur principal élargi */
+				.main-container {
+					max-width: 100%;
+					margin: 0 auto;
+				}
 
-            /* Menu desktop élargi */
-            .desktop-menu {
-                max-width: 100%;
-                padding-left: 2rem;
-                padding-right: 2rem;
-            }
+				/* Menu desktop élargi */
+				.desktop-menu {
+					max-width: 100%;
+					padding-left: 2rem;
+					padding-right: 2rem;
+				}
 
-            /* === CORRECTIONS DU MENU MOBILE === */
-            
-            /* Animation fluide pour le menu mobile */
-            .mobile-menu {
-                transform: translateX(100%);
-                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
-            }
+				/* === CORRECTIONS DU MENU MOBILE === */
 
-            .mobile-menu.active {
-                transform: translateX(0);
-            }
+				/* Animation fluide pour le menu mobile */
+				.mobile-menu {
+					transform: translateX(100%);
+					transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+					box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+				}
 
-            /* Overlay amélioré */
-            #menu-overlay {
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-                background: rgba(0, 0, 0, 0.5);
-                backdrop-filter: blur(2px);
-            }
+				.mobile-menu.active {
+					transform: translateX(0);
+				}
 
-            #menu-overlay.active {
-                opacity: 1;
-                visibility: visible;
-            }
+				/* Overlay amélioré */
+				#menu-overlay {
+					opacity: 0;
+					visibility: hidden;
+					transition: all 0.3s ease;
+					background: rgba(0, 0, 0, 0.5);
+					backdrop-filter: blur(2px);
+				}
 
-            /* Amélioration des liens mobiles */
-            .nav-link-mobile {
-                position: relative;
-                overflow: hidden;
-                transition: all 0.2s ease;
-                margin: 2px 0;
-                border-radius: 12px;
-            }
+				#menu-overlay.active {
+					opacity: 1;
+					visibility: visible;
+				}
 
-            .nav-link-mobile:not(.active):hover {
-                background: rgba(255, 255, 255, 0.1);
-                transform: translateX(4px);
-            }
+				/* Amélioration des liens mobiles */
+				.nav-link-mobile {
+					position: relative;
+					overflow: hidden;
+					transition: all 0.2s ease;
+					margin: 2px 0;
+					border-radius: 12px;
+				}
 
-            /* Scroll personnalisé pour le menu */
-            .mobile-menu-content {
-                max-height: calc(100vh - 100px);
-                overflow-y: auto;
-                scrollbar-width: none;
-            }
+				.nav-link-mobile:not(.active):hover {
+					background: rgba(255, 255, 255, 0.1);
+					transform: translateX(4px);
+				}
 
-            .mobile-menu-content::-webkit-scrollbar {
-                display: none;
-            }
+				/* Scroll personnalisé pour le menu */
+				.mobile-menu-content {
+					max-height: calc(100vh - 100px);
+					overflow-y: auto;
+					scrollbar-width: none;
+				}
 
-            /* Cacher le menu par défaut */
-            #mobile-menu {
-                display: none;
-            }
+				.mobile-menu-content::-webkit-scrollbar {
+					display: none;
+				}
 
-            #mobile-menu.active {
-                display: block;
-            }
+				/* Cacher le menu par défaut */
+				#mobile-menu {
+					display: none;
+				}
 
-            /* Responsive amélioré */
-            @media (max-width: 640px) {
-                .mobile-menu {
-                    width: 300px;
-                }
-            }
+				#mobile-menu.active {
+					display: block;
+				}
 
-            @media (max-width: 480px) {
-                .mobile-menu {
-                    width: 280px;
-                    padding: 1rem;
-                }
-            }
+				/* Responsive amélioré */
+				@media(max-width: 640px) {
+					.mobile-menu {
+						width: 300px;
+					}
+				}
 
-            @media (max-width: 360px) {
-                .mobile-menu {
-                    width: 260px;
-                    padding: 0.75rem;
-                }
-            }
+				@media(max-width: 480px) {
+					.mobile-menu {
+						width: 280px;
+						padding: 1rem;
+					}
+				}
 
-            /* Responsive fixes: scale down membership card on small screens */
-            @media(max-width: 480px) {
-                .bnj-card {
-                    width: 320px;
-                    height: 200px;
-                    margin-left: auto;
-                    margin-right: auto;
-                }
-                .bnj-card__header {
-                    height: 48px;
-                    padding: 0 12px;
-                }
-                .bnj-card__logo {
-                    width: 64px;
-                    height: 42px;
-                }
-                .bnj-card__brand {
-                    font-size: 18px;
-                }
-                .bnj-card__assoc {
-                    font-size: 8px;
-                }
-                .bnj-card__body {
-                    height: 152px;
-                    padding: 10px 12px;
-                }
-                .bnj-card__photo {
-                    width: 68px;
-                    height: 84px;
-                }
-                .bnj-card__role {
-                    font-size: 13px;
-                }
-                .bnj-card__slogan {
-                    font-size: 9px;
-                }
-                .bnj-card__name {
-                    font-size: 14px;
-                }
-                .bnj-card__details {
-                    font-size: 10px;
-                }
-                .bnj-card__badge {
-                    font-size: 9px;
-                    padding: 2px 8px;
-                }
-                .bnj-card__fd {
-                    font-size: 9px;
-                }
-            }
+				@media(max-width: 360px) {
+					.mobile-menu {
+						width: 260px;
+						padding: 0.75rem;
+					}
+				}
 
-            /* Extra small phones */
-            @media(max-width: 360px) {
-                .bnj-card {
-                    width: 290px;
-                    height: 184px;
-                }
-                .bnj-card__header {
-                    height: 44px;
-                    padding: 0 10px;
-                }
-                .bnj-card__logo {
-                    width: 56px;
-                    height: 36px;
-                }
-                .bnj-card__brand {
-                    font-size: 16px;
-                }
-                .bnj-card__assoc {
-                    font-size: 7px;
-                }
-                .bnj-card__body {
-                    height: 140px;
-                    padding: 8px 10px;
-                }
-                .bnj-card__photo {
-                    width: 62px;
-                    height: 78px;
-                }
-                .bnj-card__role {
-                    font-size: 12px;
-                }
-                .bnj-card__slogan {
-                    font-size: 8px;
-                }
-                .bnj-card__name {
-                    font-size: 13px;
-                }
-                .bnj-card__details {
-                    font-size: 9px;
-                }
-                .bnj-card__badge {
-                    font-size: 8px;
-                    padding: 2px 6px;
-                }
-                .bnj-card__fd {
-                    font-size: 8px;
-                }
-            }
+				/* Responsive fixes: scale down membership card on small screens */
+				@media(max-width: 480px) {
+					.bnj-card {
+						width: 320px;
+						height: 200px;
+						margin-left: auto;
+						margin-right: auto;
+					}
+					.bnj-card__header {
+						height: 48px;
+						padding: 0 12px;
+					}
+					.bnj-card__logo {
+						width: 64px;
+						height: 42px;
+					}
+					.bnj-card__brand {
+						font-size: 18px;
+					}
+					.bnj-card__assoc {
+						font-size: 8px;
+					}
+					.bnj-card__body {
+						height: 152px;
+						padding: 10px 12px;
+					}
+					.bnj-card__photo {
+						width: 68px;
+						height: 84px;
+					}
+					.bnj-card__role {
+						font-size: 13px;
+					}
+					.bnj-card__slogan {
+						font-size: 9px;
+					}
+					.bnj-card__name {
+						font-size: 14px;
+					}
+					.bnj-card__details {
+						font-size: 10px;
+					}
+					.bnj-card__badge {
+						font-size: 9px;
+						padding: 2px 8px;
+					}
+					.bnj-card__fd {
+						font-size: 9px;
+					}
+				}
 
-            /* Large screens */
-            @media(min-width: 1536px) {
-                .main-container {
-                    max-width: 1536px;
-                }
-                .desktop-menu {
-                    max-width: 1536px;
-                }
-            }
-        </style>
-    {% endblock %}
-</head>
+				/* Extra small phones */
+				@media(max-width: 360px) {
+					.bnj-card {
+						width: 290px;
+						height: 184px;
+					}
+					.bnj-card__header {
+						height: 44px;
+						padding: 0 10px;
+					}
+					.bnj-card__logo {
+						width: 56px;
+						height: 36px;
+					}
+					.bnj-card__brand {
+						font-size: 16px;
+					}
+					.bnj-card__assoc {
+						font-size: 7px;
+					}
+					.bnj-card__body {
+						height: 140px;
+						padding: 8px 10px;
+					}
+					.bnj-card__photo {
+						width: 62px;
+						height: 78px;
+					}
+					.bnj-card__role {
+						font-size: 12px;
+					}
+					.bnj-card__slogan {
+						font-size: 8px;
+					}
+					.bnj-card__name {
+						font-size: 13px;
+					}
+					.bnj-card__details {
+						font-size: 9px;
+					}
+					.bnj-card__badge {
+						font-size: 8px;
+						padding: 2px 6px;
+					}
+					.bnj-card__fd {
+						font-size: 8px;
+					}
+				}
 
-<body class="min-h-full bg-cream text-charcoal font-sans">
-    {% block header %}
-        <nav class="bg-gradient-to-r py-5 from-yellow-500 via-yellow-400 to-green-600 shadow-lg fixed w-full z-50 transition-all duration-300" role="navigation" aria-label="Navigation principale">
-            <div class="main-container desktop-menu mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+				/* Large screens */
+				@media(min-width: 1536px) {
+					.main-container {
+						max-width: 1536px;
+					}
+					.desktop-menu {
+						max-width: 1536px;
+					}
+				}
+			</style>
+		{% endblock %}
+	</head>
 
-                <div class="flex items-center">
-                    <a href="{{ path('app_home') }}" class="flex items-center">
-                        <img src="https://huggingface.co/spaces/Babangida77/binajia/resolve/main/images/binajia%20logo.jpg" alt="Binajia Logo" class="h-20 w-20">
-                        <span class="ml-2 text-xl font-bold text-white bg-gradient-to-r from-green-500 to-green-700 px-4 py-1 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-pulse">
-                            B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
-                        </span>
-                    </a>
-                </div>
+	<body class="min-h-full bg-cream text-charcoal font-sans">
+		{% block header %}
+			<nav class="bg-gradient-to-r py-5 from-yellow-500 via-yellow-400 to-green-600 shadow-lg fixed w-full z-50 transition-all duration-300" role="navigation" aria-label="Navigation principale">
+				<div class="main-container desktop-menu mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
 
-                <!-- Menu desktop élargi -->
-                <div class="hidden lg:flex items-center space-x-2">
-                    <a href="{{ path('app_home') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}">Accueil</a>
-                    <a href="{{ path('app_explorer') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_explorer' %}active{% endif %}">Explorer</a>
-                    <a href="{{ path('app_social_impact') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_social_impact' %}active{% endif %}">Impact Social</a>
-                    <a href="{{ path('app_events') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_events' %}active{% endif %}">Événements</a>
-                    <a href="{{ path('app_avantage') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">Avantages</a>					
-                    <a href="{{ path('app_about') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">A propos</a>
-                    <a href="{{ path('app_contact') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">Contact</a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('admin_dashboard') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'admin_dashboard' %}active{% endif %}">Admin</a>
-                    {% endif %}
-                </div>
+					<div class="flex items-center">
+						<a href="{{ path('app_home') }}" class="flex items-center">
+							<img src="https://huggingface.co/spaces/Babangida77/binajia/resolve/main/images/binajia%20logo.jpg" alt="Binajia Logo" class="h-20 w-20">
+							<span class="ml-2 text-xl font-bold text-white bg-gradient-to-r from-green-500 to-green-700 px-4 py-1 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-pulse">
+								B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
+							</span>
+						</a>
+					</div>
 
-                <div class="flex items-center space-x-3">
-                    {% if not app.user %}
-                        <a href="{{ path('app_login', {}, false) ?? '#' }}" class="hidden lg:block px-6 py-3 rounded-full bg-white border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-all duration-300">Connexion</a>
-                    {% endif %}
-                    {% if app.user %}
-                        <a href="{{ path('app_user_dashboard') }}" class="hidden lg:block px-6 py-3 text-white bg-primary text-center rounded-full font-medium transition duration-300 bg-yellow-500 hover:bg-yellow-500 {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active bg-yellow-600{% endif %}">Espace membre</a>
-                        <a href="{{ path('app_logout') }}" class="hidden lg:block p-2.5 rounded-full ring-1 ring-white hover:bg-yellow-400 transition-all duration-300" title="Se déconnecter" aria-label="Se déconnecter">
-                            <svg class="w-5 h-5 text-white" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                                <polyline points="16 17 21 12 16 7"/>
-                                <line x1="21" y1="12" x2="9" y2="12"/>
-                            </svg>
-                        </a>
-                    {% else %}
-                        <a href="{{ path('app_membership') }}" class="hidden lg:block px-6 py-3 text-white rounded-full bg-yellow-500 outline outline-2 outline-white font-semibold hover:bg-yellow-500 transition-all duration-300 {% if app.request.attributes.get('_route') == 'app_membership' %}active bg-yellow-600 outline-yellow-600{% endif %}">
-                            Devenir membre
-                        </a>
-                    {% endif %}
-                    
-                    <!-- Bouton menu mobile unifié -->
-                    <button id="mobile-menu-btn" class="lg:hidden p-2 hover:bg-white/20 rounded-full transition-all duration-200" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </nav>
+					<!-- Menu desktop élargi -->
+					<div class="hidden lg:flex items-center space-x-2">
+						<a href="{{ path('app_home') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}">Accueil</a>
+						<a href="{{ path('app_explorer') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_explorer' %}active{% endif %}">Explorer</a>
+						<a href="{{ path('app_social_impact') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_social_impact' %}active{% endif %}">Impact Social</a>
+						<a href="{{ path('app_events') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_events' %}active{% endif %}">Événements</a>
+						<a href="{{ path('app_avantage') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">Avantages</a>
+						<a href="{{ path('app_about') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">A propos</a>
+						<a href="{{ path('app_contact') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">Contact</a>
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('admin_dashboard') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'admin_dashboard' %}active{% endif %}">Admin</a>
+						{% endif %}
+					</div>
 
-        <!-- Overlay pour le menu mobile -->
-        <div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+					<div class="flex items-center space-x-3">
+						{% if not app.user %}
+							<a href="{{ path('app_login', {}, false) ?? '#' }}" class="hidden lg:block px-6 py-3 rounded-full bg-white border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-all duration-300">Connexion</a>
+						{% endif %}
+						{% if app.user %}
+							<a href="{{ path('app_user_dashboard') }}" class="hidden lg:block px-6 py-3 text-white bg-primary text-center rounded-full font-medium transition duration-300 bg-yellow-500 hover:bg-yellow-500 {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active bg-yellow-600{% endif %}">Espace membre</a>
+							<a href="{{ path('app_logout') }}" class="hidden lg:block p-2.5 rounded-full ring-1 ring-white hover:bg-yellow-400 transition-all duration-300" title="Se déconnecter" aria-label="Se déconnecter">
+								<svg class="w-5 h-5 text-white" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+									<polyline points="16 17 21 12 16 7"/>
+									<line x1="21" y1="12" x2="9" y2="12"/>
+								</svg>
+							</a>
+						{% else %}
+							<a href="{{ path('app_membership') }}" class="hidden lg:block px-6 py-3 text-white rounded-full bg-yellow-500 outline outline-2 outline-white font-semibold hover:bg-yellow-500 transition-all duration-300 {% if app.request.attributes.get('_route') == 'app_membership' %}active bg-yellow-600 outline-yellow-600{% endif %}">
+								Devenir membre
+							</a>
+						{% endif %}
 
-        <!-- Menu mobile corrigé -->
-        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-80 bg-gradient-to-b from-yellow-400 to-green-500 z-50 p-4" aria-hidden="true">
-            <!-- En-tête avec bouton fermer -->
-            <div class="flex justify-between items-center mb-6">
-                <div class="flex items-center space-x-3">
-                    <img src="/media/logo.jpeg" alt="Logo Binajia" class="h-10 w-10  object-cover">
-                    <span class="font-serif text-xl font-bold text-white">BINAJIA</span>
-                </div>
-                <button id="menu-close-btn" class="p-2 hover:bg-white/20 rounded-full transition-all duration-200" aria-label="Fermer le menu">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-            
-            <!-- Contenu du menu -->
-            <div class="mobile-menu-content space-y-1">
-                <a href="{{ path('app_home') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}">
-                    Accueil
-                </a>
-                <a href="{{ path('app_explorer') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_explorer' %}active{% endif %}">
-                    Explorer
-                </a>
-                <a href="{{ path('app_social_impact') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_social_impact' %}active{% endif %}">
-                    Impact Social
-                </a>
-                <a href="{{ path('app_events') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_events' %}active{% endif %}">
-                    Événements
-                </a>
-                <a href="{{ path('app_avantage') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">
-                    Avantages
-                </a>
-                <a href="{{ path('app_about') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">
-                    A propos
-                </a>
-                <a href="{{ path('app_contact') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">
-                    Contact
-                </a>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('admin_dashboard') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'admin_dashboard' %}active{% endif %}">
-                        Admin
-                    </a>
-                {% endif %}
-                
-                <!-- Section actions -->
-                <div class="pt-4 space-y-3 border-t border-white/20 mt-4">
-                    {% if not app.user %}
-                        <a href="{{ path('app_membership') }}" class="block w-full px-4 py-3 text-center bg-white text-primary rounded-full font-semibold transition-all duration-200 hover:bg-primary hover:text-white nav-link-mobile {% if app.request.attributes.get('_route') == 'app_membership' %}active{% endif %}">
-                            Devenir membre
-                        </a>
-                        <a href="{{ path('app_login') }}" class="block w-full px-4 py-3 text-center bg-primary border border-white text-white rounded-full font-semibold transition-all duration-200 hover:bg-white hover:text-primary nav-link-mobile {% if app.request.attributes.get('_route') == 'app_login' %}active{% endif %}">
-                            Connexion
-                        </a>
-                    {% else %}
-                        <a href="{{ path('app_user_dashboard') }}" class="block w-full px-4 py-3 text-center bg-yellow-500 text-white rounded-full font-semibold transition-all duration-200 hover:bg-yellow-600 nav-link-mobile {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active{% endif %}">
-                            Espace membre
-                        </a>
-                        <a href="{{ path('app_logout') }}" class="block w-full px-4 py-3 text-center bg-white/10 border border-white text-white rounded-full font-semibold transition-all duration-200 hover:bg-white hover:text-primary">
-                            Se déconnecter
-                        </a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    {% endblock %}
+						<!-- Bouton menu mobile unifié -->
+						<button id="mobile-menu-btn" class="lg:hidden p-2 hover:bg-white/20 rounded-full transition-all duration-200" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
+							<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</nav>
 
-    <!-- Flash Messages Section -->
-    <div id="flash-messages" class="fixed top-24 left-4 right-4 z-50 space-y-2">
-        {% for message in app.flashes('success') %}
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewbox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                    </svg>
-                    <span>{{ message }}</span>
-                </div>
-                <button onclick="this.parentElement.remove()" class="text-green-500 hover:text-green-700 ml-4">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-        {% endfor %}
+			<!-- Overlay pour le menu mobile -->
+			<div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
 
-        {% for message in app.flashes('error') %}
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewbox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                    </svg>
-                    <span>{{ message }}</span>
-                </div>
-                <button onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-700 ml-4">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-        {% endfor %}
+			<!-- Menu mobile corrigé -->
+			<div
+				id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-80 bg-gradient-to-b from-yellow-400 to-green-500 z-50 p-4" aria-hidden="true">
+				<!-- En-tête avec bouton fermer -->
+				<div class="flex justify-between items-center mb-6">
+					<div class="flex items-center space-x-3">
+						<img src="/media/logo.jpeg" alt="Logo Binajia" class="h-10 w-10  object-cover">
+						<span class="font-serif text-xl font-bold text-white">BINAJIA</span>
+					</div>
+					<button id="menu-close-btn" class="p-2 hover:bg-white/20 rounded-full transition-all duration-200" aria-label="Fermer le menu">
+						<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+						</svg>
+					</button>
+				</div>
 
-        {% for message in app.flashes('warning') %}
-            <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="currentColor" viewbox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                    </svg>
-                    <span>{{ message }}</span>
-                </div>
-                <button onclick="this.parentElement.remove()" class="text-yellow-500 hover:text-yellow-700 ml-4">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-        {% endfor %}
+				<!-- Contenu du menu -->
+				<div class="mobile-menu-content space-y-1">
+					<a href="{{ path('app_home') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}">
+						Accueil
+					</a>
+					<a href="{{ path('app_explorer') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_explorer' %}active{% endif %}">
+						Explorer
+					</a>
+					<a href="{{ path('app_social_impact') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_social_impact' %}active{% endif %}">
+						Impact Social
+					</a>
+					<a href="{{ path('app_events') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_events' %}active{% endif %}">
+						Événements
+					</a>
+					<a href="{{ path('app_avantage') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">
+						Avantages
+					</a>
+					<a href="{{ path('app_about') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">
+						A propos
+					</a>
+					<a href="{{ path('app_contact') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">
+						Contact
+					</a>
+					{% if is_granted('ROLE_ADMIN') %}
+						<a href="{{ path('admin_dashboard') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'admin_dashboard' %}active{% endif %}">
+							Admin
+						</a>
+					{% endif %}
 
-        {% for message in app.flashes('info') %}
-            <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewbox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
-                    </svg>
-                    <span>{{ message }}</span>
-                </div>
-                <button onclick="this.parentElement.remove()" class="text-blue-500 hover:text-blue-700 ml-4">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-        {% endfor %}
-    </div>
+					<!-- Section actions -->
+					<div class="pt-4 space-y-3 border-t border-white/20 mt-4">
+						{% if not app.user %}
+							<a href="{{ path('app_membership') }}" class="block w-full px-4 py-3 text-center bg-white text-primary rounded-full font-semibold transition-all duration-200 hover:bg-primary hover:text-white nav-link-mobile {% if app.request.attributes.get('_route') == 'app_membership' %}active{% endif %}">
+								Devenir membre
+							</a>
+							<a href="{{ path('app_login') }}" class="block w-full px-4 py-3 text-center bg-primary border border-white text-white rounded-full font-semibold transition-all duration-200 hover:bg-white hover:text-primary nav-link-mobile {% if app.request.attributes.get('_route') == 'app_login' %}active{% endif %}">
+								Connexion
+							</a>
+						{% else %}
+							<a href="{{ path('app_user_dashboard') }}" class="block w-full px-4 py-3 text-center bg-yellow-500 text-white rounded-full font-semibold transition-all duration-200 hover:bg-yellow-600 nav-link-mobile {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active{% endif %}">
+								Espace membre
+							</a>
+							<a href="{{ path('app_logout') }}" class="block w-full px-4 py-3 text-center bg-white/10 border border-white text-white rounded-full font-semibold transition-all duration-200 hover:bg-white hover:text-primary">
+								Se déconnecter
+							</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% endblock %}
 
-    <main class="pt-20 main-container"> {% block content %}{% endblock %}
-    </main>
+		<!-- Flash Messages Section -->
+		<div id="flash-messages" class="fixed top-24 left-4 right-4 z-50 space-y-2">
+			{% for message in app.flashes('success') %}
+				<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
+					<div class="flex items-center">
+						<svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewbox="0 0 20 20">
+							<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+						</svg>
+						<span>{{ message }}</span>
+					</div>
+					<button onclick="this.parentElement.remove()" class="text-green-500 hover:text-green-700 ml-4">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+						</svg>
+					</button>
+				</div>
+			{% endfor %}
 
-    <footer
-					class="bg-gradient-to-r from-yellow-500 via-green-600 to-green-800 shadow-lg text-white py-12 px-8 relative overflow-hidden">
-					<!-- Effet de fond décoratif -->
-					<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10"></div>
+			{% for message in app.flashes('error') %}
+				<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
+					<div class="flex items-center">
+						<svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewbox="0 0 20 20">
+							<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+						</svg>
+						<span>{{ message }}</span>
+					</div>
+					<button onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-700 ml-4">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+						</svg>
+					</button>
+				</div>
+			{% endfor %}
 
+			{% for message in app.flashes('warning') %}
+				<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
+					<div class="flex items-center">
+						<svg class="w-5 h-5 mr-2 text-yellow-500" fill="currentColor" viewbox="0 0 20 20">
+							<path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+						</svg>
+						<span>{{ message }}</span>
+					</div>
+					<button onclick="this.parentElement.remove()" class="text-yellow-500 hover:text-yellow-700 ml-4">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+						</svg>
+					</button>
+				</div>
+			{% endfor %}
+
+			{% for message in app.flashes('info') %}
+				<div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-fade-in">
+					<div class="flex items-center">
+						<svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewbox="0 0 20 20">
+							<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+						</svg>
+						<span>{{ message }}</span>
+					</div>
+					<button onclick="this.parentElement.remove()" class="text-blue-500 hover:text-blue-700 ml-4">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+						</svg>
+					</button>
+				</div>
+			{% endfor %}
+		</div>
+
+		<main class="pt-20 main-container"> {% block content %}{% endblock %}
+			</main>
+
+			<footer
+				class="bg-gradient-to-r from-yellow-500 via-green-600 to-green-800 shadow-lg text-white py-12 px-8 relative overflow-hidden">
+				<!-- Effet de fond décoratif -->
+				<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10"></div>
+
+				<div
+					class="main-container mx-auto relative z-10">
+					<!-- Contenu principal du footer -->
 					<div
-						class="main-container mx-auto relative z-10">
-						<!-- Contenu principal du footer -->
-						<div
-							class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
-							<!-- Logo et description -->
-							<div class="lg:col-span-1 sm:col-span-2">
-								<h3 class="text-xl font-bold mb-4 flex items-center">
-									<img src="https://huggingface.co/spaces/Babangida77/binajia/resolve/main/images/binajia%20logo.jpg" alt="Binajia Logo" class="h-8 w-8 mr-2">
-									<span class="text-white bg-gradient-to-r from-green-500 to-green-700 px-3 py-1 rounded-full shadow-md">
-										B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
-									</span>
-								</h3>
-								<p class="text-white text-sm sm:text-base leading-relaxed">
-									Promouvoir les échanges culturels et économiques entre le Bénin et le Nigeria, l'afrique et le monde.
-								</p>
-							</div>
-
-							<!-- Liens rapides -->
-							<div class="lg:col-span-1">
-								<h3 class="text-lg font-bold text-white mb-4 flex items-center">
-									Navigation
-								</h3>
-								<ul class="space-y-2">
-									<li>
-										<a href="{{ path('app_home') }}" class="text-white hover:text-yellow-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_home' %}font-bold text-yellow-400{% endif %}">
-											Accueil
-										</a>
-									</li>
-									<li>
-										<a href="{{ path('app_explorer') }}" class="text-white hover:text-yellow-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_explorer' %}font-bold text-yellow-400{% endif %}">
-											Explorer
-										</a>
-									</li>
-									<li>
-										<a href="{{ path('app_events') }}" class="text-white hover:text-yellow-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_events' %}font-bold text-yellow-400{% endif %}">
-											Événements
-										</a>
-									</li>
-									<li>
-										<a href="{{ path('app_about') }}" class="text-white hover:text-yellow-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_about' %}font-bold text-yellow-400{% endif %}">
-											À propos
-										</a>
-									</li>
-								</ul>
-							</div>
-
-							<!-- Services -->
-							<div class="lg:col-span-1">
-								<h3 class="text-lg font-bold text-white mb-4 flex items-center">
-									Services
-								</h3>
-								<ul class="space-y-2">
-									<li>
-										<a href="{{ path('app_membership') }}" class="text-white hover:text-green-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_membership' %}font-bold text-green-400{% endif %}">
-											Devenir membre
-										</a>
-									</li>
-									<li>
-										<a href="{{ path('app_partenaire') }}" class="text-white hover:text-green-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_partenaire' %}font-bold text-green-400{% endif %}">
-											Partenariats
-										</a>
-									</li>
-									<li>
-										<a href="{{ path('app_contact') }}" class="text-white hover:text-green-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_contact' %}font-bold text-green-400{% endif %}">
-											Contactez-nous
-										</a>
-									</li>
-									<li>
-										<a href="{{ path('app_faq') }}" class="text-white hover:text-green-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_faq' %}font-bold text-green-400{% endif %}">
-											FAQ
-										</a>
-									</li>
-								</ul>
-							</div>
-
-							<!-- Newsletter -->
-							<div class="lg:col-span-1 sm:col-span-2 lg:col-span-1">
-								<h3 class="text-lg font-bold text-white mb-4 flex items-center">
-									Restez informé
-								</h3>
-								<p class="text-white text-sm mb-4 leading-relaxed">
-									Abonnez-vous à notre newsletter pour recevoir les dernières actualités et événements.
-								</p>
-								<form class="space-y-3">
-									<div>
-										<label for="email" class="sr-only">Email</label>
-										<div class="relative rounded-md shadow-sm">
-											<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-												<svg class="h-5 w-5 text-gray-400" fill="currentColor" viewbox="0 0 20 20">
-													<path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-													<path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-												</svg>
-											</div>
-											<input type="email" id="email" name="email" required class="block w-full pl-10 pr-3 py-3 border border-transparent rounded-full bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm sm:text-base" placeholder="Votre adresse email">
-										</div>
-									</div>
-									<button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-green-800 text-sm sm:text-base">
-										S'abonner
-									</button>
-								</form>
-							</div>
-
-							<!-- Logo -->
-							<div class="lg:col-span-1 sm:col-span-2 flex justify-center lg:justify-end">
-								<img src="{{ asset('media/logo.jpeg') }}" alt="Logo Binajia" class="h-32 w-32 sm:h-40 sm:w-40 lg:h-50 lg:w-60 opacity-80 hover:opacity-100 transition-opacity object-contain">
-							</div>
+						class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+						<!-- Logo et description -->
+						<div class="lg:col-span-1 sm:col-span-2">
+							<h3 class="text-xl font-bold mb-4 flex items-center">
+								<img src="https://huggingface.co/spaces/Babangida77/binajia/resolve/main/images/binajia%20logo.jpg" alt="Binajia Logo" class="h-8 w-8 mr-2">
+								<span class="text-white bg-gradient-to-r from-green-500 to-green-700 px-3 py-1 rounded-full shadow-md">
+									B<span class="text-green-200">I</span>NAJ<span class="text-green-300">I</span>A
+								</span>
+							</h3>
+							<p class="text-white text-sm sm:text-base leading-relaxed">
+								Promouvoir les échanges culturels et économiques entre le Bénin et le Nigeria, l'afrique et le monde.
+							</p>
 						</div>
 
-						<!-- Copyright et mentions légales -->
-						<div class="pt-8 border-t border-white/10">
-							<div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-								<div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-center sm:text-left">
-									<p class="text-sm text-white">
-										&copy;
-										{{ "now"|date('Y') }}
-										BINAJIA. Tous droits réservés.
-									</p>
-									<div class="flex space-x-4">
-										<a href="{{ path('app_legal_privacy') }}" class="text-sm text-white hover:text-yellow-400 transition-colors">Confidentialité</a>
-										<span class="text-gray-600 hidden sm:inline">•</span>
-										<a href="{{ path('app_legal_cgu') }}" class="text-sm text-white hover:text-yellow-400 transition-colors">Conditions</a>
-										<span class="text-gray-600 hidden sm:inline">•</span>
-										<a href="{{ path('app_legal_mentions') }}" class="text-sm text-white hover:text-yellow-400 transition-colors">Mentions légales</a>
-										<span class="text-gray-600 hidden sm:inline">•</span>
-										<a href="{{ path('app_engagement_ethique') }}" class="text-sm text-white hover:text-yellow-400 transition-colors">Engagement éthique</a>
+						<!-- Liens rapides -->
+						<div class="lg:col-span-1">
+							<h3 class="text-lg font-bold text-white mb-4 flex items-center">
+								Navigation
+							</h3>
+							<ul class="space-y-2">
+								<li>
+									<a href="{{ path('app_home') }}" class="text-white hover:text-yellow-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_home' %}font-bold text-yellow-400{% endif %}">
+										Accueil
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('app_explorer') }}" class="text-white hover:text-yellow-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_explorer' %}font-bold text-yellow-400{% endif %}">
+										Explorer
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('app_events') }}" class="text-white hover:text-yellow-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_events' %}font-bold text-yellow-400{% endif %}">
+										Événements
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('app_about') }}" class="text-white hover:text-yellow-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_about' %}font-bold text-yellow-400{% endif %}">
+										À propos
+									</a>
+								</li>
+							</ul>
+						</div>
+
+						<!-- Services -->
+						<div class="lg:col-span-1">
+							<h3 class="text-lg font-bold text-white mb-4 flex items-center">
+								Services
+							</h3>
+							<ul class="space-y-2">
+								<li>
+									<a href="{{ path('app_membership') }}" class="text-white hover:text-green-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_membership' %}font-bold text-green-400{% endif %}">
+										Devenir membre
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('app_partenaire') }}" class="text-white hover:text-green-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_partenaire' %}font-bold text-green-400{% endif %}">
+										Partenariats
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('app_contact') }}" class="text-white hover:text-green-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_contact' %}font-bold text-green-400{% endif %}">
+										Contactez-nous
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('app_faq') }}" class="text-white hover:text-green-400 transition-colors flex items-center text-sm sm:text-base {% if app.request.attributes.get('_route') == 'app_faq' %}font-bold text-green-400{% endif %}">
+										FAQ
+									</a>
+								</li>
+							</ul>
+						</div>
+
+						<!-- Newsletter -->
+						<div class="lg:col-span-1 sm:col-span-2 lg:col-span-1">
+							<h3 class="text-lg font-bold text-white mb-4 flex items-center">
+								Restez informé
+							</h3>
+							<p class="text-white text-sm mb-4 leading-relaxed">
+								Abonnez-vous à notre newsletter pour recevoir les dernières actualités et événements.
+							</p>
+							<form class="space-y-3">
+								<div>
+									<label for="email" class="sr-only">Email</label>
+									<div class="relative rounded-md shadow-sm">
+										<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+											<svg class="h-5 w-5 text-gray-400" fill="currentColor" viewbox="0 0 20 20">
+												<path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+												<path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+											</svg>
+										</div>
+										<input type="email" id="email" name="email" required class="block w-full pl-10 pr-3 py-3 border border-transparent rounded-full bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm sm:text-base" placeholder="Votre adresse email">
 									</div>
 								</div>
+								<button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-green-800 text-sm sm:text-base">
+									S'abonner
+								</button>
+							</form>
+						</div>
 
-								<!-- Réseaux sociaux -->
+						<!-- Logo -->
+						<div class="lg:col-span-1 sm:col-span-2 flex justify-center lg:justify-end">
+							<img src="{{ asset('media/logo.jpeg') }}" alt="Logo Binajia" class="h-32 w-32 sm:h-40 sm:w-40 lg:h-50 lg:w-60 opacity-80 hover:opacity-100 transition-opacity object-contain">
+						</div>
+					</div>
+
+					<!-- Copyright et mentions légales -->
+					<div class="pt-8 border-t border-white/10">
+						<div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+							<div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-center sm:text-left">
+								<p class="text-sm text-white">
+									&copy;
+									{{ "now"|date('Y') }}
+									BINAJIA. Tous droits réservés.
+								</p>
 								<div class="flex space-x-4">
-									<a href="#" class="text-white hover:text-yellow-400 transition-colors transform hover:scale-110">
-										<svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewbox="0 0 24 24">
-											<path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-										</svg>
-									</a>
-									<a href="#" class="text-white hover:text-yellow-400 transition-colors transform hover:scale-110">
-										<svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewbox="0 0 24 24">
-											<path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-										</svg>
-									</a>
-									<a href="#" class="text-white hover:text-yellow-400 transition-colors transform hover:scale-110">
-										<svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewbox="0 0 24 24">
-											<path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.042-3.441.219-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001.012.017z"/>
-										</svg>
-									</a>
-									<a href="#" class="text-white hover:text-yellow-400 transition-colors transform hover:scale-110">
-										<svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewbox="0 0 24 24">
-											<path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-										</svg>
-									</a>
+									<a href="{{ path('app_legal_privacy') }}" class="text-sm text-white hover:text-yellow-400 transition-colors">Confidentialité</a>
+									<span class="text-gray-600 hidden sm:inline">•</span>
+									<a href="{{ path('app_legal_cgu') }}" class="text-sm text-white hover:text-yellow-400 transition-colors">Conditions</a>
+									<span class="text-gray-600 hidden sm:inline">•</span>
+									<a href="{{ path('app_legal_mentions') }}" class="text-sm text-white hover:text-yellow-400 transition-colors">Mentions légales</a>
+									<span class="text-gray-600 hidden sm:inline">•</span>
+									<a href="{{ path('app_engagement_ethique') }}" class="text-sm text-white hover:text-yellow-400 transition-colors">Engagement éthique</a>
 								</div>
+							</div>
+
+							<!-- Réseaux sociaux -->
+							<div class="flex space-x-4">
+								<a href="#" class="text-white hover:text-yellow-400 transition-colors transform hover:scale-110">
+									<svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewbox="0 0 24 24">
+										<path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+									</svg>
+								</a>
+								<a href="#" class="text-white hover:text-yellow-400 transition-colors transform hover:scale-110">
+									<svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewbox="0 0 24 24">
+										<path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+									</svg>
+								</a>
+								<a href="#" class="text-white hover:text-yellow-400 transition-colors transform hover:scale-110">
+									<svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewbox="0 0 24 24">
+										<path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.042-3.441.219-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001.012.017z"/>
+									</svg>
+								</a>
+								<a href="#" class="text-white hover:text-yellow-400 transition-colors transform hover:scale-110">
+									<svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewbox="0 0 24 24">
+										<path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+									</svg>
+								</a>
 							</div>
 						</div>
 					</div>
-				</footer>
-    
+				</div>
+			</footer>
 
-    {% block scripts %}
-        <script src="{{ asset('js/app.js') }}" defer></script>
-        <script>
-            // Gestion du menu mobile
-            document.addEventListener('DOMContentLoaded', function() {
-                const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-                const menuCloseBtn = document.getElementById('menu-close-btn');
-                const mobileMenu = document.getElementById('mobile-menu');
-                const menuOverlay = document.getElementById('menu-overlay');
-                
-                // Fonction pour ouvrir le menu
-                function openMobileMenu() {
-                    mobileMenu.classList.add('active');
-                    menuOverlay.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    mobileMenuBtn.setAttribute('aria-expanded', 'true');
-                    mobileMenu.setAttribute('aria-hidden', 'false');
-                }
-                
-                // Fonction pour fermer le menu
-                function closeMobileMenu() {
-                    mobileMenu.classList.remove('active');
-                    menuOverlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
-                    mobileMenu.setAttribute('aria-hidden', 'true');
-                }
-                
-                // Événements
-                mobileMenuBtn.addEventListener('click', openMobileMenu);
-                menuCloseBtn.addEventListener('click', closeMobileMenu);
-                menuOverlay.addEventListener('click', closeMobileMenu);
-                
-                // Fermeture avec la touche Échap
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-                        closeMobileMenu();
-                    }
-                });
-                
-                // Fermeture au clic sur les liens (pour une navigation fluide)
-                const mobileLinks = mobileMenu.querySelectorAll('a');
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', closeMobileMenu);
-                });
-            });
-        </script>
-    {% endblock %}
-</body>
-</html>
+
+			{% block scripts %}
+				<script src="{{ asset('js/app.js') }}" defer></script>
+				<script>
+					// Gestion du menu mobile
+document.addEventListener('DOMContentLoaded', function () {
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const menuCloseBtn = document.getElementById('menu-close-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const menuOverlay = document.getElementById('menu-overlay');
+
+// Fonction pour ouvrir le menu
+function openMobileMenu() {
+mobileMenu.classList.add('active');
+menuOverlay.classList.add('active');
+document.body.style.overflow = 'hidden';
+mobileMenuBtn.setAttribute('aria-expanded', 'true');
+mobileMenu.setAttribute('aria-hidden', 'false');
+}
+
+// Fonction pour fermer le menu
+function closeMobileMenu() {
+mobileMenu.classList.remove('active');
+menuOverlay.classList.remove('active');
+document.body.style.overflow = '';
+mobileMenuBtn.setAttribute('aria-expanded', 'false');
+mobileMenu.setAttribute('aria-hidden', 'true');
+}
+
+// Événements
+mobileMenuBtn.addEventListener('click', openMobileMenu);
+menuCloseBtn.addEventListener('click', closeMobileMenu);
+menuOverlay.addEventListener('click', closeMobileMenu);
+
+// Fermeture avec la touche Échap
+document.addEventListener('keydown', function (e) {
+if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+closeMobileMenu();
+}
+});
+
+// Fermeture au clic sur les liens (pour une navigation fluide)
+const mobileLinks = mobileMenu.querySelectorAll('a');
+mobileLinks.forEach(link => {
+link.addEventListener('click', closeMobileMenu);
+});
+});
+				</script>
+			{% endblock %}
+		</body>
+	</html>
