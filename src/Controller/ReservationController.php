@@ -118,7 +118,6 @@ final class ReservationController extends AbstractController
                 return $this->redirectToRoute('app_home');
             }
         }
-
         return $this->render('reservation/event_custom.html.twig', [
             'evenement' => $evenement,
             'errors' => $errors,
