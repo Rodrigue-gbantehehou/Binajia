@@ -311,7 +311,7 @@ fontFamily: {
 						<a href="{{ path('app_explorer') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_explorer' %}active{% endif %}">Explorer</a>
 						<a href="{{ path('app_social_impact') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_social_impact' %}active{% endif %}">Impact Social</a>
 						<a href="{{ path('app_events') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_events' %}active{% endif %}">Événements</a>
-						<a href="{{ path('app_avantage') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">Avantages</a>
+						<a href="{{ path('app_avantage') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_avantage' %}active{% endif %}">Avantages</a>
 						<a href="{{ path('app_about') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">A propos</a>
 						<a href="{{ path('app_contact') }}" class="nav-link text-white hover:text-primary font-medium px-4 py-2 transition-all duration-300 rounded-full {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">Contact</a>
 						{% if is_granted('ROLE_ADMIN') %}
@@ -381,7 +381,7 @@ fontFamily: {
 					<a href="{{ path('app_events') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_events' %}active{% endif %}">
 						Événements
 					</a>
-					<a href="{{ path('app_avantage') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_avantages' %}active{% endif %}">
+					<a href="{{ path('app_avantage') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_avantage' %}active{% endif %}">
 						Avantages
 					</a>
 					<a href="{{ path('app_about') }}" class="block text-white font-medium py-3 px-4 transition-all nav-link-mobile {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">
