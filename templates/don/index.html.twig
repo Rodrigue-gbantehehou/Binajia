@@ -1,207 +1,233 @@
 {# templates/don/index.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block content %}
-<div class="min-h-screen bg-gradient-to-br from-emerald-50 via-amber-50 to-cyan-50 py-12 px-4 sm:px-6 lg:px-8" style="background: linear-gradient(135deg, rgba(0, 135, 29, 0.9), rgba(0, 135, 81, 0.9), rgb(255, 174, 0))">
+<div class="min-h-screen bg-gradient-to-br from-green-700 via-green-600 to-yellow-500 py-12 px-4 sm:px-6 lg:px-8">
+    <!-- Section Dons - Design moderne et professionnel -->
+    <section id="dons" class="py-16 relative overflow-hidden">
+        <!-- Éléments d'arrière-plan décoratifs -->
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIwOS0xLjc5MS00LTQtNHMtNCAxLjc5MS00IDQgMS43OTEgNCA0IDQgNC0xLjc5MSA0LTR6Ii8+PC9nPjwvZz48L3N2Zz4=')]"></div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
 
-    	{# Donations - Design amélioré avec mise en page moderne #}
-	<section
-		id="dons"  class="py-16 relative overflow-hidden">
-		{# Background elements #}
-		<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIwOS0xLjc5MS00LTQtNHMtNCAxLjc5MS00IDQgMS43OTEgNCA0IDQgNC0xLjc5MSA0LTR6Ii8+PC9nPjwvZz48L3N2Zz4=')]"></div>
-		<div class="absolute top-0 right-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
-		<div class="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- En-tête principal -->
+            <div class="text-center mb-16 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
+                <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-300 via-white to-yellow-300 bg-clip-text text-transparent leading-tight mb-4">
+                    Soutenez notre mission
+                </h2>
+                <p class="text-xl md:text-2xl text-white font-medium max-w-3xl mx-auto">
+                    Ensemble, construisons l'avenir de la coopération
+                </p>
+            </div>
 
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-			<div class="text-center mb-12 opacity-0 translate-y-16 transition-all duration-1000 ease-out" data-scroll="fade-up">
-				<h2 class="font-serif text-4xl font-bold leading-tight drop-shadow-lg md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-500 via-green-400 to-yellow-500 bg-clip-text text-transparent leading-tight text-center">Soutenez notre mission</h2>
-				<h3 class="font-serif text-2xl md:text-3xl font-bold text-green-900 mb-3 mt-3">
-					<span class="bg-white bg-clip-text text-transparent">
-						Ensemble, construisons l'avenir de la coopération
-					</span>
-				</h3>
-			</div>
+            <!-- Contenu en grille -->
+            <div class="grid md:grid-cols-12 gap-12 items-start">
+                <!-- Colonne de gauche : Informations et avantages -->
+                <div class="md:col-span-7 space-y-10">
+                    <!-- Introduction -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                        <h3 class="text-2xl font-bold text-white mb-4">
+                            Votre soutien est essentiel pour pérenniser nos actions
+                        </h3>
+                        <p class="text-white/90 text-lg leading-relaxed">
+                            Chaque contribution, quelle que soit sa taille, nous aide à développer des projets concrets qui renforcent les échanges culturels et économiques entre le Bénin, le Nigéria, l'Afrique et sa diaspora.
+                        </p>
+                    </div>
 
-			<div class="grid md:grid-cols-12 gap-12 items-center">
-				<div class="md:col-span-7 space-y-8">
-					<div class="space-y-6 text-white/90 text-lg leading-relaxed">
-						<h2 class="text-2xl font-bold text-white mb-4">
-							Votre soutien est essentiel pour pérenniser nos actions
-						</h2>
+                    <!-- Avantages en grille -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 transition-all duration-300 hover:bg-white/15">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-yellow-400/20 flex items-center justify-center mr-3">
+                                    <svg class="w-5 h-5 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-white font-bold text-lg">Impact direct</h4>
+                            </div>
+                            <p class="text-white/80 text-sm">
+                                Votre don finance directement nos programmes d'éducation, d'aide humanitaire et de développement communautaire.
+                            </p>
+                        </div>
+                        
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 transition-all duration-300 hover:bg-white/15">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-green-400/20 flex items-center justify-center mr-3">
+                                    <svg class="w-5 h-5 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-white font-bold text-lg">Transparence</h4>
+                            </div>
+                            <p class="text-white/80 text-sm">
+                                Chaque don est tracé et vous recevrez un rapport annuel détaillé sur l'utilisation des fonds.
+                            </p>
+                        </div>
+                        
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 transition-all duration-300 hover:bg-white/15">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-yellow-400/20 flex items-center justify-center mr-3">
+                                    <svg class="w-5 h-5 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-white font-bold text-lg">Confidentialité</h4>
+                            </div>
+                            <p class="text-white/80 text-sm">
+                                Vous pouvez faire un don de manière totalement anonyme si vous le souhaitez.
+                            </p>
+                        </div>
+                        
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 transition-all duration-300 hover:bg-white/15">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-green-400/20 flex items-center justify-center mr-3">
+                                    <svg class="w-5 h-5 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-white font-bold text-lg">Reconnaissance</h4>
+                            </div>
+                            <p class="text-white/80 text-sm">
+                                Pour les donateurs qui le souhaitent, nous offrons une reconnaissance publique de leur soutien.
+                            </p>
+                        </div>
+                    </div>
 
-						<div class="flex items-start space-x-4 group">
-							<div class="flex-shrink-0 mt-1">
-								<div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-									<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-									</svg>
-								</div>
-							</div>
-							<p>
-								<span class="font-semibold text-white">Soutenez des projets concrets</span>
-								qui renforcent les échanges culturels et économiques entre le Bénin, le Nigéria, l'Afrique et sa diaspora.
-							</p>
-						</div>
+                    <!-- Utilisation des fonds -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                        <h4 class="text-white font-bold text-xl mb-4 text-center">À quoi servent vos dons ?</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="text-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300">
+                                <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-yellow-400/20 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                                    </svg>
+                                </div>
+                                <span class="text-white font-medium">Événements culturels</span>
+                            </div>
+                            <div class="text-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300">
+                                <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-green-400/20 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+                                    </svg>
+                                </div>
+                                <span class="text-white font-medium">Programmes éducatifs</span>
+                            </div>
+                            <div class="text-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300">
+                                <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-yellow-400/20 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                    </svg>
+                                </div>
+                                <span class="text-white font-medium">Aide humanitaire</span>
+                            </div>
+                            <div class="text-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300">
+                                <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-green-400/20 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"/>
+                                    </svg>
+                                </div>
+                                <span class="text-white font-medium">Développement communautaire</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Colonne de droite : Formulaire de don -->
+                <div class="md:col-span-5">
+                    <div class="sticky top-8 bg-white/10 backdrop-blur-md rounded-3xl p-1 shadow-2xl overflow-hidden border border-white/20 transform hover:scale-[1.01] transition-all duration-500">
+                        <div class="p-6">
+                            <div class="text-center mb-6">
+                                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/10 mb-4">
+                                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="text-4xl font-bold text-yellow-400">Faire un don</h3>
+                                <p class="text-white/80 mt-2">Sécurisé avec Fedapay</p>
+                            </div>
 
-						<div class="flex items-start space-x-4 group">
-							<div class="flex-shrink-0 mt-1">
-								<div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-									<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-									</svg>
-								</div>
-							</div>
-							<p>
-								<span class="font-semibold text-white">Contribuez pour un avenir meilleur</span>
-								en soutenant l'éducation des jeunes et renforçant la solidarité contre la pauvreté et la faim.
-							</p>
-						</div>
+                            <form id="donation-form">
+                                <!-- Option don anonyme -->
+                                <div class="mb-6 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <label class="flex items-center space-x-3 cursor-pointer">
+                                        <input type="checkbox" id="anonymous-donation" name="anonymous" class="w-5 h-5 text-primary border-white/30 rounded focus:ring-primary bg-white/10 focus:ring-2">
+                                        <span class="text-white font-semibold text-lg">Faire un don anonyme</span>
+                                    </label>
+                                    <p class="text-white/70 text-sm mt-2 ml-8">
+                                        Votre nom et email n'apparaîtront pas dans nos listes de donateurs
+                                    </p>
+                                </div>
 
-						<div class="flex items-start space-x-4 group">
-							<div class="flex-shrink-0 mt-1">
-								<div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-									<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-									</svg>
-								</div>
-							</div>
-							<p>
-								<span class="font-semibold text-white">Transparence totale</span>
-								- Chaque don est tracé et vous recevrez un rapport annuel sur l'utilisation des fonds.
-							</p>
-						</div>
+                                <!-- Section informations personnelles -->
+                                <div id="personal-info-section" class="space-y-4 transition-all duration-300">
+                                    <div>
+                                        <label class="block text-white/80 text-sm mb-2" for="don-nom">
+                                            Votre nom *
+                                        </label>
+                                        <input type="text" id="don-nom" name="nom" required class="w-full bg-white/10 border border-white/20 rounded-xl py-3 px-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300" placeholder="Votre nom complet">
+                                    </div>
 
-						<div class="flex items-start space-x-4 group">
-							<div class="flex-shrink-0 mt-1">
-								<div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-									<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-									</svg>
-								</div>
-							</div>
-							<p>
-								<span class="font-semibold text-white">Respect de votre vie privée</span>
-								- Vous pouvez faire un don de manière totalement anonyme si vous le souhaitez.
-							</p>
-						</div>
-					</div>
+                                    <div>
+                                        <label class="block text-white/80 text-sm mb-2" for="don-email">
+                                            Votre email *
+                                        </label>
+                                        <input type="email" id="don-email" name="email" required class="w-full bg-white/10 border border-white/20 rounded-xl py-3 px-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300" placeholder="votre@email.com">
+                                    </div>
+                                </div>
 
-					<div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-						<h4 class="text-white font-bold text-lg mb-3">À quoi servent vos dons ?</h4>
-						<div class="grid grid-cols-2 gap-4 text-sm">
-							<div class="flex items-center space-x-2">
-								<div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
-								<span class="text-white/80">Événements culturels</span>
-							</div>
-							<div class="flex items-center space-x-2">
-								<div class="w-2 h-2 bg-green-400 rounded-full"></div>
-								<span class="text-white/80">Programmes éducatifs</span>
-							</div>
-							<div class="flex items-center space-x-2">
-								<div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
-								<span class="text-white/80">Aide humanitaire</span>
-							</div>
-							<div class="flex items-center space-x-2">
-								<div class="w-2 h-2 bg-green-400 rounded-full"></div>
-								<span class="text-white/80">Développement communautaire</span>
-							</div>
-						</div>
-					</div>
-				</div>
+                                <!-- Montants prédéfinis -->
+                                <div class="mt-6">
+                                    <label class="block text-white/80 text-sm mb-3">Choisissez un montant</label>
+                                    <div class="grid grid-cols-3 gap-3 mb-4">
+                                        <button type="button" data-amount="1000" class="amount-btn bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl py-3 text-white font-medium transition-all duration-300 hover:scale-105">
+                                            1 000 F
+                                        </button>
+                                        <button type="button" data-amount="5000" class="amount-btn bg-yellow-500 hover:bg-yellow-400 border border-yellow-500 rounded-xl py-3 text-gray-900 font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                            5 000 F
+                                            <span class="block text-xs font-normal mt-1">Le plus choisi</span>
+                                        </button>
+                                        <button type="button" data-amount="10000" class="amount-btn bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl py-3 text-white font-medium transition-all duration-300 hover:scale-105">
+                                            10 000 F
+                                        </button>
+                                    </div>
+                                </div>
 
-				<div class="md:col-span-5 relative">
-					<div class="relative bg-white/10 backdrop-blur-md rounded-3xl p-1 shadow-2xl overflow-hidden border border-white/20 transform hover:scale-[1.02] transition-all duration-500">
-						<div class="p-6">
-							<div class="text-center mb-6">
-								<div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/10 mb-4">
-									<svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-									</svg>
-								</div>
-								<h3 class="text-4xl font-bold text-yellow-500">Faire un don</h3>
-								<p class="text-white/80">Sécurisé avec Fedapay</p>
-							</div>
+                                <!-- Montant personnalisé -->
+                                <div class="mb-6">
+                                    <label class="block text-white/80 text-sm mb-2" for="custom-amount">
+                                        Ou montant personnalisé (FCFA)
+                                    </label>
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70">F</span>
+                                        <input type="number" id="custom-amount" name="montant" required class="w-full bg-white/10 border border-white/20 rounded-xl py-3 pl-8 pr-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300" placeholder="Montant">
+                                    </div>
+                                </div>
 
-							<form
-								id="donation-form">
-								
-								<!-- Option don anonyme -->
-								<div class="mb-6 p-4 bg-white/5 rounded-xl border border-white/10">
-									<label class="flex items-center space-x-3 cursor-pointer">
-										<input type="checkbox" id="anonymous-donation" name="anonymous" class="w-5 h-5 text-primary border-white/30 rounded focus:ring-primary bg-white/10 focus:ring-2">
-										<span class="text-white font-semibold text-lg">Faire un don anonyme</span>
-									</label>
-									<p class="text-white/70 text-sm mt-2 ml-8">
-										Votre nom et email n'apparaîtront pas dans nos listes de donateurs
-									</p>
-								</div>
+                                <!-- Bouton de soumission -->
+                                <button type="button" class="w-full bg-gradient-to-r from-yellow-500 to-yellow-400 hover:from-yellow-400 hover:to-yellow-300 text-gray-900 font-bold py-4 px-6 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center justify-center mt-2" id="pay-btn" onclick="processDonation()">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                                    </svg>
+                                    Faire un don sécurisé
+                                </button>
 
-								<!-- Section informations personnelles -->
-								<div id="personal-info-section" class="space-y-4 transition-all duration-300">
-									<div>
-										<label class="block text-white/80 text-sm mb-2" for="don-nom">
-											Votre nom *
-										</label>
-										<input type="text" id="don-nom" name="nom" required class="w-full bg-white/10 border border-white/20 rounded-xl py-3 px-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300" placeholder="Votre nom complet">
-									</div>
-
-									<div>
-										<label class="block text-white/80 text-sm mb-2" for="don-email">
-											Votre email *
-										</label>
-										<input type="email" id="don-email" name="email" required class="w-full bg-white/10 border border-white/20 rounded-xl py-3 px-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300" placeholder="votre@email.com">
-									</div>
-								</div>
-
-								<div class="mt-6 grid grid-cols-3 gap-4 mb-6">
-									<button type="button" data-amount="1000" class="amount-btn bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl py-3 px-2 text-white font-medium transition-all duration-300 hover:scale-105">
-										1 000 F
-									</button>
-									<button type="button" data-amount="5000" class="amount-btn bg-yellow-400 hover:bg-yellow-300 border border-yellow-500 rounded-xl py-3 px-2 text-gray-900 font-bold transition-all duration-300 transform -translate-y-1 shadow-lg hover:scale-105">
-										5 000 F
-										<span class="block text-xs font-normal mt-1">Le plus choisi</span>
-									</button>
-									<button type="button" data-amount="10000" class="amount-btn bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl py-3 px-2 text-white font-medium transition-all duration-300 hover:scale-105">
-										10 000 F
-									</button>
-								</div>
-
-								<div class="mb-6">
-									<label class="block text-white/80 text-sm mb-2" for="custom-amount">
-										Ou montant personnalisé (FCFA)
-									</label>
-									<div class="relative">
-										<span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70">F</span>
-										<input type="number" id="custom-amount" name="montant" required class="w-full bg-white/10 border border-white/20 rounded-xl py-3 pl-8 pr-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300" placeholder="Montant">
-									</div>
-								</div>
-
-								
-								<button  type="button" class="w-full bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold py-4 px-6 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center justify-center mt-2"  id="pay-btn"  onclick="processDonation()">
-									<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
-									</svg>
-									Faire un don sécurisé
-								</button>
-
-								<div class="mt-4 flex items-center justify-center space-x-2 text-white/60 text-sm">
-									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-									</svg>
-									<span>Paiement sécurisé par Fedapay</span>
-								</div>
-							</form>
-						</div>
-					</div>
-
-					{# Décoration flottante #}
-					<div class="absolute -top-4 -right-4 w-8 h-8 bg-yellow-400 rounded-full animate-ping opacity-75"></div>
-					<div class="absolute -bottom-4 -left-4 w-6 h-6 bg-green-400 rounded-full animate-ping opacity-75 animation-delay-1000"></div>
-				</div>
-			</div>
-		</div>
-	</section>
+                                <!-- Sécurité -->
+                                <div class="mt-4 flex items-center justify-center space-x-2 text-white/60 text-sm">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                    </svg>
+                                    <span>Paiement sécurisé par Fedapay</span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 
 <!-- Loader pour les paiements -->
@@ -450,229 +476,40 @@ function resetButton() {
     }
 }
 
-function goToEvents() {
-window.location.href = "{{ path('app_events') }}";
-}
-
-function goToPlaces() {
-window.location.href = "{{ path('app_explorer') }}";
-}
-
 // Scroll animations with Tailwind classes
 document.addEventListener('DOMContentLoaded', function () {
-const scrollElements = document.querySelectorAll('[data-scroll]');
+    const scrollElements = document.querySelectorAll('[data-scroll]');
 
-const elementInView = (el, dividend = 1) => {
-const elementTop = el.getBoundingClientRect().top;
-return(elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend);
-};
+    const elementInView = (el, dividend = 1) => {
+        const elementTop = el.getBoundingClientRect().top;
+        return (elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend);
+    };
 
-const displayScrollElement = (element) => {
-element.classList.add('opacity-100', 'translate-y-0');
-element.classList.remove('opacity-0', 'translate-y-16', 'translate-y-20');
-};
+    const displayScrollElement = (element) => {
+        element.classList.add('opacity-100', 'translate-y-0');
+        element.classList.remove('opacity-0', 'translate-y-16', 'translate-y-20');
+    };
 
-const hideScrollElement = (element) => {
-element.classList.remove('opacity-100', 'translate-y-0');
-element.classList.add('opacity-0');
-};
+    const hideScrollElement = (element) => {
+        element.classList.remove('opacity-100', 'translate-y-0');
+        element.classList.add('opacity-0');
+    };
 
-const handleScrollAnimation = () => {
-scrollElements.forEach((el) => {
-if (elementInView(el, 1.25)) {
-displayScrollElement(el);
-}
-});
-};
+    const handleScrollAnimation = () => {
+        scrollElements.forEach((el) => {
+            if (elementInView(el, 1.25)) {
+                displayScrollElement(el);
+            }
+        });
+    };
 
-// Check on load
-handleScrollAnimation();
+    // Check on load
+    handleScrollAnimation();
 
-// Check on scroll
-window.addEventListener('scroll', () => {
-handleScrollAnimation();
-});
-});
-
-
-document.querySelectorAll('.accordion-header').forEach(button => {
-const content = button.nextElementSibling;
-// Ouvrir le premier élément par défaut
-if (button.querySelector('.accordion-icon').textContent === '▲') {
-content.classList.remove('hidden');
-content.style.maxHeight = content.scrollHeight + "px";
-} else {
-content.classList.add('hidden');
-content.style.maxHeight = 0;
-}
-
-button.addEventListener('click', () => {
-const isOpen = ! content.classList.contains('hidden');
-if (isOpen) {
-content.style.maxHeight = 0;
-content.classList.add('hidden');
-button.querySelector('.accordion-icon').textContent = '▼';
-} else {
-content.classList.remove('hidden');
-content.style.maxHeight = content.scrollHeight + "px";
-button.querySelector('.accordion-icon').textContent = '▲';
-}
-});
-});
-// Fade-up au scroll
-
-document.addEventListener('DOMContentLoaded', function () {
-const track = document.getElementById('carouselTrack');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const indicatorsContainer = document.getElementById('indicators');
-
-if (! track) 
-return;
-
-
-
-const cards = track.children;
-const totalCards = cards.length;
-
-if (totalCards === 0) 
-return;
-
-
-
-let currentIndex = 0;
-let cardWidth = cards[0].offsetWidth;
-let gap = 24; // 6 * 4px (gap-6 in Tailwind)
-let autoPlayInterval;
-
-// Calculer combien de cartes sont visibles
-function getVisibleCards() {
-const containerWidth = track.parentElement.offsetWidth;
-return Math.floor(containerWidth / (cardWidth + gap)) || 1;
-}
-
-let visibleCards = getVisibleCards();
-const maxIndex = Math.max(0, totalCards - visibleCards);
-
-// Créer les indicateurs
-function createIndicators() {
-indicatorsContainer.innerHTML = '';
-const numIndicators = maxIndex + 1;
-
-for (let i = 0; i <= maxIndex; i++) {
-const dot = document.createElement('button');
-dot.className = 'w-2 h-2 rounded-full transition-all duration-300';
-dot.style.backgroundColor = i === 0 ? '#EAB308' : '#D1D5DB';
-dot.onclick = () => goToSlide(i);
-indicatorsContainer.appendChild(dot);
-}
-}
-
-// Mettre à jour les indicateurs
-function updateIndicators() {
-const dots = indicatorsContainer.children;
-Array.from(dots).forEach((dot, i) => {
-dot.style.backgroundColor = i === currentIndex ? '#EAB308' : '#D1D5DB';
-dot.style.width = i === currentIndex ? '2rem' : '0.5rem';
-});
-}
-
-// Déplacer le carousel
-function moveCarousel() {
-const offset = -(currentIndex * (cardWidth + gap));
-track.style.transform = `translateX(${offset}px)`;
-updateIndicators();
-}
-
-// Aller à une slide spécifique
-function goToSlide(index) {
-currentIndex = Math.max(0, Math.min(index, maxIndex));
-moveCarousel();
-resetAutoPlay();
-}
-
-// Navigation suivante
-function nextSlide() {
-currentIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
-moveCarousel();
-}
-
-// Navigation précédente
-function prevSlide() {
-currentIndex = currentIndex <= 0 ? maxIndex : currentIndex - 1;
-moveCarousel();
-}
-
-// Auto-play
-function startAutoPlay() {
-autoPlayInterval = setInterval(nextSlide, 3000);
-}
-
-function stopAutoPlay() {
-clearInterval(autoPlayInterval);
-}
-
-function resetAutoPlay() {
-stopAutoPlay();
-startAutoPlay();
-}
-
-// Event listeners
-nextBtn.addEventListener('click', () => {
-nextSlide();
-resetAutoPlay();
-});
-
-prevBtn.addEventListener('click', () => {
-prevSlide();
-resetAutoPlay();
-});
-
-// Pause au survol
-track.addEventListener('mouseenter', stopAutoPlay);
-track.addEventListener('mouseleave', startAutoPlay);
-
-// Support tactile
-let touchStartX = 0;
-let touchEndX = 0;
-
-track.addEventListener('touchstart', (e) => {
-touchStartX = e.changedTouches[0].screenX;
-stopAutoPlay();
-});
-
-track.addEventListener('touchend', (e) => {
-touchEndX = e.changedTouches[0].screenX;
-handleSwipe();
-startAutoPlay();
-});
-
-function handleSwipe() {
-const swipeThreshold = 50;
-if (touchStartX - touchEndX > swipeThreshold) {
-nextSlide();
-} else if (touchEndX - touchStartX > swipeThreshold) {
-prevSlide();
-}
-}
-
-// Recalculer au redimensionnement
-window.addEventListener('resize', () => {
-cardWidth = cards[0].offsetWidth;
-visibleCards = getVisibleCards();
-const newMaxIndex = Math.max(0, totalCards - visibleCards);
-
-if (currentIndex > newMaxIndex) {
-currentIndex = newMaxIndex;
-}
-
-createIndicators();
-moveCarousel();
-});
-
-// Initialisation
-createIndicators();
-startAutoPlay();
+    // Check on scroll
+    window.addEventListener('scroll', () => {
+        handleScrollAnimation();
+    });
 });
 </script>
 
