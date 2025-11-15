@@ -324,7 +324,7 @@ fontFamily: {
 							<a href="{{ path('app_login', {}, false) ?? '#' }}" class="hidden lg:block px-6 py-3 rounded-full bg-white border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-all duration-300">Connexion</a>
 						{% endif %}
 						{% if app.user %}
-							<a href="{{ path('app_user_dashboard') }}" class="hidden lg:block px-6 py-3 text-white bg-primary text-center rounded-full font-medium transition duration-300 bg-yellow-500 hover:bg-yellow-500 {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active bg-yellow-600{% endif %}">Espace membre</a>
+							<a href="{{ path('app_user_dashboard') }}" class="hidden lg:block px-6 py-3 text-white bg-primary text-center rounded-full font-medium transition duration-300 bg-yellow-500 hover:bg-yellow-500 {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active bg-yellow-500{% endif %}">Espace membre</a>
 							<a href="{{ path('app_logout') }}" class="hidden lg:block p-2.5 rounded-full ring-1 ring-white hover:bg-yellow-400 transition-all duration-300" title="Se déconnecter" aria-label="Se déconnecter">
 								<svg class="w-5 h-5 text-white" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 									<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -333,7 +333,7 @@ fontFamily: {
 								</svg>
 							</a>
 						{% else %}
-							<a href="{{ path('app_membership') }}" class="hidden lg:block px-6 py-3 text-white rounded-full bg-yellow-500 outline outline-2 outline-white font-semibold hover:bg-yellow-500 transition-all duration-300 {% if app.request.attributes.get('_route') == 'app_membership' %}active bg-yellow-600 outline-yellow-600{% endif %}">
+							<a href="{{ path('app_membership') }}" class="hidden lg:block px-6 py-3 text-white rounded-full bg-yellow-500 outline outline-2 outline-white font-semibold hover:bg-yellow-500 transition-all duration-300 {% if app.request.attributes.get('_route') == 'app_membership' %}active bg-yellow-500 outline-yellow-500{% endif %}">
 								Devenir membre
 							</a>
 						{% endif %}
@@ -406,7 +406,7 @@ fontFamily: {
 								Connexion
 							</a>
 						{% else %}
-							<a href="{{ path('app_user_dashboard') }}" class="block w-full px-4 py-3 text-center bg-yellow-500 text-white rounded-full font-semibold transition-all duration-200 hover:bg-yellow-600 nav-link-mobile {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active{% endif %}">
+							<a href="{{ path('app_user_dashboard') }}" class="block w-full px-4 py-3 text-center bg-yellow-500 text-white rounded-full font-semibold transition-all duration-200 hover:bg-yellow-500 nav-link-mobile {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active{% endif %}">
 								Espace membre
 							</a>
 							<a href="{{ path('app_logout') }}" class="block w-full px-4 py-3 text-center bg-white/10 border border-white text-white rounded-full font-semibold transition-all duration-200 hover:bg-white hover:text-primary">
@@ -590,7 +590,7 @@ fontFamily: {
 										<input type="email" id="email" name="email" required class="block w-full pl-10 pr-3 py-3 border border-transparent rounded-full bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm sm:text-base" placeholder="Votre adresse email">
 									</div>
 								</div>
-								<button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-green-800 text-sm sm:text-base">
+								<button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-500 text-gray-900 font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-green-800 text-sm sm:text-base">
 									S'abonner
 								</button>
 							</form>

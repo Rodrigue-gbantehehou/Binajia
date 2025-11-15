@@ -427,7 +427,7 @@ function showConfirmModal(title, message, confirmText, type, onConfirm) {
     const typeColors = {
         primary: 'bg-green-600 hover:bg-green-700',
         danger: 'bg-red-600 hover:bg-red-700',
-        warning: 'bg-yellow-600 hover:bg-yellow-700',
+        warning: 'bg-yellow-500 hover:bg-yellow-700',
         success: 'bg-green-600 hover:bg-green-700'
     };
     

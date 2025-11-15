@@ -12,51 +12,51 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
-    public function indexA(EntityManagerInterface $entityManager): Response
-    {
-        // Récupérer tous les événements triés par date de début (du plus proche au plus éloigné)
-        $events = $entityManager->getRepository(Evenement::class)->findAll();
+ #[Route('/', name: 'app_home')]
+public function indexA(EntityManagerInterface $entityManager): Response
+{
+    // Récupérer tous les événements triés par date de début (du plus proche au plus éloigné)
+    $events = $entityManager->getRepository(Evenement::class)->findAll();
 
-        // Trier les événements par date de début (événements à venir en premier)
-        usort($events, function($a, $b) {
-            $dateA = $a->getStartDate();
-            $dateB = $b->getStartDate();
+    // Trier les événements par date de début (événements à venir en premier)
+    usort($events, function($a, $b) {
+        $dateA = $a->getStartDate();
+        $dateB = $b->getStartDate();
 
-            // Si les deux événements ont une date
-            if ($dateA && $dateB) {
-                // Si les deux sont dans le futur, trier par date croissante
-                if ($dateA > new \DateTime() && $dateB > new \DateTime()) {
-                    return $dateA <=> $dateB;
-                }
-                // Si un est passé et l'autre futur, le futur en premier
-                if ($dateA > new \DateTime() && $dateB <= new \DateTime()) {
-                    return -1;
-                }
-                if ($dateA <= new \DateTime() && $dateB > new \DateTime()) {
-                    return 1;
-                }
-                // Les deux passés : trier par date décroissante (plus récent en premier)
-                return $dateB <=> $dateA;
+        // Si les deux événements ont une date
+        if ($dateA && $dateB) {
+            // Si les deux sont dans le futur, trier par date croissante
+            if ($dateA > new \DateTime() && $dateB > new \DateTime()) {
+                return $dateA <=> $dateB;
             }
+            // Si un est passé et l'autre futur, le futur en premier
+            if ($dateA > new \DateTime() && $dateB <= new \DateTime()) {
+                return -1;
+            }
+            if ($dateA <= new \DateTime() && $dateB > new \DateTime()) {
+                return 1;
+            }
+            // Les deux passés : trier par date décroissante (plus récent en premier)
+            return $dateB <=> $dateA;
+        }
 
-            // Si un événement n'a pas de date, le mettre à la fin
-            if (!$dateA && $dateB) return 1;
-            if ($dateA && !$dateB) return -1;
+        // Si un événement n'a pas de date, le mettre à la fin
+        if (!$dateA && $dateB) return 1;
+        if ($dateA && !$dateB) return -1;
 
-            return 0;
-        });
+        return 0;
+    });
 
-        $partenaires = $entityManager->getRepository(Partenaire::class)->findAll();
+    // Limiter l'affichage à 5 événements
+    $events = array_slice($events, 0, 5);
 
+    $partenaires = $entityManager->getRepository(Partenaire::class)->findAll();
+    $projets = $entityManager->getRepository(Projets::class)->findAll();
+    $places = $entityManager->getRepository(CulturalContent::class)->findAll();
 
-        $projets = $entityManager->getRepository(Projets::class)->findAll();
-
-        $places = $entityManager->getRepository(CulturalContent::class)->findAll();
-
-        // Render the redesigned homepage by default
-        return $this->render('home/index_c.html.twig', compact('places','events','projets','partenaires'));
-    }
+    // Render the redesigned homepage by default
+    return $this->render('home/index_c.html.twig', compact('places','events','projets','partenaires'));
+}
 
     #[Route('/home/b', name: 'app_home_b')]
     public function indexB(): Response
